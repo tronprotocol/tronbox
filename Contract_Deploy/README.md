@@ -14,7 +14,8 @@ contract Test{
 }
 ```
 <br>
-in migrations/2_deploy_contracts.js：<br>
+in migrations/2_deploy_contracts.js：
+<br>
 
 ```
 var Migrations = artifacts.require("./Migrations.sol");
@@ -24,6 +25,7 @@ module.exports = function(deployer) {
   deployer.deploy(Test);
 };
 ```
+
 <br>
 ## explanation:
 var Test = artifacts.require("./Test.sol"); //declare a new contract instance<br>
@@ -78,7 +80,8 @@ contract('Test', function(accounts) {
 });
 ```
 <br>
-running testing script:
+running testing script:<br>
+
 ```
 PS C:\**\bare-box> tronbox test ./test/test.js --network production
 Using network 'production'.
