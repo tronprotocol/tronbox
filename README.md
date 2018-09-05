@@ -5,7 +5,8 @@ $ npm install -g tronbox
 ## OS requirement
 ·NodeJS 5.0+
 ·Windows，Linux，OR Mac OS X
-##features
+<br>
+## features
 1、intialize a custome tronbox project
 $ tronbox init
 <br>
