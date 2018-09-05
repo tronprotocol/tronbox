@@ -27,7 +27,7 @@ module.exports = function(deployer) {
 ```
 
 <br>
-## explanation:
+## explanation:<br>
 var Test = artifacts.require("./Test.sol"); //declare a new contract instance<br>
 deployer.deploy(Test): for deploy Test Contract
 <br>
