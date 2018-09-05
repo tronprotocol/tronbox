@@ -1,14 +1,14 @@
 # tron-box
 Tronbox user guide
-## install
+## Installation
 $ npm install -g tronbox
 ## OS requirement
-·NodeJS 5.0+
-·Windows，Linux，OR Mac OS X
+- NodeJS 5.0+
+- Windows, Linux, or Mac OS X
 <br>
 ## features
-1、intialize a custome tronbox project<br>
-$ tronbox init
+1. Initialize a customer Tronbox project<br>
+`$ tronbox init`
 <br>
 ## 2、download Dapp, EX: metacoin-box<br>
 $ tronbox unbox metacoin
