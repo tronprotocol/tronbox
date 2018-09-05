@@ -25,7 +25,8 @@ module.exports = function(deployer) {
 };
 ```
 <br>
-var Test = artifacts.require("./Test.sol"); declare a new contract instance<br>
+## explanation:
+var Test = artifacts.require("./Test.sol"); //declare a new contract instance<br>
 deployer.deploy(Test): for deploy Test Contract
 <br>
 ## compile the contract
@@ -38,8 +39,8 @@ output in ./build/contracts. auto generated if it doesnt exist such directory
 ## contract deployment
 <br>
 tronbox migrate or<br>
-tronbox migrate --reset to re-deploy everything including previous migration and new migration
-<br>
+tronbox migrate --reset to re-deploy everything including previous migration and new migration<br>
+
 ```
 PS  C:\**\bare-box> tronbox migrate --reset  --network production
 Using network 'production'.
@@ -51,6 +52,7 @@ Running migration: 1_initial_migration.js
 Saving successful migration to network...
 Saving artifacts...
 ```
+
 <br>
 
 ## Trigger contract
