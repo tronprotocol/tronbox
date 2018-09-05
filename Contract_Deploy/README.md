@@ -14,7 +14,7 @@ contract Test{
 }
 ```
 <br>
-in migrations/2_deploy_contracts.js：
+in migrations/2_deploy_contracts.js
 <br>
 
 ```
@@ -26,11 +26,12 @@ module.exports = function(deployer) {
 };
 ```
 
+## explanation:
 <br>
-## explanation:<br>
 var Test = artifacts.require("./Test.sol"); //declare a new contract instance<br>
 deployer.deploy(Test): for deploy Test Contract
 <br>
+
 ## compile the contract
 <br>
 tronbox compile<br>
@@ -38,6 +39,7 @@ By default, tronbox compilr only compile modified contracts since last compile. 
 tronbox compile --compile-all<br>
 output in ./build/contracts. auto generated if it doesnt exist such directory
 <br>
+
 ## contract deployment
 <br>
 tronbox migrate or<br>
