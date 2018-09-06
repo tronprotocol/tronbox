@@ -17,11 +17,11 @@ Tronbox User Guide
 
 3. Contract Compiler<br>
 `$ tronbox compile`
+
 <br>
-  To compile for all contracts, select --compile-all. <br>
-`$ tronbox compile --compile—all`
-<br>
-Optionally, you can select:<br>
+To compile for all contracts, select --compile-all.
+
+Optionally, you can select: <br>
 --compile-all: Force compile all contracts. <br>
 --network save results to a specifict hose network<br>
 <br>
