@@ -18,20 +18,22 @@ Tronbox User Guide
 3. Contract Compiler<br>
 `$ tronbox compile`
 <br>
-
---compile-all for compile all contracts<br>
-$ tronbox compile --compile—all<br>
-optional parameter：<br>
---compile-all: force compile all contracts。<br>
+  To compile for all contracts, select --compile-all. <br>
+`$ tronbox compile --compile—all`
+<br>
+Optionally, you can select:<br>
+--compile-all: Force compile all contracts. <br>
 --network save results to a specifict hose network<br>
 <br>
-## 4、migrate<br>
-$ tronbox migrate
+
+## 4. Contract Migration<br>
+`$ tronbox migrate`
 <br>
-$ tronbox migrate --reset 
+This command will make all migrations    . If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command    Instead, you can use `--reset` to start over the migration script. 
+`$ tronbox migrate --reset` 
 <br>
-## 5、console<br>
-start console using default network, connect to a tvm client, can be changed using --network
+## 5. Start Console<br>
+This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. 
 <br>
 $ tronbox console
 <br>
