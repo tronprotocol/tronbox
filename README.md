@@ -29,18 +29,22 @@ Optionally, you can select:<br>
 ## 4. Contract Migration<br>
 `$ tronbox migrate`
 <br>
-This command will invoke all migrations directory . If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command    Instead, you can use option `--reset` to start over the migration script. 
+
+This command will invoke all migration scripts within the migrations directory. If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command will have no operational effect. Instead, you can use the option `--reset` to restart the migration script.<br> 
+
 `$ tronbox migrate --reset` 
 <br>
 ## 5. Start Console<br>
 This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. 
+
 <br>
 `$ tronbox console`
 <br>
-supports tronbox command, EX: migrate --reset === tronbox migrate --reset
+
+The console supports the `tronbox` command. For example, you can invoke `migrate --reset` in the console. The result is the same as invoking `tronbox migrate --reset` in the command. 
 <br>
 
-## Extra Feature:<br>
+## Extra Features in TronBox console:<br>
 1）all compiled contract can be used same as develop and testing in the front-end<br>
 2）for each command, your contract will be re-loaded. <br> after using migrate --reset, you can use the new address andd binary code<br>
 3）promiss will automatically be logged dont have to use extra then command<br>
