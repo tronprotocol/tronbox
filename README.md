@@ -35,22 +35,26 @@ This command will invoke all migration scripts within the migrations directory. 
 `$ tronbox migrate --reset` 
 <br>
 ## 5. Start Console<br>
-This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. 
+This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. <br>
 
-<br>
-`$ tronbox console`
-<br>
+`$ tronbox console`<br>
 
 The console supports the `tronbox` command. For example, you can invoke `migrate --reset` in the console. The result is the same as invoking `tronbox migrate --reset` in the command. 
 <br>
 
 ## Extra Features in TronBox console:<br>
-1）All the compiled contracts can be used, just like in development & test, front-end code, or during script migration. <br>
-2）After each command, your contract will be re-loaded. After invoking the `migrate--rest` command, you can immediately use the new address and binary.<br> 
-3）Every returned command's promise will automatically be logged. There is no need to use `then()`, which simplifies the command.<br>
+
+1. All the compiled contracts can be used, just like in development & test, front-end code, or during script migration. <br>
+
+2. After each command, your contract will be re-loaded. After invoking the `migrate--rest` command, you can immediately use the new address and binary.<br>
+
+3. Every returned command's promise will automatically be logged. There is no need to use `then()`, which simplifies the command.<br>
 <br>
+
 ## 6. Testing<br>
-To carry out the test, run the following command:
+
+To carry out the test, run the following command:<br>
 `$ tronbox test`<br>
+
 You can also run the test for a specific file：<br>
 `$ tronbox test ./path/to/test/file.js`<br>
