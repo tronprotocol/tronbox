@@ -45,8 +45,8 @@ The console supports the `tronbox` command. For example, you can invoke `migrate
 <br>
 
 ## Extra Features in TronBox console:<br>
-1）all compiled contract can be used same as develop and testing in the front-end<br>
-2）for each command, your contract will be re-loaded. <br> after using migrate --reset, you can use the new address andd binary code<br>
+1）All the compiled contracts can be used, just like in development & test, front-end code, or during script migration. <br>
+2）After each command, your contract will be re-loaded. After invoking the `migrate--rest` command, you can immediately use the new address and binary. 
 3）promiss will automatically be logged dont have to use extra then command<br>
 <br>
 6、testing<br>
