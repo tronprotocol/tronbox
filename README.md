@@ -8,15 +8,17 @@ Tronbox User Guide
 
 ## Features
 1. Initialize a Customer Tron-Box Project<br>
-
 `$ tronbox init`
 <br>
-2. Download a Dapp, ex: metacoin-box<br>
 
+2. Download a Dapp, ex: metacoin-box<br>
 `$ tronbox unbox metacoin`
 <br>
+
 3. Contract Compiler<br>
-`$ tronbox compile`<br>
+`$ tronbox compile`
+<br>
+
 --compile-all for compile all contracts<br>
 $ tronbox compile --compile—all<br>
 optional parameter：<br>
