@@ -1,7 +1,7 @@
 # Contract Development, Deployment, and Trigger
 ## Contract Development 
 
-The ./contracts directory contains all your contracts. By default, there is a contract file and a library file within the .sol extension. Even though the library file has some unique properties, for simplicity purposes, it will be referred to as a contract.<br>
+The `./contracts` directory contains all your contracts. By default, there is a contract file and a library file within the .sol extension. Even though the library file has some unique properties, for simplicity purposes, it will be referred to as a contract.<br>
 
 Tronbox requires the contract name and file name to be defined the same. For example, if the file name is `Test.sol`, we can write the contract as follows:<br>
 <br>
@@ -20,7 +20,6 @@ contract Test{
 This type of contract is case-sensitive. In other words, if a capitalized letter is used for every beginning, then  
 
 Increase Deploy Configuration
-
 <br>
 Configuring migrations/2_deploy_contracts.js as follows:
 <br>
@@ -33,11 +32,13 @@ module.exports = function(deployer) {
   deployer.deploy(Test);
 };
 ```
+The above code primarily has two extra lines. One line is `var Test = artifacts.require("./Test.sol")`; declare a new contract instance as `Test`; This increases a new line `deployer.deploy(Test)`    
+
 
 ## explanation:
 <br>
-var Test = artifacts.require("./Test.sol"); //declare a new contract instance<br>
-deployer.deploy(Test): for deploy Test Contract
+
+: for deploy Test Contract
 <br>
 
 ## compile the contract
