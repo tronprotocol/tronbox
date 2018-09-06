@@ -1,9 +1,13 @@
-# Contract deployment and trigger
-## contract develop and compile
-./contracts should contains all your contracts. 
+# Contract Development, Deployment, and Trigger
+## Contract Development 
+
+The ./contracts directory contains all your contracts. By default, there is a contract file and a library file within the .sol extension. Even though the library file has some unique properties, for simplicity purposes, it will be referred to as a contract.<br>
+
+Tronbox requires the contract name and file name to be defined the same. For example, if the file name is `Test.sol`, we can write the contract as follows:<br>
 <br>
+
 ```
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.4;
 contract Test{
     function f() returns (string){
         return "method f()";
@@ -13,8 +17,12 @@ contract Test{
     }
 }
 ```
+This type of contract is case-sensitive. In other words, if a capitalized letter is used for every beginning, then  
+
+Increase Deploy Configuration
+
 <br>
-in migrations/2_deploy_contracts.js
+Configuring migrations/2_deploy_contracts.js as follows:
 <br>
 
 ```
