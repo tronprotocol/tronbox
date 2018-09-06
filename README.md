@@ -35,10 +35,11 @@ This command will make all migrations    . If your previous migration was succes
 ## 5. Start Console<br>
 This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. 
 <br>
-$ tronbox console
+`$ tronbox console`
 <br>
 supports tronbox command, EX: migrate --reset === tronbox migrate --reset
 <br>
+
 ## Extra Feature:<br>
 1）all compiled contract can be used same as develop and testing in the front-end<br>
 2）for each command, your contract will be re-loaded. <br> after using migrate --reset, you can use the new address andd binary code<br>
