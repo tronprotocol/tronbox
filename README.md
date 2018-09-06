@@ -23,7 +23,7 @@ To compile for all contracts, select --compile-all.
 
 Optionally, you can select: <br>
 --compile-all: Force compile all contracts. <br>
---network save results to a specifict hose network<br>
+--network save results to a specific host network<br>
 <br>
 
 ## 4. Contract Migration<br>
