@@ -5,13 +5,14 @@ Tronbox User Guide
 ## OS requirement
 - NodeJS 5.0+
 - Windows, Linux, or Mac OS X
-<br>
+
 ## Features
 1. Initialize a Customer Tron-Box Project<br>
 
 `$ tronbox init`
 <br>
 2. Download a Dapp, ex: metacoin-box<br>
+
 `$ tronbox unbox metacoin`
 <br>
 3. Contract Compiler<br>
