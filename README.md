@@ -29,7 +29,7 @@ Optionally, you can select:<br>
 ## 4. Contract Migration<br>
 `$ tronbox migrate`
 <br>
-This command will make all migrations    . If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command    Instead, you can use `--reset` to start over the migration script. 
+This command will invoke all migrations directory . If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command    Instead, you can use option `--reset` to start over the migration script. 
 `$ tronbox migrate --reset` 
 <br>
 ## 5. Start Console<br>
