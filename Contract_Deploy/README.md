@@ -45,6 +45,9 @@ The compile output is in `./build/contracts` directory. If the directory doesn't
 <br>
 
 ## Contract Deployment
+
+Script migration is with Javascript file composed to broadcast onto Ethereum network. The main purpose is to cache your broadcast responsibility. Its existence is based on your broadcast needs and will adjust accordingly. When your work incurs significant change, the migration script you created will propagate the changes through the blockchain. Previous migration history records will undergo a unique `Migrations` contract to be recorded on the blockchain. Below is a detailed instruction.   
+
 <br>
 tronbox migrate or<br>
 tronbox migrate --reset to re-deploy everything including previous migration and new migration<br>
