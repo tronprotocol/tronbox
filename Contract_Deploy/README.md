@@ -32,24 +32,19 @@ module.exports = function(deployer) {
   deployer.deploy(Test);
 };
 ```
-The above code primarily has two extra lines. One line is `var Test = artifacts.require("./Test.sol")`; declare a new contract instance as `Test`; This increases a new line `deployer.deploy(Test)`    
+The above code primarily has two extra lines. One line is `var Test = artifacts.require("./Test.sol")`; declare a new contract instance as `Test`; This increases a new line `deployer.deploy(Test)`; Use `Test` for deployment.      
 
+## Contract Compiling
 
-## explanation:
+To compile the contract, use:
+<br>
+`tronbox compile`<br>
+By default, tronbox compiler only compiles modified contracts since last compile, to reduce unnecessary compiling. If you wish to compile the entire file, you can use <br>
+`tronbox compile --compile-all`<br>
+The compile output is in `./build/contracts` directory. If the directory doesn't exist, it will be auto-generated. 
 <br>
 
-: for deploy Test Contract
-<br>
-
-## compile the contract
-<br>
-tronbox compile<br>
-By default, tronbox compilr only compile modified contracts since last compile. to re-compile, use <br>
-tronbox compile --compile-all<br>
-output in ./build/contracts. auto generated if it doesnt exist such directory
-<br>
-
-## contract deployment
+## Contract Deployment
 <br>
 tronbox migrate or<br>
 tronbox migrate --reset to re-deploy everything including previous migration and new migration<br>
