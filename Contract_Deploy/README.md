@@ -46,11 +46,14 @@ The compile output is in `./build/contracts` directory. If the directory doesn't
 
 ## Contract Deployment
 
-Script migration is with Javascript file composed to broadcast onto Ethereum network. The main purpose is to cache your broadcast responsibility. Its existence is based on your broadcast needs and will adjust accordingly. When your work incurs significant change, the migration script you created will propagate the changes through the blockchain. Previous migration history records will undergo a unique `Migrations` contract to be recorded on the blockchain. Below is a detailed instruction.   
+Script migration is with Javascript file composed to broadcast onto Ethereum network. The main purpose is to cache your broadcast responsibility. Its existence is based on your broadcast needs and will adjust accordingly. When your work incurs significant change, the migration script you created will propagate the changes through the blockchain. Previous migration history records will undergo a unique `Migrations` contract to be recorded on the blockchain. Below is a detailed instruction.<br>
 
-<br>
-tronbox migrate or<br>
-tronbox migrate --reset to re-deploy everything including previous migration and new migration<br>
+To initiate the migration, use the following command:<br>
+```
+tronbox migrate
+
+```
+This command will initiate all migration scripts within the `migration` directory. If your previous migration was successful, `tronbox migrate` will initiate a new migration. If there is no new migration script, this command will have no operation. Instead, you can use --reset to re-deploy.<br> 
 
 ```
 PS  C:\**\bare-box> tronbox migrate --reset  --network production
@@ -67,8 +70,10 @@ Saving artifacts...
 <br>
 
 ## Trigger contract
-testing script in ./tests目录。TronBox ignore all other extension except .js，.es，.es6 and .jsx<br>
-Example testing script: test.js：<br>
+
+The testing scripts are in the `./tests` directory. Truffle will ignore all other extensions except for .js, .es, .es6, and .jsx<br>
+Below is an example testing script for test.js:<br>
+
 ```
 var Test = artifacts.require("./Test.sol");
 contract('Test', function(accounts) {
@@ -88,6 +93,7 @@ contract('Test', function(accounts) {
 	});
 });
 ```
+
 <br>
 running testing script:<br>
 
