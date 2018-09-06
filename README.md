@@ -49,12 +49,13 @@ The console supports the `tronbox` command. For example, you can invoke `migrate
 2. After each command, your contract will be re-loaded. After invoking the `migrate--rest` command, you can immediately use the new address and binary.<br>
 
 3. Every returned command's promise will automatically be logged. There is no need to use `then()`, which simplifies the command.<br>
-<br>
 
 ## 6. Testing<br>
 
 To carry out the test, run the following command:<br>
+
 `$ tronbox test`<br>
 
 You can also run the test for a specific file：<br>
+
 `$ tronbox test ./path/to/test/file.js`<br>
