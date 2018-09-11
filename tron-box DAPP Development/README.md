@@ -73,7 +73,7 @@ Important: The required tronweb needs to be downloaded from here [here](https://
 
 8. Operation
 
-Execute the command <npm run dev> to start the service. The following is an appendix to the code:
+Execute the command `npm run dev` to start the service. The following is an appendix to the code:
 
 ```
 附: index.html
