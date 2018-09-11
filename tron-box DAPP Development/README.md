@@ -69,12 +69,129 @@ Below describes the meaning of each parameter in the network configuration:<br>
 6. Manually create a resource dependency file in the root directory to configure bs-config.json
 
 7. Write front-end code
+Important: The required tronweb needs to be downloaded from here [here](https://github.com/tronprotocol/tron-web 下载并打包成tronweb.js) and packaged into tronweb.js. For related APIs, please refer to tronweb official (for specific code, see attached).  
 
 8. Operation
 
 Execute the command <npm run dev> to start the service. The following is an appendix to the code:
 
+```
+附: index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DappDemo</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center">DappDemo</h1>
+          <hr/>
+          <br/>
+        </div>
+      </div>
 
+      <div class="row">
+        <button class="callBtn" method="f" disabled="disabled">call method f()</button>
+        <button class="callBtn" method="g" disabled="disabled">call method g()</button>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/tronweb.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
+
+附：App.js
+App = {
+    tronWebProvider: null,
+    contracts: {},
+    tronWeb: null,
+    account: "TPL66VK2gCXNCD7EJg9pgJRfqcRazjhUZY",
+    privateKey: "da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0",
+    contractAddress: null,
+    init: function () {
+        this.initData();
+        this.bindEvents();
+    },
+    initData: function () {
+        this.initTronWeb();
+    },
+    initTronWeb: function () {
+        var that = this;
+        this.tronWeb = new TronWeb('http://52.44.75.99:8090');
+        $.ajax({
+            url: 'Test.json',
+            method: 'get',
+            success: function (contract) {
+                console.log(contract);
+                if (contract) {
+                    that.abi = contract.abi;
+                    that.bytecode = contract.bytecode;
+                    that.contractAddress = contract.networks["*"] ? contract.networks["*"].address : "";
+                    $(".callBtn").removeAttr("disabled");
+                }
+            }
+        });
+
+    },
+    bindEvents: function () {
+        var that = this;
+        $(".callBtn").on('click', function () {
+            var method = $(this).attr("method");
+            that.triggerContract(method, '', function (result) {
+                console.log(result);
+                if (result && result.length) {
+                    alert(result[0]);
+                }
+            });
+        });
+    },
+    getContract: function (address, callback) {
+        this.tronWeb.getContract(address).then(function (res) {
+            callback && callback(res);
+        });
+    },
+    triggerContract: function (methodName, args, callback) {
+        var that = this;
+        var myContract = this.tronWeb.contract(that.abi);
+        myContract.at(that.contractAddress).then(function (contractInstance) {
+            if (!args || !args.length || args == '') {
+                args = [];
+            }
+            args.push({
+                fee_limit: that.fee_limit || 10000000,
+                call_value: that.call_value || 0,
+            });
+            contractInstance[methodName].apply(null, args).then(function (res) {
+                if (res.constant_result) {
+                    callback && callback(res.constant_result);
+                } else {
+                    contractInstance[methodName].sendTransaction(res.transaction, that.privateKey).then(function (res) {
+                        callback && callback(res);
+                    });
+                }
+            })
+
+        });
+    }
+};
+
+$(function () {
+    $(window).load(function () {
+        App.init();
+    });
+});
+
+```
 
 
 
