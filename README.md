@@ -1,5 +1,5 @@
-# Tron-Box
-Tronbox User Guide
+# Tron-Box User Guide
+
 ## Installation
 `$ npm install -g tronbox`
 ## OS requirement
