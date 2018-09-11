@@ -64,6 +64,18 @@ Below describes the meaning of each parameter in the network configuration:<br>
 }
 
 ```
+5. Create a front-end resource file directory (src), and a list of resource file directories. Example below:
+
+6. Manually create a resource dependency file in the root directory to configure bs-config.json
+
+7. Write front-end code
+
+8. Operation
+
+Execute the command <npm run dev> to start the service. The following is an appendix to the code:
+
+
+
 
 
 
