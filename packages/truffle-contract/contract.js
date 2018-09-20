@@ -8,12 +8,15 @@ var StatusError = require("./statuserror.js")
 // if (typeof Web3 == "object" && Object.keys(Web3).length == 0) {
 //   Web3 = global.Web3;
 // }
+
 var contract = (function (module) {
 
   // Planned for future features, logging, etc.
   function Provider(provider) {
     this.provider = provider;
   }
+
+  let tronWrap;
 
   Provider.prototype.send = function () {
     return this.provider.send.apply(this.provider, arguments);
@@ -67,7 +70,9 @@ var contract = (function (module) {
         }
 
         var argTopics = logABI.anonymous ? copy.topics : copy.topics.slice(1);
-        var indexedData = "0x" + argTopics.map(function (topics) { return topics.slice(2); }).join("");
+        var indexedData = "0x" + argTopics.map(function (topics) {
+          return topics.slice(2);
+        }).join("");
         var indexedParams = ethJSABI.decodeEvent(partialABI(logABI, true), indexedData);
 
         var notIndexedData = copy.data;
@@ -216,7 +221,8 @@ var contract = (function (module) {
       return merged;
     },
     parallel: function (arr, callback) {
-      callback = callback || function () { };
+      callback = callback || function () {
+      };
       if (!arr.length) {
         return callback(null, []);
       }
@@ -226,7 +232,8 @@ var contract = (function (module) {
         fn(function (err, result) {
           if (err) {
             callback(err);
-            callback = function () { };
+            callback = function () {
+            };
           } else {
             index++;
             results[position] = result;
@@ -274,9 +281,17 @@ var contract = (function (module) {
       this.contract = contract;
       this.address = contract.address;
     }
+
   };
 
   Contract._static_methods = {
+
+    initiateTronWeb: function (options) {
+      if (!tronWrap) {
+        tronWrap = TronWrap(options);
+      }
+    },
+
     setProvider: function (provider) {
       if (!provider) {
         throw new Error("Invalid provider passed to setProvider(); provider is " + provider);
@@ -285,7 +300,7 @@ var contract = (function (module) {
       var wrapped = new Provider(provider);
       //zzsun-rm-web3
       // this.web3.setProvider(wrapped);
-      // TronWrap.setHttpProvider(provider.host);
+      // tronWrap.setHttpProvider(provider.host);
       this.currentProvider = provider;
     },
 
@@ -345,7 +360,8 @@ var contract = (function (module) {
         if (tx_params.data == null) {
           tx_params.data = self.binary;
         }
-        TronWrap._deployContract(tx_params, _callback);
+        tronWrap._deployContract(tx_params, _callback);
+
         function _callback(err, res) {
           if (err) {
             reject(err);
@@ -371,7 +387,7 @@ var contract = (function (module) {
           var instance = new self(address);
 
           return new Promise(function (accept, reject) {
-            TronWrap._getContract(address, function (err, code) {
+            tronWrap._getContract(address, function (err, code) {
               if (err) return reject(err);
 
               if (!code || code.replace("0x", "").replace(/0/g, "") === '') {
@@ -390,7 +406,7 @@ var contract = (function (module) {
       var self = this;
       args = args || [];
       var option = {};
-      // var params = TronWrap.filterMatchFunction(method, self.abi)
+      // var params = tronWrap.filterMatchFunction(method, self.abi)
       return new Promise(function (accept, reject) {
         function _callback(err, res) {
           if (err) {
@@ -399,13 +415,20 @@ var contract = (function (module) {
           }
           accept(res)
         }
+
         // if (args && args.length > 0) {
         //   option = Utils.merge({ contract_address: self.address, function: params.function, parameter: [params.parameter, args] }, self.defaults())
         // } else {
         //   option = Utils.merge({ contract_address: self.address, function: params.function, parameter: '' }, self.defaults())
         // }
-        option = Utils.merge({ address: self.address, methodName: method, args: args, abi:self.abi, call_limit:call_limit}, self.defaults());
-        TronWrap.triggerContract(option, _callback);
+        option = Utils.merge({
+          address: self.address,
+          methodName: method,
+          args: args,
+          abi: self.abi,
+          call_limit: call_limit
+        }, self.defaults());
+        tronWrap.triggerContract(option, _callback);
       })
     },
     deployed: function () {

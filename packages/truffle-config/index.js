@@ -17,6 +17,9 @@ function Config(truffle_directory, working_directory, network) {
     consume_user_resource_percent:30,
     from: null,
     privateKey:null,
+    fullNode: null,
+    eventServer: null,
+    solidityNode: null,
     call_value:null
   };
 
@@ -27,6 +30,9 @@ function Config(truffle_directory, working_directory, network) {
     networks: {},
     verboseRpc: false,
     privateKey:null,
+    fullNode: null,
+    solidityNode: null,
+    eventServer: null,
     fee_limit: null,
     consume_user_resource_percent:null,
     call_value:null,
@@ -144,6 +150,42 @@ function Config(truffle_directory, working_directory, network) {
       },
       set: function (val) {
         throw new Error("Don't set config.privateKey directly. Instead, set config.networks and then config.networks[<network name>].privateKey")
+      }
+    },
+    fullNode: {
+      get: function () {
+        try {
+          return self.network_config.fullNode;
+        } catch (e) {
+          return default_tx_values.fullNode;
+        }
+      },
+      set: function (val) {
+        throw new Error("Don't set config.fullNode directly. Instead, set config.networks and then config.networks[<network name>].fullNode")
+      }
+    },
+    solidityNode: {
+      get: function () {
+        try {
+          return self.network_config.solidityNode;
+        } catch (e) {
+          return default_tx_values.solidityNode;
+        }
+      },
+      set: function (val) {
+        throw new Error("Don't set config.solidityNode directly. Instead, set config.networks and then config.networks[<network name>].solidityNode")
+      }
+    },
+    eventServer: {
+      get: function () {
+        try {
+          return self.network_config.eventServer;
+        } catch (e) {
+          return default_tx_values.eventServer;
+        }
+      },
+      set: function (val) {
+        throw new Error("Don't set config.eventServer directly. Instead, set config.networks and then config.networks[<network name>].eventServer")
       }
     },
     consume_user_resource_percent: {

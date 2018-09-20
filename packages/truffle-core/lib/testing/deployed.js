@@ -1,6 +1,6 @@
 // Using web3 for its sha function...
  var Web3 = require("web3");
-var TronWrap = require('tronwrap');
+// var TronWrap = require('tronwrap');
 var Deployed = {
 
   makeSolidityDeployedAddressesLibrary: function (mapping) {

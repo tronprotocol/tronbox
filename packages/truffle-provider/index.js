@@ -1,5 +1,5 @@
 var Web3 = require("web3");
-var TronWrap = require("tronwrap");
+// var TronWrap = require("tronwrap");
 
 var wrapper = require('./wrapper');
 
@@ -16,7 +16,7 @@ module.exports = {
     } else if (options.provider) {
       provider = options.provider;
     } else {
-      TronWrap.setHttpProvider(options);
+      // TronWrap.setHttpProvider(options);
       provider = new Web3.providers.HttpProvider("http://" + options.host + ":" + options.port);
     }
     return this.wrap(provider, options);

@@ -5,9 +5,11 @@ var ResolverIntercept = require("./resolverintercept");
 var Require = require("truffle-require");
 var async = require("async");
 // var Web3 = require("web3");
-var TronWrap = require('tronwrap');
 var expect = require("truffle-expect");
 var Deployer = require("truffle-deployer");
+
+var TronWrap = require('tronwrap');
+var tronWrap;
 
 function Migration(file) {
   this.file = path.resolve(file);
@@ -26,9 +28,10 @@ Migration.prototype.run = function (options, callback) {
 
   var resolver = new ResolverIntercept(options.resolver);
 
+  tronWrap = TronWrap(options)
   // Initial context.
   var context = {
-    TronWrap: TronWrap
+    tronWrap: tronWrap
   };
 
   var deployer = new Deployer({
@@ -53,7 +56,7 @@ Migration.prototype.run = function (options, callback) {
       if (Migrations && Migrations.isDeployed()) {
         logger.log("Saving successful migration to network...");
         return Migrations.deployed().then(function (migrations) {
-          return Migrations.call('setCompleted',[self.number]);
+          return Migrations.call('setCompleted', [self.number]);
         });
       }
     }).then(function () {
@@ -181,9 +184,11 @@ var Migrate = {
 
     if (options.quiet) {
       clone.logger = {
-        log: function () { }
+        log: function () {
+        }
       }
-    };
+    }
+    ;
 
     clone.provider = this.wrapProvider(options.provider, clone.logger);
     clone.resolver = this.wrapResolver(options.resolver, clone.provider);
@@ -255,13 +260,13 @@ var Migrate = {
 
     Migrations.deployed().then(function (migrations) {
       // Two possible Migrations.sol's (lintable/unlintable)
-      return (TronWrap.filterMatchFunction('last_completed_migration', migrations.abi))
+      return (tronWrap.filterMatchFunction('last_completed_migration', migrations.abi))
         ? migrations.call('last_completed_migration')
         : migrations.call('lastCompletedMigration');
 
     }).then(function (completed_migration) {
       var value = (typeof completed_migration) == 'object' && completed_migration.length ? completed_migration[0] : '0';
-      callback(null, TronWrap._toNumber(value));
+      callback(null, tronWrap._toNumber(value));
     }).catch(callback);
   },
 
