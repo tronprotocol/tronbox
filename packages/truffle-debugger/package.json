@@ -33,7 +33,7 @@
     "truffle-solidity-utils": "^1.1.2",
     "web3": "0.20.6",
     "web3-eth-abi": "^1.0.0-beta.29",
-    "tronwrap":"1.0.1"
+    "tronwrap":"2.0.0"
   },
   "devDependencies": {
     "async": "2.6.1",
@@ -64,7 +64,7 @@
     "webpack-merge": "^4.1.1",
     "webpack-node-externals": "^1.6.0",
     "write-file-webpack-plugin": "^4.2.0",
-    "tronwrap":"1.0.1"
+    "tronwrap":"2.0.0"
   },
   "repository": {
     "type": "git",
