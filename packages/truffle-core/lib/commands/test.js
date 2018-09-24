@@ -13,6 +13,7 @@ var command = {
     var fs = require("fs");
     var copy = require("../copy");
     var Environment = require("../environment");
+    var TronWrap = require('tronwrap')
 
     var config = Config.detect(options);
 
@@ -24,6 +25,8 @@ var command = {
     if (!config.network) {
       config.network = "test";
     }
+
+    TronWrap(config.networks[config.network])
 
     var ipcDisconnect;
 
@@ -97,31 +100,25 @@ var command = {
         if (config.networks[config.network]) {
           Environment.detect(config, environmentCallback);
         } else {
-          var ipcOptions = {
-            network: "test"
-          };
 
-          var testrpcOptions = {
-            host: "127.0.0.1",
-            port: 7545,
-            network_id: 4447,
-            mnemonic: "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat",
-            gasLimit: config.gas,
-            //
-            from: 'TPL66VK2gCXNCD7EJg9pgJRfqcRazjhUZY',
-            privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
-            consume_user_resource_percent: 30,
-            fee_limit: 100000000,
-            fullNode: "https://api.trongrid.io:8090",
-            solidityNode: "https://api.trongrid.io:8091",
-            eventServer: "https://api.trongrid.io",
-            network_id: "*" // Match any network id
-          };
+          throw new Error('No development/test environment set in tronbox.js')
 
-          Develop.connectOrStart(ipcOptions, testrpcOptions, function(started, disconnect) {
-            ipcDisconnect = disconnect;
-            Environment.develop(config, testrpcOptions, environmentCallback);
-          });
+          // var ipcOptions = {
+          //   network: "test"
+          // };
+          //
+          // var testrpcOptions = {
+          //   host: "127.0.0.1",
+          //   port: 7545,
+          //   network_id: 4447,
+          //   mnemonic: "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat",
+          //   gasLimit: config.gas,
+          // };
+          //
+          // Develop.connectOrStart(ipcOptions, testrpcOptions, function(started, disconnect) {
+          //   ipcDisconnect = disconnect;
+          //   Environment.develop(config, testrpcOptions, environmentCallback);
+          // });
         }
       });
     });

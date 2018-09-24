@@ -8,7 +8,7 @@ var contract = require("truffle-contract");
 var series = require("async").series;
 var path = require("path");
 var SolidityCoder = require("web3/lib/solidity/coder.js");
-var Web3 = require("web3");
+var TronWrap = require("tronwrap");
 
 var SolidityTest = {
   define: function(abstraction, dependency_paths, runner, mocha) {
@@ -36,8 +36,7 @@ var SolidityTest = {
       if (result.logs && result.logs.length) return result.logs;
 
       var logs = [];
-      web3 = new Web3();
-      var signature = web3.sha3('TestEvent(bool,string)');
+      var signature = TronWrap().sha3('TestEvent(bool,string)');
 
       result.receipt && result.receipt.logs.forEach(function(log) {
         if (log.topics.length === 2 && log.topics[0] === signature){

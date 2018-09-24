@@ -1,4 +1,5 @@
 var _TronWeb = require("./tron-web/dist/TronWeb.node");
+var defaultOptions = require('./default-options');
 var instance;
 
 function TronWrap() {
@@ -45,10 +46,14 @@ function filterMatchFunction(method, abi) {
   }
 }
 
-function initTronWrap(options) {
+function init(options) {
 
   if (instance) {
     return instance
+  }
+
+  if (!options) {
+    throw new Error('No options have been passed')
   }
 
   TronWrap.prototype = new _TronWeb(
@@ -90,7 +95,7 @@ function initTronWrap(options) {
 
   TronWrap.prototype.triggerContract = function (option, callback) {
     let myContract = this.contract(option.abi, option.address);
-    var callSend = 'send'
+    var callSend = 'send' // constructor and fallback
     option.abi.forEach(function (val) {
       if (val.name === option.methodName) {
         callSend = /payable/.test(val.stateMutability) ? 'send' : 'call'
@@ -100,11 +105,11 @@ function initTronWrap(options) {
       fee_limit: option.fee_limit,
       call_value: option.call_value || 0,
     })
-      .then(function () {
-        callback()
+      .then(function (res) {
+        callback(null, res)
       }).catch(function (reason) {
-        callback(new Error(reason))
-      });
+      callback(new Error(reason))
+    });
   }
 
   TronWrap.prototype.setEventListener = function (option, instance, transaction) {
@@ -115,10 +120,10 @@ function initTronWrap(options) {
         var event = that.EventList.filter((item) => (item.name == element.name && item.address == option.address));
         if (event && event.length) {
           myEvent = event[0].event;
-          console.log("已设置监听:" + element.name);
+          // console.log("已设置监听:" + element.name);
           return;
         }
-        console.log(element.name);
+        // console.log(element.name);
         var myContract = that.contract(option.abi);
         myContract.at(option.address).then(function (instance) {
           //部署成功，但是获取不到合约内容，需要截获
@@ -137,7 +142,7 @@ function initTronWrap(options) {
                   }
                 });
               }
-              console.log('eventResult:', JSON.stringify(eventResult));
+              // console.log('eventResult:', JSON.stringify(eventResult));
             }
           });
         })
@@ -149,5 +154,4 @@ function initTronWrap(options) {
   return new TronWrap;
 }
 
-
-module.exports = initTronWrap
+module.exports = init;

@@ -37,7 +37,7 @@ function Console(tasks, options) {
   this.repl = options.repl || new ReplManager(options);
   this.command = new Command(tasks);
 
-  this.tronWrap = TronWrap(options);
+  this.tronWrap = TronWrap();
   // this.tronWrap.setHttpProvider(options.provider);
 
   // Bubble the ReplManager's exit event

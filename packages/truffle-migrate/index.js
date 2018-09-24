@@ -77,7 +77,7 @@ Migration.prototype.run = function (options, callback) {
     resolver: resolver,
     args: [deployer],
   }, function (err, fn) {
-    if (!fn || !fn.length || fn.length == 0) {
+    if (!fn || !fn.length || fn.length === 0) {
       return callback(new Error("Migration " + self.file + " invalid or does not take any parameters"));
     }
     fn(deployer, options.network, options.networks[options.network].from);
@@ -95,7 +95,7 @@ var Migrate = {
       options.allowed_extensions = options.allowed_extensions || /^\.(js|es6?)$/;
 
       var migrations = files.filter(function (file) {
-        return isNaN(parseInt(path.basename(file))) == false;
+        return isNaN(parseInt(path.basename(file))) === false;
       }).filter(function (file) {
         return path.extname(file).match(options.allowed_extensions) != null;
       }).map(function (file) {
@@ -132,7 +132,7 @@ var Migrate = {
       "from", // address doing deployment
     ]);
 
-    if (options.reset == true) {
+    if (options.reset === true) {
       return this.runAll(options, callback);
     }
 
@@ -188,7 +188,6 @@ var Migrate = {
         }
       }
     }
-    ;
 
     clone.provider = this.wrapProvider(options.provider, clone.logger);
     clone.resolver = this.wrapResolver(options.resolver, clone.provider);
@@ -252,14 +251,13 @@ var Migrate = {
       return callback(new Error("Could not find built Migrations contract: " + e.message));
     }
 
-    if (Migrations.isDeployed() == false) {
+    if (Migrations.isDeployed() === false) {
       return callback(null, 0);
     }
 
-    // var migrations = Migrations.deployed();
-
     Migrations.deployed().then(function (migrations) {
       // Two possible Migrations.sol's (lintable/unlintable)
+
       return (tronWrap.filterMatchFunction('last_completed_migration', migrations.abi))
         ? migrations.call('last_completed_migration')
         : migrations.call('lastCompletedMigration');

@@ -243,6 +243,7 @@ function Config(truffle_directory, working_directory, network) {
   Object.keys(props).forEach(function (prop) {
     self.addProp(prop, props[prop]);
   });
+
 };
 
 Config.prototype.addProp = function (key, obj) {

@@ -1,13 +1,7 @@
 var ethJSABI = require("ethjs-abi");
-var BlockchainUtils = require("truffle-blockchain-utils");
 var TronWrap = require('tronwrap');
 var BigNumber = require("bignumber.js")
 var StatusError = require("./statuserror.js")
-// For browserified version. If browserify gave us an empty version,
-// look for the one provided by the user.
-// if (typeof Web3 == "object" && Object.keys(Web3).length == 0) {
-//   Web3 = global.Web3;
-// }
 
 var contract = (function (module) {
 
@@ -286,9 +280,9 @@ var contract = (function (module) {
 
   Contract._static_methods = {
 
-    initiateTronWeb: function (options) {
+    initTronWeb: function () {
       if (!tronWrap) {
-        tronWrap = TronWrap(options);
+        tronWrap = TronWrap();
       }
     },
 
@@ -381,6 +375,8 @@ var contract = (function (module) {
 
       var contract = new this(address);
 
+      console.info('self.contractName', self.contractName)
+
       // Add thennable to allow people opt into new recommended usage.
       contract.then = function (fn) {
         return new Promise(function () {
@@ -428,6 +424,7 @@ var contract = (function (module) {
           abi: self.abi,
           call_limit: call_limit
         }, self.defaults());
+
         tronWrap.triggerContract(option, _callback);
       })
     },
@@ -753,7 +750,7 @@ var contract = (function (module) {
 
         signature += ")";
 
-        var topic = web3.sha3(signature);
+        var topic = TronWrap().sha3(signature);
 
         events[topic] = item;
       });
