@@ -102,6 +102,9 @@ function init(options) {
       call_value: option.call_value || 0,
     })
       .then(function (res) {
+        if (!Array.isArray(res)) {
+          res = [res]
+        }
         callback(null, res)
       }).catch(function (reason) {
       callback(new Error(reason))

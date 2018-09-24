@@ -105,10 +105,10 @@ var Test = {
       console.log('Deploying contracts to test network...')
       return self.performInitialDeploy(config, test_resolver);
     }).then(function() {
-      console.log('Executing Solidity tests (if any)...')
+      console.log('Preparing Solidity tests (if any)...')
       return self.defineSolidityTests(mocha, testContracts, dependency_paths, runner);
     }).then(function() {
-      console.log('Executing Javascript tests (if any)...')
+      console.log('Preparing Javascript tests (if any)...')
       return self.setJSTestGlobals(accounts, test_resolver, runner);
     }).then(function() {
       // Finally, run mocha.
