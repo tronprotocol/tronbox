@@ -52,10 +52,6 @@ function init(options) {
     return instance
   }
 
-  if (!options) {
-    throw new Error('No options have been passed')
-  }
-
   TronWrap.prototype = new _TronWeb(
     options.fullNode,
     options.solidityNode,
