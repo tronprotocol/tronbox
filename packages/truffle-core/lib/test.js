@@ -41,12 +41,8 @@ var Test = {
     // Output looks like this during tests: https://gist.github.com/tcoulter/1988349d1ec65ce6b958
     var warn = config.logger.warn;
     config.logger.warn = function(message) {
-      if (message === "cannot find event for log") {
-        return;
-      } else {
-        if (warn) {
-          warn.apply(console, arguments);
-        }
+      if (message !== "cannot find event for log" && warn) {
+        warn.apply(console, arguments);
       }
     };
 
@@ -118,7 +114,6 @@ var Test = {
 
       mocha.run(function(failures) {
         config.logger.warn = warn;
-
         callback(failures);
       });
     }).catch(callback);

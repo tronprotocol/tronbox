@@ -49,6 +49,7 @@ TestSource.prototype.resolve = function(import_path, callback) {
           });
         });
         Promise.all(promises).then(function(files_data) {
+
           var addresses = files_data.map(function(data) {
             return JSON.parse(data);
           }).map(function(json) {

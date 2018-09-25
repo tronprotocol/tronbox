@@ -73,8 +73,8 @@ function init(options) {
     var myContract = this.contract();
     myContract.new({
       bytecode: option.data,
-      feeLimit: option.fee_limit,
-      callValue: option.call_value,
+      fee_limit: option.fee_limit || Math.pow(10, 7),
+      call_value: option.call_value|| option.call_value || 0,
       userFeePercentage: 30,
       abi: option.abi
     }, option.privateKey).then(() => {
@@ -84,7 +84,6 @@ function init(options) {
         this.setEventListener(option);
       }
     }).catch(function (reason) {
-      console.log('失败：' + reason);
       callback(new Error(reason))
     });
   }
@@ -102,9 +101,9 @@ function init(options) {
       call_value: option.call_value || 0,
     })
       .then(function (res) {
-        if (!Array.isArray(res)) {
-          res = [res]
-        }
+        // if (!Array.isArray(res)) {
+        //   res = [res]
+        // }
         callback(null, res)
       }).catch(function (reason) {
       callback(new Error(reason))

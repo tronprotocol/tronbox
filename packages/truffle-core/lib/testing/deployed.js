@@ -25,7 +25,6 @@ var Deployed = {
 
     source += "}";
 
-    // console.info(source)
     return source;
   },
 

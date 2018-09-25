@@ -354,6 +354,10 @@ var contract = (function (module) {
         if (tx_params.data == null) {
           tx_params.data = self.binary;
         }
+
+        // for debugging only:
+        tx_params.contractName = self.contractName
+
         tronWrap._deployContract(tx_params, _callback);
 
         function _callback(err, res) {
@@ -374,8 +378,6 @@ var contract = (function (module) {
       }
 
       var contract = new this(address);
-
-      console.info('self.contractName', self.contractName)
 
       // Add thennable to allow people opt into new recommended usage.
       contract.then = function (fn) {
