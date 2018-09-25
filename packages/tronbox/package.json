@@ -37,6 +37,7 @@
     "build": "npm run build-cli",
     "build-cli": "webpack --config ./cli.webpack.config.js",
     "test": "npm run build-cli && mocha --colors",
+    "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
     "publish:byoc": "node ./scripts/prereleaseVersion.js byoc-safe byoc",
     "publish:next": "node ./scripts/prereleaseVersion.js next next"
   },

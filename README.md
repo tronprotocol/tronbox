@@ -48,7 +48,7 @@ The console supports the `tronbox` command. For example, you can invoke `migrate
 
 1. All the compiled contracts can be used, just like in development & test, front-end code, or during script migration. <br>
 
-2. After each command, your contract will be re-loaded. After invoking the `migrate--rest` command, you can immediately use the new address and binary.<br>
+2. After each command, your contract will be re-loaded. After invoking the `migrate --reset` command, you can immediately use the new address and binary.<br>
 
 3. Every returned command's promise will automatically be logged. There is no need to use `then()`, which simplifies the command.<br>
 
