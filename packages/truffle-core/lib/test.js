@@ -41,23 +41,19 @@ var Test = {
     // Output looks like this during tests: https://gist.github.com/tcoulter/1988349d1ec65ce6b958
     var warn = config.logger.warn;
     config.logger.warn = function(message) {
-      if (message == "cannot find event for log") {
-        return;
-      } else {
-        if (warn) {
-          warn.apply(console, arguments);
-        }
+      if (message !== "cannot find event for log" && warn) {
+        warn.apply(console, arguments);
       }
     };
 
     var mocha = this.createMocha(config);
 
     var js_tests = config.test_files.filter(function(file) {
-      return path.extname(file) != ".sol";
+      return path.extname(file) !== ".sol";
     });
 
     var sol_tests = config.test_files.filter(function(file) {
-      return path.extname(file) == ".sol";
+      return path.extname(file) === ".sol";
     });
 
     // Add Javascript tests because there's nothing we need to do with them.
@@ -102,10 +98,13 @@ var Test = {
 
       runner = new TestRunner(config);
 
+      console.log('Deploying contracts to test network...')
       return self.performInitialDeploy(config, test_resolver);
     }).then(function() {
+      console.log('Preparing Solidity tests (if any)...')
       return self.defineSolidityTests(mocha, testContracts, dependency_paths, runner);
     }).then(function() {
+      console.log('Preparing Javascript tests (if any)...')
       return self.setJSTestGlobals(accounts, test_resolver, runner);
     }).then(function() {
       // Finally, run mocha.
@@ -115,7 +114,6 @@ var Test = {
 
       mocha.run(function(failures) {
         config.logger.warn = warn;
-
         callback(failures);
       });
     }).catch(callback);
@@ -165,6 +163,7 @@ var Test = {
 
   performInitialDeploy: function(config, resolver) {
     return new Promise(function(accept, reject) {
+
       Migrate.run(config.with({
         reset: true,
         resolver: resolver,

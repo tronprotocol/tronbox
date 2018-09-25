@@ -13,6 +13,7 @@ var command = {
     var fs = require("fs");
     var copy = require("../copy");
     var Environment = require("../environment");
+    var TronWrap = require('tronwrap')
 
     var config = Config.detect(options);
 
@@ -24,6 +25,8 @@ var command = {
     if (!config.network) {
       config.network = "test";
     }
+
+    TronWrap(config.networks[config.network])
 
     var ipcDisconnect;
 
@@ -97,22 +100,25 @@ var command = {
         if (config.networks[config.network]) {
           Environment.detect(config, environmentCallback);
         } else {
-          var ipcOptions = {
-            network: "test"
-          };
 
-          var testrpcOptions = {
-            host: "127.0.0.1",
-            port: 7545,
-            network_id: 4447,
-            mnemonic: "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat",
-            gasLimit: config.gas
-          };
+          throw new Error('No development/test environment set in tronbox.js')
 
-          Develop.connectOrStart(ipcOptions, testrpcOptions, function(started, disconnect) {
-            ipcDisconnect = disconnect;
-            Environment.develop(config, testrpcOptions, environmentCallback);
-          });
+          // var ipcOptions = {
+          //   network: "test"
+          // };
+          //
+          // var testrpcOptions = {
+          //   host: "127.0.0.1",
+          //   port: 7545,
+          //   network_id: 4447,
+          //   mnemonic: "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat",
+          //   gasLimit: config.gas,
+          // };
+          //
+          // Develop.connectOrStart(ipcOptions, testrpcOptions, function(started, disconnect) {
+          //   ipcDisconnect = disconnect;
+          //   Environment.develop(config, testrpcOptions, environmentCallback);
+          // });
         }
       });
     });

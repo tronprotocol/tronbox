@@ -1,6 +1,6 @@
 {
   "name": "tronwrap",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "extension for tronweb.js",
   "main": "index.js",
   "scripts": {},
@@ -8,14 +8,15 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "tronweb": "1.1.2"
-  },
-  "author": "alinger",
+  "author": "Tron",
   "authors": [
     {
       "name": "alinger",
       "email": "alinger@forke.cn"
+    },
+    {
+      "name": "sullof",
+      "email": "sullof@gmail.com"
     }
   ]
 }

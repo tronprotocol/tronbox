@@ -25,7 +25,7 @@ var command = {
     }
 
     // defer to `truffle unbox` command with "bare" box as arg
-    var url = "https://github.com/simon4545/bare-box.git";
+    var url = "https://github.com/sullof/bare-box.git";
     options._ = [url];
 
     UnboxCommand.run(options, done);

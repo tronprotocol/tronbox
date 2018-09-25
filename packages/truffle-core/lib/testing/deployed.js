@@ -1,6 +1,6 @@
 // Using web3 for its sha function...
- var Web3 = require("web3");
-var TronWrap = require('tronwrap');
+var TronWrap = require("tronwrap");
+
 var Deployed = {
 
   makeSolidityDeployedAddressesLibrary: function (mapping) {
@@ -15,10 +15,7 @@ var Deployed = {
       var body = "revert();";
 
       if (address) {
-        address = address.replace("0x", "").replace("41", "0x");
-        // console.log(address);
-        // address= TronWrap.address2HexString(address).toLowerCase().replace("41", "0x");
-        address = self.toChecksumAddress(address);
+        address = self.toChecksumAddress(address.replace(/^(0x|41)/, "0x"));
         body = "return " + address + ";";
       }
 
@@ -33,9 +30,8 @@ var Deployed = {
 
   // Pulled from ethereumjs-util, but I don't want all its dependencies at the moment.
   toChecksumAddress: function (address) {
-    var web3 = new Web3();
     address = address.toLowerCase().replace("0x", "");
-    var hash = web3.sha3(address).replace("0x", "");
+    var hash = TronWrap().sha3(address).replace("0x", "");
     var ret = '0x'
 
     for (var i = 0; i < address.length; i++) {

@@ -1,15 +1,14 @@
-var Web3 = require("web3");
 var Config = require("truffle-config");
 var Migrate = require("truffle-migrate");
 var TestResolver = require("./testresolver");
 var TestSource = require("./testsource");
 var expect = require("truffle-expect");
 var contract = require("truffle-contract");
-var SolidityCoder = require("web3/lib/solidity/coder.js");
 var path = require("path");
 var _ = require("lodash");
 var async = require("async");
 var fs = require("fs");
+var TronWrap = require('tronwrap');
 
 function TestRunner(options) {
   options = options || {};
@@ -30,8 +29,7 @@ function TestRunner(options) {
   this.first_snapshot = false;
   this.initial_snapshot = null;
   this.known_events = {};
-  this.web3 = new Web3();
-  this.web3.setProvider(options.provider);
+  this.tronwrap = TronWrap();
 
   // For each test
   this.currentTestStartBlock = null;
@@ -65,9 +63,9 @@ TestRunner.prototype.initialize = function(callback) {
         var abis = _.flatMap(contracts, "abi");
 
         abis.map(function(abi) {
-          if (abi.type == "event") {
+          if (/event/i.test(abi.type)) {
             var signature = abi.name + "(" + _.map(abi.inputs, "type").join(",") + ")";
-            self.known_events[self.web3.sha3(signature)] = {
+            self.known_events[self.tronwrap.sha3(signature)] = {
               signature: signature,
               abi_entry: abi
             };

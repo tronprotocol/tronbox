@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build:debugger": "cd packages/truffle-debugger && npm run build",
-    "lerna:bootstrap": "lerna bootstrap && cd packages/tronweb && npm run build",
+    "lerna:bootstrap": "lerna bootstrap # && cd packages/tronweb && npm run build",
     "bootstrap": "npm run lerna:bootstrap && npm run build:debugger",
     "test": "lerna run test --stream -- --colors",
     "ci": "./scripts/ci.sh"
