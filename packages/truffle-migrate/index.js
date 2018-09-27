@@ -248,7 +248,9 @@ var Migrate = {
     try {
       Migrations = options.resolver.require("Migrations");
     } catch (e) {
-      return callback(new Error("Could not find built Migrations contract: " + e.message));
+      // first migration:
+      return callback(null, true);
+      // return callback(new Error("Could not find built Migrations contract: " + e.message));
     }
 
     if (Migrations.isDeployed() === false) {

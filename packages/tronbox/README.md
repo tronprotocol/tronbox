@@ -41,6 +41,25 @@ Please see the [Official tronweb Documentation](http://doc.tron.network/) for gu
 
 This package is a distribution package of the tronbox command line tool. Please see [tronbox-core](https://github.com/simon4545/tronbox-core.git) to contribute to the main core code.
 
+### Development
+
+To contribute, fork this repo.
+When done, clone it on your computer like in this example
+```
+git clone --recurse-submodules -j8 git@github.com:sullof/tron-box.git
+cd tron-box
+git remote add upstream git@github.com:tronprotocol/tron-box.git
+npm run bootstrap
+```
+
+To pull latest version, run
+```
+git checkout master
+git fetch upstream
+git merge upstream/master --recurse-submodules
+git submodule update
+```
+
 ### License
 
 MIT
