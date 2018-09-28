@@ -34,6 +34,13 @@ var command = {
 
     var config = Config.detect(options);
 
+    // if "development" exists, default to using that
+    if (!options.network && options.networks.development) {
+      options.network = "development";
+    }
+    // init TronWeb
+    TronWrap(options.networks[options.network])
+
     function setupDryRunEnvironmentThenRunMigrations(callback) {
       Environment.fork(config, function(err) {
         if (err) return callback(err);

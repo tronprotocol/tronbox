@@ -54,7 +54,7 @@ var Environment = {
       if (config.from) {
         return done();
       }
-      return done(err);
+      return done(new Error());
     }
 
     detectNetworkId(function (err) {
