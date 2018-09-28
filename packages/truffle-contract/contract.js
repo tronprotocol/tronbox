@@ -265,15 +265,55 @@ var contract = (function (module) {
   };
 
   function Contract(contract) {
+
     var self = this;
     var constructor = this.constructor;
     this.abi = constructor.abi;
+
     if (typeof contract == "string") {
       this.address = contract
     } else {
       this.allEvents = contract.allEvents;
       this.contract = contract;
       this.address = contract.address;
+
+      // Provision our functions.
+      for (var i = 0; i < this.abi.length; i++) {
+        var item = this.abi[i];
+        if (this.hasOwnProperty(item.name)) continue;
+
+        if (item.type == "function" && item.name) {
+
+          // console.log(item.name, typeof self.call)
+          var f = function (...args) {
+            return self.call.apply(null, [item.name].concat(args))
+          }
+          this[item.name] = f
+          this[item.name].call = f
+        }
+        if (item.type == "event") {
+          this[item.name] = contract[item.name];
+        }
+      }
+
+      // this.sendTransaction = Utils.synchronizeFunction(function (tx_params, callback) {
+      //   if (typeof tx_params == "function") {
+      //     callback = tx_params;
+      //     tx_params = {};
+      //   }
+      //
+      //   tx_params.to = self.address;
+      //
+      //   constructor.web3.eth.sendTransaction.apply(constructor.web3.eth, [tx_params, callback]);
+      // }, this, constructor);
+      //
+      // this.send = function (value) {
+      //   return self.sendTransaction({value: value});
+      // };
+      //
+      // this.allEvents = contract.allEvents;
+      // this.address = contract.address;
+      // this.transactionHash = contract.transactionHash;
     }
 
   };
@@ -365,12 +405,17 @@ var contract = (function (module) {
             reject(err);
             return;
           }
-          accept(new self(res.address))
+//          accept(new self(res.address))
+          console.log('HHHHH')
+          var newContract = new self(res)
+          console.log('DDDDDD')
+          accept(newContract)
         }
       });
     },
 
     at: function (address) {
+
       var self = this;
 
       if (address == null || typeof address != "string" || address.length != 42) {
@@ -391,7 +436,6 @@ var contract = (function (module) {
               if (!code || code.replace("0x", "").replace(/0/g, "") === '') {
                 return reject(new Error("Cannot create instance of " + self.contractName + "; no code at address " + address));
               }
-
               accept(instance);
             });
           });
@@ -413,12 +457,6 @@ var contract = (function (module) {
           }
           accept(res)
         }
-
-        // if (args && args.length > 0) {
-        //   option = Utils.merge({ contract_address: self.address, function: params.function, parameter: [params.parameter, args] }, self.defaults())
-        // } else {
-        //   option = Utils.merge({ contract_address: self.address, function: params.function, parameter: '' }, self.defaults())
-        // }
         option = Utils.merge({
           address: self.address,
           methodName: method,

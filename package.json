@@ -2,8 +2,9 @@
   "private": true,
   "scripts": {
     "build:debugger": "cd packages/truffle-debugger && npm run build",
-    "lerna:bootstrap": "lerna bootstrap # && cd packages/tronweb && yarn && npm run build",
+    "lerna:bootstrap": "lerna bootstrap && cd packages/tronweb && yarn && npm run build",
     "bootstrap": "npm run lerna:bootstrap && npm run build:debugger",
+    "update-submodules": "git submodule update --init --recursive",
     "test": "lerna run test --stream -- --colors",
     "ci": "./scripts/ci.sh"
   },

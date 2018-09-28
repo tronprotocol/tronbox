@@ -60,13 +60,17 @@ function init(options) {
   );
 
   TronWrap.prototype._getContract = function (address, callback) {
-    this.getContract(address || "").then(function (contractInstance) {
-      if (contractInstance) {
-        callback && callback(null, contractInstance);
-      } else {
-        callback(new Error("no code"))
-      }
-    });
+    if (callback) {
+      this.getContract(address).then(function (contractInstance) {
+        if (contractInstance) {
+          callback && callback(null, contractInstance);
+        } else {
+          callback(new Error("no code"))
+        }
+      });
+    } else {
+      return this.getContract(address);
+    }
   }
 
   TronWrap.prototype._deployContract = function (option, callback) {
