@@ -153,3 +153,4 @@ function init(options) {
 }
 
 module.exports = init;
+module.exports.config = () => console.log('config')
