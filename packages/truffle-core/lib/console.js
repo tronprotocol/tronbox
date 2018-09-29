@@ -12,6 +12,7 @@ var os = require("os");
 var path = require("path");
 var EventEmitter = require("events");
 var inherits = require("util").inherits;
+var TronWrap = require('tronwrap')
 
 inherits(Console, EventEmitter);
 
@@ -37,7 +38,11 @@ function Console(tasks, options) {
   this.repl = options.repl || new ReplManager(options);
   this.command = new Command(tasks);
 
-  this.tronWrap = TronWrap();
+  // if "development" exists, default to using that
+  if (!options.network && options.networks.development) {
+    options.network = "development";
+  }
+  this.tronWrap = TronWrap(options.networks[options.network])
   // this.tronWrap.setHttpProvider(options.provider);
 
   // Bubble the ReplManager's exit event
@@ -65,9 +70,9 @@ Console.prototype.start = function(callback) {
     }
 
     self.repl.start({
-      prompt: "truffle(" + self.options.network + ")> ",
+      prompt: "tronbox(" + self.options.network + ")> ",
       context: {
-        tronWrap: self.tronWrap(self.options),
+        tronWrap: self.tronWrap,
       },
       interpreter: self.interpret.bind(self),
       done: callback

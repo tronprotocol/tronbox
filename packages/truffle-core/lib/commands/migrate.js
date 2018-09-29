@@ -31,8 +31,17 @@ var command = {
     var Environment = require("../environment");
     var temp = require("temp");
     var copy = require("../copy");
+    var TronWrap = require("TronWrap");
 
     var config = Config.detect(options);
+
+    // if "development" exists, default to using that
+    if (!config.network && config.networks.development) {
+      config.network = "development";
+    }
+    // init TronWeb
+    TronWrap(config.networks[config.network])
+
 
     function setupDryRunEnvironmentThenRunMigrations(callback) {
       Environment.fork(config, function(err) {

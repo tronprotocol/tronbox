@@ -98,7 +98,7 @@ var Test = {
 
       runner = new TestRunner(config);
 
-      console.log('Deploying contracts to test network...')
+      console.log('Deploying contracts to development network...')
       return self.performInitialDeploy(config, test_resolver);
     }).then(function() {
       console.log('Preparing Solidity tests (if any)...')

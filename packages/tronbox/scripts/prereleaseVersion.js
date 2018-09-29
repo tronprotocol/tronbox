@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * This script checks out the specified branch, tags and publishes truffle at
+ * This script checks out the specified branch, tags and publishes tronbox at
  * <version-tag> where <version-tag> is a pre-release increment with the tag id.
  * It asks you if you're sure you want to do this. It also commits the version
  * update and pushes to the branch. If you exit, it leaves everything alone.
@@ -36,7 +36,7 @@ if (!branch || !tag ){
   `   node ./scripts/prereleaseVersion.js <branch> <tag>\n\n` +
 
   `Ex: node ./scripts/prereleaseVersion.js next next\n` +
-  `>>  truffle@4.1.12-next.0  truffle@next\n`;
+  `>>  tronbox@4.1.12-next.0  tronbox@next\n`;
 
   console.log(help);
   return;
@@ -67,7 +67,7 @@ const warn = `You are about to:\n` +
              `  ------------------------------------------\n` +
              '  Version'.padEnd(25) + '| Tag\n' +
              `  ------------------------------------------\n` +
-             `  truffle@${version}`.padEnd(25) + `| truffle@${tag}\n\n`
+             `  tronbox@${version}`.padEnd(25) + `| tronbox@${tag}\n\n`
 
 const quest = `Are you sure you want to publish: (y/n) >> `;
 

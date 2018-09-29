@@ -58,9 +58,6 @@ Below describes the meaning of each parameter in the network configuration:<br>
 **eventServer**: The URL of the contract deployment destination event monitoring service (Need to be on same IP as the API server, otherwise the event callback cannot be monitored. For example, the API service address is http://127.0.0.1:8090, then the event listener service address is http://127.0.0.1:****)<br>
 **network_id**: Can use default settings<br>
 
-**host**: Contract deployment destination IP address (This IP needs to start FullNode node service)<br>
-**port**: The port corresponding to contract deployment destination IP address API (port number corresponding to FullNode node API service)<br>
-
 ## Unbox the MetaCoin example
 
 Instead of creating a Dapp from scratch, you can simply modify an existent example.
@@ -86,7 +83,7 @@ tronbox test
 To work, the Dapp need to know the address where the MetaCoin contract has been deployed. You can set it manually in the code, but the easy way is to execute
 
 ```
-scripts/migrate.sh
+bash scripts/migrate.sh
 ```
 It will execute the migration, retrieve the contract address and save it in the file `src/js/metacoin-config.js`
 
