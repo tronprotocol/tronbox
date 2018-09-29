@@ -12,7 +12,7 @@ module.exports = {
   create: require("./create"),
   // install: require("./install"),
   // publish: require("./publish"),
-  //digest: require("./digest"),
+  // digest: require("./digest"),
   // networks: require("./networks"),
   watch: require("./watch"),
   serve: require("./serve"),
@@ -20,3 +20,4 @@ module.exports = {
   unbox: require("./unbox"),
   version: require("./version"),
 };
+
