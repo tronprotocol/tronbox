@@ -69,7 +69,7 @@ Command.prototype.run = function(command, options, callback) {
     options = {};
   }
 
-  var result = this.getCommand(command, options.noAliases);
+  var result = this.getCommand(command, typeof options.noAliases === 'boolean' ? options.noAliases : true);
 
   if (result == null) {
     return callback(new TaskError("Cannot find command: " + command));
