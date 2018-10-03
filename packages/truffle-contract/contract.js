@@ -280,9 +280,9 @@ var contract = (function (module) {
 
   Contract._static_methods = {
 
-    initTronWeb: function () {
+    initTronWeb: function (options) {
       if (!tronWrap) {
-        tronWrap = TronWrap();
+        tronWrap = TronWrap(options);
       }
     },
 
