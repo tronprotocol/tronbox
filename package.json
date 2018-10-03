@@ -5,7 +5,8 @@
     "lerna:bootstrap": "lerna bootstrap # && cd packages/tronweb && yarn && npm run build",
     "bootstrap": "npm run lerna:bootstrap && npm run build:debugger",
     "test": "lerna run test --stream -- --colors",
-    "ci": "./scripts/ci.sh"
+    "ci": "./scripts/ci.sh",
+    "build:tronbox": "cd packages/tronbox && npm run prepare"
   },
   "devDependencies": {
     "lerna": "^2.11.0"

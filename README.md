@@ -61,3 +61,70 @@ To carry out the test, run the following command:<br>
 You can also run the test for a specific file：<br>
 
 `$ tronbox test ./path/to/test/file.js`<br>
+
+Testing in TronBox is a bit different than in Truffle.
+Let's say we want to test the contract Metacoin (from the Metacoin Box that you can download with `tronbox unbox metacoin`):
+
+```
+contract MetaCoin {
+	mapping (address => uint) balances;
+
+	event Transfer(address _from, address _to, uint256 _value);
+	event Log(string s);
+
+	constructor() public {
+		balances[tx.origin] = 10000;
+	}
+
+	function sendCoin(address receiver, uint amount) public returns(bool sufficient) {
+		if (balances[msg.sender] < amount) return false;
+		balances[msg.sender] -= amount;
+		balances[receiver] += amount;
+		emit Transfer(msg.sender, receiver, amount);
+		return true;
+	}
+
+	function getBalanceInEth(address addr) public view returns(uint){
+		return ConvertLib.convert(getBalance(addr),2);
+	}
+
+	function getBalance(address addr) public view returns(uint) {
+		return balances[addr];
+	}
+}
+```
+
+Now, take a look at the first test in `test/metacoin.js`:
+```
+var MetaCoin = artifacts.require("./MetaCoin.sol");
+contract('MetaCoin', function(accounts) {
+  it("should put 10000 MetaCoin in the first account", function() {
+
+    return MetaCoin.deployed().then(function(instance) {
+      return instance.call('getBalance',[accounts[0]]);
+    }).then(function(balance) {
+      assert.equal(balance.toNumber(), 10000, "10000 wasn't in the first account");
+    });
+  });
+  // ...
+```
+As you can see, in TronBox you execute the method `getBalance` with
+```
+instance.call('getBalance',[accounts[0]]);
+```
+while in Truffle you would have called:
+```
+instance.getBalance.call(accounts[0]);
+```
+or
+```
+instance.getBalance(accounts[0]);
+```
+As a general rule, the Tronbox artifact uses the method `call` to execute the contracts. Also, it expects all the parameters to be passed to the contract in an array. So, the following will throw an error:
+```
+instance.call('sendCoin', address, amount, {from: account[1]});
+```
+the correct call is
+```
+instance.call('sendCoin',[address, amount], {from: account[1]});
+```
