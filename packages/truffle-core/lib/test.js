@@ -101,8 +101,10 @@ var Test = {
       console.log('Deploying contracts to development network...')
       return self.performInitialDeploy(config, test_resolver);
     }).then(function() {
-      console.log('Preparing Solidity tests (if any)...')
-      return self.defineSolidityTests(mocha, testContracts, dependency_paths, runner);
+      // console.log('Preparing Solidity tests (if any)...')
+      // return self.defineSolidityTests(mocha, testContracts, dependency_paths, runner);
+      console.log('\nWarning: This version does not support tests written in Solidity.\n');
+      return Promise.resolve();
     }).then(function() {
       console.log('Preparing Javascript tests (if any)...')
       return self.setJSTestGlobals(accounts, test_resolver, runner);

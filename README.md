@@ -130,3 +130,31 @@ the correct call is
 ```
 instance.call('sendCoin',[address, amount], {from: account[1]});
 ```
+
+## How to contribute
+
+1. Fork this repo.
+
+2. Clone your forked repo recursively, to include submodules, for example:
+```
+git clone --recurse-submodules -j8 git@github.com:sullof/tron-box.git
+```
+3. If you don't have yarn, install it globally:
+```
+npm i -g yarn
+```
+4. Bootstrap the project:
+```
+yarn bootstrap
+```
+5. To build TronBox:
+```
+yarn build:tronbox
+```
+6. During the development, for better debugging, you can run
+```
+(cd packages/tronwrap/tron-web && yarn build -d)
+chmod +x ./packages/truffle-core/cli.js 
+./packages/truffle-core/cli.js migrate --reset
+```
+
