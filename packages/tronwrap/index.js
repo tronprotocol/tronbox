@@ -96,9 +96,18 @@ function init(options) {
         callSend = /payable/.test(val.stateMutability) ? 'send' : 'call'
       }
     })
+
+    var callValue = option.call_value || 0;
+    var feeLimit = option.fee_limit;
+    if(typeof option.call_limit !== 'undefined' && option.call_limit){
+      callValue = option.call_limit.call_value || callValue;
+      feeLimit = option.call_limit.fee_limit || feeLimit;
+      console.log(callValue);
+    }
+    
     myContract[option.methodName](...option.args)[callSend]({
-      fee_limit: option.fee_limit,
-      call_value: option.call_value || 0,
+      fee_limit: feeLimit,
+      call_value: callValue,
     })
       .then(function (res) {
         // if (!Array.isArray(res)) {
