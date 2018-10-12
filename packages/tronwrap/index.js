@@ -23,8 +23,8 @@ function _getAccounts(callback) {
 
 function toNumber(value) {
   if (!value) return null;
-  if ((typeof value == 'string') && value.indexOf('0x') <= -1) {
-    value = '0x' + value;
+  if (typeof value === 'string') {
+    value = /^0x/.test(value) ? value : '0x' + value;
   } else {
     value = value.toNumber();
   }
@@ -76,7 +76,8 @@ function init(options) {
       fee_limit: option.fee_limit || Math.pow(10, 7),
       call_value: option.call_value|| option.call_value || 0,
       userFeePercentage: 30,
-      abi: option.abi
+      abi: option.abi,
+      parameters: option.parameters
     }, option.privateKey).then(() => {
       callback(null, myContract);
       option.address = myContract.address;
@@ -102,7 +103,6 @@ function init(options) {
     if(typeof option.call_limit !== 'undefined' && option.call_limit){
       callValue = option.call_limit.call_value || callValue;
       feeLimit = option.call_limit.fee_limit || feeLimit;
-      console.log(callValue);
     }
     
     myContract[option.methodName](...option.args)[callSend]({

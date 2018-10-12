@@ -251,13 +251,7 @@ var Migrate = {
       tronWrap = TronWrap();
     }
 
-    try {
-      Migrations = options.resolver.require("Migrations");
-    } catch (e) {
-      // first migration:
-      return callback(null, true);
-      // return callback(new Error("Could not find built Migrations contract: " + e.message));
-    }
+    Migrations = options.resolver.require("Migrations");
 
     if (Migrations.isDeployed() === false) {
       return callback(null, 0);
@@ -271,9 +265,12 @@ var Migrate = {
         : migrations.call('lastCompletedMigration');
 
     }).then(function (completed_migration) {
-      var value = (typeof completed_migration) == 'object' && completed_migration.length ? completed_migration[0] : '0';
+      var value = typeof completed_migration == 'object' ? completed_migration : '0';
       callback(null, tronWrap._toNumber(value));
-    }).catch(callback);
+    }).catch(() => {
+      // first migration:
+      callback(null, 0)
+    });
   },
 
   needsMigrating: function (options, callback) {

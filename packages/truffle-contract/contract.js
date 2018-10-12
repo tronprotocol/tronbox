@@ -332,7 +332,9 @@ var contract = (function (module) {
       }
       return new Promise(function (accept, reject) {
         // var contract_class = self.web3.eth.contract(self.abi);
-        var tx_params = {};
+        var tx_params = {
+          parameters: args
+        };
         var last_arg = args[args.length - 1];
 
         // It's only tx_params if it's an object and not a BigNumber.
