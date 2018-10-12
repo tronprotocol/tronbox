@@ -23,8 +23,8 @@ function _getAccounts(callback) {
 
 function toNumber(value) {
   if (!value) return null;
-  if ((typeof value == 'string') && value.indexOf('0x') <= -1) {
-    value = '0x' + value;
+  if (typeof value === 'string') {
+    value = /^0x/.test(value) ? value : '0x' + value;
   } else {
     value = value.toNumber();
   }
