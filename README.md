@@ -110,25 +110,19 @@ contract('MetaCoin', function(accounts) {
   });
   // ...
 ```
-As you can see, in TronBox you execute the method `getBalance` with
+In TronBox artifacts (starting from version 2.0.5) the following commands are equivalent:
 ```
-instance.call('getBalance',[accounts[0]]);
-```
-while in Truffle you would have called:
-```
+instance.call('getBalance', accounts[0]);
+instance.getBalance(accounts[0]);
 instance.getBalance.call(accounts[0]);
 ```
-or
+As a general rule, the Tronbox artifact expects all the parameters to be passed to the contract in an array, except if the method requires only one parameter. So, the following will throw an error:
 ```
-instance.getBalance(accounts[0]);
-```
-As a general rule, the Tronbox artifact uses the method `call` to execute the contracts. Also, it expects all the parameters to be passed to the contract in an array. So, the following will throw an error:
-```
-instance.call('sendCoin', address, amount, {from: account[1]});
+instance.sendCoin(address, amount, {from: account[1]});
 ```
 the correct call is
 ```
-instance.call('sendCoin',[address, amount], {from: account[1]});
+instance.sendCoin([address, amount], {from: account[1]});
 ```
 
 ## How to contribute
