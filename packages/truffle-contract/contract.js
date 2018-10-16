@@ -275,7 +275,6 @@ var contract = (function (module) {
       this.contract = contract;
       this.address = contract.address;
     }
-
   };
 
   Contract._static_methods = {
@@ -393,7 +392,6 @@ var contract = (function (module) {
               if (!code || code.replace("0x", "").replace(/0/g, "") === '') {
                 return reject(new Error("Cannot create instance of " + self.contractName + "; no code at address " + address));
               }
-
               accept(instance);
             });
           });
@@ -404,7 +402,9 @@ var contract = (function (module) {
     },
     call: function (method, args, call_limit) {
       var self = this;
-      args = args || [];
+      if (!Array.isArray(args)) {
+        args = [args];
+      }
       var option = {};
       // var params = tronWrap.filterMatchFunction(method, self.abi)
       return new Promise(function (accept, reject) {
@@ -416,11 +416,6 @@ var contract = (function (module) {
           accept(res)
         }
 
-        // if (args && args.length > 0) {
-        //   option = Utils.merge({ contract_address: self.address, function: params.function, parameter: [params.parameter, args] }, self.defaults())
-        // } else {
-        //   option = Utils.merge({ contract_address: self.address, function: params.function, parameter: '' }, self.defaults())
-        // }
         option = Utils.merge({
           address: self.address,
           methodName: method,
@@ -439,7 +434,23 @@ var contract = (function (module) {
         if (!self.isDeployed()) {
           throw new Error(self.contractName + " has not been deployed to detected network");
         }
-        accept(self);
+        TronWrap().trx.getContract(self.address)
+          .then(res => {
+            const abi = res.abi && res.abi.entrys ? res.abi.entrys : []
+            for (var i = 0; i < abi.length; i++) {
+              var item = abi[i];
+              if (self.hasOwnProperty(item.name)) continue;
+              if (/(function|event)/i.test(item.type) && item.name) {
+                var f = (...args) => {
+                  return self.call.apply(null, [item.name].concat(args))
+                }
+                self[item.name] = f
+                self[item.name].call = f
+              }
+            }
+            accept(self);
+          })
+
       });
     },
 

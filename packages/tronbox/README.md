@@ -57,7 +57,7 @@ To pull latest version, run
 git checkout master
 git fetch upstream
 git merge upstream/master --recurse-submodules
-git submodule update
+git submodule update --init --recursive
 ```
 
 ### License

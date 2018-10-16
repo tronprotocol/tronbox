@@ -74,7 +74,7 @@ function init(options) {
     myContract.new({
       bytecode: option.data,
       fee_limit: option.fee_limit || Math.pow(10, 7),
-      call_value: option.call_value|| option.call_value || 0,
+      call_value: option.call_value || option.call_value || 0,
       userFeePercentage: 30,
       abi: option.abi,
       parameters: option.parameters
@@ -100,11 +100,11 @@ function init(options) {
 
     var callValue = option.call_value || 0;
     var feeLimit = option.fee_limit;
-    if(typeof option.call_limit !== 'undefined' && option.call_limit){
+    if (typeof option.call_limit !== 'undefined' && option.call_limit) {
       callValue = option.call_limit.call_value || callValue;
       feeLimit = option.call_limit.fee_limit || feeLimit;
     }
-    
+
     myContract[option.methodName](...option.args)[callSend]({
       fee_limit: feeLimit,
       call_value: callValue,
