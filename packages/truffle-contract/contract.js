@@ -265,57 +265,16 @@ var contract = (function (module) {
   };
 
   function Contract(contract) {
-
     var self = this;
     var constructor = this.constructor;
     this.abi = constructor.abi;
-
     if (typeof contract == "string") {
       this.address = contract
     } else {
       this.allEvents = contract.allEvents;
       this.contract = contract;
       this.address = contract.address;
-
-      // Provision our functions.
-      for (var i = 0; i < this.abi.length; i++) {
-        var item = this.abi[i];
-        if (this.hasOwnProperty(item.name)) continue;
-
-        if (item.type == "function" && item.name) {
-
-          // console.log(item.name, typeof self.call)
-          var f = function (...args) {
-            return self.call.apply(null, [item.name].concat(args))
-          }
-          this[item.name] = f
-          this[item.name].call = f
-        }
-        if (item.type == "event") {
-          this[item.name] = contract[item.name];
-        }
-      }
-
-      // this.sendTransaction = Utils.synchronizeFunction(function (tx_params, callback) {
-      //   if (typeof tx_params == "function") {
-      //     callback = tx_params;
-      //     tx_params = {};
-      //   }
-      //
-      //   tx_params.to = self.address;
-      //
-      //   constructor.web3.eth.sendTransaction.apply(constructor.web3.eth, [tx_params, callback]);
-      // }, this, constructor);
-      //
-      // this.send = function (value) {
-      //   return self.sendTransaction({value: value});
-      // };
-      //
-      // this.allEvents = contract.allEvents;
-      // this.address = contract.address;
-      // this.transactionHash = contract.transactionHash;
     }
-
   };
 
   Contract._static_methods = {
@@ -407,17 +366,12 @@ var contract = (function (module) {
             reject(err);
             return;
           }
-//          accept(new self(res.address))
-          console.log('HHHHH')
-          var newContract = new self(res)
-          console.log('DDDDDD')
-          accept(newContract)
+          accept(new self(res.address))
         }
       });
     },
 
     at: function (address) {
-
       var self = this;
 
       if (address == null || typeof address != "string" || address.length != 42) {
@@ -448,7 +402,9 @@ var contract = (function (module) {
     },
     call: function (method, args, call_limit) {
       var self = this;
-      args = args || [];
+      if (!Array.isArray(args)) {
+        args = [args];
+      }
       var option = {};
       // var params = tronWrap.filterMatchFunction(method, self.abi)
       return new Promise(function (accept, reject) {
@@ -459,6 +415,7 @@ var contract = (function (module) {
           }
           accept(res)
         }
+
         option = Utils.merge({
           address: self.address,
           methodName: method,
@@ -477,7 +434,23 @@ var contract = (function (module) {
         if (!self.isDeployed()) {
           throw new Error(self.contractName + " has not been deployed to detected network");
         }
-        accept(self);
+        TronWrap().trx.getContract(self.address)
+          .then(res => {
+            const abi = res.abi && res.abi.entrys ? res.abi.entrys : []
+            for (var i = 0; i < abi.length; i++) {
+              var item = abi[i];
+              if (self.hasOwnProperty(item.name)) continue;
+              if (/(function|event)/i.test(item.type) && item.name) {
+                var f = (...args) => {
+                  return self.call.apply(null, [item.name].concat(args))
+                }
+                self[item.name] = f
+                self[item.name].call = f
+              }
+            }
+            accept(self);
+          })
+
       });
     },
 
