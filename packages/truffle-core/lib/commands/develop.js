@@ -83,7 +83,7 @@ var command = {
     var onMissing = function(name){ return "**"};
 
     var warning =
-      ":warning:  Important :warning:  : " +
+      "IMPORTANT: " +
       "This mnemonic was created for you by Tronbox. It is not secure.\n" +
       "Ensure you do not use it on production blockchains, or else you risk losing funds.";
 

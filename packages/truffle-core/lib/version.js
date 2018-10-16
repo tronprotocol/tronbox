@@ -1,15 +1,10 @@
 var pkg = require("../package.json");
 var solcpkg = require("tron-solc/package.json");
 
-var bundle_version = null;
-
-// NOTE: Webpack will replace BUNDLE_VERSION with a string.
-if (typeof BUNDLE_VERSION != "undefined") {
-  bundle_version = BUNDLE_VERSION;
-}
+var bundle = require("tronbox/package.json");
 
 module.exports = {
   core: pkg.version,
-  bundle: bundle_version,
+  bundle: bundle.version,
   solc: solcpkg.version
 };

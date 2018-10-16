@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.0.1",
+  "version": "2.0.4",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
     "mocha": "^4.1.0",
@@ -37,7 +37,6 @@
     "build": "npm run build-tronweb && npm run build-cli",
     "build-tronweb": "cd ../tronwrap/tron-web && yarn build -p",
     "build-cli": "webpack --config ./cli.webpack.config.js",
-    "test": "npm run build-cli && mocha --colors",
     "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
     "publish:byoc": "node ./scripts/prereleaseVersion.js byoc-safe byoc",
     "publish:next": "node ./scripts/prereleaseVersion.js next next"
