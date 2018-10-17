@@ -462,7 +462,9 @@ var contract = (function (module) {
             }
             accept(self);
           })
-
+          .catch(err => {
+            reject(err);
+          })
       });
     },
 

@@ -6,7 +6,7 @@
     "bootstrap": "npm run init-submodules && npm run lerna:bootstrap && npm run build:debugger",
     "test": "lerna run test --stream -- --colors",
     "ci": "./scripts/ci.sh",
-    "build:tronbox": "cd packages/tronbox && npm run prepare",
+    "build:tronbox": "cd packages/tronbox && npm run build",
     "publish": "cd packages/tronbox && npm publish",
     "init-submodules": "git submodule init && npm run update-submodules",
     "update-submodules": "git submodule update --init --recursive && npm update-tronweb",
