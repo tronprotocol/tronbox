@@ -436,9 +436,6 @@ var contract = (function (module) {
           methodArgs
         }, self.defaults());
 
-        console.log('args', option.args);
-        console.log(option.methodName, option.methodArgs);
-
         tronWrap.triggerContract(option, _callback);
       })
     },
@@ -456,8 +453,6 @@ var contract = (function (module) {
               let item = abi[i];
               if (self.hasOwnProperty(item.name)) continue;
               if (/(function|event)/i.test(item.type) && item.name) {
-                console.log(item.name)
-
                 let f = (...args) => {
                   return self.call.apply(null, [item.name].concat(args))
                 }
