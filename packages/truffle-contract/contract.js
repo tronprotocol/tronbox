@@ -400,7 +400,7 @@ var contract = (function (module) {
 
       return contract;
     },
-    call: function (method, ...args) {
+    call: function (methodName, ...args) {
       var self = this;
       var methodArgs = {};
 
@@ -430,8 +430,8 @@ var contract = (function (module) {
 
         option = Utils.merge({
           address: self.address,
-          methodName: method,
-          args: args,
+          methodName,
+          args,
           abi: self.abi,
           methodArgs
         }, self.defaults());
@@ -450,10 +450,10 @@ var contract = (function (module) {
           .then(res => {
             const abi = res.abi && res.abi.entrys ? res.abi.entrys : []
             for (var i = 0; i < abi.length; i++) {
-              var item = abi[i];
+              let item = abi[i];
               if (self.hasOwnProperty(item.name)) continue;
               if (/(function|event)/i.test(item.type) && item.name) {
-                var f = (...args) => {
+                let f = (...args) => {
                   return self.call.apply(null, [item.name].concat(args))
                 }
                 self[item.name] = f
