@@ -5,22 +5,22 @@
 [TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
 
 ## Installation
-`$ npm install -g tronbox`
+`npm install -g tronbox`
 ## OS requirement
 - NodeJS 5.0+
 - Windows, Linux, or Mac OS X
 
 ## Features
 1. Initialize a Customer Tron-Box Project<br>
-`$ tronbox init`
+`tronbox init`
 <br>
 
 2. Download a dApp, ex: metacoin-box<br>
-`$ tronbox unbox metacoin`
+`tronbox unbox metacoin`
 <br>
 
 3. Contract Compiler<br>
-`$ tronbox compile`
+`tronbox compile`
 
 <br>
 To compile for all contracts, select --compile-all.
@@ -31,17 +31,17 @@ Optionally, you can select: <br>
 <br>
 
 ## 4. Contract Migration<br>
-`$ tronbox migrate`
+`tronbox migrate`
 <br>
 
 This command will invoke all migration scripts within the migrations directory. If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command will have no operational effect. Instead, you can use the option `--reset` to restart the migration script.<br> 
 
-`$ tronbox migrate --reset` 
+`tronbox migrate --reset`
 <br>
 ## 5. Start Console<br>
 This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. <br>
 
-`$ tronbox console`<br>
+`tronbox console`<br>
 
 The console supports the `tronbox` command. For example, you can invoke `migrate --reset` in the console. The result is the same as invoking `tronbox migrate --reset` in the command. 
 <br>
@@ -58,11 +58,11 @@ The console supports the `tronbox` command. For example, you can invoke `migrate
 
 To carry out the test, run the following command:<br>
 
-`$ tronbox test`<br>
+`tronbox test`<br>
 
 You can also run the test for a specific file：<br>
 
-`$ tronbox test ./path/to/test/file.js`<br>
+`tronbox test ./path/to/test/file.js`<br>
 
 Testing in TronBox is a bit different than in Truffle.
 Let's say we want to test the contract Metacoin (from the Metacoin Box that you can download with `tronbox unbox metacoin`):
@@ -131,22 +131,22 @@ instance.sendCoin([address, amount], {from: account[1]});
 
 2. Clone your forked repo recursively, to include submodules, for example:
 ```
-$ git clone --recurse-submodules -j8 git@github.com:sullof/tron-box.git
+git clone --recurse-submodules -j8 git@github.com:sullof/tron-box.git
 ```
 3. If you don't have yarn and/or lerna already installed, install them globally:
 ```
-$ npm i -g yarn lerna
+npm i -g yarn lerna
 ```
 4. Bootstrap the project:
 ```
-$ yarn bootstrap
+yarn bootstrap
 ```
 5. To build TronBox:
 ```
-$ yarn build:tronbox
+yarn build:tronbox
 ```
 6. During the development, for better debugging, you can run, for example
 ```
-$ ./tronbox.dev migrate --reset
+./tronbox.dev migrate --reset
 ```
 
