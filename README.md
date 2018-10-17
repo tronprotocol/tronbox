@@ -110,17 +110,17 @@ contract('MetaCoin', function(accounts) {
   });
   // ...
 ```
-In TronBox artifacts (starting from version 2.0.5) the following commands are equivalent:
+Starting from version 2.0.5, in TronBox artifacts () the following commands are equivalent:
 ```
 instance.call('getBalance', accounts[0]);
 instance.getBalance(accounts[0]);
 instance.getBalance.call(accounts[0]);
 ```
-As a general rule, the Tronbox artifact expects all the parameters to be passed to the contract in an array, except if the method requires only one parameter. So, the following will throw an error:
+and you can pass the arguments for the method in both the following ways:
 ```
 instance.sendCoin(address, amount, {from: account[1]});
 ```
-the correct call is
+and
 ```
 instance.sendCoin([address, amount], {from: account[1]});
 ```
@@ -145,10 +145,8 @@ yarn bootstrap
 ```
 yarn build:tronbox
 ```
-6. During the development, for better debugging, you can run
+6. During the development, for better debugging, you can run, for example
 ```
-(cd packages/tronwrap/tron-web && yarn build -d)
-chmod +x ./packages/truffle-core/cli.js 
-./packages/truffle-core/cli.js migrate --reset
+./tronbox.dev migrate --reset
 ```
 
