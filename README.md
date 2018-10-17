@@ -15,7 +15,7 @@
 `$ tronbox init`
 <br>
 
-2. Download a Dapp, ex: metacoin-box<br>
+2. Download a dApp, ex: metacoin-box<br>
 `$ tronbox unbox metacoin`
 <br>
 
@@ -131,22 +131,22 @@ instance.sendCoin([address, amount], {from: account[1]});
 
 2. Clone your forked repo recursively, to include submodules, for example:
 ```
-git clone --recurse-submodules -j8 git@github.com:sullof/tron-box.git
+$ git clone --recurse-submodules -j8 git@github.com:sullof/tron-box.git
 ```
-3. If you don't have yarn, install it globally:
+3. If you don't have yarn and/or lerna already installed, install them globally:
 ```
-npm i -g yarn
+$ npm i -g yarn lerna
 ```
 4. Bootstrap the project:
 ```
-yarn bootstrap
+$ yarn bootstrap
 ```
 5. To build TronBox:
 ```
-yarn build:tronbox
+$ yarn build:tronbox
 ```
 6. During the development, for better debugging, you can run, for example
 ```
-./tronbox.dev migrate --reset
+$ ./tronbox.dev migrate --reset
 ```
 
