@@ -400,13 +400,25 @@ var contract = (function (module) {
 
       return contract;
     },
-    call: function (method, args, call_limit) {
+    call: function (method, ...args) {
       var self = this;
-      if (!Array.isArray(args)) {
-        args = [args];
+      var methodArgs = {};
+
+      var lastArg = args[args.length - 1];
+      if (!Array.isArray(lastArg) && typeof lastArg === 'object') {
+        methodArgs = args.pop();
       }
+
+      if (!methodArgs.call_value) {
+        methodArgs.call_value = 0;
+      }
+
+      if (Array.isArray(args[0])) {
+        args = args[0]
+      }
+
       var option = {};
-      // var params = tronWrap.filterMatchFunction(method, self.abi)
+
       return new Promise(function (accept, reject) {
         function _callback(err, res) {
           if (err) {
@@ -421,7 +433,7 @@ var contract = (function (module) {
           methodName: method,
           args: args,
           abi: self.abi,
-          call_limit: call_limit
+          methodArgs
         }, self.defaults());
 
         tronWrap.triggerContract(option, _callback);
