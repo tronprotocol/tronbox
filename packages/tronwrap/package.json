@@ -18,5 +18,8 @@
       "name": "sullof",
       "email": "sullof@gmail.com"
     }
-  ]
+  ],
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }

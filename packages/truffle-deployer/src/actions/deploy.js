@@ -1,3 +1,5 @@
+const TronWrap = require('tronwrap');
+
 module.exports = function (contract, args, deployer) {
   return function () {
     var should_deploy = true;
@@ -24,8 +26,9 @@ module.exports = function (contract, args, deployer) {
         return contract.deployed();
       }
     }).then(function (instance) {
+      var tronWrap = TronWrap()
       if (should_deploy == true) {
-        deployer.logger.log(contract.contract_name + ": " + instance.address);
+        deployer.logger.log(contract.contract_name + ": " + tronWrap.address.fromHex(instance.address));
       } else {
         deployer.logger.log("Didn't deploy " + contract.contract_name + "; using " + instance.address);
       }

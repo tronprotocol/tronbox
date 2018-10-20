@@ -401,6 +401,7 @@ var contract = (function (module) {
       return contract;
     },
     call: function (methodName, ...args) {
+
       var self = this;
       var methodArgs = {};
 
@@ -454,7 +455,7 @@ var contract = (function (module) {
               if (self.hasOwnProperty(item.name)) continue;
               if (/(function|event)/i.test(item.type) && item.name) {
                 let f = (...args) => {
-                  return self.call.apply(null, [item.name].concat(args))
+                 return self.call.apply(null, [item.name].concat(args))
                 }
                 self[item.name] = f
                 self[item.name].call = f

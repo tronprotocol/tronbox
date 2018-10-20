@@ -1,24 +1,15 @@
 var _TronWeb = require("./tron-web/dist/TronWeb.node");
-var defaultOptions = require('./default-options');
+var axios = require('axios');
+
 var instance;
 
 function TronWrap() {
 
-  this._getNetwork = _getNetwork;
-  this._getAccounts = _getAccounts;
   this._toNumber = toNumber;
   this.EventList = [];
   this.filterMatchFunction = filterMatchFunction;
   instance = this;
   return instance;
-}
-
-function _getNetwork(callback) {
-  callback && callback(null, '*');
-}
-
-function _getAccounts(callback) {
-  callback && callback(null, ['TPL66VK2gCXNCD7EJg9pgJRfqcRazjhUZY']);
 }
 
 function toNumber(value) {
@@ -32,8 +23,8 @@ function toNumber(value) {
 }
 
 function filterMatchFunction(method, abi) {
-  let methodObj = abi.filter((item) => item.name == method);
-  if (methodObj == null || methodObj.length == 0) {
+  let methodObj = abi.filter((item) => item.name === method);
+  if (!methodObj || methodObj.length === 0) {
     return null;
   }
   methodObj = methodObj[0];
@@ -58,6 +49,49 @@ function init(options) {
     options.eventServer,
     options.privateKey
   );
+
+  TronWrap.prototype._options = options;
+
+  TronWrap.prototype._getNetwork = function (callback) {
+    callback && callback(null, options.network_id);
+  }
+
+  TronWrap.prototype._getAccounts = function (callback) {
+
+    const self = this
+
+    return new Promise((accept, reject) => {
+      function cb() {
+        if (callback) {
+          callback(null, self._accounts)
+          accept()
+        }
+        else {
+          accept(self._accounts)
+        }
+      }
+
+      if (self._accounts) {
+        return cb()
+      }
+      self._accounts = [options.from || 'TPL66VK2gCXNCD7EJg9pgJRfqcRazjhUZY'];
+      self._privateKeyByAccount = {}
+      return axios.get(self._options.fullNode + '/admin/accounts-json')
+        .then(({data}) => {
+          if (Array.isArray(data) && data.length > 0) {
+            self._accounts = [];
+            for (let account of data) {
+              let address = this.address.fromPrivateKey(account)
+              self._privateKeyByAccount[address] = account
+              self._accounts.push(address)
+            }
+          }
+          return cb();
+        })
+        .catch(() => cb())
+
+    })
+  }
 
   TronWrap.prototype._getContract = function (address, callback) {
     this.getContract(address || "").then(function (contractInstance) {
@@ -97,7 +131,14 @@ function init(options) {
         callSend = /payable/.test(val.stateMutability) ? 'send' : 'call'
       }
     })
-    myContract[option.methodName](...option.args)[callSend](option.methodArgs || {})
+    if (!option.methodArgs) option.methodArgs = {}
+
+    var privateKey
+    if (callSend === 'send' && option.methodArgs.from && this._accounts) {
+      privateKey = this._privateKeyByAccount[option.methodArgs.from]
+    }
+    // console.debug(option.methodName, option.args, option.methodArgs);
+    myContract[option.methodName](...option.args)[callSend](option.methodArgs || {}, privateKey)
       .then(function (res) {
         callback(null, res)
       }).catch(function (reason) {
