@@ -141,11 +141,7 @@ npm i -g yarn lerna
 ```
 yarn bootstrap
 ```
-5. To build TronBox:
-```
-yarn build:tronbox
-```
-6. During the development, for better debugging, you can run, for example
+5. During the development, for better debugging, you can run the unbuilt version of TronBox, for example
 ```
 ./tronbox.dev migrate --reset
 ```

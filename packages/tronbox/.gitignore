@@ -3,6 +3,9 @@ node_modules
 .tern-port
 yarn.lock
 package-lock.json
-
 dependencies
 build
+
+# for now
+CONTRIBUTING.md
+
