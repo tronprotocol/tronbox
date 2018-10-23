@@ -113,7 +113,6 @@ function init(options) {
         var event = that.EventList.filter((item) => (item.name == element.name && item.address == option.address));
         if (event && event.length) {
           myEvent = event[0].event;
-          // console.log("已设置监听:" + element.name);
           return;
         }
         // console.log(element.name);
