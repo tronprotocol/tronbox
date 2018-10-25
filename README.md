@@ -1,25 +1,3 @@
-<p align="center">
-  <a href="https://discord.gg/GsRgsTD">
-    <img src="https://img.shields.io/badge/chat-on%20discord-brightgreen.svg">
-  </a>
-  
-  <a href="https://github.com/tronprotocol/tron-box/issues">
-    <img src="https://img.shields.io/github/issues/tronprotocol/tron-box.svg">
-  </a>
-  
-  <a href="https://github.com/tronprotocol/tron-box/pulls">
-    <img src="https://img.shields.io/github/issues-pr/tronprotocol/tron-box.svg">
-  </a>
-  
-  <a href="https://github.com/tronprotocol/tron-box/graphs/contributors"> 
-    <img src="https://img.shields.io/github/contributors/tronprotocol/tron-box.svg">
-  </a>
-  
-  <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/tronprotocol/tron-box.svg">
-  </a>
-</p>
-
 # Tron-Box
 
 ### Note: Tron-Box is a fork from Truffle project

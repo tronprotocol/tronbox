@@ -5,3 +5,5 @@ node_modules
 # we use yarn
 package-lock.json
 metacoin-box
+tmp
+.scratch

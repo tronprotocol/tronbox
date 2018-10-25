@@ -30,6 +30,7 @@ function TestRunner(options) {
   this.initial_snapshot = null;
   this.known_events = {};
   this.tronwrap = TronWrap();
+  global.tronWeb = TronWrap();
 
   // For each test
   this.currentTestStartBlock = null;
