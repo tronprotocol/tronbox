@@ -6,6 +6,7 @@ var TestRPC = require("ganache-cli");
 var spawn = require("child_process").spawn;
 var path = require("path");
 var Develop = require("./develop");
+var TronWrap = require('Tronwrap')
 
 var Environment = {
   // It's important config is a Config object and not a vanilla object
@@ -41,6 +42,8 @@ var Environment = {
       return callback(new Error("You must specify a network_id in your '" + config.network + "' configuration in order to use this network."));
     }
 
+    tronWrap = TronWrap();
+
     function detectNetworkId(done) {
       if (network_id != "*") {
         return done(null, network_id);
@@ -54,7 +57,13 @@ var Environment = {
       if (config.from) {
         return done();
       }
-      return done(new Error());
+
+      tronWrap._getAccounts(function(err, accounts) {
+        if (err) return done(err);
+        config.networks[config.network].from = accounts[0];
+        config.networks[config.network].privateKey = tronWrap._privateKeyByAccount[accounts[0]];
+        done();
+      });
     }
 
     detectNetworkId(function (err) {

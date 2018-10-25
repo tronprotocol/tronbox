@@ -10,7 +10,8 @@
     "publish": "cd packages/tronbox && npm publish",
     "init-submodules": "git submodule init && npm run update-submodules",
     "update-submodules": "git submodule update --init --recursive && npm update-tronweb",
-    "update-tronweb": "(cd packages/tronwrap/tron-web && yarn)"
+    "update-tronweb": "(cd packages/tronwrap/tron-web && yarn)",
+    "build:tronweb-dev": "(cd packages/tronwrap/tron-web && yarn build:dev)"
   },
   "devDependencies": {
     "lerna": "^2.11.0"
