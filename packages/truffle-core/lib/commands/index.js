@@ -18,7 +18,6 @@ module.exports = {
   serve: require("./serve"),
   exec: require("./exec"),
   unbox: require("./unbox"),
-  version: require("./version"),
-  generate: require("./generate")
+  version: require("./version")
 };
 

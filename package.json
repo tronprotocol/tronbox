@@ -3,15 +3,14 @@
   "scripts": {
     "build:debugger": "(cd packages/truffle-debugger && npm run build)",
     "lerna:bootstrap": "lerna bootstrap",
-    "bootstrap": "npm run init-submodules && npm run lerna:bootstrap && npm run build:debugger",
+    "bootstrap": "npm run update:tronweb && npm run lerna:bootstrap && npm run build:debugger",
     "test": "lerna run test --stream -- --colors",
     "ci": "./scripts/ci.sh",
     "build:tronbox": "cd packages/tronbox && npm run build",
     "publish": "cd packages/tronbox && npm publish",
     "init-submodules": "git submodule init && npm run update-submodules",
-    "update-submodules": "git submodule update --init --recursive && npm update-tronweb",
-    "update-tronweb": "(cd packages/tronwrap/tron-web && yarn)",
-    "build:tronweb-dev": "(cd packages/tronwrap/tron-web && yarn build:dev)"
+    "update-submodules": "git submodule update --init --recursive",
+    "update:tronweb": "(cd packages/tronwrap/tron-web && git pull && yarn install && yarn build)"
   },
   "devDependencies": {
     "lerna": "^2.11.0"
