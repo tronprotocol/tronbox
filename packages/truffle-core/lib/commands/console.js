@@ -9,14 +9,15 @@ var command = {
     var Develop = require("./develop");
     var TruffleError = require("truffle-error");
 
+    var TronWrap = require("TronWrap");
+
     var config = Config.detect(options);
 
-    if (!config.network && !config.networks.development) {
-      return done(new TruffleError(
-        "No network available. Use `tronbox develop` " +
-          "or add network to tronbox.js config."
-      ));
+    if (!config.network && config.networks.development) {
+      config.network = "development";
     }
+    // init TronWeb
+    TronWrap(config.networks[config.network])
 
     // This require a smell?
     var commands = require("./index")
