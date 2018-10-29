@@ -131,7 +131,8 @@ function init(options) {
         callSend = /payable/.test(val.stateMutability) ? 'send' : 'call'
       }
     })
-    if (!option.methodArgs) option.methodArgs = {}
+    option.methodArgs || (option.methodArgs = {})
+    option.methodArgs.from || (option.methodArgs.from = this._accounts[0])
 
     var privateKey
     if (callSend === 'send' && option.methodArgs.from && this._accounts) {
