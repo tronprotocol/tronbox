@@ -37,7 +37,7 @@ function TestRunner(options) {
     this.tronwrap.fullNode,
     this.tronwrap.solidityNode,
     this.tronwrap.eventServer,
-    this.tronwrap.privateKey
+    this.tronwrap.defaultPrivateKey
   )
 
   global.waitForTransactionReceipt = waitForTransactionReceipt(tronWeb)
