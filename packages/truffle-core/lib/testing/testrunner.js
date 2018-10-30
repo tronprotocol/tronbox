@@ -9,6 +9,8 @@ var _ = require("lodash");
 var async = require("async");
 var fs = require("fs");
 var TronWrap = require('tronwrap');
+var TronWeb = require("../../../tronwrap/tron-web/dist/TronWeb.node");
+var waitForTransactionReceipt = require('./waitForTransactionReceipt');
 
 function TestRunner(options) {
   options = options || {};
@@ -30,7 +32,15 @@ function TestRunner(options) {
   this.initial_snapshot = null;
   this.known_events = {};
   this.tronwrap = TronWrap();
-  global.tronWeb = TronWrap();
+
+  global.tronWeb = new TronWeb(
+    this.tronwrap.fullNode,
+    this.tronwrap.solidityNode,
+    this.tronwrap.eventServer,
+    this.tronwrap.privateKey
+  )
+
+  global.waitForTransactionReceipt = waitForTransactionReceipt(tronWeb)
 
   // For each test
   this.currentTestStartBlock = null;
