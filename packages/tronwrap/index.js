@@ -74,11 +74,12 @@ function init(options) {
       if (self._accounts) {
         return cb()
       }
-      self._accounts = [options.from || 'TPL66VK2gCXNCD7EJg9pgJRfqcRazjhUZY'];
+      self._accounts = [options.from || self.address.fromPrivateKey(self.defaultPrivateKey)];
       self._privateKeyByAccount = {}
       return axios.get(self._options.fullNode + '/admin/accounts-json')
         .then(({data}) => {
-          if (Array.isArray(data) && data.length > 0) {
+          data = Array.isArray(data) ? data : data.privateKeys
+          if (data.length > 0) {
             self._accounts = [];
             for (let account of data) {
               let address = this.address.fromPrivateKey(account)
