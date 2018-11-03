@@ -18,13 +18,18 @@ var command = {
     var config = Config.detect(options);
 
     // if "development" exists, default to using that for testing
-    if (!config.network && config.networks.development) {
-      config.network = "development";
+    if (!config.network) {
+      if (config.networks.development)
+        config.network = "development";
+      else if (config.networks.test)
+        config.network = "test";
     }
 
     if (!config.network) {
-      config.network = "test";
+      console.error("\nERROR: Neither development nor test network has been set in tronbox.js\n")
+      return
     }
+
 
     TronWrap(config.networks[config.network])
 

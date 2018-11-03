@@ -1,4 +1,5 @@
 var _TronWeb = require("./tron-web/dist/TronWeb.node");
+
 var axios = require('axios');
 
 var instance;
@@ -50,13 +51,20 @@ function init(options) {
     options.privateKey
   );
 
-  TronWrap.prototype._options = options;
+  const tronWrap = TronWrap.prototype
 
-  TronWrap.prototype._getNetwork = function (callback) {
+  tronWrap._options = options;
+
+  tronWrap._getNetwork = function (callback) {
     callback && callback(null, options.network_id);
   }
 
-  TronWrap.prototype._getAccounts = function (callback) {
+  const defaultAddress = tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey)
+  tronWrap._accounts = [defaultAddress]
+  tronWrap._privateKeyByAccount = {}
+  tronWrap._privateKeyByAccount[defaultAddress] = tronWrap.defaultPrivateKey
+
+  tronWrap._getAccounts = function (callback) {
 
     const self = this
 
@@ -71,30 +79,34 @@ function init(options) {
         }
       }
 
-      if (self._accounts) {
+      if (self._accountsRequested) {
         return cb()
       }
-      self._accounts = [options.from || self.address.fromPrivateKey(self.defaultPrivateKey)];
-      self._privateKeyByAccount = {}
+
       return axios.get(self._options.fullNode + '/admin/accounts-json')
         .then(({data}) => {
           data = Array.isArray(data) ? data : data.privateKeys
-          if (data.length > 0) {
-            self._accounts = [];
+          if (data.length > 0 && data[0].length === 64) {
+            self._accounts = []
+            self._privateKeyByAccount = {}
             for (let account of data) {
               let address = this.address.fromPrivateKey(account)
               self._privateKeyByAccount[address] = account
               self._accounts.push(address)
             }
           }
+          self._accountsRequested = true;
           return cb();
         })
-        .catch(() => cb())
+        .catch(err => {
+          self._accountsRequested = true;
+          return cb()
+        })
 
     })
   }
 
-  TronWrap.prototype._getContract = function (address, callback) {
+  tronWrap._getContract = function (address, callback) {
     this.getContract(address || "").then(function (contractInstance) {
       if (contractInstance) {
         callback && callback(null, contractInstance);
@@ -104,7 +116,7 @@ function init(options) {
     });
   }
 
-  TronWrap.prototype._deployContract = function (option, callback) {
+  tronWrap._deployContract = function (option, callback) {
     var myContract = this.contract();
     myContract.new({
       bytecode: option.data,
@@ -124,7 +136,7 @@ function init(options) {
     });
   }
 
-  TronWrap.prototype.triggerContract = function (option, callback) {
+  tronWrap.triggerContract = function (option, callback) {
     let myContract = this.contract(option.abi, option.address);
     var callSend = 'send' // constructor and fallback
     option.abi.forEach(function (val) {
@@ -136,7 +148,7 @@ function init(options) {
     option.methodArgs.from || (option.methodArgs.from = this._accounts[0])
 
     var privateKey
-    if (callSend === 'send' && option.methodArgs.from && this._accounts) {
+    if (callSend === 'send' && option.methodArgs.from) {
       privateKey = this._privateKeyByAccount[option.methodArgs.from]
     }
     // console.debug(option.methodName, option.args, option.methodArgs);
@@ -148,7 +160,7 @@ function init(options) {
     });
   }
 
-  TronWrap.prototype.setEventListener = function (option, instance, transaction) {
+  tronWrap.setEventListener = function (option, instance, transaction) {
     var that = this;
     var abi = option.abi, myEvent;
     abi.forEach(element => {
