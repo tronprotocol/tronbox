@@ -28,7 +28,7 @@ module.exports = function (contract, args, deployer) {
     }).then(function (instance) {
       var tronWrap = TronWrap()
       if (should_deploy == true) {
-        deployer.logger.log(contract.contract_name + ": " + tronWrap.address.fromHex(instance.address));
+        deployer.logger.log(contract.contract_name + ":\n    (base58) " + tronWrap.address.fromHex(instance.address) + '\n    (hex) ' + instance.address);
       } else {
         deployer.logger.log("Didn't deploy " + contract.contract_name + "; using " + instance.address);
       }
