@@ -156,6 +156,9 @@ function init(options) {
       .then(function (res) {
         callback(null, res)
       }).catch(function (reason) {
+      if (typeof reason === 'object' && reason.error) {
+        reason = reason.error
+      }
       callback(new Error(reason))
     });
   }
