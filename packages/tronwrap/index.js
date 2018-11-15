@@ -122,7 +122,7 @@ function init(options) {
       bytecode: option.data,
       fee_limit: option.fee_limit || Math.pow(10, 7),
       call_value: option.call_value || option.call_value || 0,
-      userFeePercentage: 30,
+      userFeePercentage: option.consume_user_resource_percent || 30,
       abi: option.abi,
       parameters: option.parameters
     }, option.privateKey).then(() => {
@@ -156,6 +156,9 @@ function init(options) {
       .then(function (res) {
         callback(null, res)
       }).catch(function (reason) {
+      if (typeof reason === 'object' && reason.error) {
+        reason = reason.error
+      }
       callback(new Error(reason))
     });
   }
