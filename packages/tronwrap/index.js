@@ -45,9 +45,9 @@ function init(options) {
   }
 
   TronWrap.prototype = new _TronWeb(
-    options.fullNode,
-    options.solidityNode,
-    options.eventServer,
+    options.fullHost || options.fullNode,
+    options.fullHost || options.solidityNode,
+    options.fullHost || options.eventServer,
     options.privateKey
   );
 

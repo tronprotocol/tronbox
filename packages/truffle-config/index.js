@@ -17,6 +17,7 @@ function Config(truffle_directory, working_directory, network) {
     consume_user_resource_percent:30,
     from: null,
     privateKey:null,
+    fullHost:null,
     fullNode: null,
     eventServer: null,
     solidityNode: null,
@@ -30,6 +31,7 @@ function Config(truffle_directory, working_directory, network) {
     networks: {},
     verboseRpc: false,
     privateKey:null,
+    fullHost:null,
     fullNode: null,
     solidityNode: null,
     eventServer: null,
@@ -162,6 +164,18 @@ function Config(truffle_directory, working_directory, network) {
       },
       set: function (val) {
         throw new Error("Don't set config.fullNode directly. Instead, set config.networks and then config.networks[<network name>].fullNode")
+      }
+    },
+    fullHost: {
+      get: function () {
+        try {
+          return self.network_config.fullHost;
+        } catch (e) {
+          return default_tx_values.fullHost;
+        }
+      },
+      set: function (val) {
+        throw new Error("Don't set config.fullHost directly. Instead, set config.networks and then config.networks[<network name>].fullHost")
       }
     },
     solidityNode: {
