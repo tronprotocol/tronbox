@@ -11,15 +11,15 @@
 - Windows, Linux, or Mac OS X
 
 ## Features
-1. Initialize a Customer Tron-Box Project<br>
+Initialize a Customer Tron-Box Project<br>
 `tronbox init`
 <br>
 
-2. Download a dApp, ex: metacoin-box<br>
+Download a dApp, ex: metacoin-box<br>
 `tronbox unbox metacoin`
 <br>
 
-3. Contract Compiler<br>
+Contract Compiler<br>
 `tronbox compile`
 
 <br>
@@ -30,7 +30,62 @@ Optionally, you can select: <br>
 --network save results to a specific host network<br>
 <br>
 
-## 4. Contract Migration<br>
+## Configuration
+To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. This is an example of `tronbox.js`:
+```
+module.exports = {
+  networks: {
+    development: {
+// For trontools/quickstart docker image
+      privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
+      consume_user_resource_percent: 30,
+      fee_limit: 100000000,
+      fullNode: "http://127.0.0.1:8090",
+      solidityNode: "http://127.0.0.1:8091",
+      eventServer: "http://127.0.0.1:8092",
+      network_id: "*"
+    },
+    mainnet: {
+// Don't put your private key here, pass it using an env variable, like:
+// PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
+      privateKey: process.env.PK,
+      consume_user_resource_percent: 30,
+      fee_limit: 100000000,
+      fullNode: "https://api.trongrid.io",
+      solidityNode: "https://api.trongrid.io",
+      eventServer: "https://api.trongrid.io",
+      network_id: "*"
+    }
+  }
+};
+```
+Starting from TronBox 2.1.9, if you are connecting to the same host for full and solidity nodes, and event server, you can set just `fullHost`:
+```
+module.exports = {
+  networks: {
+    development: {
+// For trontools/quickstart docker image
+      privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
+      consume_user_resource_percent: 30,
+      fee_limit: 100000000,
+      fullHost: "http://127.0.0.1:9090",
+      network_id: "*"
+    },
+    mainnet: {
+// Don't put your private key here, pass it using an env variable, like:
+// PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
+      privateKey: process.env.PK,
+      consume_user_resource_percent: 30,
+      fee_limit: 100000000,
+      fullHost: "https://api.trongrid.io",
+      network_id: "*"
+    }
+  }
+};
+```
+Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mononode on port 9090.
+
+## Contract Migration<br>
 `tronbox migrate`
 <br>
 
@@ -38,7 +93,7 @@ This command will invoke all migration scripts within the migrations directory. 
 
 `tronbox migrate --reset`
 <br>
-## 5. Start Console<br>
+## Start Console<br>
 This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. <br>
 
 `tronbox console`<br>
@@ -54,7 +109,7 @@ The console supports the `tronbox` command. For example, you can invoke `migrate
 
 3. Every returned command's promise will automatically be logged. There is no need to use `then()`, which simplifies the command.<br>
 
-## 6. Testing<br>
+## Testing<br>
 
 To carry out the test, run the following command:<br>
 
