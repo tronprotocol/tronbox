@@ -7,10 +7,12 @@
     "test": "lerna run test --stream -- --colors",
     "ci": "./scripts/ci.sh",
     "build:tronbox": "cd packages/tronbox && npm run build",
+    "version:patch": "cd packages/tronbox && npm version patch",
     "publish": "cd packages/tronbox && npm publish",
     "init-submodules": "git submodule init && npm run update-submodules",
     "update-submodules": "git submodule update --init --recursive",
-    "update:tronweb": "(cd packages/tronwrap/tron-web && git pull && yarn install && yarn build)"
+    "update:tronweb": "(cd packages/tronwrap/tron-web && git pull && yarn install && yarn build)",
+    "re-install": "scripts/clean-all-modules.sh && lerna bootstrap"
   },
   "devDependencies": {
     "lerna": "^2.11.0"
