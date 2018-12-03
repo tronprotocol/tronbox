@@ -13,15 +13,10 @@ var BACKUP_CONFIG_FILENAME = "tronbox-config.js"; // For Windows + Command Promp
 function Config(truffle_directory, working_directory, network) {
   var self = this;
   var default_tx_values = {
-    fee_limit: 10000000,
-    consume_user_resource_percent:30,
-    from: null,
-    privateKey:null,
-    fullHost:null,
-    fullNode: null,
-    eventServer: null,
-    solidityNode: null,
-    call_value:null
+    feeLimit: 1e7,
+    userFeePercentage: 30,
+    originEnergyLimit: 1e5,
+    callValue: 0
   };
 
   this._values = {
@@ -30,14 +25,15 @@ function Config(truffle_directory, working_directory, network) {
     network: network,
     networks: {},
     verboseRpc: false,
-    privateKey:null,
-    fullHost:null,
+    privateKey: null,
+    fullHost: null,
     fullNode: null,
     solidityNode: null,
     eventServer: null,
-    fee_limit: null,
-    consume_user_resource_percent:null,
-    call_value:null,
+    feeLimit: null,
+    userFeePercentage: null,
+    originEnergyLimit: null,
+    callValue: null,
     from: null,
     build: null,
     resolver: null,
@@ -56,23 +52,35 @@ function Config(truffle_directory, working_directory, network) {
       evmVersion: "byzantium"
     },
     logger: {
-      log: function () { },
+      log: function () {
+      },
     }
   };
 
   var props = {
     // These are already set.
-    truffle_directory: function () { },
-    working_directory: function () { },
-    network: function () { },
-    networks: function () { },
-    verboseRpc: function () { },
-    build: function () { },
-    resolver: function () { },
-    artifactor: function () { },
-    ethpm: function () { },
-    solc: function () { },
-    logger: function () { },
+    truffle_directory: function () {
+    },
+    working_directory: function () {
+    },
+    network: function () {
+    },
+    networks: function () {
+    },
+    verboseRpc: function () {
+    },
+    build: function () {
+    },
+    resolver: function () {
+    },
+    artifactor: function () {
+    },
+    ethpm: function () {
+    },
+    solc: function () {
+    },
+    logger: function () {
+    },
 
     build_directory: function () {
       return path.join(self.working_directory, "build");
@@ -123,7 +131,7 @@ function Config(truffle_directory, working_directory, network) {
 
         conf = _.extend({}, default_tx_values, conf);
 
-       
+
         return conf;
       },
       set: function (val) {
@@ -202,28 +210,40 @@ function Config(truffle_directory, working_directory, network) {
         throw new Error("Don't set config.eventServer directly. Instead, set config.networks and then config.networks[<network name>].eventServer")
       }
     },
-    consume_user_resource_percent: {
+    userFeePercentage: {
       get: function () {
         try {
-          return self.network_config.consume_user_resource_percent;
+          return self.network_config.userFeePercentage || self.network_config.consume_user_resource_percent;
         } catch (e) {
-          return default_tx_values.consume_user_resource_percent;
+          return default_tx_values.userFeePercentage;
         }
       },
       set: function (val) {
-        throw new Error("Don't set config.consume_user_resource_percent directly. Instead, set config.networks and then config.networks[<network name>].consume_user_resource_percent")
+        throw new Error("Don't set config.userFeePercentage directly. Instead, set config.networks and then config.networks[<network name>].userFeePercentage")
       }
     },
-    fee_limit: {
+    feeLimit: {
       get: function () {
         try {
-          return self.network_config.fee_limit;
+          return self.network_config.feeLimit || self.network_config.fee_limit;
         } catch (e) {
-          return default_tx_values.fee_limit;
+          return default_tx_values.feeLimit;
         }
       },
       set: function (val) {
-        throw new Error("Don't set config.fee_limit directly. Instead, set config.networks and then config.networks[<network name>].fee_limit")
+        throw new Error("Don't set config.feeLimit directly. Instead, set config.networks and then config.networks[<network name>].feeLimit")
+      }
+    },
+    originEnergyLimit: {
+      get: function () {
+        try {
+          return self.network_config.originEnergyLimit;
+        } catch (e) {
+          return default_tx_values.originEnergyLimit;
+        }
+      },
+      set: function (val) {
+        throw new Error("Don't set config.originEnergyLimit directly. Instead, set config.networks and then config.networks[<network name>].originEnergyLimit")
       }
     },
     provider: {
@@ -240,16 +260,16 @@ function Config(truffle_directory, working_directory, network) {
         throw new Error("Don't set config.provider directly. Instead, set config.networks and then set config.networks[<network name>].provider")
       }
     },
-    call_value: {
+    callValue: {
       get: function () {
         try {
-          return self.network_config.call_value;
+          return self.network_config.callValue || self.network_config.call_value;
         } catch (e) {
-          return default_tx_values.call_value;
+          return default_tx_values.callValue;
         }
       },
       set: function (val) {
-        throw new Error("Don't set config.call_value directly. Instead, set config.networks and then config.networks[<network name>].call_value")
+        throw new Error("Don't set config.callValue directly. Instead, set config.networks and then config.networks[<network name>].callValue")
       }
     },
   };
@@ -319,7 +339,7 @@ Config.detect = function (options, filename) {
     ? search = [DEFAULT_CONFIG_FILENAME, BACKUP_CONFIG_FILENAME]
     : search = filename;
 
-  var file = findUp.sync(search, { cwd: options.working_directory || options.workingDirectory });
+  var file = findUp.sync(search, {cwd: options.working_directory || options.workingDirectory});
 
   if (file == null) {
     throw new TruffleError("Could not find suitable configuration file.");

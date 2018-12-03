@@ -120,9 +120,10 @@ function init(options) {
     var myContract = this.contract();
     myContract.new({
       bytecode: option.data,
-      fee_limit: option.fee_limit || Math.pow(10, 7),
-      call_value: option.call_value || option.call_value || 0,
-      userFeePercentage: option.consume_user_resource_percent || 30,
+      feeLimit: option.feeLimit,
+      callValue: option.callValue,
+      userFeePercentage: option.userFeePercentage,
+      originalEnergyLimit: option.originalEnergyLimit,
       abi: option.abi,
       parameters: option.parameters
     }, option.privateKey).then(() => {
