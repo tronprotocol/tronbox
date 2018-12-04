@@ -35,9 +35,6 @@ var command = {
 
     var config = Config.detect(options);
 
-    console.log(config)
-
-
     // if "development" exists, default to using that
     if (!config.network && config.networks.development) {
       config.network = "development";
