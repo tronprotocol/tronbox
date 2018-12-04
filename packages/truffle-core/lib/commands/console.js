@@ -17,7 +17,14 @@ var command = {
       config.network = "development";
     }
     // init TronWeb
-    TronWrap(config.networks[config.network])
+    try {
+      TronWrap(config.networks[config.network], {
+        verify: true,
+        log: options.log
+      })
+    } catch(err) {
+      return console.error('Error', err.message)
+    }
 
     // This require a smell?
     var commands = require("./index")

@@ -38,10 +38,28 @@ function filterMatchFunction(method, abi) {
   }
 }
 
-function init(options) {
+function filterNetworkConfig(options) {
+  return {
+    fullNode: options.fullNode || options.fullHost,
+    feeLimit: options.feeLimit || options.fee_limit || 1e7,
+    userFeePercentage: options.userFeePercentage || options.consume_user_resource_percent || 30,
+    originEnergyLimit: options.originEnergyLimit || options.origin_energy_limit || 1e5,
+    callValue: options.callValue || options.call_value || 0
+  }
+}
+
+function init(options, extraOptions) {
 
   if (instance) {
     return instance
+  }
+
+  if (extraOptions.verify && (
+    !options || !options.privateKey || !(
+      options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
+    )
+  )) {
+    throw new Error('Network parameters are missing or the network set with the options --network does not exist.')
   }
 
   TronWrap.prototype = new _TronWeb(
@@ -53,7 +71,10 @@ function init(options) {
 
   const tronWrap = TronWrap.prototype
 
-  tronWrap._options = options;
+  tronWrap.networkConfig = filterNetworkConfig(options);
+  if (extraOptions.log) {
+    tronWrap._log = extraOptions.log;
+  }
 
   tronWrap._getNetwork = function (callback) {
     callback && callback(null, options.network_id);
@@ -83,7 +104,7 @@ function init(options) {
         return cb()
       }
 
-      return axios.get(self._options.fullNode + '/admin/accounts-json')
+      return axios.get(self.networkConfig.fullNode + '/admin/accounts-json')
         .then(({data}) => {
           data = Array.isArray(data) ? data : data.privateKeys
           if (data.length > 0 && data[0].length === 64) {
@@ -102,7 +123,6 @@ function init(options) {
           self._accountsRequested = true;
           return cb()
         })
-
     })
   }
 
@@ -120,13 +140,13 @@ function init(options) {
     var myContract = this.contract();
     myContract.new({
       bytecode: option.data,
-      feeLimit: option.feeLimit,
-      callValue: option.callValue,
-      userFeePercentage: option.userFeePercentage,
-      originalEnergyLimit: option.originalEnergyLimit,
+      feeLimit: this.networkConfig.feeLimit,
+      callValue: this.networkConfig.callValue,
+      userFeePercentage: this.networkConfig.userFeePercentage,
+      originalEnergyLimit: this.networkConfig.originalEnergyLimit,
       abi: option.abi,
       parameters: option.parameters
-    }, option.privateKey).then(() => {
+    }, option.privateKey).then(result => {
       callback(null, myContract);
       option.address = myContract.address;
       if (option.address) {

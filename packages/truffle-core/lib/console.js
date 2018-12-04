@@ -42,7 +42,16 @@ function Console(tasks, options) {
   if (!options.network && options.networks.development) {
     options.network = "development";
   }
-  this.tronWrap = TronWrap(options.networks[options.network])
+
+  try {
+    this.tronWrap = TronWrap(options.networks[options.network], {
+      verify: true,
+      log: options.log
+    })
+  } catch(err) {
+    return console.error('Error', err.message)
+  }
+
   // this.tronWrap.setHttpProvider(options.provider);
 
   // Bubble the ReplManager's exit event
