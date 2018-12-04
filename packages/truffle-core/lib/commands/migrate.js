@@ -11,11 +11,11 @@ var command = {
       type: "boolean",
       default: false
     },
-    "dry-run": {
-      describe: "Run migrations against an in-memory fork, for testing",
-      type: "boolean",
-      default: false
-    },
+    // "dry-run": {
+    //   describe: "Run migrations against an in-memory fork, for testing",
+    //   type: "boolean",
+    //   default: false
+    // },
     f: {
       describe: "Specify a migration number to run from",
       type: "number"
@@ -35,12 +35,22 @@ var command = {
 
     var config = Config.detect(options);
 
+    console.log(config)
+
+
     // if "development" exists, default to using that
     if (!config.network && config.networks.development) {
       config.network = "development";
     }
     // init TronWeb
-    TronWrap(config.networks[config.network])
+    try {
+      TronWrap(config.networks[config.network], {
+        verify: true,
+        log: options.log
+      })
+    } catch(err) {
+      return console.error('Error', err.message)
+    }
 
 
     function setupDryRunEnvironmentThenRunMigrations(callback) {

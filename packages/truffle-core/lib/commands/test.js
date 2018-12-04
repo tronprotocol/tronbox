@@ -30,8 +30,14 @@ var command = {
       return
     }
 
-
-    TronWrap(config.networks[config.network])
+    try {
+      TronWrap(config.networks[config.network], {
+        verify: true,
+        log: options.log
+      })
+    } catch(err) {
+      return console.error('Error', err.message)
+    }
 
     var ipcDisconnect;
 
