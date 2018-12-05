@@ -34,6 +34,8 @@ export async function prepareContracts(provider, sources = {}, migrations) {
   }
 
   await addMigrations(config, migrations);
+
+  console.log('config', config)
   await migrate(config);
 
   let artifacts = await gatherArtifacts(config);

@@ -13,9 +13,9 @@ var BACKUP_CONFIG_FILENAME = "tronbox-config.js"; // For Windows + Command Promp
 function Config(truffle_directory, working_directory, network) {
   var self = this;
   var default_tx_values = {
-    feeLimit: 1e7,
+    feeLimit: 1e8,
     userFeePercentage: 30,
-    originEnergyLimit: 1e5,
+    originEnergyLimit: 1e8,
     callValue: 0
   };
 
