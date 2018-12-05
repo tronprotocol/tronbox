@@ -36,7 +36,7 @@ var command = {
         log: options.log
       })
     } catch(err) {
-      return console.error('Error', err.message)
+      return console.error('ERROR:', err.message)
     }
 
     var ipcDisconnect;
