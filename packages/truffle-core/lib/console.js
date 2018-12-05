@@ -49,7 +49,7 @@ function Console(tasks, options) {
       log: options.log
     })
   } catch(err) {
-    return console.error('Error', err.message)
+    return console.error('ERROR:', err.message)
   }
 
   // this.tronWrap.setHttpProvider(options.provider);

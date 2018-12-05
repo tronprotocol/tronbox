@@ -1,4 +1,5 @@
 var _TronWeb = require("./tron-web/dist/TronWeb.node");
+var chalk = require('chalk')
 
 var axios = require('axios');
 
@@ -41,7 +42,7 @@ function filterMatchFunction(method, abi) {
 function filterNetworkConfig(options) {
   return {
     fullNode: options.fullNode || options.fullHost,
-    feeLimit: options.feeLimit || options.fee_limit || 1e7,
+    feeLimit: options.feeLimit || options.fee_limit || 1e8,
     userFeePercentage: options.userFeePercentage || options.consume_user_resource_percent || 30,
     originEnergyLimit: options.originEnergyLimit || options.origin_energy_limit || 1e5,
     callValue: options.callValue || options.call_value || 0
@@ -59,7 +60,8 @@ function init(options, extraOptions) {
       options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
     )
   )) {
-    throw new Error('Network parameters are missing or the network set with the options --network does not exist.')
+    console.log(chalk.red('\nNetwork parameters are missing or the network set with the options --network does not exist.'))
+    throw new Error('It was not possible to instantiate TronWeb.\n')
   }
 
   TronWrap.prototype = new _TronWeb(
