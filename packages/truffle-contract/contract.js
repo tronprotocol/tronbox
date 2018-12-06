@@ -1,5 +1,6 @@
 var ethJSABI = require("ethjs-abi");
 var TronWrap = require('tronwrap');
+var {constants} = require('tronwrap');
 var BigNumber = require("bignumber.js")
 var StatusError = require("./statuserror.js")
 
@@ -265,7 +266,6 @@ var contract = (function (module) {
   };
 
   function Contract(contract) {
-    var self = this;
     var constructor = this.constructor;
     this.abi = constructor.abi;
     if (typeof contract == "string") {
@@ -276,6 +276,25 @@ var contract = (function (module) {
       this.address = contract.address;
     }
   };
+
+  function toCamelCase(str) {
+    return str.replace(/_([a-z])/g, g => g[1].toUpperCase())
+  }
+
+  function filterEnergyParameter(args) {
+    let deployParameters = Object.keys(constants.deployParameters)
+    let lastArg = args[args.length - 1]
+    if (typeof lastArg !== 'object' || Array.isArray(lastArg)) return [args, {}]
+    args.pop()
+    let res = {}
+    for (let property in lastArg) {
+      let camelCased = toCamelCase(property)
+      if (!!~deployParameters.indexOf(camelCased)) {
+        res[camelCased] = lastArg[property]
+      }
+    }
+    return [args, res]
+  }
 
   Contract._static_methods = {
 
@@ -304,7 +323,7 @@ var contract = (function (module) {
         throw new Error(this.contractName + " error: Please call setProvider() first before calling new().");
       }
 
-      var args = Array.prototype.slice.call(arguments);
+      var [args, params] = filterEnergyParameter(Array.prototype.slice.call(arguments));
 
       if (!this.bytecode) {
         throw new Error(this._json.contractName + " error: contract binary not set. Can't deploy new instance.");
@@ -349,7 +368,6 @@ var contract = (function (module) {
         if (constructor.length && constructor[0].inputs.length !== args.length) {
           throw new Error(self.contractName + " contract constructor expected " + constructor[0].inputs.length + " arguments, received " + args.length);
         }
-        tx_params.abi = self.abi;
         tx_params = Utils.merge(self.class_defaults, tx_params);
 
         if (tx_params.data == null) {
@@ -358,6 +376,12 @@ var contract = (function (module) {
 
         // for debugging only:
         tx_params.contractName = self.contractName
+
+        for (let param in params) {
+          tx_params[param] = params[param]
+        }
+
+        tx_params.abi = self.abi;
 
         tronWrap._deployContract(tx_params, _callback);
 
@@ -405,6 +429,7 @@ var contract = (function (module) {
       var self = this;
       var methodArgs = {};
 
+
       var lastArg = args[args.length - 1];
       if (!Array.isArray(lastArg) && typeof lastArg === 'object') {
         methodArgs = args.pop();
@@ -415,7 +440,17 @@ var contract = (function (module) {
       }
 
       if (Array.isArray(args[0])) {
-        args = args[0]
+        if (Array.isArray(args[0][0])) {
+          args = args[0];
+        } else {
+          for (let item of self.abi) {
+            if (item.name === methodName) {
+              if (!/\[\]$/.test(item.inputs[0].type)) {
+                args = args[0]
+              }
+            }
+          }
+        }
       }
 
       var option = {};
@@ -455,7 +490,7 @@ var contract = (function (module) {
               if (self.hasOwnProperty(item.name)) continue;
               if (/(function|event)/i.test(item.type) && item.name) {
                 let f = (...args) => {
-                 return self.call.apply(null, [item.name].concat(args))
+                  return self.call.apply(null, [item.name].concat(args))
                 }
                 self[item.name] = f
                 self[item.name].call = f

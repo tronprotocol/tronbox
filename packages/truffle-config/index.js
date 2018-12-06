@@ -1,6 +1,7 @@
 var fs = require("fs");
 var _ = require("lodash");
 var path = require("path");
+var { constants } = require('tronwrap');
 var Provider = require("truffle-provider");
 var TruffleError = require("truffle-error");
 var Module = require('module');
@@ -12,13 +13,7 @@ var BACKUP_CONFIG_FILENAME = "tronbox-config.js"; // For Windows + Command Promp
 
 function Config(truffle_directory, working_directory, network) {
   var self = this;
-  var default_tx_values = {
-    feeLimit: 1e7,
-    userFeePercentage: 30,
-    originEnergyLimit: 1e5,
-    callValue: 0
-  };
-
+  var default_tx_values = constants.deployParameters;
   this._values = {
     truffle_directory: truffle_directory || path.resolve(path.join(__dirname, "../")),
     working_directory: working_directory || process.cwd(),

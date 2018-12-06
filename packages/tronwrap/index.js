@@ -1,6 +1,6 @@
 var _TronWeb = require("./tron-web/dist/TronWeb.node");
 var chalk = require('chalk')
-
+var constants = require('./constants')
 var axios = require('axios');
 
 var instance;
@@ -142,10 +142,10 @@ function init(options, extraOptions) {
     var myContract = this.contract();
     myContract.new({
       bytecode: option.data,
-      feeLimit: this.networkConfig.feeLimit,
-      callValue: this.networkConfig.callValue,
-      userFeePercentage: this.networkConfig.userFeePercentage,
-      originalEnergyLimit: this.networkConfig.originalEnergyLimit,
+      feeLimit: option.feeLimit || this.networkConfig.feeLimit,
+      callValue: option.callValue || this.networkConfig.callValue,
+      userFeePercentage: option.userFeePercentage || this.networkConfig.userFeePercentage,
+      originEnergyLimit: option.originEnergyLimit || this.networkConfig.originEnergyLimit,
       abi: option.abi,
       parameters: option.parameters
     }, option.privateKey).then(result => {
@@ -229,3 +229,5 @@ function init(options, extraOptions) {
 
 module.exports = init;
 module.exports.config = () => console.log('config')
+module.exports.constants = constants
+
