@@ -1,6 +1,6 @@
 var ethJSABI = require("ethjs-abi");
 var TronWrap = require('tronwrap');
-var { constants } = require('tronwrap');
+var {constants} = require('tronwrap');
 var BigNumber = require("bignumber.js")
 var StatusError = require("./statuserror.js")
 
@@ -377,7 +377,7 @@ var contract = (function (module) {
         // for debugging only:
         tx_params.contractName = self.contractName
 
-        for(let param in params) {
+        for (let param in params) {
           tx_params[param] = params[param]
         }
 
@@ -439,6 +439,20 @@ var contract = (function (module) {
         methodArgs.call_value = 0;
       }
 
+      if (Array.isArray(args[0])) {
+        if (Array.isArray(args[0][0])) {
+          args = args[0];
+        } else {
+          for (let item of self.abi) {
+            if (item.name === methodName) {
+              if (!/\[\]$/.test(item.inputs[0].type)) {
+                args = args[0]
+              }
+            }
+          }
+        }
+      }
+
       var option = {};
 
       return new Promise(function (accept, reject) {
@@ -476,7 +490,7 @@ var contract = (function (module) {
               if (self.hasOwnProperty(item.name)) continue;
               if (/(function|event)/i.test(item.type) && item.name) {
                 let f = (...args) => {
-                 return self.call.apply(null, [item.name].concat(args))
+                  return self.call.apply(null, [item.name].concat(args))
                 }
                 self[item.name] = f
                 self[item.name].call = f

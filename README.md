@@ -196,15 +196,14 @@ instance.call('getBalance', accounts[0]);
 instance.getBalance(accounts[0]);
 instance.getBalance.call(accounts[0]);
 ```
-and you can pass the arguments for the method in both the following ways:
+and you can pass the `address` and `amount` for the method in both the following ways:
 ```
 instance.sendCoin(address, amount, {from: account[1]});
 ```
-while instead the old approach with arrays won't work:
+and
 ```
-instance.sendCoin([address, amount], {from: account[1]}); // error
+instance.sendCoin([address, amount], {from: account[1]});
 ```
-We removed this possibility because it makes impossible to distinguish between an array of parameters or a single parameter which is an Array.
 
 ## How to contribute
 
