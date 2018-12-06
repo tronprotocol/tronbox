@@ -284,7 +284,7 @@ var contract = (function (module) {
   function filterEnergyParameter(args) {
     let deployParameters = Object.keys(constants.deployParameters)
     let lastArg = args[args.length - 1]
-    if (typeof lastArg !== 'object') return [args, {}]
+    if (typeof lastArg !== 'object' || Array.isArray(lastArg)) return [args, {}]
     args.pop()
     let res = {}
     for (let property in lastArg) {
@@ -377,8 +377,6 @@ var contract = (function (module) {
         // for debugging only:
         tx_params.contractName = self.contractName
 
-        // console.log(tx_params)
-
         for(let param in params) {
           tx_params[param] = params[param]
         }
@@ -431,6 +429,7 @@ var contract = (function (module) {
       var self = this;
       var methodArgs = {};
 
+
       var lastArg = args[args.length - 1];
       if (!Array.isArray(lastArg) && typeof lastArg === 'object') {
         methodArgs = args.pop();
@@ -438,10 +437,6 @@ var contract = (function (module) {
 
       if (!methodArgs.call_value) {
         methodArgs.call_value = 0;
-      }
-
-      if (Array.isArray(args[0])) {
-        args = args[0]
       }
 
       var option = {};

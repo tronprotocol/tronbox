@@ -38,8 +38,10 @@ module.exports = {
     development: {
 // For trontools/quickstart docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
-      consume_user_resource_percent: 30,
-      fee_limit: 100000000,
+      userFeePercentage: 30, // or consume_user_resource_percent
+      feeLimit: 100000000, // or fee_limit
+      originEnergyLimit: 1e8, // or origin_energy_limit
+      callValue: 0, // or call_value
       fullNode: "http://127.0.0.1:8090",
       solidityNode: "http://127.0.0.1:8091",
       eventServer: "http://127.0.0.1:8092",
@@ -49,8 +51,8 @@ module.exports = {
 // Don't put your private key here, pass it using an env variable, like:
 // PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
       privateKey: process.env.PK,
-      consume_user_resource_percent: 30,
-      fee_limit: 100000000,
+      userFeePercentage: 30,
+      feeLimit: 100000000,
       fullNode: "https://api.trongrid.io",
       solidityNode: "https://api.trongrid.io",
       eventServer: "https://api.trongrid.io",
@@ -66,8 +68,8 @@ module.exports = {
     development: {
 // For trontools/quickstart docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
-      consume_user_resource_percent: 30,
-      fee_limit: 100000000,
+      userFeePercentage: 30,
+      feeLimit: 100000000,
       fullHost: "http://127.0.0.1:9090",
       network_id: "*"
     },
@@ -75,8 +77,8 @@ module.exports = {
 // Don't put your private key here, pass it using an env variable, like:
 // PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
       privateKey: process.env.PK,
-      consume_user_resource_percent: 30,
-      fee_limit: 100000000,
+      userFeePercentage: 30,
+      feeLimit: 100000000,
       fullHost: "https://api.trongrid.io",
       network_id: "*"
     }
@@ -93,6 +95,29 @@ This command will invoke all migration scripts within the migrations directory. 
 
 `tronbox migrate --reset`
 <br>
+
+## Parameters by contract (introduced in v2.2.3)
+
+It is very important to set the deploying parameters for any contract. In TronBox 2.2.3+ you can do it modifying the file
+```
+migrations/2_deploy_contracts.js
+```
+and specifying the parameters you need like in the following example:
+```
+var ConvertLib = artifacts.require("./ConvertLib.sol");
+var MetaCoin = artifacts.require("./MetaCoin.sol");
+
+module.exports = function(deployer) {
+  deployer.deploy(ConvertLib);
+  deployer.link(ConvertLib, MetaCoin);
+  deployer.deploy(MetaCoin, 10000, {
+    fee_limit: 1.1e8,
+    userFeePercentage: 31,
+    originEnergyLimit: 1.1e8
+  });
+};
+```
+
 ## Start Console<br>
 This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. <br>
 
@@ -175,10 +200,11 @@ and you can pass the arguments for the method in both the following ways:
 ```
 instance.sendCoin(address, amount, {from: account[1]});
 ```
-and
+while instead the old approach with arrays won't work:
 ```
-instance.sendCoin([address, amount], {from: account[1]});
+instance.sendCoin([address, amount], {from: account[1]}); // error
 ```
+We removed this possibility because it makes impossible to distinguish between an array of parameters or a single parameter which is an Array.
 
 ## How to contribute
 
