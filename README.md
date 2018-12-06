@@ -96,7 +96,7 @@ This command will invoke all migration scripts within the migrations directory. 
 `tronbox migrate --reset`
 <br>
 
-## Parameters by contract (introduced in v2.2.3)
+## Parameters by contract (introduced in v2.2.2)
 
 It is very important to set the deploying parameters for any contract. In TronBox 2.2.3+ you can do it modifying the file
 ```
