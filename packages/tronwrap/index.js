@@ -151,9 +151,9 @@ function init(options, extraOptions) {
     }, option.privateKey).then(result => {
       callback(null, myContract);
       option.address = myContract.address;
-      if (option.address) {
-        this.setEventListener(option);
-      }
+      // if (option.address) {
+      //   this.setEventListener(option);
+      // }
     }).catch(function (reason) {
       callback(new Error(reason))
     });
