@@ -226,3 +226,16 @@ yarn bootstrap
 ./tronbox.dev migrate --reset
 ```
 
+## Recent history
+
+__2.2.3__
+Resolve appended process after migrating.
+Add better error messaging.
+Fix issue with invalid origin_energy_limit.
+
+__2.2.2__
+Add parameter configuration by smart contract.
+
+__2.2.1__
+Add compatibility with JavaTron 3.2.
+
