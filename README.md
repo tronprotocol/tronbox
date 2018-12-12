@@ -228,6 +228,13 @@ yarn bootstrap
 
 ## Recent history
 
+
+__2.2.5__
+False alarm and reverse back for origin_energy_limit check.
+
+__2.2.4__
+Temporary reverse of origin_energy_limit change.
+
 __2.2.3__
 Resolve appended process after migrating.
 Add better error messaging.
