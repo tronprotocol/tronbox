@@ -42,10 +42,10 @@ function filterMatchFunction(method, abi) {
 function filterNetworkConfig(options) {
   return {
     fullNode: options.fullNode || options.fullHost,
-    feeLimit: options.feeLimit || options.fee_limit || 1e8,
-    userFeePercentage: options.userFeePercentage || options.consume_user_resource_percent || 30,
-    originEnergyLimit: options.originEnergyLimit || options.origin_energy_limit || 1e5,
-    callValue: options.callValue || options.call_value || 0
+    feeLimit: options.feeLimit || options.fee_limit || constants.deployParameters.feeLimit,
+    userFeePercentage: options.userFeePercentage || options.consume_user_resource_percent || constants.deployParameters.userFeePercentage,
+    originEnergyLimit: options.originEnergyLimit || options.origin_energy_limit || constants.deployParameters.originEnergyLimit,
+    callValue: options.callValue || options.call_value || constants.deployParameters.callValue
   }
 }
 
@@ -60,8 +60,11 @@ function init(options, extraOptions) {
       options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
     )
   )) {
-    console.log(chalk.red('\nNetwork parameters are missing or the network set with the options --network does not exist.'))
-    throw new Error('It was not possible to instantiate TronWeb.\n')
+    if (!options) {
+      throw new Error('It was not possible to instantiate TronWeb. The chosen network does not exist in your "tronbox.js".')
+    } else {
+      throw new Error('It was not possible to instantiate TronWeb. Some required parameters are missing in your "tronbox.js".')
+    }
   }
 
   TronWrap.prototype = new _TronWeb(
@@ -139,21 +142,22 @@ function init(options, extraOptions) {
   }
 
   tronWrap._deployContract = function (option, callback) {
-    var myContract = this.contract();
+    const myContract = this.contract();
+    let originEnergyLimit = option.originEnergyLimit || this.networkConfig.originEnergyLimit
+    if (originEnergyLimit < 0 || originEnergyLimit > constants.deployParameters.originEnergyLimit) {
+      throw new Error('Origin Energy Limit must be > 0 and <= 10,000,000')
+    }
     myContract.new({
       bytecode: option.data,
       feeLimit: option.feeLimit || this.networkConfig.feeLimit,
       callValue: option.callValue || this.networkConfig.callValue,
       userFeePercentage: option.userFeePercentage || this.networkConfig.userFeePercentage,
-      originEnergyLimit: option.originEnergyLimit || this.networkConfig.originEnergyLimit,
+      originEnergyLimit,
       abi: option.abi,
       parameters: option.parameters
     }, option.privateKey).then(result => {
       callback(null, myContract);
       option.address = myContract.address;
-      // if (option.address) {
-      //   this.setEventListener(option);
-      // }
     }).catch(function (reason) {
       callback(new Error(reason))
     });
@@ -174,7 +178,6 @@ function init(options, extraOptions) {
     if (callSend === 'send' && option.methodArgs.from) {
       privateKey = this._privateKeyByAccount[option.methodArgs.from]
     }
-    // console.debug(option.methodName, option.args, option.methodArgs);
     myContract[option.methodName](...option.args)[callSend](option.methodArgs || {}, privateKey)
       .then(function (res) {
         callback(null, res)
@@ -182,45 +185,8 @@ function init(options, extraOptions) {
       if (typeof reason === 'object' && reason.error) {
         reason = reason.error
       }
-      callback(new Error(reason))
-    });
-  }
-
-  tronWrap.setEventListener = function (option, instance, transaction) {
-    var that = this;
-    var abi = option.abi, myEvent;
-    abi.forEach(element => {
-      if (element.type == 'event') {
-        var event = that.EventList.filter((item) => (item.name == element.name && item.address == option.address));
-        if (event && event.length) {
-          myEvent = event[0].event;
-          return;
-        }
-        // console.log(element.name);
-        var myContract = that.contract(option.abi);
-        myContract.at(option.address).then(function (instance) {
-          //部署成功，但是获取不到合约内容，需要截获
-          if (!instance.address) return;
-          var myEvent = instance[element.name]();
-          myEvent.watch(function (err, result) {
-            if (err && err != "") return;
-            var eventResult = "";
-            if (result && result.length) {
-              eventResult = result;
-              if (transaction) {
-                result.forEach((item) => {
-                  if (item.transaction_id == transaction.txID) {
-                    eventResult = item.result;
-                    myEvent.stopWatching();
-                  }
-                });
-              }
-              // console.log('eventResult:', JSON.stringify(eventResult));
-            }
-          });
-        })
-        that.EventList.push({name: element.name, event: myEvent, address: option.address});
-      }
+      customError(console, reason)
+      // callback(new Error(reason))
     });
   }
 
@@ -231,3 +197,15 @@ module.exports = init;
 module.exports.config = () => console.log('config')
 module.exports.constants = constants
 
+const customError = (logger, err) => {
+  let msg = typeof err === 'string' ? err : err.message
+  if (msg) {
+    msg = msg.replace(/^error(:|) /i, '')
+    logger.error(chalk.red(chalk.bold('ERROR:'), msg))
+  } else {
+    logger.error("Error encountered, bailing. Network state unknown.");
+  }
+  process.exit()
+}
+
+module.exports.error = customError

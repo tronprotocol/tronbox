@@ -7,8 +7,10 @@ var async = require("async");
 // var Web3 = require("web3");
 var expect = require("truffle-expect");
 var Deployer = require("truffle-deployer");
+var chalk = require("chalk")
 
 var TronWrap = require('tronwrap');
+const TWError = require('tronwrap').error
 var tronWrap;
 
 function Migration(file) {
@@ -67,8 +69,7 @@ Migration.prototype.run = function (options, callback) {
       // Use process.nextTicK() to prevent errors thrown in the callback from triggering the below catch()
       process.nextTick(callback);
     }).catch(function (e) {
-      logger.log("Error encountered, bailing. Network state unknown. Review successful transactions manually.");
-      callback(e);
+      TWError(logger, e)
     });
   };
   Require.file({
