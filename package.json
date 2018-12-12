@@ -9,8 +9,8 @@
     "build:tronbox": "cd packages/tronbox && npm run build",
     "version:patch": "cd packages/tronbox && npm version patch",
     "publish:tronbox": "cd packages/tronbox && npm publish",
-    "init-submodules": "git submodule init && npm run update-submodules",
-    "update-submodules": "git submodule update --init --recursive",
+    "init:submodules": "git submodule init && npm run update-submodules",
+    "update:submodules": "git submodule update --init --recursive",
     "update:tronweb": "./scripts/update-tronweb.sh",
     "re-install": "scripts/clean-all-modules.sh && lerna bootstrap"
   },
