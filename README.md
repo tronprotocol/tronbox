@@ -228,6 +228,8 @@ yarn bootstrap
 
 ## Recent history
 
+__2.3.0__
+When a smart contract deploy fails, the error shows the url to get info about the failed transaction.
 
 __2.2.5__
 False alarm and reverse back for origin_energy_limit check.

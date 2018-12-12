@@ -142,25 +142,71 @@ function init(options, extraOptions) {
   }
 
   tronWrap._deployContract = function (option, callback) {
+
     const myContract = this.contract();
     let originEnergyLimit = option.originEnergyLimit || this.networkConfig.originEnergyLimit
     if (originEnergyLimit < 0 || originEnergyLimit > constants.deployParameters.originEnergyLimit) {
       throw new Error('Origin Energy Limit must be > 0 and <= 10,000,000')
     }
-    myContract.new({
+
+    this._new(myContract, {
       bytecode: option.data,
       feeLimit: option.feeLimit || this.networkConfig.feeLimit,
       callValue: option.callValue || this.networkConfig.callValue,
       userFeePercentage: option.userFeePercentage || this.networkConfig.userFeePercentage,
       originEnergyLimit,
       abi: option.abi,
-      parameters: option.parameters
-    }, option.privateKey).then(result => {
-      callback(null, myContract);
-      option.address = myContract.address;
-    }).catch(function (reason) {
+      parameters: option.parameters,
+      contractName: option.contractName
+    }, option.privateKey)
+      .then(result => {
+        callback(null, myContract);
+        option.address = myContract.address;
+      }).catch(function (reason) {
       callback(new Error(reason))
     });
+  }
+
+  tronWrap._new = function (myContract, options, privateKey = tronWrap.defaultPrivateKey, callback) {
+
+    let signedTransaction
+
+    const address = tronWrap.address.fromPrivateKey(privateKey);
+    return tronWrap.transactionBuilder.createSmartContract(options, address)
+      .then(transaction => {
+        return tronWrap.trx.sign(transaction, privateKey)
+      })
+      .then(result => {
+        signedTransaction = result
+        return tronWrap.trx.sendRawTransaction(signedTransaction);
+      })
+      .then(contract => {
+        if (!contract.result) {
+          throw new Error('Unknown error: ' + JSON.stringify(contract, null, 2))
+        } else {
+          return tronWrap.trx.getContract(signedTransaction.contract_address)
+        }
+      })
+      .then(contract => {
+        if (!contract.contract_address)
+          callback('Unknown error: ' + JSON.stringify(contract, null, 2));
+
+        myContract.address = contract.contract_address;
+        myContract.bytecode = contract.bytecode;
+        myContract.deployed = true;
+
+        myContract.loadAbi(contract.abi.entrys);
+
+        return Promise.resolve(myContract);
+      })
+      .catch(ex => {
+        if (ex.toString().includes('does not exist')) {
+          let url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
+
+          ex = 'Contract ' + chalk.bold(options.contractName) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url)
+        }
+        return Promise.reject(ex);
+      })
   }
 
   tronWrap.triggerContract = function (option, callback) {
@@ -198,15 +244,24 @@ module.exports.config = () => console.log('config')
 module.exports.constants = constants
 
 const logErrorAndExit = (logger, err) => {
+
+  function log(str) {
+    try {
+      logger.error(str)
+    } catch (err) {
+      console.error(str)
+    }
+  }
+
   let msg = typeof err === 'string' ? err : err.message
   if (msg) {
     msg = msg.replace(/^error(:|) /i, '')
     if (msg === 'Invalid URL provided to HttpProvider') {
       msg = 'Either invalid or wrong URL provided to HttpProvider. Verify the configuration in your "tronbox.js"'
     }
-    logger.error(chalk.red(chalk.bold('ERROR:'), msg))
+    log(chalk.red(chalk.bold('ERROR:'), msg))
   } else {
-    logger.error("Error encountered, bailing. Network state unknown.");
+    log("Error encountered, bailing. Network state unknown.");
   }
   process.exit()
 }
