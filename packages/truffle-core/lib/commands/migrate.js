@@ -32,7 +32,7 @@ var command = {
     var temp = require("temp");
     var copy = require("../copy");
     var TronWrap = require("TronWrap");
-    const TWError = require('tronwrap').error
+    const logErrorAndExit = require('tronwrap').logErrorAndExit
 
     var config = Config.detect(options);
 
@@ -47,7 +47,7 @@ var command = {
         log: options.log
       })
     } catch(err) {
-      return TWError(console, err.message)
+      logErrorAndExit(console, err.message)
     }
 
 

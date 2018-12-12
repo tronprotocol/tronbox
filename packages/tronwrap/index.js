@@ -185,7 +185,7 @@ function init(options, extraOptions) {
       if (typeof reason === 'object' && reason.error) {
         reason = reason.error
       }
-      customError(console, reason)
+      logErrorAndExit(console, reason)
       // callback(new Error(reason))
     });
   }
@@ -197,10 +197,13 @@ module.exports = init;
 module.exports.config = () => console.log('config')
 module.exports.constants = constants
 
-const customError = (logger, err) => {
+const logErrorAndExit = (logger, err) => {
   let msg = typeof err === 'string' ? err : err.message
   if (msg) {
     msg = msg.replace(/^error(:|) /i, '')
+    if (msg === 'Invalid URL provided to HttpProvider') {
+      msg = 'Either invalid or wrong URL provided to HttpProvider. Verify the configuration in your "tronbox.js"'
+    }
     logger.error(chalk.red(chalk.bold('ERROR:'), msg))
   } else {
     logger.error("Error encountered, bailing. Network state unknown.");
@@ -208,4 +211,4 @@ const customError = (logger, err) => {
   process.exit()
 }
 
-module.exports.error = customError
+module.exports.logErrorAndExit = logErrorAndExit

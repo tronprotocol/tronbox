@@ -10,7 +10,7 @@ var Deployer = require("truffle-deployer");
 var chalk = require("chalk")
 
 var TronWrap = require('tronwrap');
-const TWError = require('tronwrap').error
+const logErrorAndExit = require('tronwrap').logErrorAndExit
 var tronWrap;
 
 function Migration(file) {
@@ -69,7 +69,7 @@ Migration.prototype.run = function (options, callback) {
       // Use process.nextTicK() to prevent errors thrown in the callback from triggering the below catch()
       process.nextTick(callback);
     }).catch(function (e) {
-      TWError(logger, e)
+      logErrorAndExit(logger, e)
     });
   };
   Require.file({

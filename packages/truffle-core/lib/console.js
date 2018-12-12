@@ -13,7 +13,7 @@ var path = require("path");
 var EventEmitter = require("events");
 var inherits = require("util").inherits;
 var TronWrap = require('tronwrap')
-const TWError = require('tronwrap').error
+const logErrorAndExit = require('tronwrap').logErrorAndExit
 
 inherits(Console, EventEmitter);
 
@@ -50,7 +50,7 @@ function Console(tasks, options) {
       log: options.log
     })
   } catch(err) {
-    return TWError(console, err.message)
+    logErrorAndExit(console, err.message)
   }
 
   // this.tronWrap.setHttpProvider(options.provider);
