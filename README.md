@@ -229,22 +229,16 @@ yarn bootstrap
 ## Recent history
 
 __2.3.0__
-When a smart contract deploy fails, the error shows the url to get info about the failed transaction.
-
-__2.2.5__
-False alarm and reverse back for origin_energy_limit check.
-
-__2.2.4__
-Temporary reverse of origin_energy_limit change.
+* When a smart contract deploy fails, the error shows the url to get info about the failed transaction.
 
 __2.2.3__
-Resolve appended process after migrating.
-Add better error messaging.
-Fix issue with invalid origin_energy_limit.
+* Resolve appended process after migrating.
+* Add better error messaging.
+* Fix issue with invalid origin_energy_limit.
 
 __2.2.2__
-Add parameter configuration by smart contract.
+* Add parameter configuration by smart contract.
 
 __2.2.1__
-Add compatibility with JavaTron 3.2.
+* Add compatibility with JavaTron 3.2.
 
