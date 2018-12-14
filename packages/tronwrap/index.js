@@ -157,7 +157,7 @@ function init(options, extraOptions) {
       originEnergyLimit,
       abi: option.abi,
       parameters: option.parameters,
-      contractName: option.contractName
+      name: option.contractName
     }, option.privateKey)
       .then(result => {
         callback(null, myContract);
