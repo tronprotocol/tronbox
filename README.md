@@ -232,6 +232,10 @@ yarn bootstrap
 
 ## Recent history
 
+__2.3.1__
+* Adds temporary logo.
+* Fix contract name during deployment
+
 __2.3.0__
 * When a smart contract deploy fails, the error shows the url to get info about the failed transaction.
 
