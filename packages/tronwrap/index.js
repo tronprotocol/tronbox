@@ -2,6 +2,7 @@ var _TronWeb = require("./tron-web/dist/TronWeb.node");
 var chalk = require('chalk')
 var constants = require('./constants')
 var axios = require('axios');
+var sleep = require('sleep')
 
 var instance;
 
@@ -176,12 +177,19 @@ function init(options, extraOptions) {
       .then(transaction => {
         return tronWrap.trx.sign(transaction, privateKey)
       })
-      .then(result => {
+      .then(async result => {
         signedTransaction = result
-        return tronWrap.trx.sendRawTransaction(signedTransaction);
+        for (let i=0;i<10;i++) {
+          const contract = await tronWrap.trx.sendRawTransaction(signedTransaction);
+          if (contract.result) {
+            return Promise.resolve(contract.result)
+          }
+          sleep.sleep(1)
+        }
+        return Promise.resolve(false)
       })
-      .then(contract => {
-        if (!contract.result) {
+      .then(result => {
+        if (!result) {
           throw new Error('Unknown error: ' + JSON.stringify(contract, null, 2))
         } else {
           return tronWrap.trx.getContract(signedTransaction.contract_address)
