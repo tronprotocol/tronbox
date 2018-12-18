@@ -1,4 +1,6 @@
 const TronWrap = require('tronwrap');
+const {dlog} = require('tronwrap');
+
 
 module.exports = function (contract, args, deployer) {
   return function () {
@@ -21,6 +23,7 @@ module.exports = function (contract, args, deployer) {
           prefix = "Replacing ";
         }
         deployer.logger.log(prefix + contract.contract_name + "...");
+        dlog(contract, new_args)
         return contract.new.apply(contract, new_args);
       } else {
         return contract.deployed();
@@ -35,6 +38,8 @@ module.exports = function (contract, args, deployer) {
 
       // Ensure the address and tx-hash are set on the contract.
       contract.address = instance.address;
+
+      dlog('Instance name:', instance && instance.constructor ? instance.constructor.contractName : null)
       return instance;
     });
   };

@@ -15,8 +15,8 @@ function TronWrap() {
 }
 
 function toNumber(value) {
-  if (!value) return null;
-  if (typeof value === 'string') {
+  if(!value) return null;
+  if(typeof value === 'string') {
     value = /^0x/.test(value) ? value : '0x' + value;
   } else {
     value = value.toNumber();
@@ -26,7 +26,7 @@ function toNumber(value) {
 
 function filterMatchFunction(method, abi) {
   let methodObj = abi.filter((item) => item.name === method);
-  if (!methodObj || methodObj.length === 0) {
+  if(!methodObj || methodObj.length === 0) {
     return null;
   }
   methodObj = methodObj[0];
@@ -37,6 +37,10 @@ function filterMatchFunction(method, abi) {
     methodName: methodObj.name,
     methodType: methodObj.type
   }
+}
+
+function sleep(millis) {
+  return new Promise(resolve => setTimeout(resolve, millis));
 }
 
 function filterNetworkConfig(options) {
@@ -51,16 +55,16 @@ function filterNetworkConfig(options) {
 
 function init(options, extraOptions) {
 
-  if (instance) {
+  if(instance) {
     return instance
   }
 
-  if (extraOptions.verify && (
+  if(extraOptions.verify && (
     !options || !options.privateKey || !(
       options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
     )
   )) {
-    if (!options) {
+    if(!options) {
       throw new Error('It was not possible to instantiate TronWeb. The chosen network does not exist in your "tronbox.js".')
     } else {
       throw new Error('It was not possible to instantiate TronWeb. Some required parameters are missing in your "tronbox.js".')
@@ -77,7 +81,7 @@ function init(options, extraOptions) {
   const tronWrap = TronWrap.prototype
 
   tronWrap.networkConfig = filterNetworkConfig(options);
-  if (extraOptions.log) {
+  if(extraOptions.log) {
     tronWrap._log = extraOptions.log;
   }
 
@@ -96,7 +100,7 @@ function init(options, extraOptions) {
 
     return new Promise((accept, reject) => {
       function cb() {
-        if (callback) {
+        if(callback) {
           callback(null, self._accounts)
           accept()
         }
@@ -105,17 +109,17 @@ function init(options, extraOptions) {
         }
       }
 
-      if (self._accountsRequested) {
+      if(self._accountsRequested) {
         return cb()
       }
 
       return axios.get(self.networkConfig.fullNode + '/admin/accounts-json')
         .then(({data}) => {
           data = Array.isArray(data) ? data : data.privateKeys
-          if (data.length > 0 && data[0].length === 64) {
+          if(data.length > 0 && data[0].length === 64) {
             self._accounts = []
             self._privateKeyByAccount = {}
-            for (let account of data) {
+            for(let account of data) {
               let address = this.address.fromPrivateKey(account)
               self._privateKeyByAccount[address] = account
               self._accounts.push(address)
@@ -131,10 +135,18 @@ function init(options, extraOptions) {
     })
   }
 
-  tronWrap._getContract = function (address, callback) {
-    this.getContract(address || "").then(function (contractInstance) {
-      if (contractInstance) {
-        callback && callback(null, contractInstance);
+  tronWrap._getContract = async function (address, callback) {
+    const myContract = this.contract();
+    tronWrap.trx.getContract(address || "").then(function (contractInstance) {
+      if(contractInstance) {
+
+        myContract.address = contractInstance.contract_address;
+        myContract.bytecode = contractInstance.bytecode;
+        myContract.deployed = true;
+
+        myContract.loadAbi(contractInstance.abi.entrys);
+
+        callback && callback(null, myContract);
       } else {
         callback(new Error("no code"))
       }
@@ -145,7 +157,7 @@ function init(options, extraOptions) {
 
     const myContract = this.contract();
     let originEnergyLimit = option.originEnergyLimit || this.networkConfig.originEnergyLimit
-    if (originEnergyLimit < 0 || originEnergyLimit > constants.deployParameters.originEnergyLimit) {
+    if(originEnergyLimit < 0 || originEnergyLimit > constants.deployParameters.originEnergyLimit) {
       throw new Error('Origin Energy Limit must be > 0 and <= 10,000,000')
     }
 
@@ -167,53 +179,77 @@ function init(options, extraOptions) {
     });
   }
 
-  tronWrap._new = function (myContract, options, privateKey = tronWrap.defaultPrivateKey, callback) {
+  tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey, callback) {
 
-    let signedTransaction
+    try {
+      const address = tronWrap.address.fromPrivateKey(privateKey);
+      const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
+      const signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
+      const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
 
-    const address = tronWrap.address.fromPrivateKey(privateKey);
-    return tronWrap.transactionBuilder.createSmartContract(options, address)
-      .then(transaction => {
-        return tronWrap.trx.sign(transaction, privateKey)
+      if(!result) {
+        return Promise.reject('Transaction not broadcasted')
+      }
+
+      let contract
+      dlog('Contract broadcasted', {
+        result: result.result,
+        transaction_id: transaction.txID,
+        address: transaction.contract_address
       })
-      .then(result => {
-        signedTransaction = result
-        return tronWrap.trx.sendRawTransaction(signedTransaction);
-      })
-      .then(contract => {
-        if (!contract.result) {
-          throw new Error('Unknown error: ' + JSON.stringify(contract, null, 2))
-        } else {
-          return tronWrap.trx.getContract(signedTransaction.contract_address)
+      for(let i = 0; i < 10; i++) {
+        try {
+          dlog('Requesting contract')
+          contract = await tronWrap.trx.getContract(signedTransaction.contract_address)
+          dlog('Contract requested')
+          if(contract.contract_address) {
+            dlog('Contract found')
+            break
+          }
+        } catch (err) {
+          dlog('Contract does not exist yet')
         }
-      })
-      .then(contract => {
-        if (!contract.contract_address)
-          callback('Unknown error: ' + JSON.stringify(contract, null, 2));
 
-        myContract.address = contract.contract_address;
-        myContract.bytecode = contract.bytecode;
-        myContract.deployed = true;
+        await sleep(500)
+      }
 
-        myContract.loadAbi(contract.abi.entrys);
+      dlog('Reading contract data')
 
-        return Promise.resolve(myContract);
-      })
-      .catch(ex => {
-        if (ex.toString().includes('does not exist')) {
-          let url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
+      if(!contract || !contract.contract_address) {
 
-          ex = 'Contract ' + chalk.bold(options.contractName) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url)
+        dlog('Contract address missing')
+
+        if(contract.code && contract.message) {
+          contract.message = tronWrap.toAscii(contract.message)
         }
-        return Promise.reject(ex);
-      })
+        return Promise.reject('Unknown error: ' + JSON.stringify(contract, null, 2));
+      }
+
+      myContract.address = contract.contract_address;
+      myContract.bytecode = contract.bytecode;
+      myContract.deployed = true;
+
+      myContract.loadAbi(contract.abi.entrys);
+
+      dlog('Contract deployed')
+      return Promise.resolve(myContract)
+
+    } catch (ex) {
+      if(ex.toString().includes('does not exist')) {
+        let url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
+
+        ex = 'Contract ' + chalk.bold(options.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url)
+      }
+
+      return Promise.reject(ex);
+    }
   }
 
   tronWrap.triggerContract = function (option, callback) {
     let myContract = this.contract(option.abi, option.address);
     var callSend = 'send' // constructor and fallback
     option.abi.forEach(function (val) {
-      if (val.name === option.methodName) {
+      if(val.name === option.methodName) {
         callSend = /payable/.test(val.stateMutability) ? 'send' : 'call'
       }
     })
@@ -221,14 +257,14 @@ function init(options, extraOptions) {
     option.methodArgs.from || (option.methodArgs.from = this._accounts[0])
 
     var privateKey
-    if (callSend === 'send' && option.methodArgs.from) {
+    if(callSend === 'send' && option.methodArgs.from) {
       privateKey = this._privateKeyByAccount[option.methodArgs.from]
     }
     myContract[option.methodName](...option.args)[callSend](option.methodArgs || {}, privateKey)
       .then(function (res) {
         callback(null, res)
       }).catch(function (reason) {
-      if (typeof reason === 'object' && reason.error) {
+      if(typeof reason === 'object' && reason.error) {
         reason = reason.error
       }
       logErrorAndExit(console, reason)
@@ -254,9 +290,9 @@ const logErrorAndExit = (logger, err) => {
   }
 
   let msg = typeof err === 'string' ? err : err.message
-  if (msg) {
+  if(msg) {
     msg = msg.replace(/^error(:|) /i, '')
-    if (msg === 'Invalid URL provided to HttpProvider') {
+    if(msg === 'Invalid URL provided to HttpProvider') {
       msg = 'Either invalid or wrong URL provided to HttpProvider. Verify the configuration in your "tronbox.js"'
     }
     log(chalk.red(chalk.bold('ERROR:'), msg))
@@ -267,3 +303,20 @@ const logErrorAndExit = (logger, err) => {
 }
 
 module.exports.logErrorAndExit = logErrorAndExit
+
+const dlog = function (...args) {
+  if(process.env.DEBUG_MODE) {
+    for(let i = 0; i < args.length; i++) {
+
+      if(typeof args[i] === 'object') {
+        try {
+          args[i] = JSON.stringify(args[i], null, 2)
+        } catch (err) {
+        }
+      }
+    }
+    console.log(chalk.blue(args.join(' ')))
+  }
+}
+
+module.exports.dlog = dlog
