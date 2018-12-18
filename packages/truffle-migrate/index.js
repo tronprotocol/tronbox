@@ -18,6 +18,10 @@ function Migration(file) {
   this.number = parseInt(path.basename(file));
 };
 
+function sleep(millis) {
+  return new Promise(resolve => setTimeout(resolve, millis));
+}
+
 Migration.prototype.run = function (options, callback) {
   var self = this;
   var logger = options.logger;
@@ -50,16 +54,28 @@ Migration.prototype.run = function (options, callback) {
 
   var finish = function (err) {
     if (err) return callback(err);
-    deployer.start().then(function () {
+    deployer.start().then(async function () {
       if (options.save === false) return;
 
       var Migrations = resolver.require("./Migrations.sol");
 
       if (Migrations && Migrations.isDeployed()) {
         logger.log("Saving successful migration to network...");
-        return Migrations.deployed().then(function (migrations) {
-          return Migrations.call('setCompleted', [self.number]);
-        });
+
+        let result
+        try {
+          await Migrations.deployed()
+          await sleep(200)
+          result = Migrations.call('setCompleted', [self.number])
+        } catch(err) {
+          console.error(err)
+        }
+
+        return Promise.resolve(result)
+
+        // return Migrations.deployed().then(function (migrations) {
+        //   return Migrations.call('setCompleted', [self.number]);
+        // });
       }
     }).then(function () {
       if (options.save === false) return;

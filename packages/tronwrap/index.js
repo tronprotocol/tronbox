@@ -2,7 +2,7 @@ var _TronWeb = require("./tron-web/dist/TronWeb.node");
 var chalk = require('chalk')
 var constants = require('./constants')
 var axios = require('axios');
-var sleep = require('sleep')
+// var sleep = require('sleep')
 
 var instance;
 
@@ -38,6 +38,10 @@ function filterMatchFunction(method, abi) {
     methodName: methodObj.name,
     methodType: methodObj.type
   }
+}
+
+function sleep(millis) {
+  return new Promise(resolve => setTimeout(resolve, millis));
 }
 
 function filterNetworkConfig(options) {
@@ -168,53 +172,55 @@ function init(options, extraOptions) {
     });
   }
 
-  tronWrap._new = function (myContract, options, privateKey = tronWrap.defaultPrivateKey, callback) {
+  tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey, callback) {
 
-    let signedTransaction
+    try {
+      const address = tronWrap.address.fromPrivateKey(privateKey);
+      const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
+      const signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
+      const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
 
-    const address = tronWrap.address.fromPrivateKey(privateKey);
-    return tronWrap.transactionBuilder.createSmartContract(options, address)
-      .then(transaction => {
-        return tronWrap.trx.sign(transaction, privateKey)
-      })
-      .then(async result => {
-        signedTransaction = result
-        for (let i=0;i<10;i++) {
-          const contract = await tronWrap.trx.sendRawTransaction(signedTransaction);
-          if (contract.result) {
-            return Promise.resolve(contract.result)
-          }
-          sleep.sleep(1)
+      if (!result) {
+        return Promise.reject('Transaction not broadcasted')
+      }
+
+      let contract
+      for (let i = 0; i < 10; i++) {
+        try {
+          contract = await tronWrap.trx.getContract(signedTransaction.contract_address)
+          if (contract.contract_address) break
+        } catch (err) {
+          // it does not exist yet
         }
-        return Promise.resolve(false)
-      })
-      .then(result => {
-        if (!result) {
-          throw new Error('Unknown error: ' + JSON.stringify(contract, null, 2))
-        } else {
-          return tronWrap.trx.getContract(signedTransaction.contract_address)
+
+        await sleep(500)
+      }
+
+      if (!contract || !contract.contract_address) {
+
+        if (contract.error) {
+          contract.message = tronWrap.toAscii(contract.message)
         }
-      })
-      .then(contract => {
-        if (!contract.contract_address)
-          callback('Unknown error: ' + JSON.stringify(contract, null, 2));
+        return Promise.reject('Unknown error: ' + JSON.stringify(contract, null, 2));
+      }
 
-        myContract.address = contract.contract_address;
-        myContract.bytecode = contract.bytecode;
-        myContract.deployed = true;
+      myContract.address = contract.contract_address;
+      myContract.bytecode = contract.bytecode;
+      myContract.deployed = true;
 
-        myContract.loadAbi(contract.abi.entrys);
+      myContract.loadAbi(contract.abi.entrys);
 
-        return Promise.resolve(myContract);
-      })
-      .catch(ex => {
-        if (ex.toString().includes('does not exist')) {
-          let url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
+      return Promise.resolve(myContract)
 
-          ex = 'Contract ' + chalk.bold(options.contractName) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url)
-        }
-        return Promise.reject(ex);
-      })
+    } catch (ex) {
+      if (ex.toString().includes('does not exist')) {
+        let url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
+
+        ex = 'Contract ' + chalk.bold(options.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url)
+      }
+
+      return Promise.reject(ex);
+    }
   }
 
   tronWrap.triggerContract = function (option, callback) {

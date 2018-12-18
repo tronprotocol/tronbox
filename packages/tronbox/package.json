@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
     "mocha": "^4.1.0",
