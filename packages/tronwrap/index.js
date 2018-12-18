@@ -2,7 +2,6 @@ var _TronWeb = require("./tron-web/dist/TronWeb.node");
 var chalk = require('chalk')
 var constants = require('./constants')
 var axios = require('axios');
-// var sleep = require('sleep')
 
 var instance;
 
@@ -136,10 +135,18 @@ function init(options, extraOptions) {
     })
   }
 
-  tronWrap._getContract = function (address, callback) {
-    this.getContract(address || "").then(function (contractInstance) {
+  tronWrap._getContract = async function (address, callback) {
+    const myContract = this.contract();
+    tronWrap.trx.getContract(address || "").then(function (contractInstance) {
       if (contractInstance) {
-        callback && callback(null, contractInstance);
+
+        myContract.address = contractInstance.contract_address;
+        myContract.bytecode = contractInstance.bytecode;
+        myContract.deployed = true;
+
+        myContract.loadAbi(contractInstance.abi.entrys);
+
+        callback && callback(null, myContract);
       } else {
         callback(new Error("no code"))
       }
