@@ -63,13 +63,8 @@ Migration.prototype.run = function (options, callback) {
         logger.log("Saving successful migration to network...");
 
         let result
-        try {
-          await Migrations.deployed()
-          await sleep(200)
-          result = Migrations.call('setCompleted', [self.number])
-        } catch(err) {
-          console.error(err)
-        }
+        await Migrations.deployed()
+        result = Migrations.call('setCompleted', [self.number])
 
         return Promise.resolve(result)
 

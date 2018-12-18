@@ -4,6 +4,7 @@ var deploy = require("./src/actions/deploy");
 var deployMany = require("./src/actions/deploymany");
 var link = require("./src/actions/link");
 var create = require("./src/actions/new");
+var {dlog} = require('tronwrap')
 
 function Deployer(options) {
   var self = this;
@@ -43,8 +44,10 @@ Deployer.prototype.deploy = function() {
   var contract = args.shift();
 
   if (Array.isArray(contract)) {
+    dlog('Deploy many')
     return this.queueOrExec(deployMany(contract, this));
   } else {
+    dlog('Deploy one')
     return this.queueOrExec(deploy(contract, args, this));
   }
 };

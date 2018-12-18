@@ -31,7 +31,8 @@ var command = {
     var Environment = require("../environment");
     var temp = require("temp");
     var copy = require("../copy");
-    var TronWrap = require("TronWrap");
+    var TronWrap = require("tronwrap");
+    var {dlog} = require("tronwrap");
     const logErrorAndExit = require('tronwrap').logErrorAndExit
 
     var config = Config.detect(options);
@@ -50,40 +51,40 @@ var command = {
       logErrorAndExit(console, err.message)
     }
 
-
-    function setupDryRunEnvironmentThenRunMigrations(callback) {
-      Environment.fork(config, function(err) {
-        if (err) return callback(err);
-
-        // Copy artifacts to a temporary directory
-        temp.mkdir('migrate-dry-run-', function(err, temporaryDirectory) {
-          if (err) return callback(err);
-
-          function cleanup() {
-            var args = arguments;
-            // Ensure directory cleanup.
-            temp.cleanup(function(err) {
-              // Ignore cleanup errors.
-              callback.apply(null, args);
-            });
-          };
-
-          copy(config.contracts_build_directory, temporaryDirectory, function(err) {
-            if (err) return callback(err);
-
-            config.contracts_build_directory = temporaryDirectory;
-
-            // Note: Create a new artifactor and resolver with the updated config.
-            // This is because the contracts_build_directory changed.
-            // Ideally we could architect them to be reactive of the config changes.
-            config.artifactor = new Artifactor(temporaryDirectory);
-            config.resolver = new Resolver(config);
-
-            runMigrations(cleanup);
-          });
-        });
-      });
-    }
+    //
+    // function setupDryRunEnvironmentThenRunMigrations(callback) {
+    //   Environment.fork(config, function(err) {
+    //     if (err) return callback(err);
+    //
+    //     // Copy artifacts to a temporary directory
+    //     temp.mkdir('migrate-dry-run-', function(err, temporaryDirectory) {
+    //       if (err) return callback(err);
+    //
+    //       function cleanup() {
+    //         var args = arguments;
+    //         // Ensure directory cleanup.
+    //         temp.cleanup(function(err) {
+    //           // Ignore cleanup errors.
+    //           callback.apply(null, args);
+    //         });
+    //       };
+    //
+    //       copy(config.contracts_build_directory, temporaryDirectory, function(err) {
+    //         if (err) return callback(err);
+    //
+    //         config.contracts_build_directory = temporaryDirectory;
+    //
+    //         // Note: Create a new artifactor and resolver with the updated config.
+    //         // This is because the contracts_build_directory changed.
+    //         // Ideally we could architect them to be reactive of the config changes.
+    //         config.artifactor = new Artifactor(temporaryDirectory);
+    //         config.resolver = new Resolver(config);
+    //
+    //         runMigrations(cleanup);
+    //       });
+    //     });
+    //   });
+    // }
 
     function runMigrations(callback) {
       if (options.f) {
@@ -93,6 +94,7 @@ var command = {
           if (err) return callback(err);
 
           if (needsMigrating) {
+            dlog('Starting migration')
             Migrate.run(config, done);
           } else {
             config.logger.log("Network up to date.")
@@ -101,6 +103,7 @@ var command = {
         });
       }
     };
+
     Contracts.compile(config, function(err) {
       if (err) return done(err);
       Environment.detect(config, function(err) {
@@ -115,11 +118,11 @@ var command = {
 
         config.logger.log(networkMessage + "." + OS.EOL);
 
-        if (dryRun) {
-          setupDryRunEnvironmentThenRunMigrations(done);
-        } else {
+        // if (dryRun) {
+        //   setupDryRunEnvironmentThenRunMigrations(done);
+        // } else {
           runMigrations(done);
-        }
+        // }
       });
     });
   }
