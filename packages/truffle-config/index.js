@@ -28,6 +28,8 @@ function Config(truffle_directory, working_directory, network) {
     feeLimit: null,
     userFeePercentage: null,
     originEnergyLimit: null,
+    tokenValue: null,
+    tokenId: null,
     callValue: null,
     from: null,
     build: null,
@@ -239,6 +241,30 @@ function Config(truffle_directory, working_directory, network) {
       },
       set: function (val) {
         throw new Error("Don't set config.originEnergyLimit directly. Instead, set config.networks and then config.networks[<network name>].originEnergyLimit")
+      }
+    },
+    tokenValue: {
+      get: function () {
+        try {
+          return self.network_config.tokenValue;
+        } catch (e) {
+          // no default value
+        }
+      },
+      set: function (val) {
+        throw new Error("Don't set config.tokenValue directly. Instead, set config.networks and then config.networks[<network name>].tokenValue")
+      }
+    },
+    tokenId: {
+      get: function () {
+        try {
+          return self.network_config.tokenId;
+        } catch (e) {
+          // no default value
+        }
+      },
+      set: function (val) {
+        throw new Error("Don't set config.tokenId directly. Instead, set config.networks and then config.networks[<network name>].tokenId")
       }
     },
     provider: {

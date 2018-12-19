@@ -49,7 +49,9 @@ function filterNetworkConfig(options) {
     feeLimit: options.feeLimit || options.fee_limit || constants.deployParameters.feeLimit,
     userFeePercentage: options.userFeePercentage || options.consume_user_resource_percent || constants.deployParameters.userFeePercentage,
     originEnergyLimit: options.originEnergyLimit || options.origin_energy_limit || constants.deployParameters.originEnergyLimit,
-    callValue: options.callValue || options.call_value || constants.deployParameters.callValue
+    callValue: options.callValue || options.call_value || constants.deployParameters.callValue,
+    tokenValue: options.tokenValue || options.token_value,
+    tokenId: options.tokenId || options.token_id
   }
 }
 
@@ -79,10 +81,35 @@ function init(options, extraOptions) {
   );
 
   const tronWrap = TronWrap.prototype
+  tronWrap._compilerVersion = 1
 
   tronWrap.networkConfig = filterNetworkConfig(options);
   if(extraOptions.log) {
     tronWrap._log = extraOptions.log;
+  }
+
+  tronWrap._getNetworkInfo = async function () {
+    let info = {
+      javaTronVersion: '<3.2.2',
+      compilerVersion: '1'
+    }
+
+    const [proposals, nodeInfo] = await Promise.all([
+      tronWrap.trx.getChainParameters(),
+      tronWrap.trx.getNodeInfo()
+    ])
+    for(let proposal of proposals) {
+      if(proposal.key === 'getAllowTvmTransferTrc10') {
+        if(proposal.value) {
+          info.compilerVersion = '2'
+        }
+        break
+      }
+    }
+    if(nodeInfo) {
+      info.javaTronVersion = nodeInfo.configNodeInfo.codeVersion
+    }
+    return Promise.resolve(info)
   }
 
   tronWrap._getNetwork = function (callback) {
@@ -275,9 +302,6 @@ function init(options, extraOptions) {
   return new TronWrap;
 }
 
-module.exports = init;
-module.exports.config = () => console.log('config')
-module.exports.constants = constants
 
 const logErrorAndExit = (logger, err) => {
 
@@ -302,8 +326,6 @@ const logErrorAndExit = (logger, err) => {
   process.exit()
 }
 
-module.exports.logErrorAndExit = logErrorAndExit
-
 const dlog = function (...args) {
   if(process.env.DEBUG_MODE) {
     for(let i = 0; i < args.length; i++) {
@@ -319,4 +341,11 @@ const dlog = function (...args) {
   }
 }
 
+
+module.exports = init;
+
+module.exports.config = () => console.log('config')
+module.exports.constants = constants
+module.exports.logErrorAndExit = logErrorAndExit
 module.exports.dlog = dlog
+module.exports.sleep = sleep

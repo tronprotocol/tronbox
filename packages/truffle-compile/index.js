@@ -35,7 +35,9 @@ var compile = function(sources, options, callback) {
   ]);
 
   // Load solc module only when compilation is actually required.
-  var solc = require("tron-solc");
+  const { getWrapper } = require("tron-solc")
+
+  var solc = getWrapper(options);
   // Clean up after solc.
   var listeners = process.listeners("uncaughtException");
   var solc_listener = listeners[listeners.length - 1];
