@@ -163,21 +163,18 @@ function init(options, extraOptions) {
   }
 
   tronWrap._getContract = async function (address, callback) {
-    const myContract = this.contract();
-    tronWrap.trx.getContract(address || "").then(function (contractInstance) {
-      if(contractInstance) {
-
-        myContract.address = contractInstance.contract_address;
-        myContract.bytecode = contractInstance.bytecode;
-        myContract.deployed = true;
-
-        myContract.loadAbi(contractInstance.abi.entrys);
-
-        callback && callback(null, myContract);
-      } else {
-        callback(new Error("no code"))
-      }
-    });
+    const contractInstance = await tronWrap.trx.getContract(address || "")
+    if(contractInstance) {
+      // myContract.address = contractInstance.contract_address;
+      // myContract.bytecode = contractInstance.bytecode;
+      // myContract.deployed = true;
+      //
+      // myContract.loadAbi(contractInstance.abi.entrys);
+      //
+      callback && callback(null, contractInstance.contract_address);
+    } else {
+      callback(new Error("no code"))
+    }
   }
 
   tronWrap._deployContract = function (option, callback) {
@@ -208,10 +205,11 @@ function init(options, extraOptions) {
 
   tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey, callback) {
 
+    let signedTransaction
     try {
       const address = tronWrap.address.fromPrivateKey(privateKey);
       const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
-      const signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
+      signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
 
       if(!result) {
@@ -236,20 +234,13 @@ function init(options, extraOptions) {
         } catch (err) {
           dlog('Contract does not exist yet')
         }
-
         await sleep(500)
       }
 
       dlog('Reading contract data')
 
       if(!contract || !contract.contract_address) {
-
-        dlog('Contract address missing')
-
-        if(contract.code && contract.message) {
-          contract.message = tronWrap.toAscii(contract.message)
-        }
-        return Promise.reject('Unknown error: ' + JSON.stringify(contract, null, 2));
+        throw new Error('Contract does not exist')
       }
 
       myContract.address = contract.contract_address;
@@ -265,7 +256,8 @@ function init(options, extraOptions) {
       if(ex.toString().includes('does not exist')) {
         let url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
 
-        ex = 'Contract ' + chalk.bold(options.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url)
+        ex = 'Contract ' + chalk.bold(options.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url) +
+          '\nIf the transaction above is empty, most likely, your address had no bandwidth/energy to deploy the contract.'
       }
 
       return Promise.reject(ex);

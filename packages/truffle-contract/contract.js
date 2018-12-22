@@ -398,6 +398,8 @@ var contract = (function (module) {
     at: function (address) {
       var self = this;
 
+      throw new Error('The construct contractArtifacts.at(address) is not currently supported by TronBox. It will be in the future. Stay in touch.')
+
       if (address == null || typeof address != "string" || address.length != 42) {
         throw new Error("Invalid address passed to " + this._json.contractName + ".at(): " + address);
       }
@@ -410,12 +412,15 @@ var contract = (function (module) {
           var instance = new self(address);
 
           return new Promise(function (accept, reject) {
-            tronWrap._getContract(address, function (err, code) {
+            tronWrap._getContract(address, function (err, contractAddress) {
               if (err) return reject(err);
-
-              if (!code || code.replace("0x", "").replace(/0/g, "") === '') {
+              if (!contractAddress || contractAddress.replace(/^0x/, "").replace(/0/g, "") === '') {
                 return reject(new Error("Cannot create instance of " + self.contractName + "; no code at address " + address));
               }
+              // for (let prop in contract) console.log(1, prop)
+              // for (let prop in instance) console.log(1, prop)
+
+
               accept(instance);
             });
           });
