@@ -19,6 +19,9 @@ var debug = require("debug")("compile");
 //   quiet: false,
 //   logger: console
 // }
+
+var preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning
+
 var compile = function(sources, options, callback) {
   if (typeof options == "function") {
     callback = options;
@@ -121,10 +124,18 @@ var compile = function(sources, options, callback) {
     });
 
     if (options.quiet !== true && warnings.length > 0) {
-      options.logger.log(OS.EOL + "Compilation warnings encountered:" + OS.EOL);
-      options.logger.log(warnings.map(function(warning) {
-        return warning.formattedMessage;
-      }).join());
+      for (var i=0;i<warnings.length;i++) {
+          if (!!~warnings[i].formattedMessage.indexOf(preReleaseCompilerWarning)) {
+            warnings.splice(i,1)
+            i--
+          }
+      }
+      if (warnings.length > 0) {
+        options.logger.log(OS.EOL + "Compilation warnings encountered:" + OS.EOL);
+        options.logger.log(warnings.map(function (warning) {
+          return warning.formattedMessage;
+        }).join());
+      }
     }
   }
 
