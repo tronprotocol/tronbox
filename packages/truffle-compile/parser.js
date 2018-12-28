@@ -12,7 +12,7 @@ if (solc_listener) {
 }
 
 // Warning issued by a pre-release compiler version, ignored by this component.
-var preReleaseCompilerWarning = "This is a pre-release compiler version, please do not use it in production.";
+var preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning
 
 var installedContractsDir = "installed_contracts"
 
@@ -141,6 +141,8 @@ module.exports = {
     });
 
     output = JSON.parse(output);
+
+
 
     // Filter out the "pre-release compiler" warning, if present.
     var errors = output.errors.filter(function(solidity_error) {
