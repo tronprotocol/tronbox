@@ -9,6 +9,7 @@ var command = {
     }
   },
   run: function (options, done) {
+    process.env.CURRENT = 'networks'
     var Config = require("truffle-config");
     var Networks = require("../networks");
 

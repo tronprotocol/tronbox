@@ -7,6 +7,7 @@ var command = {
     }
   },
   run: function (options, done) {
+    process.env.CURRENT = 'debug'
     var OS = require("os");
     var path = require("path");
     var debugModule = require("debug");

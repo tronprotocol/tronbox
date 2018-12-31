@@ -39,6 +39,7 @@ var command = {
     } catch(err) {
       logErrorAndExit(console, err.message)
     }
+    process.env.CURRENT = 'test'
 
     var ipcDisconnect;
 

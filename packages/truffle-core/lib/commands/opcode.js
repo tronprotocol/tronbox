@@ -8,6 +8,7 @@ var command = {
     }
   },
   run: function (options, done) {
+    process.env.CURRENT = 'opcode'
     var Config = require("truffle-config");
     var TruffleError = require("truffle-error");
     var Contracts = require("truffle-workflow-compile");

@@ -3,6 +3,7 @@ var command = {
   description: 'Install a package from the tronbox Package Registry',
   builder: {},
   run: function (options, done) {
+    process.env.CURRENT = 'install'
     var Config = require("truffle-config");
     var Package = require("../package");
 

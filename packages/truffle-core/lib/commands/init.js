@@ -3,6 +3,7 @@ var command = {
   description: 'Initialize new and empty tronBox project',
   builder: {},
   run: function (options, done) {
+    process.env.CURRENT = 'init'
     var Config = require("truffle-config");
     var OS = require("os");
     var UnboxCommand = require("./unbox");

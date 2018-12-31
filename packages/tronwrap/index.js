@@ -288,8 +288,11 @@ function init(options, extraOptions) {
       if(typeof reason === 'object' && reason.error) {
         reason = reason.error
       }
-      logErrorAndExit(console, reason)
-      // callback(new Error(reason))
+      if (process.env.CURRENT === 'test') {
+        callback(reason)
+      } else {
+        logErrorAndExit(console, reason)
+      }
     });
   }
 

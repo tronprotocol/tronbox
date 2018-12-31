@@ -3,6 +3,7 @@ var command = {
   description: 'Execute build pipeline (if configuration present)',
   builder: {},
   run: function (options, done) {
+    process.env.CURRENT = 'build'
     var Config = require("truffle-config");
     var Build = require("../build");
 

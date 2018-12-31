@@ -3,6 +3,7 @@ var command = {
   description: 'Show version number and exit',
   builder: {},
   run: function (options, done) {
+    process.env.CURRENT = 'version'
     var version = require("../version");
 
     var bundle_version;
