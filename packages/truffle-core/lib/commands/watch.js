@@ -3,6 +3,7 @@ var command = {
   description: 'Watch filesystem for changes and rebuild the project automatically',
   builder: {},
   run: function (options, done) {
+    process.env.CURRENT = 'watch'
     var Build = require("../build");
     var Config = require("truffle-config");
     var chokidar = require("chokidar");

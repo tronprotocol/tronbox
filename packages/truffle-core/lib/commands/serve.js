@@ -8,6 +8,7 @@ var command = {
     }
   },
   run: function (options, done) {
+    process.env.CURRENT = 'serve'
     var Serve = require("../serve");
     var Config = require("truffle-config");
     var watch = require("./watch");

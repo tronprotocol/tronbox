@@ -3,6 +3,7 @@ var command = {
   description: 'Publish a package to the tronBox Package Registry',
   builder: {},
   run: function (options, done) {
+    process.env.CURRENT = 'publish'
     var Config = require("truffle-config");
     var Package = require("../package");
 

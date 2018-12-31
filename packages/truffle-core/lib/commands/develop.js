@@ -45,6 +45,7 @@ var command = {
     });
   },
   run: function (options, done) {
+    process.env.CURRENT = 'develop'
     var Config = require("truffle-config");
     var Develop = require("../develop");
 

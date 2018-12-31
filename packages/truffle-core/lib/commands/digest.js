@@ -3,6 +3,7 @@ var command = {
   description: 'Show publishable information about the current project',
   builder: {},
   run: function (options, done) {
+    process.env.CURRENT = 'digest'
     var Config = require("truffle-config");
     var Package = require("../package");
 

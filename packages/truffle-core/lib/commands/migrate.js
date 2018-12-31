@@ -22,6 +22,7 @@ var command = {
     }
   },
   run: function (options, done) {
+    process.env.CURRENT = 'migrate'
     var OS = require("os");
     var Config = require("truffle-config");
     var Contracts = require("truffle-workflow-compile");
