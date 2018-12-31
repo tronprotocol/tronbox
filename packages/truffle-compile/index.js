@@ -116,7 +116,7 @@ var compile = function(sources, options, callback) {
 
   if (options.strict !== true) {
     warnings = errors.filter(function(error) {
-      return error.severity == "warning";
+      return error.severity === "warning" && error.message !== preReleaseCompilerWarning;
     });
 
     errors = errors.filter(function(error) {
@@ -124,18 +124,10 @@ var compile = function(sources, options, callback) {
     });
 
     if (options.quiet !== true && warnings.length > 0) {
-      for (var i=0;i<warnings.length;i++) {
-          if (!!~warnings[i].formattedMessage.indexOf(preReleaseCompilerWarning)) {
-            warnings.splice(i,1)
-            i--
-          }
-      }
-      if (warnings.length > 0) {
-        options.logger.log(OS.EOL + "Compilation warnings encountered:" + OS.EOL);
-        options.logger.log(warnings.map(function (warning) {
-          return warning.formattedMessage;
-        }).join());
-      }
+      options.logger.log(OS.EOL + "Compilation warnings encountered:" + OS.EOL);
+      options.logger.log(warnings.map(function (warning) {
+        return warning.formattedMessage;
+      }).join());
     }
   }
 
