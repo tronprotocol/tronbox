@@ -93,21 +93,23 @@ function init(options, extraOptions) {
       javaTronVersion: '<3.2.2',
       compilerVersion: '1'
     }
-
-    const [proposals, nodeInfo] = await Promise.all([
-      tronWrap.trx.getChainParameters(),
-      tronWrap.trx.getNodeInfo()
-    ])
-    for(let proposal of proposals) {
-      if(proposal.key === 'getAllowTvmTransferTrc10') {
-        if(proposal.value) {
-          info.compilerVersion = '2'
+    try {
+      const [proposals, nodeInfo] = await Promise.all([
+        tronWrap.trx.getChainParameters(),
+        tronWrap.trx.getNodeInfo()
+      ])
+      for(let proposal of proposals) {
+        if(proposal.key === 'getAllowTvmTransferTrc10') {
+          if(proposal.value) {
+            info.compilerVersion = '2'
+          }
+          break
         }
-        break
       }
-    }
-    if(nodeInfo) {
-      info.javaTronVersion = nodeInfo.configNodeInfo.codeVersion
+      if(nodeInfo) {
+        info.javaTronVersion = nodeInfo.configNodeInfo.codeVersion
+      }
+    } catch (err) {
     }
     return Promise.resolve(info)
   }
