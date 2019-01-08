@@ -23,7 +23,7 @@ module.exports = function (contract, args, deployer) {
           prefix = "Replacing ";
         }
         deployer.logger.log(prefix + contract.contract_name + "...");
-        dlog(contract, new_args)
+        dlog(new_args)
         return contract.new.apply(contract, new_args);
       } else {
         return contract.deployed();
