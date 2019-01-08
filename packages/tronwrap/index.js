@@ -50,7 +50,7 @@ function filterNetworkConfig(options) {
     userFeePercentage: options.userFeePercentage || options.consume_user_resource_percent || constants.deployParameters.userFeePercentage,
     originEnergyLimit: options.originEnergyLimit || options.origin_energy_limit || constants.deployParameters.originEnergyLimit,
     callValue: options.callValue || options.call_value || constants.deployParameters.callValue,
-    tokenValue: options.tokenValue || options.token_value,
+    tokenValue: options.tokenValue || options.token_value || options.call_token_value,
     tokenId: options.tokenId || options.token_id
   }
 }
@@ -167,12 +167,6 @@ function init(options, extraOptions) {
   tronWrap._getContract = async function (address, callback) {
     const contractInstance = await tronWrap.trx.getContract(address || "")
     if(contractInstance) {
-      // myContract.address = contractInstance.contract_address;
-      // myContract.bytecode = contractInstance.bytecode;
-      // myContract.deployed = true;
-      //
-      // myContract.loadAbi(contractInstance.abi.entrys);
-      //
       callback && callback(null, contractInstance.contract_address);
     } else {
       callback(new Error("no code"))
@@ -276,6 +270,8 @@ function init(options, extraOptions) {
     })
     option.methodArgs || (option.methodArgs = {})
     option.methodArgs.from || (option.methodArgs.from = this._accounts[0])
+
+    dlog(option.methodName, option.args, options.methodArgs)
 
     var privateKey
     if(callSend === 'send' && option.methodArgs.from) {
