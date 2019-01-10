@@ -14,8 +14,9 @@ var command = {
       bundle_version = "(unbundled)";
     }
 
-    options.logger.log("Tronbox " + bundle_version + " (core: " + version.core + ")");
-    options.logger.log("Solidity v" + version.solc + " (tron-solc)");
+    options.logger.log("Tronbox " + bundle_version);
+    // + " (core: " + version.core + ")");
+    // options.logger.log("Solidity v" + version.solc + " (tron-solc)");
 
     done();
   }
