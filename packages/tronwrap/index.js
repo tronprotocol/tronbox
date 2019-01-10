@@ -98,10 +98,11 @@ function init(options, extraOptions) {
         tronWrap.trx.getChainParameters(),
         tronWrap.trx.getNodeInfo()
       ])
+
       for(let proposal of proposals) {
         if(proposal.key === 'getAllowTvmTransferTrc10') {
           if(proposal.value) {
-            info.compilerVersion = '2'
+            info.compilerVersion = '3'
           }
           break
         }
@@ -277,14 +278,22 @@ function init(options, extraOptions) {
     if(callSend === 'send' && option.methodArgs.from) {
       privateKey = this._privateKeyByAccount[option.methodArgs.from]
     }
-    myContract[option.methodName](...option.args)[callSend](option.methodArgs || {}, privateKey)
+
+    this._getNetworkInfo()
+      .then(info => {
+        if(info.compilerVersion === '1') {
+          delete option.methodArgs.tokenValue
+          delete option.methodArgs.tokenId
+        }
+        return myContract[option.methodName](...option.args)[callSend](option.methodArgs || {}, privateKey)
+      })
       .then(function (res) {
         callback(null, res)
       }).catch(function (reason) {
       if(typeof reason === 'object' && reason.error) {
         reason = reason.error
       }
-      if (process.env.CURRENT === 'test') {
+      if(process.env.CURRENT === 'test') {
         callback(reason)
       } else {
         logErrorAndExit(console, reason)
