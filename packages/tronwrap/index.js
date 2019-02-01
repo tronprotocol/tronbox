@@ -209,8 +209,8 @@ function init(options, extraOptions) {
       signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
 
-      if(!result) {
-        return Promise.reject('Transaction not broadcasted')
+      if(result.code) {
+        return Promise.reject(`${result.code} (${tronWrap.toUtf8(result.message)}) while broadcasting the transaction to create the contract ${options.name}`)
       }
 
       let contract
