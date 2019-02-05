@@ -209,6 +209,10 @@ function init(options, extraOptions) {
       signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
 
+      if(!result || typeof result !== 'object') {
+        return Promise.reject(`Error while broadcasting the transaction to create the contract ${options.name}. Most likely, the creator has either insufficient bandwidth or energy.`)
+      }
+
       if(result.code) {
         return Promise.reject(`${result.code} (${tronWrap.toUtf8(result.message)}) while broadcasting the transaction to create the contract ${options.name}`)
       }
