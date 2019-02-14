@@ -44,14 +44,20 @@ function sleep(millis) {
 }
 
 function filterNetworkConfig(options) {
+  let userFeePercentage =
+    typeof options.userFeePercentage === 'number'
+      ? options.userFeePercentage
+      : typeof options.consume_user_resource_percent === 'number'
+      ? options.consume_user_resource_percent
+      : constants.deployParameters.userFeePercentage
   return {
     fullNode: options.fullNode || options.fullHost,
     feeLimit: options.feeLimit || options.fee_limit || constants.deployParameters.feeLimit,
-    userFeePercentage: options.userFeePercentage || options.consume_user_resource_percent || constants.deployParameters.userFeePercentage,
     originEnergyLimit: options.originEnergyLimit || options.origin_energy_limit || constants.deployParameters.originEnergyLimit,
     callValue: options.callValue || options.call_value || constants.deployParameters.callValue,
     tokenValue: options.tokenValue || options.token_value || options.call_token_value,
-    tokenId: options.tokenId || options.token_id
+    tokenId: options.tokenId || options.token_id,
+    userFeePercentage
   }
 }
 
@@ -133,8 +139,7 @@ function init(options, extraOptions) {
         if(callback) {
           callback(null, self._accounts)
           accept()
-        }
-        else {
+        } else {
           accept(self._accounts)
         }
       }
@@ -182,11 +187,16 @@ function init(options, extraOptions) {
       throw new Error('Origin Energy Limit must be > 0 and <= 10,000,000')
     }
 
+    let userFeePercentage =
+      typeof options.userFeePercentage === 'number'
+        ? options.userFeePercentage
+        : this.networkConfig.userFeePercentage
+
     this._new(myContract, {
       bytecode: option.data,
       feeLimit: option.feeLimit || this.networkConfig.feeLimit,
       callValue: option.callValue || this.networkConfig.callValue,
-      userFeePercentage: option.userFeePercentage || this.networkConfig.userFeePercentage,
+      userFeePercentage,
       originEnergyLimit,
       abi: option.abi,
       parameters: option.parameters,
