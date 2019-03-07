@@ -230,7 +230,12 @@ yarn bootstrap
 ./tronbox.dev migrate --reset
 ```
 
+## Latest version is 2.3.15
+
 ## Recent history
+
+__2.3.15__
+* Updates TronWeb to latest version which fixes issues with watch
 
 __2.3.1__
 * Adds temporary logo.
