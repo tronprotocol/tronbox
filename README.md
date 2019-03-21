@@ -1,6 +1,5 @@
 
-![TronBox](https://raw.githubusercontent.com/tronprotocol/tron-box/master/assets/TronBox-logo.png "TronBox Logo")
-
+<img src="https://raw.githubusercontent.com/tronprotocol/tron-box/master/assets/TronBox-logo.png" style="float:right;width:100px"/>
 
 # Tron-Box
 
