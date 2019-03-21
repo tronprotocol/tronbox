@@ -229,7 +229,7 @@ yarn bootstrap
 ./tronbox.dev migrate --reset
 ```
 
-## Latest version is 2.3.15
+## Latest version is 2.3.16
 
 ## Recent history
 
