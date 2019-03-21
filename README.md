@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/tronprotocol/tron-box/master/assets/TronBox-logo.png" style="float:right;width:100px"/>
+<img src="https://raw.githubusercontent.com/tronprotocol/tron-box/master/assets/TronBox-logo.png" width="100"/>
 
 # Tron-Box
 
