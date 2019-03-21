@@ -233,6 +233,9 @@ yarn bootstrap
 
 ## Recent history
 
+__2.3.16__
+* Updates TronWeb to version 2.3.2
+
 __2.3.15__
 * Updates TronWeb to latest version which fixes issues with watch
 
