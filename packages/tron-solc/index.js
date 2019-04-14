@@ -5,5 +5,5 @@ function getWrapper(options) {
   return wrapper(soljson)
 }
 
-module.exports = wrapper(require('./soljson_v1.js'));
+module.exports = wrapper(require('./soljson_v3.js'));
 module.exports.getWrapper = getWrapper

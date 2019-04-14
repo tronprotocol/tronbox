@@ -87,7 +87,7 @@ function init(options, extraOptions) {
   );
 
   const tronWrap = TronWrap.prototype
-  tronWrap._compilerVersion = 1
+  // tronWrap._compilerVersion = 3
 
   tronWrap.networkConfig = filterNetworkConfig(options);
   if(extraOptions.log) {
@@ -96,8 +96,8 @@ function init(options, extraOptions) {
 
   tronWrap._getNetworkInfo = async function () {
     let info = {
-      javaTronVersion: '<3.2.2',
-      compilerVersion: '1'
+      javaTronVersion: 'unknown',
+      compilerVersion: '3'
     }
     try {
       const [proposals, nodeInfo] = await Promise.all([
@@ -107,8 +107,8 @@ function init(options, extraOptions) {
 
       for(let proposal of proposals) {
         if(proposal.key === 'getAllowTvmTransferTrc10') {
-          if(proposal.value) {
-            info.compilerVersion = '3'
+          if(!proposal.value) {
+            info.compilerVersion = '1'
           }
           break
         }
