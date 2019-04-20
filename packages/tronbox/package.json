@@ -4,7 +4,7 @@
   "version": "2.4.0",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
-    "mocha": "^4.1.0",
+    "mocha": "^4.1.2",
     "original-require": "1.0.1"
   },
   "devDependencies": {
