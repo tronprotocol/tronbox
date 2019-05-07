@@ -5,6 +5,8 @@
 
 ### Note: Tron-Box is a fork from Truffle project
 
+Originally, this code was at [https://github.com/tronprotocol/tron-box](https://github.com/tronprotocol/tron-box)
+
 [TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
 
 ## Installation
@@ -214,7 +216,7 @@ instance.sendCoin([address, amount], {from: account[1]});
 
 2. Clone your forked repo recursively, to include submodules, for example:
 ```
-git clone --recurse-submodules -j8 git@github.com:sullof/tron-box.git
+git clone --recurse-submodules -j8 git@github.com:sullof/tronbox.git
 ```
 3. If you don't have yarn and/or lerna already installed, install them globally:
 ```
