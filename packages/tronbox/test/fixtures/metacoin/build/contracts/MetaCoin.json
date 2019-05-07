@@ -115,9 +115,9 @@
   "sourceMap": "212:803:2:-;;;351:108;8:9:-1;5:2;;;30:1;27;20:12;5:2;351:108:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;404:10;396:5;;:18;;;;;;;;;;;;;;;;;;441:14;418:8;:20;427:10;418:20;;;;;;;;;;;;;;;:37;;;;351:108;212:803;;;;;;",
   "deployedSourceMap": "212:803:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;729:117;;8:9:-1;5:2;;;30:1;27;20:12;5:2;729:117:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;941:71;;8:9:-1;5:2;;;30:1;27;20:12;5:2;941:71:2;;;;;;;;;;;;;;;;;;;;;;;;;;;462:264;;8:9:-1;5:2;;;30:1;27;20:12;5:2;462:264:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;849:89;;8:9:-1;5:2;;;30:1;27;20:12;5:2;849:89:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;729:117;788:4;804:10;:18;823:16;834:4;823:10;:16::i;:::-;840:1;804:38;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;804:38:2;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;804:38:2;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;804:38:2;;;;;;;;;;;;;;;;797:45;;729:117;;;:::o;941:71::-;981:7;1003:5;;;;;;;;;;;996:12;;941:71;:::o;462:264::-;526:15;574:6;551:8;:20;560:10;551:20;;;;;;;;;;;;;;;;:29;547:47;;;589:5;582:12;;;;547:47;622:6;598:8;:20;607:10;598:20;;;;;;;;;;;;;;;;:30;;;;;;;;;;;654:6;632:8;:18;641:8;632:18;;;;;;;;;;;;;;;;:28;;;;;;;;;;;669:38;678:10;690:8;700:6;669:38;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;718:4;711:11;;462:264;;;;;:::o;849:89::-;903:4;920:8;:14;929:4;920:14;;;;;;;;;;;;;;;;913:21;;849:89;;;:::o",
   "source": "pragma solidity ^0.4.23;\n\nimport \"./ConvertLib.sol\";\n\n// This is just a simple example of a coin-like contract.\n// It is not standards compatible and cannot be expected to talk to other\n// coin/token contracts.\n\ncontract MetaCoin {\n\tmapping (address => uint) balances;\n\n\tevent Transfer(address _from, address _to, uint256 _value);\n\n  address owner;\n\n\tconstructor(uint initialBalance) public {\n\t  owner = msg.sender;\n\t\tbalances[msg.sender] = initialBalance;\n\t}\n\n\tfunction sendCoin(address receiver, uint amount) public returns(bool sufficient) {\n\t\tif (balances[msg.sender] < amount) return false;\n\t\tbalances[msg.sender] -= amount;\n\t\tbalances[receiver] += amount;\n\t\temit Transfer(msg.sender, receiver, amount);\n\t\treturn true;\n\t}\n\n\tfunction getBalanceInEth(address addr) public view returns(uint){\n\t\treturn ConvertLib.convert(getBalance(addr),2);\n\t}\n\n\tfunction getBalance(address addr) public view returns(uint) {\n\t\treturn balances[addr];\n\t}\n\n\tfunction getOwner() public view returns(address) {\n    return owner;\n\t}\n\n}\n",
-  "sourcePath": "/Users/sullof/Projects/tron-box/packages/tronbox/test/fixtures/metacoin/contracts/MetaCoin.sol",
+  "sourcePath": "/Users/sullof/Projects/tronbox/packages/tronbox/test/fixtures/metacoin/contracts/MetaCoin.sol",
   "ast": {
-    "absolutePath": "/Users/sullof/Projects/tron-box/packages/tronbox/test/fixtures/metacoin/contracts/MetaCoin.sol",
+    "absolutePath": "/Users/sullof/Projects/tronbox/packages/tronbox/test/fixtures/metacoin/contracts/MetaCoin.sol",
     "exportedSymbols": {
       "MetaCoin": [
         3059
@@ -138,7 +138,7 @@
         "src": "0:24:2"
       },
       {
-        "absolutePath": "/Users/sullof/Projects/tron-box/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
+        "absolutePath": "/Users/sullof/Projects/tronbox/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
         "file": "./ConvertLib.sol",
         "id": 2949,
         "nodeType": "ImportDirective",
@@ -1506,7 +1506,7 @@
     "src": "0:1016:2"
   },
   "legacyAST": {
-    "absolutePath": "/Users/sullof/Projects/tron-box/packages/tronbox/test/fixtures/metacoin/contracts/MetaCoin.sol",
+    "absolutePath": "/Users/sullof/Projects/tronbox/packages/tronbox/test/fixtures/metacoin/contracts/MetaCoin.sol",
     "exportedSymbols": {
       "MetaCoin": [
         3059
@@ -1527,7 +1527,7 @@
         "src": "0:24:2"
       },
       {
-        "absolutePath": "/Users/sullof/Projects/tron-box/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
+        "absolutePath": "/Users/sullof/Projects/tronbox/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
         "file": "./ConvertLib.sol",
         "id": 2949,
         "nodeType": "ImportDirective",
