@@ -30,9 +30,9 @@
   "sourceMap": "25:155:1:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
   "deployedSourceMap": "25:155:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;46:132;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;117:20;160:14;151:6;:23;144:30;;46:132;;;;:::o",
   "source": "pragma solidity ^0.4.4;\n\nlibrary ConvertLib{\n\tfunction convert(uint amount,uint conversionRate) public pure returns (uint convertedAmount)\n\t{\n\t\treturn amount * conversionRate;\n\t}\n}\n",
-  "sourcePath": "/Users/sullof/Projects/tron-box/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
+  "sourcePath": "/Users/sullof/Projects/tronbox/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
   "ast": {
-    "absolutePath": "/Users/sullof/Projects/tron-box/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
+    "absolutePath": "/Users/sullof/Projects/tronbox/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
     "exportedSymbols": {
       "ConvertLib": [
         2946
@@ -239,7 +239,7 @@
     "src": "0:181:1"
   },
   "legacyAST": {
-    "absolutePath": "/Users/sullof/Projects/tron-box/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
+    "absolutePath": "/Users/sullof/Projects/tronbox/packages/tronbox/test/fixtures/metacoin/contracts/ConvertLib.sol",
     "exportedSymbols": {
       "ConvertLib": [
         2946

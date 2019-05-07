@@ -43,11 +43,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tronprotocol/tron-box.git"
+    "url": "https://github.com/tron-us/tronbox.git"
   },
-  "homepage": "https://github.com/tronprotocol/tron-box/",
+  "homepage": "https://github.com/tron-us/tronbox/",
   "bugs": {
-    "url": "https://github.com/tronprotocol/tron-box/issues"
+    "url": "https://github.com/tron-us/tronbox/issues"
   },
   "originalAuthor": "consensys.net",
   "author": "tron.network",
