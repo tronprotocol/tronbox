@@ -5,8 +5,6 @@
 
 ### Note: Tron-Box is a fork from Truffle project
 
-Originally, this code was at [https://github.com/tron-us/tronbox](https://github.com/tron-us/tronbox)
-
 [TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
 
 ## Installation
