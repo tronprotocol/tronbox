@@ -259,3 +259,8 @@ __2.2.2__
 __2.2.1__
 * Add compatibility with JavaTron 3.2.
 
+
+-----
+
+For more historic data, check the original repo at
+[https://github.com/tronprotocol/tron-box](https://github.com/tronprotocol/tron-box)
