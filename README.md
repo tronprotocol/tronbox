@@ -1,11 +1,11 @@
 
-<img src="https://raw.githubusercontent.com/tronprotocol/tron-box/master/assets/TronBox-logo.png" width="100"/>
+<img src="https://raw.githubusercontent.com/tron-us/tronbox/master/assets/TronBox-logo.png" width="100"/>
 
 # Tron-Box
 
 ### Note: Tron-Box is a fork from Truffle project
 
-Originally, this code was at [https://github.com/tronprotocol/tron-box](https://github.com/tronprotocol/tron-box)
+Originally, this code was at [https://github.com/tron-us/tronbox](https://github.com/tron-us/tronbox)
 
 [TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
 
@@ -259,3 +259,8 @@ __2.2.2__
 __2.2.1__
 * Add compatibility with JavaTron 3.2.
 
+
+-----
+
+For more historic data, check the original repo at
+[https://github.com/tronprotocol/tron-box](https://github.com/tronprotocol/tron-box)
