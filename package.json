@@ -12,7 +12,7 @@
     "update:submodules": "git submodule update --init --recursive",
     "update:tronweb": "./scripts/update-tronweb.sh",
     "re-install": "scripts/clean-all-modules.sh && lerna bootstrap",
-    "build:tronweb:dev": "cd packages/tronwrap/tron-web && yarn build:dev"
+    "build:tronweb:dev": "cd packages/tronwrap/tronweb && yarn build:dev"
   },
   "devDependencies": {
     "lerna": "^2.11.0"

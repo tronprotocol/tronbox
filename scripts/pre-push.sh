@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd packages/tronwrap/tron-web
+cd packages/tronwrap/tronweb
 current_tronweb_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 cd ../../..
 

@@ -9,7 +9,7 @@ var _ = require("lodash");
 var async = require("async");
 var fs = require("fs");
 var TronWrap = require('tronwrap');
-var TronWeb = require("../../../tronwrap/tron-web/dist/TronWeb.node");
+var TronWeb = require("../../../tronwrap/tronweb/dist/TronWeb.node");
 var waitForTransactionReceipt = require('./waitForTransactionReceipt');
 
 function TestRunner(options) {

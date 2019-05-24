@@ -35,7 +35,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run build-tronweb && npm run build-cli",
-    "build-tronweb": "cd ../tronwrap/tron-web && yarn build -p",
+    "build-tronweb": "cd ../tronwrap/tronweb && yarn build -p",
     "build-cli": "webpack --config ./cli.webpack.config.js",
     "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
     "publish:byoc": "node ./scripts/prereleaseVersion.js byoc-safe byoc",
