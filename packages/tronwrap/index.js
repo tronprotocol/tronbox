@@ -1,4 +1,4 @@
-var _TronWeb = require("./tron-web/dist/TronWeb.node");
+var _TronWeb = require("./tronweb/dist/TronWeb.node");
 var chalk = require('chalk')
 var constants = require('./constants')
 var axios = require('axios');

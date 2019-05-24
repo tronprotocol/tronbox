@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 (
-cd packages/tronwrap/tron-web
+cd packages/tronwrap/tronweb
 yarn build -p
 )
 (
