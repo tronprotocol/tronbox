@@ -218,13 +218,15 @@ instance.sendCoin([address, amount], {from: account[1]});
 ```
 git clone --recurse-submodules -j8 git@github.com:sullof/tronbox.git
 ```
-3. If you don't have yarn and/or lerna already installed, install them globally:
+3. If you use nvm for Node, please install Node 8, and install lerna globally:
 ```
-npm i -g yarn lerna
+nvm install v8.16.0
+nvm use v8.16.0
+npm i -g lerna
 ```
 4. Bootstrap the project:
 ```
-yarn bootstrap
+lerna bootstrap
 ```
 5. During the development, for better debugging, you can run the unbuilt version of TronBox, for example
 ```
