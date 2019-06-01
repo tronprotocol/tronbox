@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
     "mocha": "^4.1.0",
@@ -25,7 +25,7 @@
     "truffle-box": "^1.0.7",
     "truffle-contract": "^3.0.6",
     "truffle-core": "^4.1.14",
-    "web3": "0.20.6",
+    "web3": "0.20.7",
     "webpack": "^2.5.1",
     "yargs": "^8.0.2"
   },

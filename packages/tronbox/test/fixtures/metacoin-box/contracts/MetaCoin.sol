@@ -7,34 +7,35 @@ import "./ConvertLib.sol";
 // coin/token contracts.
 
 contract MetaCoin {
-	mapping (address => uint) balances;
+  mapping(address => uint) balances;
 
-	event Transfer(address _from, address _to, uint256 _value);
+  event Transfer(address _from, address _to, uint256 _value);
 
-    address owner;
+  address owner;
 
-	constructor(uint initialBalance) public {
-	  owner = msg.sender;
-		balances[msg.sender] = initialBalance;
-	}
+  constructor(uint initialBalance) public {
+    owner = msg.sender;
+    balances[msg.sender] = initialBalance;
+  }
 
-	function sendCoin(address receiver, uint amount) public returns(bool sufficient) {
-		if (balances[msg.sender] < amount) return false;
-		balances[msg.sender] -= amount;
-		balances[receiver] += amount;
-		emit Transfer(msg.sender, receiver, amount);
-		return true;
-	}
+  function sendCoin(address receiver, uint amount) public returns (bool sufficient) {
+    if (balances[msg.sender] < amount) return false;
+    balances[msg.sender] -= amount;
+    balances[receiver] += amount;
+    emit Transfer(msg.sender, receiver, amount);
+    return true;
+  }
 
-	function getBalanceInEth(address addr) public view returns(uint){
-		return ConvertLib.convert(getBalance(addr),2);
-	}
+  function getBalanceInEth(address addr) public view returns (uint){
 
-	function getBalance(address addr) public view returns(uint) {
-		return balances[addr];
-	}
+    return ConvertLib.convert(getBalance(addr), 2);
+  }
 
-	function getOwner() public view returns(address) {
+  function getBalance(address addr) public view returns (uint) {
+    return balances[addr];
+  }
+
+  function getOwner() public view returns (address) {
     return owner;
-	}
+  }
 }
