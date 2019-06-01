@@ -49,7 +49,7 @@
     "truffle-resolver": "^4.0.4",
     "truffle-solidity-utils": "^1.1.2",
     "truffle-workflow-compile": "^1.0.6",
-    "web3": "0.20.6",
+    "web3": "0.20.7",
     "yargs": "^8.0.2"
   },
   "bin": {
