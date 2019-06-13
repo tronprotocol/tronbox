@@ -8,7 +8,7 @@ var solc = require("solc");
 var fs = require("fs");
 var requireNoCache = require("require-nocache")(module);
 var TestRPC = require("ganache-cli");
-var Web3 = require("web3");
+var Web3 = require("web3-mock");
 
 describe("artifactor + require", function() {
   var Example;

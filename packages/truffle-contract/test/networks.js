@@ -14,7 +14,7 @@ var debug = require("debug")("ganache-core");
 var TestRPC = require("ganache-core");
 var BlockchainUtils = require("truffle-blockchain-utils");
 var contract = require("../");
-var Web3 = require("web3");
+var Web3 = require("web3-mock");
 var times = require("async/times");
 
 var log = {

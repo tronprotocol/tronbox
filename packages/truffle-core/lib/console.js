@@ -12,7 +12,6 @@ var os = require("os");
 var path = require("path");
 var EventEmitter = require("events");
 var inherits = require("util").inherits;
-var TronWrap = require('tronwrap')
 const logErrorAndExit = require('tronwrap').logErrorAndExit
 
 inherits(Console, EventEmitter);

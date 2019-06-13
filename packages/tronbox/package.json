@@ -25,7 +25,7 @@
     "truffle-box": "^1.0.7",
     "truffle-contract": "^3.0.6",
     "truffle-core": "^4.1.14",
-    "web3": "0.20.7",
+    "web3-mock": "1.0.0",
     "webpack": "^2.5.1",
     "yargs": "^8.0.2"
   },

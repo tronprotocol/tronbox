@@ -7,7 +7,7 @@ var path = require("path");
 var assert = require("assert");
 var Reporter = require("../reporter");
 var Server = require("../server");
-var Web3 = require("web3");
+var Web3 = require("web3-mock");
 
 describe("Migration Parameters", function() {
   var config;

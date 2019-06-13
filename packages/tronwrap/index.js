@@ -2,6 +2,7 @@ var _TronWeb = require("./tronweb/dist/TronWeb.node");
 var chalk = require('chalk')
 var constants = require('./constants')
 var axios = require('axios');
+var semver = require('semver')
 
 var instance;
 
@@ -105,6 +106,7 @@ function init(options, extraOptions) {
         tronWrap.trx.getNodeInfo()
       ])
 
+      // this should never happens
       for(let proposal of proposals) {
         if(proposal.key === 'getAllowTvmTransferTrc10') {
           if(!proposal.value) {
@@ -113,8 +115,12 @@ function init(options, extraOptions) {
           break
         }
       }
+
       if(nodeInfo) {
         info.javaTronVersion = nodeInfo.configNodeInfo.codeVersion
+        if (semver.gte(info.javaTronVersion, '3.6.0')) {
+          info.compilerVersion = '4'
+        }
       }
     } catch (err) {
     }
@@ -365,3 +371,5 @@ module.exports.constants = constants
 module.exports.logErrorAndExit = logErrorAndExit
 module.exports.dlog = dlog
 module.exports.sleep = sleep
+module.exports.TronWeb = _TronWeb
+

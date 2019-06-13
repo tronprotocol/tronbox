@@ -1,7 +1,7 @@
 var TestRPC = require("ganache-cli");
 var contract = require("truffle-contract");
 var Deployer = require("../index");
-var Web3 = require("web3");
+var Web3 = require("web3-mock");
 var assert = require("assert");
 
 var exec = require("../src/actions/exec");

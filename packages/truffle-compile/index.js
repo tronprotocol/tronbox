@@ -107,7 +107,7 @@ var compile = function(sources, options, callback) {
     }
   });
 
-  var result = solc.compileStandard(JSON.stringify(solcStandardInput));
+  var result = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput));
 
   var standardOutput = JSON.parse(result);
 
