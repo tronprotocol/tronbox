@@ -1,5 +1,6 @@
 var CompileError = require("./compileerror");
-var solc = require("tron-solc");
+const {getWrapper} = require("tron-solc")
+// var solc = require("tron-solc");
 var fs = require("fs");
 var path = require("path");
 
@@ -17,7 +18,7 @@ var preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning
 var installedContractsDir = "installed_contracts"
 
 module.exports = {
-  parse: function(body, fileName) {
+  parse: function(body, fileName, options) {
     // Here, we want a valid AST even if imports don't exist. The way to
     // get around that is to tell the compiler, as they happen, that we
     // have source for them (an empty file).
@@ -60,7 +61,8 @@ module.exports = {
       }
     };
 
-    var output = solc.compileStandard(JSON.stringify(solcStandardInput), function(file_path) {
+    var solc = getWrapper({});
+    var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function(file_path) {
       // Resolve dependency manually.
       if (fs.existsSync(file_path)) {
         contents = fs.readFileSync(file_path, {encoding: 'UTF-8'});
@@ -97,7 +99,7 @@ module.exports = {
   },
 
   // This needs to be fast! It is fast (as of this writing). Keep it fast!
-  parseImports: function(body) {
+  parseImports: function(body, options) {
     var self = this;
 
     // WARNING: Kind of a hack (an expedient one).
@@ -133,7 +135,8 @@ module.exports = {
       }
     };
 
-    var output = solc.compileStandard(JSON.stringify(solcStandardInput), function() {
+    var solc = getWrapper({});
+    var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function() {
       // The existence of this function ensures we get a parsable error message.
       // Without this, we'll get an error message we *can* detect, but the key will make it easier.
       // Note: This is not a normal callback. See docs here: https://github.com/ethereum/solc-js#from-version-021

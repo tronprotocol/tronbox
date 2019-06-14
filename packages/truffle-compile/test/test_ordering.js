@@ -27,7 +27,7 @@ describe("Compile", function() {
         settings: { outputSelection: { "*": { "*": ["abi"] } } }
       };
 
-      var result = solc.compileStandard(JSON.stringify(input));
+      var result = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(input));
       result = JSON.parse(result);
       var abi = result.contracts["SimpleOrdered.sol"]["SimpleOrdered"].abi.map(function(item){
         return item.name;
@@ -59,7 +59,7 @@ describe("Compile", function() {
         settings: { outputSelection: { "*": { "*": ["abi"] } } }
       };
 
-      var result = solc.compileStandard(JSON.stringify(input));
+      var result = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(input));
       result = JSON.parse(result);
       var abi = result.contracts["ComplexOrdered.sol"]["ComplexOrdered"].abi.map(function(item){
         return item.name;

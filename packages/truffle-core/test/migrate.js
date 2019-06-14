@@ -8,7 +8,7 @@ var fs = require("fs");
 var TestRPC = require("ganache-cli");
 var Resolver = require("truffle-resolver");
 var Artifactor = require("truffle-artifactor");
-var Web3 = require("web3");
+var Web3 = require("web3-mock");
 
 describe("migrate", function() {
   var config;

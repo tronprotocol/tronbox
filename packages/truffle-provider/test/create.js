@@ -1,5 +1,5 @@
 var assert = require("assert");
-var Web3 = require("web3");
+var Web3 = require("web3-mock");
 var Ganache = require("ganache-cli");
 var Provider = require("../index");
 

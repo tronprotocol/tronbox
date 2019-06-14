@@ -47,7 +47,7 @@ describe("solc", function() {
         }
       }
     });
-    var solcOut = JSON.parse(solc.compileStandard(solcIn));
+    var solcOut = JSON.parse(solc[solc.compileStandard ? 'compileStandard' : 'compile'](solcIn));
 
     // contracts now grouped by solidity source file
     var rawA = solcOut.contracts["A.sol"].A;

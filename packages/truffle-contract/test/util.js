@@ -1,6 +1,6 @@
 var debug = require("debug")("ganache-core");
 var ganache = require("ganache-core");
-var Web3 = require("web3");
+var Web3 = require("web3-mock");
 
 var log = {
   log: debug

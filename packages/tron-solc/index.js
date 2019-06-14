@@ -1,9 +1,13 @@
-var wrapper = require('./wrapper.js');
+var wrapper = require('solc/wrapper');
 
-function getWrapper(options) {
-  let soljson = require(`./soljson_v${options.compilerVersion || 1}.js`)
+function getWrapper(options = {}) {
+
+  let compilerVersion = options.compilerVersion || 3
+  if (options.useZeroFourCompiler) {
+    compilerVersion = '3'
+  }
+  let soljson = require(`./compiler-versions/soljson_v${compilerVersion}.js`)
   return wrapper(soljson)
 }
 
-module.exports = wrapper(require('./soljson_v3.js'));
 module.exports.getWrapper = getWrapper;
