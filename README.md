@@ -237,6 +237,7 @@ lerna bootstrap
 
 __2.5.0__
 * Add support for JavaTron 3.6 and Solidity compiler for `^0.5.4`
+* Fix vulnerability with (unused) `web3` and `diff` packages
 
 __2.3.16__
 * Updates TronWeb to version 2.3.2
