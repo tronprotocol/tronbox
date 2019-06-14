@@ -233,7 +233,13 @@ lerna bootstrap
 
 ## Latest version is 2.3.16
 
-## Recent history
+## Recent history (selected)
+
+__2.5.0__
+* Add support for JavaTron 3.6 and Solidity compiler for `^0.5.4`
+
+__2.3.16__
+* Updates TronWeb to version 2.3.2
 
 __2.3.16__
 * Updates TronWeb to version 2.3.2
