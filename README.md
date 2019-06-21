@@ -10,7 +10,7 @@
 ## Installation
 `npm install -g tronbox`
 ## OS requirement
-- NodeJS 5.0+
+- NodeJS 8.0+
 - Windows, Linux, or Mac OS X
 
 ## Features
