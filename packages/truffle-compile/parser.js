@@ -34,7 +34,7 @@ module.exports = {
           remappings.push(pkg + "/=" + path.join(installedContractsDir, pkg, 'contracts', '/'));
         }
       }
-      
+
       return remappings;
     }
 
@@ -135,7 +135,7 @@ module.exports = {
       }
     };
 
-    var solc = getWrapper({});
+    var solc = getWrapper(options);
     var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function() {
       // The existence of this function ensures we get a parsable error message.
       // Without this, we'll get an error message we *can* detect, but the key will make it easier.
