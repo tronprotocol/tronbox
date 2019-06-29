@@ -299,7 +299,7 @@ module.exports = {
         var imports;
 
         try {
-          imports = Parser.parseImports(resolved_body);
+          imports = Parser.parseImports(resolved_body, resolver.options);
         } catch (e) {
           e.message = "Error parsing " + import_path + ": " + e.message;
           return finished(e);
