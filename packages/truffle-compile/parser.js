@@ -61,7 +61,7 @@ module.exports = {
       }
     };
 
-    var solc = getWrapper({});
+    var solc = getWrapper(options);
     var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function(file_path) {
       // Resolve dependency manually.
       if (fs.existsSync(file_path)) {
@@ -144,8 +144,6 @@ module.exports = {
     });
 
     output = JSON.parse(output);
-
-
 
     // Filter out the "pre-release compiler" warning, if present.
     var errors = output.errors.filter(function(solidity_error) {
