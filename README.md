@@ -235,6 +235,9 @@ lerna bootstrap
 
 ## Recent history (selected)
 
+__2.5.2__
+* Fix bug in compiler wrapper calls 
+
 __2.5.0__
 * Add support for JavaTron 3.6 and Solidity compiler for `^0.5.4`
 * Fix vulnerability with (unused) `web3` and `diff` packages

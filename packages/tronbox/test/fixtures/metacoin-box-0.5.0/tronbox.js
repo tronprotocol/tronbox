@@ -34,6 +34,7 @@ Then, run the migration with:
       feeLimit: 1e8,
       fullHost: 'http://127.0.0.1:' + port,
       network_id: "9"
-    }
+    },
+    useZeroFiveCompiler: true
   }
 }
