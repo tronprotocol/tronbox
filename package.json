@@ -23,6 +23,6 @@
     ]
   },
   "dependencies": {
-    "ipfsd-ctl": "^0.42.2"
+    "ipfsd-ctl": "0.42.2"
   }
 }
