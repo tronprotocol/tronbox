@@ -216,6 +216,7 @@ function init(options, extraOptions) {
     });
   }
 
+
   tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey, callback) {
 
     let signedTransaction
