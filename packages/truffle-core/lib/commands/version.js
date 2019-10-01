@@ -1,3 +1,5 @@
+var {supportedVersions} = require('../../../tron-solc')
+
 var command = {
   command: 'version',
   description: 'Show version number and exit',
@@ -15,8 +17,7 @@ var command = {
     }
 
     options.logger.log("Tronbox " + bundle_version);
-    // + " (core: " + version.core + ")");
-    // options.logger.log("Solidity v" + version.solc + " (tron-solc)");
+    options.logger.log("Solidity v" + supportedVersions[supportedVersions.length - 1] + " (tron-solc)");
 
     done();
   }
