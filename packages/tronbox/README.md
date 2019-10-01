@@ -125,6 +125,18 @@ and
 instance.sendCoin([address, amount], {from: account[1]});
 ```
 
+## Solc versions
+
+TronBox does not supports all the Solidity compilers.  
+The supported versions are the following:
+```
+0.4.24
+0.4.25
+0.5.4
+0.5.8
+```
+ 
+
 ## How to contribute
 
 1. Fork this repo.
