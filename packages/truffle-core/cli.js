@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('source-map-support/register')
 
-var Config = require("truffle-config");
+var Config = require("./components/Config");
 var Command = require("./lib/command");
 var TaskError = require("./lib/errors/taskerror");
 var TruffleError = require("truffle-error");

@@ -52,8 +52,8 @@ var command = {
   description: 'Download a tronbox Box, a pre-built tronbox project',
   builder: {},
   run: function(options, done) {
-    var Config = require("truffle-config");
-    var Box = require("truffle-box");
+    var Config = require("../../components/Config");
+    var Box = require("../../components/Box");
     var OS = require("os");
 
     var config = Config.default().with({

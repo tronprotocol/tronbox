@@ -4,7 +4,7 @@ var command = {
   builder: {},
   run: function (options, done) {
     process.env.CURRENT = 'install'
-    var Config = require("truffle-config");
+    var Config = require("../../components/Config");
     var Package = require("../package");
 
     if (options._ && options._.length > 0) {

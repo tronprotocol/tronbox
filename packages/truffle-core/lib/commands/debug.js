@@ -16,13 +16,13 @@ var command = {
     var util = require("util");
     var _ = require("lodash");
 
-    var compile = require("truffle-compile");
-    var Config = require("truffle-config");
-    var Debugger = require("truffle-debugger");
-    var DebugUtils = require("truffle-debug-utils");
+    var compile = require("../../components/Compile");
+    var Config = require("../../components/Config");
+    var Debugger = require("../../components/Debugger");
+    var DebugUtils = require("../../components/DebugUtils");
     var Environment = require("../environment");
     var ReplManager = require("../repl");
-    var selectors = require("truffle-debugger").selectors;
+    var selectors = require("../../components/DebugUtils").selectors;
 
     // Debugger Session properties
     var ast = selectors.ast;

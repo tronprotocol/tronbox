@@ -10,7 +10,7 @@ var command = {
   run: function (options, done) {
     process.env.CURRENT = 'serve'
     var Serve = require("../serve");
-    var Config = require("truffle-config");
+    var Config = require("../../components/Config");
     var watch = require("./watch");
 
     var config = Config.detect(options);

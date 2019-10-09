@@ -5,11 +5,11 @@ var command = {
   run: function (options, done) {
     process.env.CURRENT = 'watch'
     var Build = require("../build");
-    var Config = require("truffle-config");
+    var Config = require("../../components/Config");
     var chokidar = require("chokidar");
     var path = require("path");
     var colors = require("colors");
-    var Contracts = require("truffle-workflow-compile");
+    var Contracts = require("../../components/WorkflowCompile");
     var TruffleError = require("truffle-error");
 
     var config = Config.detect(options);

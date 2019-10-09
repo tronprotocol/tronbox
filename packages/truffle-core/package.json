@@ -30,25 +30,12 @@
     "source-map-support": "^0.5.3",
     "spawn-args": "^0.1.0",
     "temp": "^0.8.3",
-    "truffle-artifactor": "^3.0.7",
-    "truffle-box": "^1.0.7",
-    "truffle-compile": "^3.0.13",
-    "truffle-config": "^1.0.6",
-    "truffle-contract": "^3.0.6",
     "truffle-contract-sources": "^0.0.2",
-    "truffle-debug-utils": "^1.0.6",
-    "truffle-debugger": "^4.0.2",
-    "truffle-deployer": "^2.0.7",
     "truffle-error": "^0.0.3",
     "truffle-expect": "^0.0.4",
     "truffle-init": "^1.0.7",
-    "truffle-migrate": "^2.0.8",
-    "truffle-provider": "^0.0.6",
-    "truffle-provisioner": "^0.1.1",
     "truffle-require": "^1.0.7",
-    "truffle-resolver": "^4.0.4",
     "truffle-solidity-utils": "^1.1.2",
-    "truffle-workflow-compile": "^1.0.6",
     "web3-mock": "1.0.0",
     "yargs": "^8.0.2"
   },
@@ -76,7 +63,6 @@
     }
   ],
   "devDependencies": {
-    "ipfsd-ctl": "^0.21.0",
     "truffle-blockchain-utils": "^0.0.5"
   },
   "publishConfig": {

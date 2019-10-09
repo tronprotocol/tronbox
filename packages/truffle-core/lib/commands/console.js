@@ -4,7 +4,7 @@ var command = {
   builder: {},
   run: function (options, done) {
     process.env.CURRENT = 'console'
-    var Config = require("truffle-config");
+    var Config = require("../../components/Config");
     var Console = require("../console");
     var Environment = require("../environment");
     var Develop = require("./develop");

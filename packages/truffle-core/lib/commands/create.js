@@ -13,7 +13,7 @@ var command = {
   },
   run: function (options, done) {
     process.env.CURRENT = 'create'
-    var Config = require("truffle-config");
+    var Config = require("../../components/Config");
     var ConfigurationError = require("../errors/configurationerror");
     var create = require("../create");
 

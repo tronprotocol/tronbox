@@ -24,11 +24,11 @@ var command = {
   run: function (options, done) {
     process.env.CURRENT = 'migrate'
     var OS = require("os");
-    var Config = require("truffle-config");
-    var Contracts = require("truffle-workflow-compile");
-    var Resolver = require("truffle-resolver");
-    var Artifactor = require("truffle-artifactor");
-    var Migrate = require("truffle-migrate");
+    var Config = require("../../components/Config");
+    var Contracts = require("../../components/WorkflowCompile");
+    var Resolver = require("../../components/Resolver");
+    var Artifactor = require("../../components/Artifactor");
+    var Migrate = require("../../components/Migrate");
     var Environment = require("../environment");
     var temp = require("temp");
     var copy = require("../copy");
@@ -110,7 +110,7 @@ var command = {
       Environment.detect(config, function(err) {
         if (err) return done(err);
         var dryRun = options.dryRun === true;
-        
+
         var networkMessage = "Using network '" + config.network + "'";
 
         if (dryRun) {
