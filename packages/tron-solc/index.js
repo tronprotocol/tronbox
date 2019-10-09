@@ -1,19 +1,17 @@
 var wrapper = require('solc/wrapper');
+var path = require('path');
+var fs = require('fs-extra');
+var homedir = require('homedir');
+const {execSync} = require('child_process')
 
 var supportedVersions = [
-  '0.4.24', '0.4.25', '0.5.4', '0.5.8'
-]
-
-var fullVersions = [
-  '0.4.24-develop.2018.8.28+commit.3ba0cdec.mod.Emscripten.clang',
-  '0.4.25+commit.69a1e720.Emscripten.clang',
-  '0.5.4+commit.7b0de266.mod.Emscripten.clang',
-  '0.5.8+commit.1f148fe1.Emscripten.clang'
+  '0.4.24', '0.4.25', '0.5.4', '0.5.8', '0.5.9'
 ]
 
 function getWrapper(options = {}) {
 
-  let compilerVersion = supportedVersions[supportedVersions.length - 1]
+  let compilerVersion = '0.5.4'
+  let solcDir = path.join(homedir(), '.tronbox', 'solc');
 
   if (options.networks) {
     if (options.networks.useZeroFourCompiler) {
@@ -27,17 +25,23 @@ function getWrapper(options = {}) {
       if (supportedVersions.includes(version)) {
         compilerVersion = version
       } else {
-        console.error(`Configuration error in "tronbox.js":
+        console.error(`Error:
 TronBox supports only the following versions:
 ${supportedVersions.join(', ')}
 `)
         process.exit()
       }
-    } catch(e) {
+    } catch (e) {
     }
   }
 
-  let soljson = require(`./compiler-versions/soljson_v${compilerVersion}.js`)
+  let soljsonPath = path.join(solcDir, `soljson_v${compilerVersion}.js`)
+
+  if (!fs.existsSync(soljsonPath)) {
+    let result = execSync(`tronbox --download-compiler ${compilerVersion}`).toString()
+    console.log(result)
+  }
+  let soljson = require(soljsonPath)
   return wrapper(soljson)
 }
 

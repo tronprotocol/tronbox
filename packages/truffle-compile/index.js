@@ -41,6 +41,7 @@ var compile = function(sources, options, callback) {
   const {getWrapper} = require("tron-solc")
 
   var solc = getWrapper(options);
+  console.log(typeof solc)
   // Clean up after solc.
   var listeners = process.listeners("uncaughtException");
   var solc_listener = listeners[listeners.length - 1];

@@ -1,0 +1,699 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20191009.090642.94048.0.001.json",
+    "dumpEventTime": "2019-10-09T09:06:42Z",
+    "dumpEventTimeStamp": "1570637202988",
+    "processId": 94048,
+    "cwd": "/Users/sullof/Projects/Tron/tronbox/packages/tronbox",
+    "commandLine": [
+      "node",
+      "/Users/sullof/Projects/Tron/tronbox/packages/tronbox/node_modules/.bin/webpack",
+      "--config",
+      "./cli.webpack.config.js"
+    ],
+    "nodejsVersion": "v12.11.1",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "darwin",
+    "componentVersions": {
+      "node": "12.11.1",
+      "v8": "7.7.299.11-node.12",
+      "uv": "1.32.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.39.2",
+      "napi": "5",
+      "llhttp": "1.1.4",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1c",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v12.11.1/node-v12.11.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.11.1/node-v12.11.1.tar.gz"
+    },
+    "osName": "Darwin",
+    "osRelease": "18.7.0",
+    "osVersion": "Darwin Kernel Version 18.7.0: Tue Aug 20 16:57:14 PDT 2019; root:xnu-4903.271.2~2/RELEASE_X86_64",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 31003930,
+        "nice": 0,
+        "sys": 22150470,
+        "idle": 152219240,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 2329640,
+        "nice": 0,
+        "sys": 1423720,
+        "idle": 201394340,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 26949450,
+        "nice": 0,
+        "sys": 16721150,
+        "idle": 161479290,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 2299790,
+        "nice": 0,
+        "sys": 1195850,
+        "idle": 201651850,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 23013680,
+        "nice": 0,
+        "sys": 13810590,
+        "idle": 168325240,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 2309360,
+        "nice": 0,
+        "sys": 1037280,
+        "idle": 201800650,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 19706150,
+        "nice": 0,
+        "sys": 11062760,
+        "idle": 174380210,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 2314070,
+        "nice": 0,
+        "sys": 906260,
+        "idle": 201926740,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 16926330,
+        "nice": 0,
+        "sys": 8550300,
+        "idle": 179672110,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 2301980,
+        "nice": 0,
+        "sys": 797640,
+        "idle": 202047240,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 15471320,
+        "nice": 0,
+        "sys": 7019110,
+        "idle": 182657930,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz",
+        "speed": 2900,
+        "user": 2292600,
+        "nice": 0,
+        "sys": 703010,
+        "idle": 202151020,
+        "irq": 0
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::1",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 1
+      },
+      {
+        "name": "en5",
+        "internal": false,
+        "mac": "ac:de:48:00:11:22",
+        "address": "fe80::aede:48ff:fe00:1122",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 9
+      },
+      {
+        "name": "en0",
+        "internal": false,
+        "mac": "f0:18:98:85:57:96",
+        "address": "fe80::1c97:5d20:1f0e:818b",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 11
+      },
+      {
+        "name": "en0",
+        "internal": false,
+        "mac": "f0:18:98:85:57:96",
+        "address": "192.168.101.230",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "awdl0",
+        "internal": false,
+        "mac": "de:9c:7f:c8:cc:26",
+        "address": "fe80::dc9c:7fff:fec8:cc26",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 13
+      },
+      {
+        "name": "utun0",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::d696:e321:fa48:fb0a",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 19
+      },
+      {
+        "name": "utun1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::9b54:93d6:6845:b181",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 20
+      },
+      {
+        "name": "en7",
+        "internal": false,
+        "mac": "a0:ce:c8:c3:51:8a",
+        "address": "fe80::8e1:c881:e65d:4b59",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 8
+      },
+      {
+        "name": "en7",
+        "internal": false,
+        "mac": "a0:ce:c8:c3:51:8a",
+        "address": "10.10.0.63",
+        "netmask": "255.255.0.0",
+        "family": "IPv4"
+      }
+    ],
+    "host": "Valeria.local"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x000000010014a414",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, v8::Local<v8::String>) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x000000010007af11",
+      "symbol": "node::OnFatalError(char const*, char const*) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000100172b97",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000100172b33",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x00000001002f6b55",
+      "symbol": "v8::internal::Heap::FatalProcessOutOfMemory(char const*) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x00000001002f8224",
+      "symbol": "v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x00000001002f50f7",
+      "symbol": "v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x00000001002f30dd",
+      "symbol": "v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x00000001002fe7f4",
+      "symbol": "v8::internal::Heap::AllocateRawWithLightRetry(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x00000001002fe86f",
+      "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x00000001002cb467",
+      "symbol": "v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationType) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x00000001005f3fc5",
+      "symbol": "v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x000000010092c479",
+      "symbol": "Builtins_CEntry_Return1_DontSaveFPRegs_ArgvOnStack_NoBuiltinExit [/Users/sullof/.nvm/versions/node/v12.11.1/bin/node]"
+    },
+    {
+      "pc": "0x000036dd40a6a4ea",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2154864640,
+    "totalCommittedMemory": 2152883928,
+    "usedMemory": 2146007216,
+    "availableMemory": 47437880,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 32568,
+        "capacity": 261872,
+        "used": 32296,
+        "available": 229576
+      },
+      "new_space": {
+        "memorySize": 4194304,
+        "committedMemory": 2795336,
+        "capacity": 2094976,
+        "used": 891072,
+        "available": 1203904
+      },
+      "old_space": {
+        "memorySize": 2082582528,
+        "committedMemory": 2082340904,
+        "capacity": 2080321776,
+        "used": 2079363008,
+        "available": 958768
+      },
+      "code_space": {
+        "memorySize": 950272,
+        "committedMemory": 905632,
+        "capacity": 787008,
+        "used": 787008,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 2625536,
+        "committedMemory": 2559632,
+        "capacity": 764640,
+        "used": 764640,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 64200704,
+        "committedMemory": 64200704,
+        "capacity": 64165640,
+        "used": 64165640,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 3552,
+        "used": 3552,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 2094976,
+        "used": 0,
+        "available": 2094976
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 148.192,
+    "kernelCpuSeconds": 10.3127,
+    "cpuConsumptionPercent": 186.477,
+    "maxRss": 2348290146304,
+    "pageFaults": {
+      "IORequired": 35,
+      "IONotRequired": 2483906
+    },
+    "fsActivity": {
+      "reads": 0,
+      "writes": 0
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "npm_config_save_dev": "",
+    "npm_config_legacy_bundling": "",
+    "npm_config_dry_run": "",
+    "npm_package_devDependencies_ganache_cli": "6.1.0-beta.4",
+    "npm_config_only": "",
+    "npm_config_browser": "",
+    "npm_config_viewer": "man",
+    "npm_config_commit_hooks": "true",
+    "npm_package_devDependencies_meta_npm": "^0.0.22",
+    "npm_package_dependencies_mocha": "^4.1.0",
+    "LDFLAGS": "-L/usr/local/opt/openssl@1.1/lib",
+    "npm_config_also": "",
+    "npm_config_sign_git_commit": "",
+    "npm_config_rollback": "true",
+    "npm_package_devDependencies_meta_pkgs": "^0.2.0",
+    "npm_config_usage": "",
+    "npm_config_audit": "true",
+    "NODE": "/Users/sullof/.nvm/versions/node/v12.11.1/bin/node",
+    "npm_package_homepage": "https://github.com/tron-us/tronbox/",
+    "INIT_CWD": "/Users/sullof/Projects/Tron/tronbox/packages/tronbox",
+    "NVM_CD_FLAGS": "",
+    "npm_config_globalignorefile": "/Users/sullof/.nvm/versions/node/v12.11.1/etc/npmignore",
+    "npm_package_devDependencies_mocha": "5.2.0",
+    "npm_package_namespace": "tronprotocol",
+    "SHELL": "/bin/bash",
+    "TERM": "xterm-256color",
+    "npm_config_init_author_url": "",
+    "npm_config_shell": "/bin/bash",
+    "npm_config_maxsockets": "50",
+    "npm_config_parseable": "",
+    "npm_config_shrinkwrap": "true",
+    "npm_config_metrics_registry": "https://registry.npmjs.org/",
+    "npm_package_devDependencies_truffle_core": "^4.1.14",
+    "npm_package_devDependencies_semver": "^5.5.0",
+    "TMPDIR": "/var/folders/ph/31j7v72n63d_9nhwlsjr43q80000gn/T/",
+    "CPPFLAGS": "-I/usr/local/opt/openssl@1.1/include",
+    "npm_config_timing": "",
+    "npm_config_init_license": "ISC",
+    "Apple_PubSub_Socket_Render": "/private/tmp/com.apple.launchd.UK5MpPSXst/Render",
+    "npm_config_if_present": "",
+    "npm_package_devDependencies_fs_extra": "6.0.1",
+    "npm_config_sign_git_tag": "",
+    "npm_config_init_author_email": "",
+    "npm_config_cache_max": "Infinity",
+    "npm_config_preid": "",
+    "npm_config_long": "",
+    "npm_config_local_address": "",
+    "npm_config_cert": "",
+    "npm_config_git_tag_version": "true",
+    "npm_package_scripts_publish_next": "node ./scripts/prereleaseVersion.js next next",
+    "npm_config_noproxy": "",
+    "npm_config_registry": "https://registry.npmjs.org/",
+    "npm_config_fetch_retries": "2",
+    "npm_package_devDependencies_yargs": "^8.0.2",
+    "npm_package_repository_url": "git+https://github.com/tron-us/tronbox.git",
+    "npm_package_devDependencies_tmp": "0.0.33",
+    "npm_package_devDependencies_clean_webpack_plugin": "^0.1.16",
+    "npm_config_versions": "",
+    "npm_config_key": "",
+    "npm_config_message": "%s",
+    "npm_package_readmeFilename": "README.md",
+    "npm_package_authors_0_name": "Tim Coulter",
+    "npm_package_devDependencies_webpack": "^2.5.1",
+    "npm_package_description": "TronBox - Simple development framework for tronweb",
+    "USER": "sullof",
+    "NVM_DIR": "/Users/sullof/.nvm",
+    "npm_package_authors_2_url": "https://github.com/sullof",
+    "npm_package_devDependencies_shebang_loader": "0.0.1",
+    "npm_package_authors_1_name": "alinger",
+    "npm_config_globalconfig": "/Users/sullof/.nvm/versions/node/v12.11.1/etc/npmrc",
+    "npm_package_authors_0_url": "https://github.com/tcoulter",
+    "npm_package_devDependencies_stream_buffers": "^3.0.1",
+    "npm_config_prefer_online": "",
+    "npm_config_always_auth": "",
+    "npm_config_logs_max": "10",
+    "npm_package_devDependencies_prepend_file": "^1.3.1",
+    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.0xdnRwF0JB/Listeners",
+    "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0",
+    "npm_execpath": "/Users/sullof/.nvm/versions/node/v12.11.1/lib/node_modules/npm/bin/npm-cli.js",
+    "npm_config_global_style": "",
+    "npm_config_cache_lock_retries": "10",
+    "npm_config_cafile": "",
+    "npm_config_update_notifier": "true",
+    "npm_package_scripts_build_cli": "webpack --config ./cli.webpack.config.js",
+    "npm_package_authors_1_email": "alinger@forke.cn",
+    "npm_package_author_name": "tron.network",
+    "npm_package_devDependencies_glob": "^7.1.2",
+    "npm_config_heading": "npm",
+    "npm_config_audit_level": "low",
+    "npm_package_devDependencies_copy_webpack_plugin": "^4.0.1",
+    "npm_config_read_only": "",
+    "npm_config_offline": "",
+    "npm_config_searchlimit": "20",
+    "npm_config_fetch_retry_mintimeout": "10000",
+    "npm_config_json": "",
+    "npm_config_access": "",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"build-cli\"],\"original\":[\"run\",\"build-cli\"]}",
+    "npm_package_bin_tronbox": "./build/cli.bundled.js",
+    "PATH": "/Users/sullof/.nvm/versions/node/v12.11.1/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/sullof/Projects/Tron/tronbox/packages/tronbox/node_modules/.bin:/Users/sullof/.nvm/versions/node/v12.11.1/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/sullof/Projects/Tron/tronbox/packages/tronbox/node_modules/.bin:/Users/sullof/.nvm/versions/node/v12.11.1/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/sullof/Projects/Tron/tronbox/packages/tronbox/node_modules/.bin:/usr/local/opt/openssl@1.1/bin:/usr/local/Cellar/openresty/1.15.8.1/nginx/sbin:/Users/sullof/.cargo/bin:/Users/sullof/.nvm/versions/node/v12.11.1/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Users/sullof/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/sullof/go/bin:/Users/sullof/bin:/opt/apache-maven/bin:/usr/local/bin:/Users/sullof/go/bin",
+    "npm_config_allow_same_version": "",
+    "npm_package_scripts_build_tronweb": "cd ../tronwrap/tronweb && yarn build -p",
+    "npm_package_devDependencies_web3_mock": "1.0.0",
+    "TERMINAL_EMULATOR": "JetBrains-JediTerm",
+    "npm_config_https_proxy": "",
+    "npm_config_engine_strict": "",
+    "npm_config_description": "true",
+    "_": "/Users/sullof/Projects/Tron/tronbox/packages/tronbox/node_modules/.bin/webpack",
+    "npm_config_userconfig": "/Users/sullof/.npmrc",
+    "npm_config_init_module": "/Users/sullof/.npm-init.js",
+    "npm_package_dependencies_original_require": "1.0.1",
+    "npm_config_cidr": "",
+    "PWD": "/Users/sullof/Projects/Tron/tronbox/packages/tronbox",
+    "npm_config_user": "501",
+    "npm_config_node_version": "12.11.1",
+    "npm_package_bugs_url": "https://github.com/tron-us/tronbox/issues",
+    "JAVA_HOME": "/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home",
+    "npm_lifecycle_event": "build-cli",
+    "_INTELLIJ_FORCE_SET_PATH": "/usr/local/opt/openssl@1.1/bin:/usr/local/Cellar/openresty/1.15.8.1/nginx/sbin:/Users/sullof/.cargo/bin:/Users/sullof/.nvm/versions/node/v10.15.3/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Users/sullof/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/sullof/go/bin:/Users/sullof/bin:/opt/apache-maven/bin:/usr/local/bin:/Users/sullof/go/bin",
+    "EDITOR": "/usr/bin/nano",
+    "npm_config_ignore_prepublish": "",
+    "npm_config_save": "true",
+    "npm_config_editor": "/usr/bin/nano",
+    "npm_config_auth_type": "legacy",
+    "npm_package_repository_type": "git",
+    "npm_package_name": "tronbox",
+    "npm_config_script_shell": "",
+    "npm_config_tag": "latest",
+    "npm_package_authors_2_email": "francesco@sullo.co",
+    "npm_package_originalAuthor": "consensys.net",
+    "_INTELLIJ_FORCE_SET_GOPATH": "/Users/sullof/go",
+    "npm_config_global": "",
+    "npm_config_before": "",
+    "npm_config_progress": "true",
+    "npm_package_scripts_build": "npm run build-tronweb && npm run build-cli",
+    "npm_config_ham_it_up": "",
+    "npm_config_searchstaleness": "900",
+    "npm_config_optional": "true",
+    "npm_package_scripts_publish_byoc": "node ./scripts/prereleaseVersion.js byoc-safe byoc",
+    "XPC_FLAGS": "0x0",
+    "npm_config_save_prod": "",
+    "npm_config_force": "",
+    "npm_config_bin_links": "true",
+    "npm_config_searchopts": "",
+    "npm_config_node_gyp": "/Users/sullof/.nvm/versions/node/v12.11.1/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
+    "npm_config_depth": "Infinity",
+    "npm_package_authors_2_name": "Francesco Sullo",
+    "npm_config_sso_poll_frequency": "500",
+    "npm_config_rebuild_bundle": "true",
+    "npm_package_version": "2.6.1",
+    "XPC_SERVICE_NAME": "0",
+    "npm_config_unicode": "true",
+    "HOME": "/Users/sullof",
+    "SHLVL": "4",
+    "npm_config_fetch_retry_maxtimeout": "60000",
+    "npm_package_scripts_test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
+    "npm_config_ca": "",
+    "npm_config_tag_version_prefix": "v",
+    "npm_config_strict_ssl": "true",
+    "npm_config_sso_type": "oauth",
+    "npm_config_scripts_prepend_node_path": "warn-only",
+    "npm_config_save_prefix": "^",
+    "npm_config_loglevel": "notice",
+    "npm_package_devDependencies_truffle_contract": "^3.0.6",
+    "npm_config_save_exact": "",
+    "npm_config_dev": "",
+    "npm_config_group": "20",
+    "npm_config_fetch_retry_factor": "10",
+    "npm_config_version": "",
+    "npm_config_prefer_offline": "",
+    "npm_config_cache_lock_stale": "60000",
+    "npm_package_publishConfig_access": "public",
+    "npm_config_otp": "",
+    "npm_config_cache_min": "10",
+    "npm_config_searchexclude": "",
+    "npm_config_cache": "/Users/sullof/.npm",
+    "npm_package_authors_0_email": "tim@timothyjcoulter.com",
+    "LOGNAME": "sullof",
+    "npm_lifecycle_script": "webpack --config ./cli.webpack.config.js",
+    "npm_config_color": "true",
+    "npm_config_proxy": "",
+    "npm_config_package_lock": "true",
+    "npm_package_devDependencies_js_scrypt": "^0.2.0",
+    "LC_CTYPE": "en_US.UTF-8",
+    "npm_config_package_lock_only": "",
+    "npm_config_save_optional": "",
+    "GOPATH": "/Users/sullof/go",
+    "NVM_BIN": "/Users/sullof/.nvm/versions/node/v12.11.1/bin",
+    "npm_config_ignore_scripts": "",
+    "npm_config_user_agent": "npm/6.11.3 node/v12.11.1 darwin x64",
+    "npm_config_cache_lock_wait": "10000",
+    "npm_config_production": "",
+    "npm_config_send_metrics": "",
+    "npm_config_save_bundle": "",
+    "npm_package_scripts_prepare": "npm run build",
+    "npm_config_node_options": "",
+    "npm_config_umask": "0022",
+    "npm_config_init_version": "1.0.0",
+    "npm_package_devDependencies_truffle_box": "^1.0.7",
+    "npm_config_init_author_name": "",
+    "npm_config_git": "git",
+    "npm_config_scope": "",
+    "npm_config_onload_script": "",
+    "npm_config_unsafe_perm": "true",
+    "npm_config_tmp": "/var/folders/ph/31j7v72n63d_9nhwlsjr43q80000gn/T",
+    "npm_node_execpath": "/Users/sullof/.nvm/versions/node/v12.11.1/bin/node",
+    "npm_config_link": "",
+    "npm_config_prefix": "/Users/sullof/.nvm/versions/node/v12.11.1"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": 0,
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 49152,
+      "hard": "unlimited"
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": 67104768
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 2837,
+      "hard": 4256
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "/Users/sullof/.nvm/versions/node/v12.11.1/bin/node",
+    "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+    "/usr/lib/libSystem.B.dylib",
+    "/usr/lib/libc++.1.dylib",
+    "/usr/lib/libobjc.A.dylib",
+    "/usr/lib/libDiagnosticMessagesClient.dylib",
+    "/usr/lib/libicucore.A.dylib",
+    "/usr/lib/libz.1.dylib",
+    "/usr/lib/libc++abi.dylib",
+    "/usr/lib/system/libcache.dylib",
+    "/usr/lib/system/libcommonCrypto.dylib",
+    "/usr/lib/system/libcompiler_rt.dylib",
+    "/usr/lib/system/libcopyfile.dylib",
+    "/usr/lib/system/libcorecrypto.dylib",
+    "/usr/lib/system/libdispatch.dylib",
+    "/usr/lib/system/libdyld.dylib",
+    "/usr/lib/system/libkeymgr.dylib",
+    "/usr/lib/system/liblaunch.dylib",
+    "/usr/lib/system/libmacho.dylib",
+    "/usr/lib/system/libquarantine.dylib",
+    "/usr/lib/system/libremovefile.dylib",
+    "/usr/lib/system/libsystem_asl.dylib",
+    "/usr/lib/system/libsystem_blocks.dylib",
+    "/usr/lib/system/libsystem_c.dylib",
+    "/usr/lib/system/libsystem_configuration.dylib",
+    "/usr/lib/system/libsystem_coreservices.dylib",
+    "/usr/lib/system/libsystem_darwin.dylib",
+    "/usr/lib/system/libsystem_dnssd.dylib",
+    "/usr/lib/system/libsystem_info.dylib",
+    "/usr/lib/system/libsystem_m.dylib",
+    "/usr/lib/system/libsystem_malloc.dylib",
+    "/usr/lib/system/libsystem_networkextension.dylib",
+    "/usr/lib/system/libsystem_notify.dylib",
+    "/usr/lib/system/libsystem_sandbox.dylib",
+    "/usr/lib/system/libsystem_secinit.dylib",
+    "/usr/lib/system/libsystem_kernel.dylib",
+    "/usr/lib/system/libsystem_platform.dylib",
+    "/usr/lib/system/libsystem_pthread.dylib",
+    "/usr/lib/system/libsystem_symptoms.dylib",
+    "/usr/lib/system/libsystem_trace.dylib",
+    "/usr/lib/system/libunwind.dylib",
+    "/usr/lib/system/libxpc.dylib"
+  ]
+}
