@@ -1,9 +1,6 @@
-
-<img src="https://raw.githubusercontent.com/tron-us/tronbox/master/assets/TronBox-logo.png" width="100"/>
-
-# Tron-Box
-
-### Note: Tron-Box is a fork from Truffle project
+# TronBox
+Simple development framework for tronweb  
+**TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)** 
 
 [TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
 
