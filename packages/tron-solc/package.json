@@ -41,7 +41,8 @@
   "dependencies": {
     "solc": "0.5.9"
   },
-  "devDependencies": {},
+  "devDependencies": {
+  },
   "semistandard": {
     "ignore": [
       "soljson.js"
