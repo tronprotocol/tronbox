@@ -15,7 +15,7 @@ var Migrate = require("../components/Migrate");
 var Profiler = require("../components/Compile/profiler");
 var async = require("async");
 var originalrequire = require("original-require");
-var TronWrap = require('../components/Tronwrap');
+var TronWrap = require('../components/TronWrap');
 
 chai.use(require("./assertions"));
 

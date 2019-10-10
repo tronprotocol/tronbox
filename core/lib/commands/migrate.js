@@ -32,9 +32,9 @@ var command = {
     var Environment = require("../environment");
     var temp = require("temp");
     var copy = require("../copy");
-    var TronWrap = require("../../components/Tronwrap");
-    var {dlog} = require("../../components/Tronwrap");
-    const logErrorAndExit = require('../../components/Tronwrap').logErrorAndExit
+    var TronWrap = require("../../components/TronWrap");
+    var {dlog} = require("../../components/TronWrap");
+    const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
 
     var config = Config.detect(options);
 

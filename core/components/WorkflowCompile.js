@@ -9,7 +9,7 @@ var _ = require("lodash");
 var Resolver = require("./Resolver");
 var Artifactor = require("./Artifactor");
 var OS = require("os");
-var TronWrap = require("./Tronwrap");
+var TronWrap = require("./TronWrap");
 
 async function getCompilerVersion(options) {
 

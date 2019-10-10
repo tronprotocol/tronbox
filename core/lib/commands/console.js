@@ -10,8 +10,8 @@ var command = {
     var Develop = require("./develop");
     var TruffleError = require("truffle-error");
 
-    var TronWrap = require("../../components/Tronwrap");
-    const logErrorAndExit = require('../../components/Tronwrap').logErrorAndExit
+    var TronWrap = require("../../components/TronWrap");
+    const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
 
     var config = Config.detect(options);
 

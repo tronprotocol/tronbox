@@ -8,7 +8,7 @@ var contract = require("../../components/Contract");
 var series = require("async").series;
 var path = require("path");
 var SolidityCoder = require("web3/lib/solidity/coder.js");
-var TronWrap = require("../../components/Tronwrap");
+var TronWrap = require("../../components/TronWrap");
 
 var SolidityTest = {
   define: function(abstraction, dependency_paths, runner, mocha) {

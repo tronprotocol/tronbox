@@ -1,7 +1,7 @@
 var fs = require("fs");
 var _ = require("lodash");
 var path = require("path");
-var { constants } = require('./Tronwrap');
+var { constants } = require('./TronWrap');
 var Provider = require("./Provider");
 var TruffleError = require("truffle-error");
 var Module = require('module');

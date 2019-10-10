@@ -1,6 +1,6 @@
 var ethJSABI = require("ethjs-abi");
-var TronWrap = require('../Tronwrap');
-var {constants} = require('../Tronwrap');
+var TronWrap = require('../TronWrap');
+var {constants} = require('../TronWrap');
 var BigNumber = require("bignumber.js")
 var StatusError = require("./statuserror.js")
 

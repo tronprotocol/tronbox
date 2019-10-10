@@ -9,8 +9,8 @@ var expect = require("truffle-expect");
 var Deployer = require("../Deployer");
 var chalk = require("chalk")
 
-var TronWrap = require('../Tronwrap');
-const logErrorAndExit = require('../Tronwrap').logErrorAndExit
+var TronWrap = require('../TronWrap');
+const logErrorAndExit = require('../TronWrap').logErrorAndExit
 var tronWrap;
 
 function Migration(file) {

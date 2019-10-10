@@ -12,7 +12,7 @@ var path = require("path");
 var async = require("async");
 var EventEmitter = require("events");
 var inherits = require("util").inherits;
-var TronWrap = require('../components/Tronwrap');
+var TronWrap = require('../components/TronWrap');
 
 inherits(ReplManager, EventEmitter);
 

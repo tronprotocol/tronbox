@@ -4,7 +4,7 @@ var deploy = require("./src/actions/deploy");
 var deployMany = require("./src/actions/deploymany");
 var link = require("./src/actions/link");
 var create = require("./src/actions/new");
-var {dlog} = require('../Tronwrap')
+var {dlog} = require('../TronWrap')
 
 function Deployer(options) {
   var self = this;

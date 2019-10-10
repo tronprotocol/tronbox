@@ -1,4 +1,4 @@
-var {TronWeb} = require("../Tronwrap");
+var {TronWeb} = require("../TronWrap");
 var wrapper = require('./wrapper');
 
 module.exports = {

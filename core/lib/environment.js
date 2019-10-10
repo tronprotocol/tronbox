@@ -6,7 +6,7 @@ var Artifactor = require("../components/Artifactor");
 var spawn = require("child_process").spawn;
 var path = require("path");
 var Develop = require("./develop");
-var TronWrap = require('../components/Tronwrap')
+var TronWrap = require('../components/TronWrap')
 
 var Environment = {
   // It's important config is a Config object and not a vanilla object

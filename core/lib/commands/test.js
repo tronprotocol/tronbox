@@ -13,8 +13,8 @@ var command = {
     var fs = require("fs");
     var copy = require("../copy");
     var Environment = require("../environment");
-    var TronWrap = require('../../components/Tronwrap')
-    const logErrorAndExit = require('../../components/Tronwrap').logErrorAndExit
+    var TronWrap = require('../../components/TronWrap')
+    const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
 
     var config = Config.detect(options);
 

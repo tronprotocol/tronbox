@@ -8,7 +8,7 @@ var path = require("path");
 var _ = require("lodash");
 var async = require("async");
 var fs = require("fs");
-var TronWrap = require('../../components/Tronwrap');
+var TronWrap = require('../../components/TronWrap');
 var TronWeb = require("tronweb");
 var waitForTransactionReceipt = require('./waitForTransactionReceipt');
 

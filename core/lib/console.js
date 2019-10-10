@@ -2,7 +2,7 @@ var ReplManager = require("./repl");
 var Command = require("./command");
 var provision = require("../components/Provisioner");
 var contract = require("../components/Contract");
-var TronWrap = require("../components/Tronwrap");
+var TronWrap = require("../components/TronWrap");
 var vm = require("vm");
 var expect = require("truffle-expect");
 var _ = require("lodash");
@@ -12,7 +12,7 @@ var os = require("os");
 var path = require("path");
 var EventEmitter = require("events");
 var inherits = require("util").inherits;
-const logErrorAndExit = require('../components/Tronwrap').logErrorAndExit
+const logErrorAndExit = require('../components/TronWrap').logErrorAndExit
 
 inherits(Console, EventEmitter);
 

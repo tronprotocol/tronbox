@@ -1,5 +1,5 @@
 // Using web3 for its sha function...
-var TronWrap = require("../../components/Tronwrap");
+var TronWrap = require("../../components/TronWrap");
 
 var Deployed = {
 
