@@ -1,28 +1,104 @@
 {
-  "private": true,
-  "scripts": {
-    "build:debugger": "(cd packages/truffle-debugger && npm run build)",
-    "lerna:bootstrap": "lerna bootstrap",
-    "bootstrap": "npm run update:tronweb && npm run lerna:bootstrap && npm run build:debugger",
-    "test": "lerna run test --stream -- --colors",
-    "ci": "./scripts/ci.sh",
-    "build:tronbox": "cd packages/tronbox && npm run build",
-    "version:patch": "cd packages/tronbox && npm version patch",
-    "init:submodules": "git submodule init && npm run update-submodules",
-    "update:submodules": "git submodule update --init --recursive",
-    "update:tronweb": "./scripts/update-tronweb.sh",
-    "re-install": "scripts/clean-all-modules.sh && lerna bootstrap",
-    "build:tronweb:dev": "cd packages/tronwrap/tronweb && yarn build:dev"
+  "name": "tronbox",
+  "namespace": "tronprotocol",
+  "version": "3.0.0",
+  "description": "TronBox - Simple development framework for tronweb",
+  "dependencies": {
+    "async": "2.6.1",
+    "axios": "^0.18.0",
+    "bignumber.js": "^7.2.1",
+    "chalk": "^2.4.1",
+    "chokidar": "^1.4.2",
+    "colors": "^1.1.2",
+    "cpr": "^0.4.3",
+    "debug": "^3.1.0",
+    "del": "^2.2.0",
+    "diff": ">=3.5.0",
+    "ethpm": "0.0.16",
+    "ethpm-registry": "0.0.10",
+    "finalhandler": "^1.1.2",
+    "fs-extra": "^6.0.1",
+    "graphlib": "^2.1.7",
+    "homedir": "^0.6.0",
+    "lodash": "^4.17.11",
+    "mkdirp": "^0.5.1",
+    "node-dir": "0.1.17",
+    "node-emoji": "^1.8.1",
+    "node-ipc": "^9.1.1",
+    "original-require": "1.0.1",
+    "safe-eval": "^0.4.1",
+    "semver": "^6.1.1",
+    "serve-static": "^1.10.0",
+    "sleep": "^5.2.3",
+    "solc": "0.5.9",
+    "source-map-support": "^0.5.3",
+    "spawn-args": "^0.1.0",
+    "superagent": "^5.1.0",
+    "temp": "^0.8.3",
+    "tronweb": "^2.7.2",
+    "truffle-contract-sources": "^0.0.2",
+    "truffle-error": "^0.0.3",
+    "truffle-expect": "^0.0.4",
+    "truffle-init": "^1.0.7",
+    "truffle-require": "^1.0.7",
+    "truffle-solidity-utils": "^1.1.2",
+    "web3-mock": "1.0.1",
+    "yargs": "^8.0.2"
   },
   "devDependencies": {
-    "lerna": "^2.11.0"
+    "chai": "4.1.2",
+    "clean-webpack-plugin": "^0.1.16",
+    "copy-webpack-plugin": "^4.0.1",
+    "electron": "^6.0.12",
+    "ganache-cli": "^6.7.0",
+    "glob": "^7.1.2",
+    "js-scrypt": "^0.2.0",
+    "meta-npm": "^0.0.22",
+    "meta-pkgs": "^0.2.0",
+    "mocha": "5.2.0",
+    "moment": "^2.24.0",
+    "prepend-file": "^1.3.1",
+    "shebang-loader": "0.0.1",
+    "stream-buffers": "^3.0.1",
+    "tmp": "0.0.33",
+    "truffle-blockchain-utils": "^0.0.5",
+    "webpack": "^2.5.1"
   },
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
+  "bin": {
+    "tronbox": "build/cli.bundled.js"
   },
-  "dependencies": {
-    "ipfsd-ctl": "0.42.2"
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "webpack --config cli.webpack.config.js",
+    "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tron-us/tronbox.git"
+  },
+  "homepage": "https://github.com/tron-us/tronbox/",
+  "bugs": {
+    "url": "https://github.com/tron-us/tronbox/issues"
+  },
+  "originalAuthor": "consensys.net",
+  "author": "tron.network",
+  "authors": [
+    {
+      "name": "Tim Coulter",
+      "email": "tim@timothyjcoulter.com",
+      "url": "https://github.com/tcoulter"
+    },
+    {
+      "name": "alinger",
+      "email": "alinger@forke.cn"
+    },
+    {
+      "name": "Francesco Sullo",
+      "email": "francesco@sullo.co",
+      "url": "https://github.com/sullof"
+    }
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

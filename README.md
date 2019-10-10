@@ -231,9 +231,25 @@ lerna bootstrap
 ./tronbox.dev migrate --reset
 ```
 
+## Solc versions
+
+TronBox does not supports all the Solidity compilers.  
+Supported versions:
+```
+0.4.24
+0.4.25
+0.5.4
+0.5.8
+0.5.9
+``` 
+
 ## Latest version is 2.3.16
 
 ## Recent history (selected)
+
+__3.0.0__
+* Full refactoring
+* Add support for Solidity compiler 0.5.9 
 
 __2.5.2__
 * Fix bug in compiler wrapper calls 
