@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "3.0.0c",
+  "version": "3.0.0",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
     "async": "2.6.1",
