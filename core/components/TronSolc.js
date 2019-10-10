@@ -1,4 +1,5 @@
 var wrapper = require('solc/wrapper');
+var {name} = require('../../package');
 var path = require('path');
 var fs = require('fs-extra');
 var homedir = require('homedir');
@@ -35,14 +36,10 @@ ${supportedVersions.join(', ')}
     }
   }
 
-
-
-
   let soljsonPath = path.join(solcDir, `soljson_v${compilerVersion}.js`)
 
   if (!fs.existsSync(soljsonPath)) {
-    let result = execSync(`trondev --download-compiler ${compilerVersion}`).toString()
-    console.log(result)
+    execSync(`${name} --download-compiler ${compilerVersion}`).toString()
   }
   let soljson = require(soljsonPath)
   return wrapper(soljson)

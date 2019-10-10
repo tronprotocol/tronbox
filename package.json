@@ -1,12 +1,13 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "3.0.0",
+  "version": "3.0.0c",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
     "async": "2.6.1",
     "axios": "^0.18.0",
     "bignumber.js": "^7.2.1",
+    "chai": "4.1.2",
     "chalk": "^2.4.1",
     "chokidar": "^1.4.2",
     "colors": "^1.1.2",
@@ -22,6 +23,7 @@
     "homedir": "^0.6.0",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
+    "mocha": "5.2.0",
     "node-dir": "0.1.17",
     "node-emoji": "^1.8.1",
     "node-ipc": "^9.1.1",
@@ -46,30 +48,22 @@
     "yargs": "^8.0.2"
   },
   "devDependencies": {
-    "chai": "4.1.2",
-    "clean-webpack-plugin": "^0.1.16",
-    "copy-webpack-plugin": "^4.0.1",
     "electron": "^6.0.12",
-    "ganache-cli": "^6.7.0",
     "glob": "^7.1.2",
     "js-scrypt": "^0.2.0",
     "meta-npm": "^0.0.22",
     "meta-pkgs": "^0.2.0",
-    "mocha": "5.2.0",
     "moment": "^2.24.0",
     "prepend-file": "^1.3.1",
     "shebang-loader": "0.0.1",
     "stream-buffers": "^3.0.1",
     "tmp": "0.0.33",
-    "truffle-blockchain-utils": "^0.0.5",
-    "webpack": "^2.5.1"
+    "truffle-blockchain-utils": "^0.0.5"
   },
   "bin": {
-    "tronbox": "build/cli.bundled.js"
+    "tronbox": "core/cli.js"
   },
   "scripts": {
-    "prepare": "npm run build",
-    "build": "webpack --config cli.webpack.config.js",
     "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1"
   },
   "repository": {

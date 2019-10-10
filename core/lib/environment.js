@@ -2,7 +2,7 @@ var TruffleError = require("truffle-error");
 var expect = require("truffle-expect");
 var Resolver = require("../components/Resolver");
 var Artifactor = require("../components/Artifactor");
-var TestRPC = require("ganache-cli");
+// var TestRPC = require("ganache-cli");
 var spawn = require("child_process").spawn;
 var path = require("path");
 var Develop = require("./develop");
@@ -84,10 +84,11 @@ var Environment = {
 
     config.networks[forkedNetwork] = {
       network_id: config.network_id,
-      provider: TestRPC.provider({
-        fork: config.provider,
-        unlocked_accounts: [config.networks[config.network].from]
-      }),
+      provider: undefined,
+      //   TestRPC.provider({
+      //   fork: config.provider,
+      //   unlocked_accounts: [config.networks[config.network].from]
+      // }),
       from: config.from
     }
     config.network = forkedNetwork;
