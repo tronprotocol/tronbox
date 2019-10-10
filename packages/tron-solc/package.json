@@ -39,10 +39,10 @@
   },
   "homepage": "https://github.com/ethereum/solc-js#readme",
   "dependencies": {
+    "homedir": "^0.6.0",
     "solc": "0.5.9"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "semistandard": {
     "ignore": [
       "soljson.js"
