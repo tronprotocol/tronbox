@@ -134,8 +134,8 @@ The supported versions are the following:
 0.4.25
 0.5.4
 0.5.8
-```
- 
+0.5.9
+``` 
 
 ## How to contribute
 
