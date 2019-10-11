@@ -2,7 +2,7 @@ var Deployed = require("./deployed");
 var path = require("path");
 var fs = require("fs");
 var contract = require("../../components/Contract");
-var find_contracts = require("truffle-contract-sources");
+var find_contracts = require("@truffle/contract-sources");
 
 function TestSource(config) {
   this.config = config;

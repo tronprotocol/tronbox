@@ -5,7 +5,7 @@ var fs = require("fs");
 var async = require("async");
 var CompileError = require("./compileerror");
 var expect = require("@truffle/expect");
-var find_contracts = require("truffle-contract-sources");
+var find_contracts = require("@truffle/contract-sources");
 var Config = require("../Config");
 var debug = require("debug")("compile");
 

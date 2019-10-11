@@ -1,7 +1,7 @@
 // var TestCase = require("mocha/lib/test.js");
 // var Suite = require("mocha/lib/suite.js");
 // var Deployer = require("../../components/Deployer");
-// var find_contracts = require("truffle-contract-sources");
+// var find_contracts = require("@truffle/contract-sources");
 // var compile = require("../../components/Compile");
 // var Artifactor = require("../../components/Artifactor");
 // var contract = require("../../components/Contract");
