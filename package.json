@@ -4,6 +4,11 @@
   "version": "3.0.0",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
+    "@truffle/contract-sources": "^0.1.6",
+    "@truffle/error": "0.0.7",
+    "@truffle/expect": "0.0.11",
+    "@truffle/require": "^2.0.24",
+    "@truffle/solidity-utils": "^1.2.5",
     "async": "2.6.1",
     "axios": "^0.18.0",
     "bignumber.js": "^7.2.1",
@@ -44,10 +49,14 @@
     "truffle-init": "^1.0.7",
     "truffle-require": "^1.0.7",
     "truffle-solidity-utils": "^1.1.2",
+    "web3": "1.2.1",
     "web3-mock": "1.0.1",
     "yargs": "^8.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
     "electron": "^6.0.12",
     "glob": "^7.1.2",
     "js-scrypt": "^0.2.0",
@@ -61,10 +70,12 @@
     "truffle-blockchain-utils": "^0.0.5"
   },
   "bin": {
-    "tronbox": "core/cli.js"
+    "tronbox": "build/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1"
+    "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
+    "prepare": "npm run build",
+    "build": "babel --minified --no-comments src -d build"
   },
   "repository": {
     "type": "git",

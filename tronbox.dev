@@ -2,13 +2,13 @@
 require('source-map-support/register')
 
 var Config = require("truffle-config");
-var Command = require("truffle-core/lib/command");
-var TaskError = require("truffle-core/lib/errors/taskerror");
+var Command = require("truffle-src/lib/command");
+var TaskError = require("truffle-src/lib/errors/taskerror");
 var TruffleError = require("truffle-error");
-var version = require("truffle-core/lib/version");
+var version = require("truffle-src/lib/version");
 var OS = require("os");
 
-var command = new Command(require("truffle-core/lib/commands"));
+var command = new Command(require("truffle-src/lib/commands"));
 
 var options = {
   logger: console

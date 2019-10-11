@@ -12,7 +12,7 @@ contract EIP20 is EIP20Interface {
     /*
     NOTE:
     The following variables are OPTIONAL vanities. One does not have to include them.
-    They allow one to customise the token contract & in no way influences the core functionality.
+    They allow one to customise the token contract & in no way influences the src functionality.
     Some wallets/interfaces might not even bother to look at this information.
     */
     string public name;                   //fancy name: eg Simon Bucks
