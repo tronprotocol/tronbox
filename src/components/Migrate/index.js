@@ -2,7 +2,7 @@ var fs = require("fs");
 var dir = require("node-dir");
 var path = require("path");
 var ResolverIntercept = require("./resolverintercept");
-var Require = require("truffle-require");
+var Require = require("@truffle/require");
 var async = require("async");
 // var Web3 = require("web3-mock");
 var expect = require("@truffle/expect");
@@ -79,18 +79,18 @@ Migration.prototype.run = function (options, callback) {
       logErrorAndExit(logger, e)
     });
   };
-  Require.file({
+  const fn = Require.file({
     file: self.file,
     context: context,
     resolver: resolver,
     args: [deployer],
-  }, function (err, fn) {
+  })
+
     if (!fn || !fn.length || fn.length === 0) {
       return callback(new Error("Migration " + self.file + " invalid or does not take any parameters"));
     }
     fn(deployer, options.network, options.networks[options.network].from);
     finish();
-  });
 };
 
 var Migrate = {

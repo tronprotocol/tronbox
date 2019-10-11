@@ -44,8 +44,6 @@
     "temp": "^0.8.3",
     "tronweb": "^2.7.2",
     "truffle-init": "^1.0.7",
-    "truffle-require": "^1.0.7",
-    "truffle-solidity-utils": "^1.1.2",
     "web3": "1.2.1",
     "web3-mock": "1.0.1",
     "yargs": "^8.0.2"
