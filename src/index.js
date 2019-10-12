@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 require('source-map-support/register')
 
 var Config = require("./components/Config");

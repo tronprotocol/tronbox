@@ -5,6 +5,7 @@ package-lock.json
 dependencies
 build
 tmp
+dist
 
 # for now
 CONTRIBUTING.md

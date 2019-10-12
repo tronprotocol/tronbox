@@ -44,7 +44,7 @@ ${supportedVersions.join(', ')}
     }
     execSync(`${name} --download-compiler ${compilerVersion}`).toString()
   }
-  let soljson = require(soljsonPath)
+  let soljson = eval('require')(soljsonPath)
   return wrapper(soljson)
 }
 
