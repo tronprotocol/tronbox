@@ -1,7 +1,6 @@
 node_modules
 .DS_Store
-.tern-port
-package-lock.json
+yarn.lock
 dependencies
 build
 tmp

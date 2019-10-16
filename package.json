@@ -1,7 +1,7 @@
 {
-  "name": "tronbox-stage",
+  "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "3.0.1-h",
+  "version": "3.0.1-l",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
     "@truffle/contract-sources": "^0.1.6",
@@ -21,12 +21,11 @@
     "del": "^2.2.0",
     "diff": ">=3.5.0",
     "ethpm": "0.0.16",
-    "ethpm-registry": "0.0.10",
+    "ethpm-registry": "0.1.0-next.3",
     "finalhandler": "^1.1.2",
     "fs-extra": "^8.1.0",
     "graphlib": "^2.1.7",
     "homedir": "^0.6.0",
-    "keccak": "^2.0.0",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
     "mocha": "5.2.0",
@@ -37,7 +36,6 @@
     "safe-eval": "^0.4.1",
     "semver": "^6.1.1",
     "serve-static": "^1.10.0",
-    "sleep": "^5.2.3",
     "solc": "0.5.9",
     "source-map-support": "^0.5.3",
     "spawn-args": "^0.1.0",
@@ -50,8 +48,9 @@
     "yargs": "^8.0.2"
   },
   "devDependencies": {
-    "clean-webpack-plugin": "^0.1.16",
-    "copy-webpack-plugin": "^4.0.1",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
     "electron": "^6.0.12",
     "glob": "^7.1.2",
     "js-scrypt": "^0.2.0",
@@ -62,18 +61,15 @@
     "shebang-loader": "0.0.1",
     "stream-buffers": "^3.0.1",
     "tmp": "0.0.33",
-    "truffle-blockchain-utils": "^0.0.5",
-    "webpack": "^4.41.1",
-    "webpack-cli": "^3.3.9"
+    "truffle-blockchain-utils": "^0.0.5"
   },
   "bin": {
-    "tronbox-stage": "dist/tronbox.js"
+    "tronbox": "build/tronbox.js"
   },
   "scripts": {
     "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
     "prepare": "npm run build",
-    "build": "npm run build-cli && chmod +x dist/tronbox.js #babel --minified --no-comments src -d build",
-    "build-cli": "webpack --config ./webpack.config.js"
+    "build": "scripts/build.sh"
   },
   "repository": {
     "type": "git",

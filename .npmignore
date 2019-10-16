@@ -1,6 +1,6 @@
 .DS_Store
-.scratch
-.idea
-test
-scripts
-src
+/.scratch
+/.idea
+/test
+/scripts
+/src

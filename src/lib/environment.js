@@ -42,7 +42,7 @@ var Environment = {
       return callback(new Error("You must specify a network_id in your '" + config.network + "' configuration in order to use this network."));
     }
 
-    tronWrap = TronWrap();
+    let tronWrap = TronWrap();
 
     function detectNetworkId(done) {
       if (network_id != "*") {
