@@ -1,9 +1,11 @@
-.idea
-.ID_Store
 node_modules
-
-# we use yarn
-package-lock.json
-metacoin-box
+.DS_Store
+yarn.lock
+dependencies
+build
 tmp
-.scratch
+dist
+
+# for now
+CONTRIBUTING.md
+

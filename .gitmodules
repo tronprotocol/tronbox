@@ -1,3 +1,0 @@
-[submodule "packages/tronwrap/tronweb"]
-	path = packages/tronwrap/tronweb
-	url = git@github.com:TRON-US/tronweb.git
