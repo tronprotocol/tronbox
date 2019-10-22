@@ -4,7 +4,6 @@ var OS = require("os");
 var BlockchainUtils = require("truffle-blockchain-utils");
 var Provider = require("../components/Provider");
 var async = require("async");
-var Web3 = require('web3');
 
 var Networks = {
   deployed: function(options, callback) {
