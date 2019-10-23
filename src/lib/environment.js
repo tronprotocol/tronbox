@@ -5,7 +5,6 @@ var Artifactor = require("../components/Artifactor");
 // var TestRPC = require("ganache-cli");
 var spawn = require("child_process").spawn;
 var path = require("path");
-var Develop = require("./develop");
 var TronWrap = require('../components/TronWrap')
 
 var Environment = {
