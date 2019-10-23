@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.7.1",
+  "version": "2.7.2",
   "description": "TronBox - Simple development framework for tronweb",
   "dependencies": {
     "@truffle/contract-sources": "^0.1.6",
@@ -32,7 +32,6 @@
     "mocha": "5.2.0",
     "node-dir": "0.1.17",
     "node-emoji": "^1.8.1",
-    "node-ipc": "^9.1.1",
     "original-require": "1.0.1",
     "safe-eval": "^0.4.1",
     "semver": "^6.1.1",

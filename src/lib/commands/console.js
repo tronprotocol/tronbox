@@ -7,7 +7,6 @@ var command = {
     var Config = require("../../components/Config");
     var Console = require("../console");
     var Environment = require("../environment");
-    var Develop = require("./develop");
     var TruffleError = require("@truffle/error");
 
     var TronWrap = require("../../components/TronWrap");
@@ -34,8 +33,7 @@ var command = {
       "console",
       "init",
       "watch",
-      "serve",
-      "develop"
+      "serve"
     ];
 
     var available_commands = Object.keys(commands).filter(function(name) {

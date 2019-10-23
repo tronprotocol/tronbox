@@ -8,7 +8,6 @@ var command = {
     var temp = require("temp");
     var Config = require("../../components/Config");
     var Artifactor = require("../../components/Artifactor");
-    var Develop = require("../develop");
     var Test = require("../test");
     var fs = require("fs");
     var copy = require("../copy");
