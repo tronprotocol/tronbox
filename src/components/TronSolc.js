@@ -6,10 +6,24 @@ var homedir = require('homedir');
 const {execSync} = require('child_process')
 
 var supportedVersions = [
-  '0.4.24', '0.4.25', '0.5.4', '0.5.8' //, '0.5.9'
+  '0.4.24', '0.4.25', '0.5.4', '0.5.8'
 ]
 
 function getWrapper(options = {}) {
+
+  try {
+    const params = options.networkInfo.parameters
+    for (let p of params) {
+      if (p.key === 'getAllowTvmSolidity059') {
+        if (p.value) {
+          supportedVersions.push('0.5.9')
+          break
+        }
+      }
+    }
+  } catch(e) {
+
+  }
 
   let compilerVersion = '0.5.4'
   let solcDir = path.join(homedir(), '.tronbox', 'solc');
@@ -28,7 +42,7 @@ function getWrapper(options = {}) {
       } else {
         console.error(`Error:
 TronBox supports only the following versions:
-${supportedVersions.join(', ')}
+${supportedVersions.join(' - ')}
 `)
         process.exit()
       }

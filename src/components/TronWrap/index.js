@@ -97,32 +97,17 @@ function init(options, extraOptions) {
 
   tronWrap._getNetworkInfo = async function () {
     let info = {
-      javaTronVersion: 'unknown',
-      compilerVersion: '3'
+      parameters: {}, nodeinfo: {}
     }
     try {
-      const [proposals, nodeInfo] = await Promise.all([
+      let res = await Promise.all([
         tronWrap.trx.getChainParameters(),
         tronWrap.trx.getNodeInfo()
       ])
-
-      // this should never happens
-      for(let proposal of proposals) {
-        if(proposal.key === 'getAllowTvmTransferTrc10') {
-          if(!proposal.value) {
-            info.compilerVersion = '1'
-          }
-          break
-        }
-      }
-
-      if(nodeInfo) {
-        info.javaTronVersion = nodeInfo.configNodeInfo.codeVersion
-        if (semver.gte(info.javaTronVersion, '3.6.0')) {
-          info.compilerVersion = '4'
-        }
-      }
+      info.parameters = res[0] || {}
+      info.nodeinfo = res[1] || {}
     } catch (err) {
+      // console.log('Error', err)
     }
     return Promise.resolve(info)
   }
