@@ -6,7 +6,7 @@ var homedir = require('homedir');
 const {execSync} = require('child_process')
 
 var supportedVersions = [
-  '0.4.24', '0.4.25', '0.5.4', '0.5.8', '0.5.9'
+  '0.4.24', '0.4.25', '0.5.4', '0.5.8' //, '0.5.9'
 ]
 
 function getWrapper(options = {}) {
