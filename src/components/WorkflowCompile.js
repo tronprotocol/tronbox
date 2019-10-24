@@ -26,7 +26,7 @@ async function getCompilerVersion(options) {
       log: options.log
     })
     const networkInfo = await tronWrap._getNetworkInfo()
-    return Promise.resolve(networkInfo)
+    return Promise.resolve(networkInfo || {})
   } catch(err) {
     return Promise.resolve(1)
   }
