@@ -1,14 +1,5 @@
 var repl = require('repl')
-var Command = require('./command')
-var provision = require('../components/Provisioner')
-var contract = require('../components/Contract')
-var vm = require('vm')
 var expect = require('@truffle/expect')
-var _ = require('lodash')
-var TruffleError = require('@truffle/error')
-var fs = require('fs')
-var os = require('os')
-var path = require('path')
 var async = require('async')
 var EventEmitter = require('events')
 var inherits = require('util').inherits
@@ -37,7 +28,7 @@ function ReplManager(options) {
   this.contexts = []
 }
 
-ReplManager.prototype.start = function(options) {
+ReplManager.prototype.start = function (options) {
   var self = this
 
   global.tronWeb = TronWrap()
@@ -56,23 +47,27 @@ ReplManager.prototype.start = function(options) {
       eval: this.interpret.bind(this),
     })
 
-    this.repl.on('exit', function() {
+    this.repl.on('exit', function () {
       // If we exit for some reason, call done functions for good measure
       // then ensure the process is completely killed. Once the repl exits,
       // the process is in a bad state and can't be recovered (e.g., stdin is closed).
-      var doneFunctions = self.contexts.map(function(context) {
+      var doneFunctions = self.contexts.map(function (context) {
         return context.done ?
-          function() { context.done() } :
-          function() {}
+          function () {
+            context.done()
+          } :
+          function () {
+          }
       })
-      async.series(doneFunctions, function(err) {
+      async.series(doneFunctions, function () {
+        // eslint-disable-next-line no-process-exit
         process.exit()
       })
     })
   }
 
   // Bubble the internal repl's exit event
-  this.repl.on('exit', function() {
+  this.repl.on('exit', function () {
     self.emit('exit')
   })
 
@@ -80,16 +75,16 @@ ReplManager.prototype.start = function(options) {
   this.setContextVars(options.context || {})
 }
 
-ReplManager.prototype.setContextVars = function(obj) {
+ReplManager.prototype.setContextVars = function (obj) {
   var self = this
   if (this.repl) {
-    Object.keys(obj).forEach(function(key) {
+    Object.keys(obj).forEach(function (key) {
       self.repl.context[key] = obj[key]
     })
   }
 }
 
-ReplManager.prototype.stop = function(callback) {
+ReplManager.prototype.stop = function (callback) {
   var oldContext = this.contexts.pop()
 
   if (oldContext.done) {
@@ -108,6 +103,7 @@ ReplManager.prototype.stop = function(callback) {
     // Since we can't recover to a state before the repl was opened,
     // we should just exit. He're, we'll exit after we've popped
     // off the stack of all repl contexts.
+    // eslint-disable-next-line no-process-exit
     process.exit()
   }
 
@@ -116,7 +112,7 @@ ReplManager.prototype.stop = function(callback) {
   }
 }
 
-ReplManager.prototype.interpret = function(cmd, context, filename, callback) {
+ReplManager.prototype.interpret = function (cmd, context, filename, callback) {
   var currentContext = this.contexts[this.contexts.length - 1]
   currentContext.interpreter(cmd, context, filename, callback)
 }

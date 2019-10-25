@@ -4,7 +4,7 @@ const Module = require('module')
 const vm = require('vm')
 const originalrequire = require('original-require')
 const expect = require('@truffle/expect')
-const Config = require('./config')
+const Config = require('./Config')
 
 // options.file: path to file to execute. Must be a module that exports a function.
 // options.args: arguments passed to the exported function within file. If a callback
@@ -20,7 +20,7 @@ const Require = {
 
     options = Config.default().with(options)
 
-    source = fs.readFileSync(options.file, { encoding: 'utf8' })
+    source = fs.readFileSync(options.file, {encoding: 'utf8'})
 
     // Modified from here: https://gist.github.com/anatoliychakkaev/1599423
     const m = new Module(file)
@@ -34,6 +34,7 @@ const Require = {
       clearInterval: clearInterval,
       clearTimeout: clearTimeout,
       console: console,
+      // eslint-disable-next-line node/exports-style
       exports: exports,
       global: global,
       module: m,
@@ -54,12 +55,15 @@ const Require = {
           // Here we have to require from the node_modules directory directly.
 
           var moduleDir = path.dirname(file)
+          // eslint-disable-next-line no-constant-condition
           while (true) {
             try {
               return originalrequire(
                 path.join(moduleDir, 'node_modules', pkgPath)
               )
-            } catch (e) {}
+            } // eslint-disable-next-line no-empty
+            catch (e) {
+            }
             var oldModuleDir = moduleDir
             moduleDir = path.join(moduleDir, '..')
             if (moduleDir === oldModuleDir) break

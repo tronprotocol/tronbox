@@ -1,19 +1,16 @@
 var Schema = require('./ContractSchema')
-var expect = require('@truffle/expect')
 var fs = require('fs-extra')
 var path = require('path')
-var async = require('async')
 var _ = require('lodash')
-var debug = require('debug')('artifactor')
 
 function Artifactor(destination) {
   this.destination = destination
 }
 
-Artifactor.prototype.save = function(object) {
+Artifactor.prototype.save = function (object) {
   var self = this
 
-  return new Promise(function(accept, reject) {
+  return new Promise(function (accept, reject) {
     object = Schema.normalize(object)
 
     if (object.contractName == null) {
@@ -29,7 +26,7 @@ Artifactor.prototype.save = function(object) {
     // Add json extension.
     output_path = output_path + '.json'
 
-    fs.readFile(output_path, {encoding: 'utf8'}, function(err, json) {
+    fs.readFile(output_path, {encoding: 'utf8'}, function (err, json) {
       // No need to handle the error. If the file doesn't exist then we'll start afresh
       // with a new object.
 
@@ -59,7 +56,7 @@ Artifactor.prototype.save = function(object) {
       finalObject.updatedAt = new Date().toISOString()
 
       // output object
-      fs.outputFile(output_path, JSON.stringify(finalObject, null, 2), 'utf8', function(err) {
+      fs.outputFile(output_path, JSON.stringify(finalObject, null, 2), 'utf8', function (err) {
         if (err) return reject(err)
         accept()
       })
@@ -67,29 +64,29 @@ Artifactor.prototype.save = function(object) {
   })
 }
 
-Artifactor.prototype.saveAll = function(objects) {
+Artifactor.prototype.saveAll = function (objects) {
   var self = this
 
   if (Array.isArray(objects)) {
     var array = objects
     objects = {}
 
-    array.forEach(function(item) {
+    array.forEach(function (item) {
       objects[item.contract_name] = item
     })
   }
 
-  return new Promise(function(accept, reject) {
-    fs.stat(self.destination, function(err, stat) {
+  return new Promise(function (accept, reject) {
+    fs.stat(self.destination, function (err) {
       if (err) {
-        return reject(new Error('Desination ' + self.destination + " doesn't exist!"))
+        return reject(new Error('Destination ' + self.destination + " doesn't exist!"))
       }
       accept()
     })
-  }).then(function() {
+  }).then(function () {
     var promises = []
 
-    Object.keys(objects).forEach(function(contractName) {
+    Object.keys(objects).forEach(function (contractName) {
       var object = objects[contractName]
       object.contractName = contractName
       promises.push(self.save(object))

@@ -1,4 +1,3 @@
-var sha3 = require('crypto-js/sha3')
 var pkgVersion = '2.0.1'
 var Ajv = require('ajv')
 
@@ -30,12 +29,12 @@ var abiSchema = require('./spec/abi.spec.json')
  * for purposes of ensuring data type and/or string schemas.
  */
 var properties = {
-  'contractName': {
-    'sources': ['contractName', 'contract_name']
+  contractName: {
+    sources: ['contractName', 'contract_name']
   },
-  'abi': {
-    'sources': ['abi', 'interface'],
-    'transform': function(value) {
+  abi: {
+    sources: ['abi', 'interface'],
+    transform: function (value) {
       if (typeof value === 'string') {
         try {
           value = JSON.parse(value)
@@ -46,39 +45,39 @@ var properties = {
       return value
     }
   },
-  'bytecode': {
-    'sources': [
+  bytecode: {
+    sources: [
       'bytecode', 'binary', 'unlinked_binary', 'evm.bytecode.object'
     ],
-    'transform': function(value) {
+    transform: function (value) {
       if (value && value.indexOf('0x') != 0) {
         value = '0x' + value
       }
       return value
     }
   },
-  'deployedBytecode': {
-    'sources': [
+  deployedBytecode: {
+    sources: [
       'deployedBytecode', 'runtimeBytecode', 'evm.deployedBytecode.object'
     ],
-    'transform': function(value) {
+    transform: function (value) {
       if (value && value.indexOf('0x') != 0) {
         value = '0x' + value
       }
       return value
     }
   },
-  'sourceMap': {
-    'sources': ['sourceMap', 'srcmap', 'evm.bytecode.sourceMap']
+  sourceMap: {
+    sources: ['sourceMap', 'srcmap', 'evm.bytecode.sourceMap']
   },
-  'deployedSourceMap': {
-    'sources': ['deployedSourceMap', 'srcmapRuntime', 'evm.deployedBytecode.sourceMap']
+  deployedSourceMap: {
+    sources: ['deployedSourceMap', 'srcmapRuntime', 'evm.deployedBytecode.sourceMap']
   },
-  'source': {},
-  'sourcePath': {},
-  'ast': {},
-  'legacyAST': {
-    'transform': function(value, obj) {
+  source: {},
+  sourcePath: {},
+  ast: {},
+  legacyAST: {
+    transform: function (value, obj) {
       var schemaVersion = obj.schemaVersion || '0.0.0'
 
       // legacyAST introduced in v2.0.0
@@ -89,21 +88,21 @@ var properties = {
       }
     }
   },
-  'compiler': {},
-  'networks': {
-    'transform': function(value) {
+  compiler: {},
+  networks: {
+    transform: function (value) {
       if (value === undefined) {
         value = {}
       }
       return value
     }
   },
-  'schemaVersion': {
-    'sources': ['schemaVersion', 'schema_version']
+  schemaVersion: {
+    sources: ['schemaVersion', 'schema_version']
   },
-  'updatedAt': {
-    'sources': ['updatedAt', 'updated_at'],
-    'transform': function(value) {
+  updatedAt: {
+    sources: ['updatedAt', 'updated_at'],
+    transform: function (value) {
       if (typeof value === 'number') {
         value = new Date(value).toISOString()
       }
@@ -121,10 +120,12 @@ var properties = {
  */
 function getter(key, transform) {
   if (transform === undefined) {
-    transform = function(x) { return x }
+    transform = function (x) {
+      return x
+    }
   }
 
-  return function(obj) {
+  return function (obj) {
     try {
       return transform(obj[key])
     } catch (e) {
@@ -146,7 +147,7 @@ function getter(key, transform) {
  */
 function chain() {
   var getters = Array.prototype.slice.call(arguments)
-  return function(obj) {
+  return function (obj) {
     return getters.reduce(function (cur, get) {
       return get(cur)
     }, obj)
@@ -161,8 +162,8 @@ var TruffleContractSchema = {
   // Return a promise to validate a contract object
   // - Resolves as validated `contractObj`
   // - Rejects with list of errors from schema validator
-  validate: function(contractObj) {
-    var ajv = new Ajv({ useDefaults: true })
+  validate: function (contractObj) {
+    var ajv = new Ajv({useDefaults: true})
     ajv.addSchema(abiSchema)
     ajv.addSchema(networkObjectSchema)
     ajv.addSchema(contractObjectSchema)
@@ -175,12 +176,12 @@ var TruffleContractSchema = {
 
   // accepts as argument anything that can be turned into a contract object
   // returns a contract object
-  normalize: function(objDirty, options) {
+  normalize: function (objDirty, options) {
     options = options || {}
     var normalized = {}
 
     // iterate over each property
-    Object.keys(properties).forEach(function(key) {
+    Object.keys(properties).forEach(function (key) {
       var property = properties[key]
       var value  // normalized value || undefined
 
@@ -195,7 +196,9 @@ var TruffleContractSchema = {
         // getters
         if (typeof source === 'string') {
           var traversals = source.split('.')
-            .map(function(k) { return getter(k) })
+            .map(function (k) {
+              return getter(k)
+            })
           source = chain.apply(null, traversals)
         }
 
@@ -215,7 +218,7 @@ var TruffleContractSchema = {
     })
 
     // Copy x- options
-    Object.keys(objDirty).forEach(function(key) {
+    Object.keys(objDirty).forEach(function (key) {
       if (key.indexOf('x-') === 0) {
         normalized[key] = getter(key)(objDirty)
       }

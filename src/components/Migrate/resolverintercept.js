@@ -1,11 +1,10 @@
-const path = require('path')
 
 function ResolverIntercept(resolver) {
   this.resolver = resolver
   this.cache = {}
 }
 
-ResolverIntercept.prototype.require = function(import_path) {
+ResolverIntercept.prototype.require = function (import_path) {
   // Modify import_path so the cache key is consistently the same irrespective
   // of whether a user explicated .sol extension
   import_path = import_path.replace(/\.sol$/i, '')
@@ -29,9 +28,9 @@ ResolverIntercept.prototype.require = function(import_path) {
   return resolved
 }
 
-ResolverIntercept.prototype.contracts = function() {
+ResolverIntercept.prototype.contracts = function () {
   var self = this
-  return Object.keys(this.cache).map(function(key) {
+  return Object.keys(this.cache).map(function (key) {
     return self.cache[key]
   })
 }

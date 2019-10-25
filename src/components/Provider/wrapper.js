@@ -7,7 +7,7 @@ module.exports = {
    * Wraps an underlying web3 provider's RPC transport methods (send/sendAsync)
    * for Truffle-specific purposes, mainly for logging / request verbosity.
    */
-  wrap: function(provider, options) {
+  wrap: function (provider, options) {
     /* wrapping should be idempotent */
     if (provider._alreadyWrapped) return provider
 
@@ -52,8 +52,8 @@ module.exports = {
    */
 
   // before send/sendAsync
-  preHook: function(options) {
-    return function(payload) {
+  preHook: function (options) {
+    return function (payload) {
       if (options.verbose) {
         // for request payload debugging
         options.logger.log('   > ' + JSON.stringify(payload, null, 2).split('\n').join('\n   > '))
@@ -64,8 +64,8 @@ module.exports = {
   },
 
   // after send/sendAsync
-  postHook: function(options) {
-    return function(payload, error, result) {
+  postHook: function (options) {
+    return function (payload, error, result) {
       if (error != null) {
         // wrap errors in internal error class
         error = new ProviderError(error.message, error)
@@ -93,8 +93,8 @@ module.exports = {
 
   // wrap a `provider.send` function with behavior hooks
   // returns a function(payload) to replace `provider.send`
-  send: function(originalSend, preHook, postHook) {
-    return function(payload) {
+  send: function (originalSend, preHook, postHook) {
+    return function (payload) {
       var result = null
       var error = null
 
@@ -121,11 +121,11 @@ module.exports = {
 
   // wrap a `provider.sendAsync` function with behavior hooks
   // returns a function(payload, callback) to replace `provider.sendAsync`
-  sendAsync: function(originalSendAsync, preHook, postHook) {
-    return function(payload, callback) {
+  sendAsync: function (originalSendAsync, preHook, postHook) {
+    return function (payload, callback) {
       payload = preHook(payload)
 
-      originalSendAsync(payload, function(error, result) {
+      originalSendAsync(payload, function (error, result) {
         var modified = postHook(payload, error, result)
         payload = modified[0]
         error = modified[1]

@@ -13,7 +13,7 @@ Array.prototype.push.apply(args, process.argv.slice(2))
 var cmd = spawn('node', args)
 
 cmd.stdout.on('data', (data) => {
-  console.log(data.toString())
+  console.info(data.toString())
 })
 
 cmd.stderr.on('data', (data) => {
@@ -25,6 +25,6 @@ cmd.on('close', (code) => {
   process.exit(code)
 })
 
-cmd.on('error', function(err) {
+cmd.on('error', function (err) {
   throw err
 })

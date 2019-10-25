@@ -5,7 +5,7 @@ var TruffleError = require('@truffle/error')
 // connect to RPC node.
 var NOT_CONNECTED_MESSAGE = 'Invalid JSON RPC response: ""'
 
-function ProviderError(message, error) {
+function ProviderError(message) {
   if (message == NOT_CONNECTED_MESSAGE) {
     message = 'Could not connect to your Ethereum client. ' +
       'Please check that your Ethereum client:\n' +

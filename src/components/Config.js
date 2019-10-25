@@ -1,7 +1,6 @@
-var fs = require('fs')
 var _ = require('lodash')
 var path = require('path')
-var { constants } = require('./TronWrap')
+var {constants} = require('./TronWrap')
 var Provider = require('./Provider')
 var TruffleError = require('@truffle/error')
 var Module = require('module')
@@ -108,7 +107,7 @@ function Config(truffle_directory, working_directory, network) {
           return null
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error('Do not set config.network_id. Instead, set config.networks and then config.networks[<network name>].network_id')
       }
     },
@@ -120,18 +119,9 @@ function Config(truffle_directory, working_directory, network) {
           throw new Error('Network not set. Cannot determine network to use.')
         }
 
-        var conf = self.networks[network]
-
-        if (conf == null) {
-          config = {}
-        }
-
-        conf = _.extend({}, default_tx_values, conf)
-
-
-        return conf
+        return _.extend({}, default_tx_values, self.networks[network] || {})
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.network_config. Instead, set config.networks with the desired values.")
       }
     },
@@ -143,7 +133,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.from
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.from directly. Instead, set config.networks and then config.networks[<network name>].from")
       }
     },
@@ -155,7 +145,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.privateKey
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.privateKey directly. Instead, set config.networks and then config.networks[<network name>].privateKey")
       }
     },
@@ -167,7 +157,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.fullNode
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.fullNode directly. Instead, set config.networks and then config.networks[<network name>].fullNode")
       }
     },
@@ -179,7 +169,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.fullHost
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.fullHost directly. Instead, set config.networks and then config.networks[<network name>].fullHost")
       }
     },
@@ -191,7 +181,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.solidityNode
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.solidityNode directly. Instead, set config.networks and then config.networks[<network name>].solidityNode")
       }
     },
@@ -203,7 +193,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.eventServer
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.eventServer directly. Instead, set config.networks and then config.networks[<network name>].eventServer")
       }
     },
@@ -215,7 +205,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.userFeePercentage
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.userFeePercentage directly. Instead, set config.networks and then config.networks[<network name>].userFeePercentage")
       }
     },
@@ -227,7 +217,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.feeLimit
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.feeLimit directly. Instead, set config.networks and then config.networks[<network name>].feeLimit")
       }
     },
@@ -239,7 +229,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.originEnergyLimit
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.originEnergyLimit directly. Instead, set config.networks and then config.networks[<network name>].originEnergyLimit")
       }
     },
@@ -251,7 +241,7 @@ function Config(truffle_directory, working_directory, network) {
           // no default value
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.tokenValue directly. Instead, set config.networks and then config.networks[<network name>].tokenValue")
       }
     },
@@ -263,7 +253,7 @@ function Config(truffle_directory, working_directory, network) {
           // no default value
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.tokenId directly. Instead, set config.networks and then config.networks[<network name>].tokenId")
       }
     },
@@ -277,7 +267,7 @@ function Config(truffle_directory, working_directory, network) {
         options.verboseRpc = self.verboseRpc
         return Provider.create(options)
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.provider directly. Instead, set config.networks and then set config.networks[<network name>].provider")
       }
     },
@@ -289,7 +279,7 @@ function Config(truffle_directory, working_directory, network) {
           return default_tx_values.callValue
         }
       },
-      set: function (val) {
+      set: function () {
         throw new Error("Don't set config.callValue directly. Instead, set config.networks and then config.networks[<network name>].callValue")
       }
     },

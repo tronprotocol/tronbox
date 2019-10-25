@@ -1,18 +1,19 @@
 var path = require('path')
 var fs = require('fs')
+
 function NPM(working_directory) {
   this.working_directory = working_directory
 }
 
-NPM.prototype.require = function(import_path, search_path) {
+NPM.prototype.require = function (import_path, search_path) {
   if (import_path.indexOf('.') == 0 || import_path.indexOf('/') == 0) {
     return null
   }
   var contract_name = path.basename(import_path, '.sol')
   var regex = new RegExp(`(.*)/${contract_name}`)
   let package_name = ''
-  var matched =  regex.exec(import_path)
-  if(matched){
+  var matched = regex.exec(import_path)
+  if (matched) {
     package_name = matched[1]
   }
   var expected_path = path.join((search_path || this.working_directory), 'node_modules', package_name, 'build', 'contracts', contract_name + '.json')
@@ -24,20 +25,22 @@ NPM.prototype.require = function(import_path, search_path) {
   }
 }
 
-NPM.prototype.resolve = function(import_path, imported_from, callback) {
+NPM.prototype.resolve = function (import_path, imported_from, callback) {
 
   // If nothing's found, body returns `undefined`
   var body
   var modulesDir = this.working_directory
 
-  while(true){
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
     var expected_path = path.join(modulesDir, 'node_modules', import_path)
 
     try {
-      var body = fs.readFileSync(expected_path, {encoding: 'utf8'})
+      body = fs.readFileSync(expected_path, {encoding: 'utf8'})
       break
+    } // eslint-disable-next-line no-empty
+    catch (err) {
     }
-    catch(err){}
 
     // Recurse outwards until impossible
     var oldModulesDir = modulesDir
@@ -54,12 +57,12 @@ NPM.prototype.resolve = function(import_path, imported_from, callback) {
 // i.e., if some_module/contracts/MyContract.sol imported "./AnotherContract.sol",
 // we're going to resolve it to some_module/contracts/AnotherContract.sol, ensuring
 // that when this path is evaluated this source is used again.
-NPM.prototype.resolve_dependency_path = function(import_path, dependency_path) {
+NPM.prototype.resolve_dependency_path = function (import_path, dependency_path) {
   var dirname = path.dirname(import_path)
   return path.join(dirname, dependency_path)
 }
 
-NPM.prototype.provision_contracts = function(callback) {
+NPM.prototype.provision_contracts = function (callback) {
   // TODO: Fill this out!
   callback(null, {})
 }

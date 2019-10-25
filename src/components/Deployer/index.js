@@ -17,9 +17,12 @@ function Deployer(options) {
   ])
 
   this.chain = new DeferredChain()
-  this.logger = options.logger || {log: function() {}}
+  this.logger = options.logger || {
+    log: function () {
+    }
+  }
   this.known_contracts = {};
-  (options.contracts || []).forEach(function(contract) {
+  (options.contracts || []).forEach(function (contract) {
     self.known_contracts[contract.contract_name] = contract
   })
   this.network = options.network
@@ -31,15 +34,15 @@ function Deployer(options) {
 // Note: In all code below we overwrite this.chain every time .then() is used
 // in order to ensure proper error processing.
 
-Deployer.prototype.start = function() {
+Deployer.prototype.start = function () {
   return this.chain.start()
 }
 
-Deployer.prototype.link = function(library, destinations) {
+Deployer.prototype.link = function (library, destinations) {
   return this.queueOrExec(link(library, destinations, this))
 }
 
-Deployer.prototype.deploy = function() {
+Deployer.prototype.deploy = function () {
   var args = Array.prototype.slice.call(arguments)
   var contract = args.shift()
 
@@ -52,31 +55,30 @@ Deployer.prototype.deploy = function() {
   }
 }
 
-Deployer.prototype.new = function() {
+Deployer.prototype.new = function () {
   var args = Array.prototype.slice.call(arguments)
   var contract = args.shift()
 
   return this.queueOrExec(create(contract, args, this))
 }
 
-Deployer.prototype.exec = function(file) {
+Deployer.prototype.exec = function () {
   throw new Error('deployer.exec() has been deprecated; please seen the tronbox-require package for integration.')
 }
 
-Deployer.prototype.then = function(fn) {
+Deployer.prototype.then = function (fn) {
   var self = this
 
-  return this.queueOrExec(function() {
+  return this.queueOrExec(function () {
     self.logger.log('Running step...')
     return fn(this)
   })
 }
 
-Deployer.prototype.queueOrExec = function(fn) {
-  var self = this
+Deployer.prototype.queueOrExec = function (fn) {
 
   if (this.chain.started == true) {
-    return new Promise(function(accept, reject) {
+    return new Promise(function (accept) {
       accept()
     }).then(fn)
   } else {

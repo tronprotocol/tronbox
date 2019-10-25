@@ -2,7 +2,7 @@ var command = {
   command: 'watch',
   description: 'Watch filesystem for changes and rebuild the project automatically',
   builder: {},
-  run: function (options, done) {
+  run: function (options) {
     process.env.CURRENT = 'watch'
     var Build = require('../build')
     var Config = require('../../components/Config')
@@ -14,16 +14,16 @@ var command = {
 
     var config = Config.detect(options)
 
-    var printSuccess = function() {
+    var printSuccess = function () {
       config.logger.log(colors.green('Completed without errors on ' + new Date().toString()))
     }
 
-    var printFailure = function(err) {
+    var printFailure = function (err) {
       if (err instanceof TruffleError) {
-        console.log(err.message)
+        console.error(err.message)
       } else {
         // Bubble up all other unexpected errors.
-        console.log(err.stack || err.toString())
+        console.error(err.stack || err.toString())
       }
     }
 
@@ -40,10 +40,10 @@ var command = {
     ]
 
     chokidar.watch(watchPaths, {
-      ignored: /[\/\\]\./, // Ignore files prefixed with "."
+      ignored: /[/\\]\./, // Ignore files prefixed with "."
       cwd: config.working_directory,
       ignoreInitial: true
-    }).on('all', function(event, filePath) {
+    }).on('all', function (event, filePath) {
       // On changed/added/deleted
       var display_path = path.join('./', filePath.replace(config.working_directory, ''))
       config.logger.log(colors.cyan('>> File ' + display_path + ' changed.'))
@@ -55,7 +55,7 @@ var command = {
       }
     })
 
-    var check_rebuild = function() {
+    var check_rebuild = function () {
       if (working) {
         setTimeout(check_rebuild, 200)
         return
@@ -68,7 +68,7 @@ var command = {
           config.logger.log('Rebuilding...')
           working = true
 
-          Build.build(config, function(err) {
+          Build.build(config, function (err) {
             if (err) {
               printFailure(err)
             } else {
@@ -81,7 +81,7 @@ var command = {
         needs_recompile = false
         working = true
 
-        Contracts.compile(config, function(err) {
+        Contracts.compile(config, function (err) {
           if (err) {
             printFailure(err)
           }

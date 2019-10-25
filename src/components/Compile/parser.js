@@ -1,6 +1,5 @@
 var CompileError = require('./compileerror')
 const {getWrapper} = require('../TronSolc')
-// var solc = require("tron-solc");
 var fs = require('fs')
 var path = require('path')
 
@@ -18,19 +17,19 @@ var preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning
 var installedContractsDir = 'installed_contracts'
 
 module.exports = {
-  parse: function(body, fileName, options) {
+  parse: function (body, fileName, options) {
     // Here, we want a valid AST even if imports don't exist. The way to
     // get around that is to tell the compiler, as they happen, that we
     // have source for them (an empty file).
 
-    var build_remappings = function() {
+    var build_remappings = function () {
       // Maps import paths to paths from EthPM installed contracts, so we can correctly solve imports
       // e.g. "my_pkg/=installed_contracts/my_pkg/contracts/"
       var remappings = []
 
       if (fs.existsSync('ethpm.json')) {
-        ethpm = JSON.parse(fs.readFileSync('ethpm.json'))
-        for (pkg in ethpm.dependencies) {
+        let ethpm = JSON.parse(fs.readFileSync('ethpm.json'))
+        for (let pkg in ethpm.dependencies) {
           remappings.push(pkg + '/=' + path.join(installedContractsDir, pkg, 'contracts', '/'))
         }
       }
@@ -38,7 +37,7 @@ module.exports = {
       return remappings
     }
 
-    var fileName = fileName || 'ParsedContract.sol'
+    fileName = fileName || 'ParsedContract.sol'
 
     var remappings = build_remappings()
 
@@ -62,12 +61,12 @@ module.exports = {
     }
 
     var solc = getWrapper(options)
-    var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function(file_path) {
+    var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function (file_path) {
       // Resolve dependency manually.
+      let contents
       if (fs.existsSync(file_path)) {
         contents = fs.readFileSync(file_path, {encoding: 'UTF-8'})
-      }
-      else {
+      } else {
         contents = 'pragma solidity ^0.4.0;'
       }
       return {contents: contents}
@@ -76,15 +75,15 @@ module.exports = {
     output = JSON.parse(output)
 
     // Filter out the "pre-release compiler" warning, if present.
-    var errors = output.errors ? output.errors.filter(function(solidity_error) {
+    var errors = output.errors ? output.errors.filter(function (solidity_error) {
       return solidity_error.message.indexOf(preReleaseCompilerWarning) < 0
     }) : []
 
     // Filter out warnings.
-    var warnings = output.errors ? output.errors.filter(function(solidity_error) {
-      return solidity_error.severity == 'warning'
-    }) : []
-    var errors = output.errors ? output.errors.filter(function(solidity_error) {
+    // var warnings = output.errors ? output.errors.filter(function (solidity_error) {
+    //   return solidity_error.severity == 'warning'
+    // }) : []
+    errors = output.errors ? output.errors.filter(function (solidity_error) {
       return solidity_error.severity != 'warning'
     }) : []
 
@@ -99,8 +98,7 @@ module.exports = {
   },
 
   // This needs to be fast! It is fast (as of this writing). Keep it fast!
-  parseImports: function(body, options) {
-    var self = this
+  parseImports: function (body, options) {
 
     // WARNING: Kind of a hack (an expedient one).
 
@@ -136,7 +134,7 @@ module.exports = {
     }
 
     var solc = getWrapper(options)
-    var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function() {
+    var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function () {
       // The existence of this function ensures we get a parsable error message.
       // Without this, we'll get an error message we *can* detect, but the key will make it easier.
       // Note: This is not a normal callback. See docs here: https://github.com/ethereum/solc-js#from-version-021
@@ -146,11 +144,11 @@ module.exports = {
     output = JSON.parse(output)
 
     // Filter out the "pre-release compiler" warning, if present.
-    var errors = output.errors.filter(function(solidity_error) {
+    var errors = output.errors.filter(function (solidity_error) {
       return solidity_error.message.indexOf(preReleaseCompilerWarning) < 0
     })
 
-    var nonImportErrors = errors.filter(function(solidity_error) {
+    var nonImportErrors = errors.filter(function (solidity_error) {
       // If the import error key is not found, we must not have an import error.
       // This means we have a *different* parsing error which we should show to the user.
       // Note: solc can return multiple parsing errors at once.
@@ -165,9 +163,9 @@ module.exports = {
 
     // Now, all errors must be import errors.
     // Filter out our forced import, then get the import paths of the rest.
-    var imports = errors.filter(function(solidity_error) {
+    var imports = errors.filter(function (solidity_error) {
       return solidity_error.message.indexOf(failingImportFileName) < 0
-    }).map(function(solidity_error) {
+    }).map(function (solidity_error) {
       var matches = solidity_error.formattedMessage.match(/import[^'"]+("|')([^'"]+)("|');/)
 
       // Return the item between the quotes.

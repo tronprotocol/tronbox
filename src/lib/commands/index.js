@@ -6,7 +6,6 @@ module.exports = {
   build: require('./build'),
   test: require('./test'),
   console: require('./console'),
-  create: require('./create'),
   watch: require('./watch'),
   serve: require('./serve'),
   unbox: require('./unbox'),

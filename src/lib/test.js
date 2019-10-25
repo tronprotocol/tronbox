@@ -1,19 +1,15 @@
 var Mocha = require('mocha')
 var chai = require('chai')
 var path = require('path')
-var fs = require('fs')
 var Config = require('../components/Config')
 var Contracts = require('../components/WorkflowCompile')
 var Resolver = require('../components/Resolver')
 var TestRunner = require('./testing/testrunner')
 var TestResolver = require('./testing/testresolver')
 var TestSource = require('./testing/testsource')
-// var SolidityTest = require("./testing/soliditytest");
 var expect = require('@truffle/expect')
-var find_contracts = require('@truffle/contract-sources')
 var Migrate = require('../components/Migrate')
 var Profiler = require('../components/Compile/profiler')
-var async = require('async')
 var originalrequire = require('original-require')
 var TronWrap = require('../components/TronWrap')
 
@@ -68,8 +64,6 @@ var Test = {
       mocha.addFile(file)
     })
 
-    var dependency_paths = []
-    var testContracts = []
     var accounts = []
     var runner
     var test_resolver
@@ -92,29 +86,18 @@ var Test = {
       test_resolver.cache_on = false
 
       return self.compileContractsWithTestFilesIfNeeded(sol_tests, config, test_resolver)
-    }).then(function (paths) {
-      dependency_paths = paths
-
-      testContracts = sol_tests.map(function (test_file_path) {
-        var built_name = './' + path.basename(test_file_path)
-        return test_resolver.require(built_name)
-      })
+    }).then(function () {
 
       runner = new TestRunner(config)
 
-      console.log('Deploying contracts to development network...')
+      console.info('Deploying contracts to development network...')
       return self.performInitialDeploy(config, test_resolver)
-    // }).then(function () {
-    //   console.log('Preparing Solidity tests (if any)...')
-    //   return self.defineSolidityTests(mocha, testContracts, dependency_paths, runner);
-    //   console.log('\nWarning: This version does not support tests written in Solidity.\n');
-    //   return Promise.resolve();
     }).then(function () {
-      console.log('Preparing Javascript tests (if any)...')
+      console.info('Preparing Javascript tests (if any)...')
       return self.setJSTestGlobals(accounts, test_resolver, runner)
     }).then(function () {
       // Finally, run mocha.
-      process.on('unhandledRejection', function (reason, p) {
+      process.on('unhandledRejection', function (reason) {
         throw reason
       })
 
@@ -181,18 +164,8 @@ var Test = {
     })
   },
 
-  // defineSolidityTests: function (mocha, contracts, dependency_paths, runner) {
-  //   return new Promise(function (accept) {
-  //     contracts.forEach(function (contract) {
-  //       SolidityTest.define(contract, dependency_paths, runner, mocha);
-  //     });
-  //
-  //     accept();
-  //   });
-  // },
-
   setJSTestGlobals: function (accounts, test_resolver, runner) {
-    return new Promise(function (accept, reject) {
+    return new Promise(function (accept) {
       global.assert = chai.assert
       global.expect = chai.expect
       global.artifacts = {

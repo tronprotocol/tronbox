@@ -2,11 +2,11 @@ var {TronWeb} = require('../TronWrap')
 var wrapper = require('./wrapper')
 
 module.exports = {
-  wrap: function(provider, options) {
+  wrap: function (provider, options) {
     return wrapper.wrap(provider, options)
   },
 
-  create: function(options) {
+  create: function (options) {
     var provider
 
     if (options.provider && typeof options.provider == 'function') {
@@ -23,7 +23,7 @@ module.exports = {
         try {
           request.send(JSON.stringify(payload))
         } catch (error) {
-          throw errors.InvalidConnection(this.host)
+          throw new Error(`Invalid Connection (${this.host})`)
         }
 
         var result = request.responseText
@@ -31,7 +31,7 @@ module.exports = {
         try {
           result = JSON.parse(result)
         } catch (e) {
-          throw errors.InvalidResponse(request.responseText)
+          throw new Error(`Invalid Response (${request.responseText})`)
         }
 
         return result
@@ -48,7 +48,7 @@ module.exports = {
             try {
               result = JSON.parse(result)
             } catch (e) {
-              error = errors.InvalidResponse(request.responseText)
+              error = new Error(`Invalid Response (${request.responseText})`)
             }
 
             callback(error, result)
@@ -56,13 +56,13 @@ module.exports = {
         }
 
         request.ontimeout = function () {
-          callback(errors.ConnectionTimeout(this.timeout))
+          throw new Error(`Connection Timeout (${this.timeout})`)
         }
 
         try {
           request.send(JSON.stringify(payload))
         } catch (error) {
-          callback(errors.InvalidConnection(this.host))
+          callback(new Error(`Invalid Connection (${this.host})`))
         }
         return request
       }
@@ -72,7 +72,7 @@ module.exports = {
     return this.wrap(provider, options)
   },
 
-  test_connection: function(provider, callback) {
+  test_connection: function (provider, callback) {
     callback(null, true)
   }
 }

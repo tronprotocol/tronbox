@@ -26,12 +26,8 @@ var command = {
     var OS = require('os')
     var Config = require('../../components/Config')
     var Contracts = require('../../components/WorkflowCompile')
-    var Resolver = require('../../components/Resolver')
-    var Artifactor = require('../../components/Artifactor')
     var Migrate = require('../../components/Migrate')
     var Environment = require('../environment')
-    var temp = require('temp')
-    var copy = require('../copy')
     var TronWrap = require('../../components/TronWrap')
     var {dlog} = require('../../components/TronWrap')
     const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
@@ -48,50 +44,15 @@ var command = {
         verify: true,
         log: options.log
       })
-    } catch(err) {
+    } catch (err) {
       logErrorAndExit(console, err.message)
     }
-
-    //
-    // function setupDryRunEnvironmentThenRunMigrations(callback) {
-    //   Environment.fork(config, function(err) {
-    //     if (err) return callback(err);
-    //
-    //     // Copy artifacts to a temporary directory
-    //     temp.mkdir('migrate-dry-run-', function(err, temporaryDirectory) {
-    //       if (err) return callback(err);
-    //
-    //       function cleanup() {
-    //         var args = arguments;
-    //         // Ensure directory cleanup.
-    //         temp.cleanup(function(err) {
-    //           // Ignore cleanup errors.
-    //           callback.apply(null, args);
-    //         });
-    //       };
-    //
-    //       copy(config.contracts_build_directory, temporaryDirectory, function(err) {
-    //         if (err) return callback(err);
-    //
-    //         config.contracts_build_directory = temporaryDirectory;
-    //
-    //         // Note: Create a new artifactor and resolver with the updated config.
-    //         // This is because the contracts_build_directory changed.
-    //         // Ideally we could architect them to be reactive of the config changes.
-    //         config.artifactor = new Artifactor(temporaryDirectory);
-    //         config.resolver = new Resolver(config);
-    //
-    //         runMigrations(cleanup);
-    //       });
-    //     });
-    //   });
-    // }
 
     function runMigrations(callback) {
       if (options.f) {
         Migrate.runFrom(options.f, config, done)
       } else {
-        Migrate.needsMigrating(config, function(err, needsMigrating) {
+        Migrate.needsMigrating(config, function (err, needsMigrating) {
           if (err) return callback(err)
 
           if (needsMigrating) {
@@ -105,9 +66,9 @@ var command = {
       }
     }
 
-    Contracts.compile(config, function(err) {
+    Contracts.compile(config, function (err) {
       if (err) return done(err)
-      Environment.detect(config, function(err) {
+      Environment.detect(config, function (err) {
         if (err) return done(err)
         var dryRun = options.dryRun === true
 
@@ -118,12 +79,7 @@ var command = {
         }
 
         config.logger.log(networkMessage + '.' + OS.EOL)
-
-        // if (dryRun) {
-        //   setupDryRunEnvironmentThenRunMigrations(done);
-        // } else {
-          runMigrations(done)
-        // }
+        runMigrations(done)
       })
     })
   }

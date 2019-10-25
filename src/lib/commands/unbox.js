@@ -38,10 +38,12 @@ function formatCommands(commands) {
   var names = Object.keys(commands)
 
   var maxLength = Math.max.apply(
-    null, names.map(function(name) { return name.length })
+    null, names.map(function (name) {
+      return name.length
+    })
   )
 
-  return names.map(function(name) {
+  return names.map(function (name) {
     var spacing = Array(maxLength - name.length + 1).join(' ')
     return '  ' + name + ': ' + spacing + commands[name]
   })
@@ -51,7 +53,7 @@ var command = {
   command: 'unbox',
   description: 'Download a tronbox Box, a pre-built tronbox project',
   builder: {},
-  run: function(options, done) {
+  run: function (options, done) {
     var Config = require('../../components/Config')
     var Box = require('../../components/Box')
     var OS = require('os')
@@ -61,15 +63,15 @@ var command = {
     })
 
     var url = normalizeURL(options._[0])
-    Box.unbox(url, options.working_directory||config.working_directory, {logger: config.logger})
-      .then(function(boxConfig) {
+    Box.unbox(url, options.working_directory || config.working_directory, {logger: config.logger})
+      .then(function (boxConfig) {
         config.logger.log('Unbox successful. Sweet!' + OS.EOL)
 
         var commandMessages = formatCommands(boxConfig.commands)
         if (commandMessages.length > 0) {
           config.logger.log('Commands:' + OS.EOL)
         }
-        commandMessages.forEach(function(message) {
+        commandMessages.forEach(function (message) {
           config.logger.log(message)
         })
 

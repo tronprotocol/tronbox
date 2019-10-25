@@ -22,6 +22,7 @@ var command = {
         OS.EOL +
         ' - Or, browse the tronbox Boxes at <http://tronboxframework.com/boxes>!'
       )
+      // eslint-disable-next-line no-process-exit
       process.exit(1)
     }
 

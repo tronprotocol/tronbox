@@ -5,16 +5,12 @@ var path = require('path')
 var async = require('async')
 var fs = require('fs')
 var Graph = require('graphlib').Graph
-var isAcyclic = require('graphlib/lib/alg').isAcyclic
 var Parser = require('./parser')
-var CompileError = require('./compileerror')
 var expect = require('@truffle/expect')
 var find_contracts = require('@truffle/contract-sources')
-var debug = require('debug')('compile:profiler')
 
 module.exports = {
-  updated: function(options, callback) {
-    var self = this
+  updated: function (options, callback) {
 
     expect.options(options, [
       'resolver'
@@ -38,12 +34,12 @@ module.exports = {
 
     async.series([
       // Get all the source files and create an object out of them.
-      function(c) {
-        getFiles(function(err, files) {
+      function (c) {
+        getFiles(function (err, files) {
           if (err) return c(err)
 
           // Use an object for O(1) access.
-          files.forEach(function(sourceFile) {
+          files.forEach(function (sourceFile) {
             sourceFilesArtifacts[sourceFile] = []
           })
 
@@ -51,8 +47,8 @@ module.exports = {
         })
       },
       // Get all the artifact files, and read them, parsing them as JSON
-      function(c) {
-        fs.readdir(build_directory, function(err, build_files) {
+      function (c) {
+        fs.readdir(build_directory, function (err, build_files) {
           if (err) {
             // The build directory may not always exist.
             if (err.message.indexOf('ENOENT: no such file or directory') >= 0) {
@@ -63,16 +59,16 @@ module.exports = {
             }
           }
 
-          build_files = build_files.filter(function(build_file) {
+          build_files = build_files.filter(function (build_file) {
             return path.extname(build_file) == '.json'
           })
 
-          async.map(build_files, function(buildFile, finished) {
-            fs.readFile(path.join(build_directory, buildFile), 'utf8', function(err, body) {
+          async.map(build_files, function (buildFile, finished) {
+            fs.readFile(path.join(build_directory, buildFile), 'utf8', function (err, body) {
               if (err) return finished(err)
               finished(null, body)
             })
-          }, function(err, jsonData) {
+          }, function (err, jsonData) {
             if (err) return c(err)
 
             try {
@@ -94,13 +90,13 @@ module.exports = {
           })
         })
       },
-      function(c) {
+      function (c) {
         // Get the minimum updated time for all of a source file's artifacts
         // (note: one source file might have multiple artifacts).
-        Object.keys(sourceFilesArtifacts).forEach(function(sourceFile) {
+        Object.keys(sourceFilesArtifacts).forEach(function (sourceFile) {
           var artifacts = sourceFilesArtifacts[sourceFile]
 
-          sourceFilesArtifactsUpdatedTimes[sourceFile] = artifacts.reduce(function(minimum, current) {
+          sourceFilesArtifactsUpdatedTimes[sourceFile] = artifacts.reduce(function (minimum, current) {
             var updatedAt = new Date(current.updatedAt).getTime()
 
             if (updatedAt < minimum) {
@@ -119,11 +115,11 @@ module.exports = {
       },
       // Stat all the source files, getting there updated times, and comparing them to
       // the artifact updated times.
-      function(c) {
+      function (c) {
         var sourceFiles = Object.keys(sourceFilesArtifacts)
 
-        async.map(sourceFiles, function(sourceFile, finished) {
-          fs.stat(sourceFile, function(err, stat) {
+        async.map(sourceFiles, function (sourceFile, finished) {
+          fs.stat(sourceFile, function (err, stat) {
             if (err) {
               // Ignore it. This means the source file was removed
               // but the artifact file possibly exists. Return null
@@ -132,10 +128,10 @@ module.exports = {
             }
             finished(null, stat)
           })
-        }, function(err, sourceFileStats) {
+        }, function (err, sourceFileStats) {
           if (err) return callback(err)
 
-          sourceFiles.forEach(function(sourceFile, index) {
+          sourceFiles.forEach(function (sourceFile, index) {
             var sourceFileStat = sourceFileStats[index]
 
             // Ignore updating artifacts if source file has been removed.
@@ -154,12 +150,12 @@ module.exports = {
           c()
         })
       }
-    ], function(err) {
+    ], function (err) {
       callback(err, updatedFiles)
     })
   },
 
-  required_sources: function(options, callback) {
+  required_sources: function (options, callback) {
     var self = this
 
     expect.options(options, [
@@ -178,8 +174,6 @@ module.exports = {
       }
 
       function include(import_path) {
-        //console.log("Including: " + file)
-
         required[import_path] = dependsGraph.node(import_path)
       }
 
@@ -191,9 +185,6 @@ module.exports = {
         include(import_path)
 
         var dependencies = dependsGraph.successors(import_path)
-
-        // console.log("At: " + import_path);
-        // console.log("   Dependencies: ", dependencies);
 
         if (dependencies.length > 0) {
           dependencies.forEach(walk_down)
@@ -207,10 +198,6 @@ module.exports = {
 
         var ancestors = dependsGraph.predecessors(import_path)
         var dependencies = dependsGraph.successors(import_path)
-
-        // console.log("At: " + import_path);
-        // console.log("   Ancestors: ", ancestors);
-        // console.log("   Dependencies: ", dependencies);
 
         include(import_path)
 
@@ -228,13 +215,13 @@ module.exports = {
       done(null, required)
     }
 
-    find_contracts(options.base_path, function(err, allPaths) {
+    find_contracts(options.base_path, function (err, allPaths) {
       if (err) return callback(err)
 
       // Include paths for Solidity .sols, specified in options.
       allPaths = allPaths.concat(paths)
 
-      self.dependency_graph(allPaths, options.resolver, function(err, dependsGraph) {
+      self.dependency_graph(allPaths, options.resolver, function (err, dependsGraph) {
         if (err) return callback(err)
 
         findRequiredSources(dependsGraph, callback)
@@ -242,9 +229,9 @@ module.exports = {
     })
   },
 
-  convert_to_absolute_paths: function(paths, base) {
+  convert_to_absolute_paths: function (paths, base) {
     var self = this
-    return paths.map(function(p) {
+    return paths.map(function (p) {
       // If it's anabsolute paths, leave it alone.
       if (path.isAbsolute(p)) return p
 
@@ -256,11 +243,11 @@ module.exports = {
     })
   },
 
-  isExplicitlyRelative: function(import_path) {
+  isExplicitlyRelative: function (import_path) {
     return import_path.indexOf('.') == 0
   },
 
-  dependency_graph: function(paths, resolver, callback) {
+  dependency_graph: function (paths, resolver, callback) {
     var self = this
 
     // Iterate through all the contracts looking for libraries and building a dependency graph
@@ -271,74 +258,74 @@ module.exports = {
     // For the purposes of determining correct error messages.
     // The second array item denotes which path imported the current path.
     // In the case of the paths passed in, there was none.
-    paths = paths.map(function(p) {
+    paths = paths.map(function (p) {
       return [p, null]
     })
 
-    async.whilst(function() {
-      return paths.length > 0
-    }, function(finished) {
-      var current = paths.shift()
-      var import_path = current[0]
-      var imported_from = current[1]
+    async.whilst(function () {
+        return paths.length > 0
+      }, function (finished) {
+        var current = paths.shift()
+        var import_path = current[0]
+        var imported_from = current[1]
 
-      if (dependsGraph.hasNode(import_path) && imports_cache[import_path] != null) {
-        return finished()
-      }
-
-      resolver.resolve(import_path, imported_from, function(err, resolved_body, resolved_path, source) {
-        if (err) return finished(err)
-
-        if (dependsGraph.hasNode(resolved_path) && imports_cache[resolved_path] != null) {
+        if (dependsGraph.hasNode(import_path) && imports_cache[import_path] != null) {
           return finished()
         }
 
-        // Add the contract to the depends graph.
-        dependsGraph.setNode(resolved_path, resolved_body)
+        resolver.resolve(import_path, imported_from, function (err, resolved_body, resolved_path, source) {
+          if (err) return finished(err)
 
-        var imports
-
-        try {
-          imports = Parser.parseImports(resolved_body, resolver.options)
-        } catch (e) {
-          e.message = 'Error parsing ' + import_path + ': ' + e.message
-          return finished(e)
-        }
-
-        // Convert explicitly relative dependencies of modules
-        // back into module paths. We also use this loop to update
-        // the graph edges.
-        imports = imports.map(function(dependency_path) {
-          // Convert explicitly relative paths
-          if (self.isExplicitlyRelative(dependency_path)) {
-            dependency_path = source.resolve_dependency_path(import_path, dependency_path)
+          if (dependsGraph.hasNode(resolved_path) && imports_cache[resolved_path] != null) {
+            return finished()
           }
 
-          // Update graph edges
-          if (!dependsGraph.hasEdge(import_path, dependency_path)) {
-            dependsGraph.setEdge(import_path, dependency_path)
+          // Add the contract to the depends graph.
+          dependsGraph.setNode(resolved_path, resolved_body)
+
+          var imports
+
+          try {
+            imports = Parser.parseImports(resolved_body, resolver.options)
+          } catch (e) {
+            e.message = 'Error parsing ' + import_path + ': ' + e.message
+            return finished(e)
           }
 
-          // Return an array that denotes a new import and the path it was imported from.
-          return [dependency_path, import_path]
+          // Convert explicitly relative dependencies of modules
+          // back into module paths. We also use this loop to update
+          // the graph edges.
+          imports = imports.map(function (dependency_path) {
+            // Convert explicitly relative paths
+            if (self.isExplicitlyRelative(dependency_path)) {
+              dependency_path = source.resolve_dependency_path(import_path, dependency_path)
+            }
+
+            // Update graph edges
+            if (!dependsGraph.hasEdge(import_path, dependency_path)) {
+              dependsGraph.setEdge(import_path, dependency_path)
+            }
+
+            // Return an array that denotes a new import and the path it was imported from.
+            return [dependency_path, import_path]
+          })
+
+          imports_cache[import_path] = imports
+
+          Array.prototype.push.apply(paths, imports)
+
+          finished()
         })
-
-        imports_cache[import_path] = imports
-
-        Array.prototype.push.apply(paths, imports)
-
-        finished()
+      },
+      function (err) {
+        if (err) return callback(err)
+        callback(null, dependsGraph)
       })
-    },
-    function(err) {
-      if (err) return callback(err)
-      callback(null, dependsGraph)
-    })
   },
 
   // Parse all source files in the directory and output the names of contracts and their source paths
   // directory can either be a directory or array of files.
-  defined_contracts: function(directory, callback) {
+  defined_contracts: function (directory, callback) {
     function getFiles(callback) {
       if (Array.isArray(directory)) {
         callback(null, directory)
@@ -347,12 +334,12 @@ module.exports = {
       }
     }
 
-    getFiles(function(err, files) {
+    getFiles(function (err, files) {
       if (err) return callback(err)
 
-      var promises = files.map(function(file) {
-        return new Promise(function(accept, reject) {
-          fs.readFile(file, 'utf8', function(err, body) {
+      var promises = files.map(function (file) {
+        return new Promise(function (accept, reject) {
+          fs.readFile(file, 'utf8', function (err, body) {
             if (err) return reject(err)
 
             var output
@@ -366,10 +353,10 @@ module.exports = {
 
             accept(output.contracts)
           })
-        }).then(function(contract_names) {
+        }).then(function (contract_names) {
           var returnVal = {}
 
-          contract_names.forEach(function(contract_name) {
+          contract_names.forEach(function (contract_name) {
             returnVal[contract_name] = file
           })
 
@@ -377,11 +364,11 @@ module.exports = {
         })
       })
 
-      Promise.all(promises).then(function(objects) {
+      Promise.all(promises).then(function (objects) {
         var contract_source_paths = {}
 
-        objects.forEach(function(object) {
-          Object.keys(object).forEach(function(contract_name) {
+        objects.forEach(function (object) {
+          Object.keys(object).forEach(function (contract_name) {
             contract_source_paths[contract_name] = object[contract_name]
           })
         })

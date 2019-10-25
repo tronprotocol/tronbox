@@ -1,13 +1,10 @@
-var fs = require('fs')
 var dir = require('node-dir')
 var path = require('path')
 var ResolverIntercept = require('./resolverintercept')
 var Require = require('../Require')
 var async = require('async')
-// var Web3 = require("web3-mock");
 var expect = require('@truffle/expect')
 var Deployer = require('../Deployer')
-var chalk = require('chalk')
 
 var TronWrap = require('../TronWrap')
 const logErrorAndExit = require('../TronWrap').logErrorAndExit
@@ -16,10 +13,6 @@ var tronWrap
 function Migration(file) {
   this.file = path.resolve(file)
   this.number = parseInt(path.basename(file))
-}
-
-function sleep(millis) {
-  return new Promise(resolve => setTimeout(resolve, millis))
 }
 
 Migration.prototype.run = function (options, callback) {
@@ -86,11 +79,11 @@ Migration.prototype.run = function (options, callback) {
     args: [deployer],
   })
 
-    if (!fn || !fn.length || fn.length === 0) {
-      return callback(new Error('Migration ' + self.file + ' invalid or does not take any parameters'))
-    }
-    fn(deployer, options.network, options.networks[options.network].from)
-    finish()
+  if (!fn || !fn.length || fn.length === 0) {
+    return callback(new Error('Migration ' + self.file + ' invalid or does not take any parameters'))
+  }
+  fn(deployer, options.network, options.networks[options.network].from)
+  finish()
 }
 
 var Migrate = {

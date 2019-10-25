@@ -4,6 +4,7 @@ var {constants} = require('../TronWrap')
 var BigNumber = require('bignumber.js')
 var StatusError = require('./statuserror.js')
 
+// eslint-disable-next-line no-unused-vars
 var contract = (function (module) {
 
   // Planned for future features, logging, etc.
@@ -104,7 +105,6 @@ var contract = (function (module) {
       })
     },
     promisifyFunction: function (fn, C) {
-      var self = this
       return function () {
         var instance = this
 
@@ -309,10 +309,6 @@ var contract = (function (module) {
         throw new Error('Invalid provider passed to setProvider(); provider is ' + provider)
       }
 
-      var wrapped = new Provider(provider)
-      //zzsun-rm-web3
-      // this.web3.setProvider(wrapped);
-      // tronWrap.setHttpProvider(provider.host);
       this.currentProvider = provider
     },
 
@@ -395,39 +391,10 @@ var contract = (function (module) {
       })
     },
 
-    at: function (address) {
-      var self = this
+    at: function () {
 
       throw new Error('The construct contractArtifacts.at(address) is not currently supported by TronBox. It will be in the future. Stay in touch.')
 
-      if (address == null || typeof address != 'string' || address.length != 42) {
-        throw new Error('Invalid address passed to ' + this._json.contractName + '.at(): ' + address)
-      }
-
-      var contract = new this(address)
-
-      // Add thennable to allow people opt into new recommended usage.
-      contract.then = function (fn) {
-        return new Promise(function () {
-          var instance = new self(address)
-
-          return new Promise(function (accept, reject) {
-            tronWrap._getContract(address, function (err, contractAddress) {
-              if (err) return reject(err)
-              if (!contractAddress || contractAddress.replace(/^0x/, '').replace(/0/g, '') === '') {
-                return reject(new Error('Cannot create instance of ' + self.contractName + '; no code at address ' + address))
-              }
-              // for (let prop in contract) console.log(1, prop)
-              // for (let prop in instance) console.log(1, prop)
-
-
-              accept(instance)
-            })
-          })
-        }).then(fn)
-      }
-
-      return contract
     },
     call: function (methodName, ...args) {
 
@@ -492,6 +459,7 @@ var contract = (function (module) {
             const abi = res.abi && res.abi.entrys ? res.abi.entrys : []
             for (var i = 0; i < abi.length; i++) {
               let item = abi[i]
+              // eslint-disable-next-line no-prototype-builtins
               if (self.hasOwnProperty(item.name)) continue
               if (/(function|event)/i.test(item.type) && item.name) {
                 let f = (...args) => {
@@ -787,42 +755,7 @@ var contract = (function (module) {
       return this.network.links || {}
     },
     events: function () {
-      // helper web3; not used for provider
-      // var web3 = new Web3();zzsun-add
       return []
-
-      var events
-
-      if (this._json.networks[this.network_id] == null) {
-        events = {}
-      } else {
-        events = this.network.events || {}
-      }
-
-      // Merge abi events with whatever's returned.
-      var abi = this.abi
-
-      abi.forEach(function (item) {
-        if (item.type != 'event') return
-
-        var signature = item.name + '('
-
-        item.inputs.forEach(function (input, index) {
-          signature += input.type
-
-          if (index < item.inputs.length - 1) {
-            signature += ','
-          }
-        })
-
-        signature += ')'
-
-        var topic = TronWrap().sha3(signature)
-
-        events[topic] = item
-      })
-
-      return events
     },
     binary: function () {
       return Utils.linkBytecode(this.bytecode, this.links)

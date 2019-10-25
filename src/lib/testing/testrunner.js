@@ -40,6 +40,7 @@ function TestRunner(options) {
     this.tronwrap.defaultPrivateKey
   )
 
+  // eslint-disable-next-line no-undef
   global.waitForTransactionReceipt = waitForTransactionReceipt(tronWeb)
 
   // For each test
@@ -49,31 +50,31 @@ function TestRunner(options) {
   this.TEST_TIMEOUT = 300000
 }
 
-TestRunner.prototype.initialize = function(callback) {
+TestRunner.prototype.initialize = function (callback) {
   var self = this
 
   var test_source = new TestSource(self.config)
   this.config.resolver = new TestResolver(self.initial_resolver, test_source, self.config.contracts_build_directory)
 
-  var afterStateReset = function(err) {
+  var afterStateReset = function (err) {
     if (err) return callback(err)
 
-    fs.readdir(self.config.contracts_build_directory, function(err, files) {
+    fs.readdir(self.config.contracts_build_directory, function (err, files) {
       if (err) return callback(err)
 
-      files = _.filter(files, function(file) {
+      files = _.filter(files, function (file) {
         return path.extname(file) === '.json'
       })
 
-      async.map(files, function(file, finished) {
+      async.map(files, function (file, finished) {
         fs.readFile(path.join(self.config.contracts_build_directory, file), 'utf8', finished)
-      }, function(err, data) {
+      }, function (err, data) {
         if (err) return callback(err)
 
         var contracts = data.map(JSON.parse).map(contract)
         var abis = _.flatMap(contracts, 'abi')
 
-        abis.map(function(abi) {
+        abis.map(function (abi) {
           if (/event/i.test(abi.type)) {
             var signature = abi.name + '(' + _.map(abi.inputs, 'type').join(',') + ')'
             self.known_events[self.tronwrap.sha3(signature)] = {
@@ -89,44 +90,40 @@ TestRunner.prototype.initialize = function(callback) {
   afterStateReset()
 }
 
-TestRunner.prototype.deploy = function(callback) {
+TestRunner.prototype.deploy = function (callback) {
   Migrate.run(this.config.with({
     reset: true,
     quiet: true
   }), callback)
 }
 
-TestRunner.prototype.resetState = function(callback) {
-  var self = this
+TestRunner.prototype.resetState = function (callback) {
   this.deploy(callback)
 }
 
-TestRunner.prototype.startTest = function(mocha, callback) {
-  var self = this
+TestRunner.prototype.startTest = function (mocha, callback) {
   callback()
 }
 
-TestRunner.prototype.endTest = function(mocha, callback) {
-  var self = this
-
+TestRunner.prototype.endTest = function (mocha, callback) {
   if (mocha.currentTest.state != 'failed') {
     return callback()
   }
   callback()
 }
 
-TestRunner.prototype.snapshot = function(callback) {
-  this.rpc('evm_snapshot', function(err, result) {
+TestRunner.prototype.snapshot = function (callback) {
+  this.rpc('evm_snapshot', function (err, result) {
     if (err) return callback(err)
     callback(null, result.result)
   })
 },
 
-TestRunner.prototype.revert = function(snapshot_id, callback) {
-  this.rpc('evm_revert', [snapshot_id], callback)
-}
+  TestRunner.prototype.revert = function (snapshot_id, callback) {
+    this.rpc('evm_revert', [snapshot_id], callback)
+  }
 
-TestRunner.prototype.rpc = function(method, arg, cb) {
+TestRunner.prototype.rpc = function (method, arg, cb) {
   var req = {
     jsonrpc: '2.0',
     method: method,
@@ -138,7 +135,7 @@ TestRunner.prototype.rpc = function(method, arg, cb) {
     cb = arg
   }
 
-  var intermediary = function(err, result) {
+  var intermediary = function (err, result) {
     if (err != null) {
       cb(err)
       return

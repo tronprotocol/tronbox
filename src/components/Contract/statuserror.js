@@ -1,6 +1,5 @@
 var TruffleError = require('@truffle/error')
 var inherits = require('util').inherits
-var web3 = require('web3-mock')
 
 inherits(StatusError, TruffleError)
 
@@ -10,7 +9,7 @@ function StatusError(args, tx, receipt) {
   var message
   var gasLimit = parseInt(args.gas) || defaultGas
 
-  if(receipt.gasUsed === gasLimit){
+  if (receipt.gasUsed === gasLimit) {
 
     message = 'Transaction: ' + tx + ' exited with an error (status 0) after consuming all gas.\n' +
       'Please check that the transaction:\n' +

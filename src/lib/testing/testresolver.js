@@ -8,7 +8,7 @@ function TestResolver(resolver, source, search_path) {
   this.cache_on = true
 }
 
-TestResolver.prototype.require = function(import_path) {
+TestResolver.prototype.require = function (import_path) {
   if (this.cache_on && this.require_cache[import_path]) {
     return this.require_cache[import_path]
   }
@@ -21,9 +21,9 @@ TestResolver.prototype.require = function(import_path) {
   return result
 }
 
-TestResolver.prototype.resolve = function(import_path, imported_from, callback) {
+TestResolver.prototype.resolve = function (import_path, imported_from, callback) {
   var self = this
-  this.source.resolve(import_path, function(err, result, resolved_path) {
+  this.source.resolve(import_path, function (err, result, resolved_path) {
     if (err) return callback(err)
     if (result) return callback(null, result, resolved_path)
 

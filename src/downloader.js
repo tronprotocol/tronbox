@@ -16,7 +16,7 @@ async function downloader(compilerVersion) {
   if (res && res.body) {
     await fs.writeFile(soljsonPath, res.body)
   } else {
-    console.log('Error. Wrong Solidity compiler version.')
+    console.error('Error. Wrong Solidity compiler version.')
   }
   // eslint-disable-next-line no-process-exit
   process.exit()

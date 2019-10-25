@@ -7,14 +7,14 @@ function Command(commands) {
 
   var args = yargs()
 
-  Object.keys(this.commands).forEach(function(command) {
+  Object.keys(this.commands).forEach(function (command) {
     args = args.command(commands[command])
   })
 
   this.args = args
 }
 
-Command.prototype.getCommand = function(str, noAliases) {
+Command.prototype.getCommand = function (str, noAliases) {
   var argv = this.args.parse(str)
 
   if (argv._.length == 0) {
@@ -36,7 +36,7 @@ Command.prototype.getCommand = function(str, noAliases) {
     // that uniquely matches.
     while (currentLength <= input.length) {
       // Gather all possible commands that match with the current length
-      var possibleCommands = availableCommandNames.filter(function(possibleCommand) {
+      var possibleCommands = availableCommandNames.filter(function (possibleCommand) {
         return possibleCommand.substring(0, currentLength) == input.substring(0, currentLength)
       })
 
@@ -63,7 +63,7 @@ Command.prototype.getCommand = function(str, noAliases) {
   }
 }
 
-Command.prototype.run = function(command, options, callback) {
+Command.prototype.run = function (command, options, callback) {
   if (typeof options == 'function') {
     callback = options
     options = {}
@@ -87,7 +87,7 @@ Command.prototype.run = function(command, options, callback) {
 
   // Some options might throw if options is a Config object. If so, let's ignore those options.
   var clone = {}
-  Object.keys(options).forEach(function(key) {
+  Object.keys(options).forEach(function (key) {
     try {
       clone[key] = options[key]
     } catch (e) {

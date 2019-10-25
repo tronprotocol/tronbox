@@ -22,7 +22,7 @@ function Resolver(options) {
 }
 
 // This function might be doing too much. If so, too bad (for now).
-Resolver.prototype.require = function(import_path, search_path) {
+Resolver.prototype.require = function (import_path, search_path) {
   var self = this
 
   for (var i = 0; i < this.sources.length; i++) {
@@ -38,7 +38,7 @@ Resolver.prototype.require = function(import_path, search_path) {
   throw new Error('Could not find artifacts for ' + import_path + ' from any sources')
 }
 
-Resolver.prototype.resolve = function(import_path, imported_from, callback) {
+Resolver.prototype.resolve = function (import_path, imported_from, callback) {
   var self = this
 
   if (typeof imported_from == 'function') {
@@ -51,20 +51,20 @@ Resolver.prototype.resolve = function(import_path, imported_from, callback) {
   var current_index = -1
   var current_source
 
-  whilst(function() {
+  whilst(function () {
     return !resolved_body && current_index < self.sources.length - 1
-  }, function(next) {
+  }, function (next) {
     current_index += 1
     current_source = self.sources[current_index]
 
-    current_source.resolve(import_path, imported_from, function(err, body, file_path) {
+    current_source.resolve(import_path, imported_from, function (err, body, file_path) {
       if (!err && body) {
         resolved_body = body
         resolved_path = file_path
       }
       next(err)
     })
-  }, function(err) {
+  }, function (err) {
     if (err) return callback(err)
 
     if (!resolved_body) {

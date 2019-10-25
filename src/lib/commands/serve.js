@@ -14,7 +14,7 @@ var command = {
     var watch = require('./watch')
 
     var config = Config.detect(options)
-    Serve.start(config, function() {
+    Serve.start(config, function () {
       watch.run(options, done)
     })
   }

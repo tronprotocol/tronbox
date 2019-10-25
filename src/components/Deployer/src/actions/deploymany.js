@@ -1,8 +1,8 @@
 var deploy = require('./deploy')
 
-module.exports = function(arr, deployer) {
-  return function() {
-    var deployments = arr.map(function(args) {
+module.exports = function (arr, deployer) {
+  return function () {
+    var deployments = arr.map(function (args) {
       var contract
 
       if (Array.isArray(args)) {

@@ -35,7 +35,7 @@ var command = {
         verify: true,
         log: options.log
       })
-    } catch(err) {
+    } catch (err) {
       logErrorAndExit(console, err.message)
     }
     process.env.CURRENT = 'test'
@@ -58,20 +58,20 @@ var command = {
       dir.files(config.test_directory, callback)
     }
 
-    getFiles(function(err, files) {
+    getFiles(function (err, files) {
       if (err) return done(err)
 
-      files = files.filter(function(file) {
+      files = files.filter(function (file) {
         return file.match(config.test_file_extension_regexp) != null
       })
 
-      temp.mkdir('test-', function(err, temporaryDirectory) {
+      temp.mkdir('test-', function (err, temporaryDirectory) {
         if (err) return done(err)
 
         function cleanup() {
           var args = arguments
           // Ensure directory cleanup.
-          temp.cleanup(function(err) {
+          temp.cleanup(function () {
             // Ignore cleanup errors.
             done.apply(null, args)
             if (ipcDisconnect) {
@@ -91,15 +91,15 @@ var command = {
           }), cleanup)
         }
 
-        var environmentCallback = function(err) {
+        var environmentCallback = function (err) {
           if (err) return done(err)
           // Copy all the built files over to a temporary directory, because we
           // don't want to save any tests artifacts. Only do this if the build directory
           // exists.
-          fs.stat(config.contracts_build_directory, function(err, stat) {
+          fs.stat(config.contracts_build_directory, function (err) {
             if (err) return run()
 
-            copy(config.contracts_build_directory, temporaryDirectory, function(err) {
+            copy(config.contracts_build_directory, temporaryDirectory, function (err) {
               if (err) return done(err)
 
               config.logger.log("Using network '" + config.network + "'." + OS.EOL)

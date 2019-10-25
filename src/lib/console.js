@@ -5,10 +5,8 @@ var contract = require('../components/Contract')
 var TronWrap = require('../components/TronWrap')
 var vm = require('vm')
 var expect = require('@truffle/expect')
-var _ = require('lodash')
 var TruffleError = require('@truffle/error')
 var fs = require('fs')
-var os = require('os')
 var path = require('path')
 var EventEmitter = require('events')
 var inherits = require('util').inherits
@@ -48,23 +46,23 @@ function Console(tasks, options) {
       verify: true,
       log: options.log
     })
-  } catch(err) {
+  } catch (err) {
     logErrorAndExit(console, err.message)
   }
 
   // this.tronWrap.setHttpProvider(options.provider);
 
   // Bubble the ReplManager's exit event
-  this.repl.on('exit', function() {
+  this.repl.on('exit', function () {
     self.emit('exit')
   })
 }
 
-Console.prototype.start = function(callback) {
+Console.prototype.start = function (callback) {
   var self = this
 
   if (!this.repl) {
-    this.repl = new Repl(this.options)
+    this.repl = new ReplManager(this.options)
   }
 
   // TODO: This should probalby be elsewhere.
@@ -72,7 +70,7 @@ Console.prototype.start = function(callback) {
   // passed down to commands.
   this.options.repl = this.repl
 
-  this.provision(function(err, abstractions) {
+  this.provision(function (err, abstractions) {
     if (err) {
       self.options.logger.log('Unexpected error: Cannot provision contracts while instantiating the console.')
       self.options.logger.log(err.stack || err.message || err)
@@ -91,10 +89,10 @@ Console.prototype.start = function(callback) {
   })
 }
 
-Console.prototype.provision = function(callback) {
+Console.prototype.provision = function (callback) {
   var self = this
 
-  fs.readdir(this.options.contracts_build_directory, function(err, files) {
+  fs.readdir(this.options.contracts_build_directory, function (err, files) {
     if (err) {
       // Error reading the build directory? Must mean it doesn't exist or we don't have access to it.
       // Couldn't provision the contracts if we wanted. It's possible we're hiding very rare FS
@@ -105,9 +103,9 @@ Console.prototype.provision = function(callback) {
     var promises = []
     files = files || []
 
-    files.forEach(function(file) {
-      promises.push(new Promise(function(accept, reject) {
-        fs.readFile(path.join(self.options.contracts_build_directory, file), 'utf8', function(err, body) {
+    files.forEach(function (file) {
+      promises.push(new Promise(function (accept, reject) {
+        fs.readFile(path.join(self.options.contracts_build_directory, file), 'utf8', function (err, body) {
           if (err) return reject(err)
           try {
             body = JSON.parse(body)
@@ -120,8 +118,8 @@ Console.prototype.provision = function(callback) {
       }))
     })
 
-    Promise.all(promises).then(function(json_blobs) {
-      var abstractions = json_blobs.map(function(json) {
+    Promise.all(promises).then(function (json_blobs) {
+      var abstractions = json_blobs.map(function (json) {
         var abstraction = contract(json)
         provision(abstraction, self.options)
         return abstraction
@@ -134,38 +132,38 @@ Console.prototype.provision = function(callback) {
   })
 }
 
-Console.prototype.resetContractsInConsoleContext = function(abstractions) {
+Console.prototype.resetContractsInConsoleContext = function (abstractions) {
   var self = this
 
   abstractions = abstractions || []
 
   var contextVars = {}
 
-  abstractions.forEach(function(abstraction) {
+  abstractions.forEach(function (abstraction) {
     contextVars[abstraction.contract_name] = abstraction
   })
 
   self.repl.setContextVars(contextVars)
 }
 
-Console.prototype.interpret = function(cmd, context, filename, callback) {
+Console.prototype.interpret = function (cmd, context, filename, callback) {
   var self = this
 
   if (this.command.getCommand(cmd.trim(), this.options.noAliases) != null) {
-    return self.command.run(cmd.trim(), this.options, function(err) {
+    return self.command.run(cmd.trim(), this.options, function (err) {
       if (err) {
         // Perform error handling ourselves.
         if (err instanceof TruffleError) {
-          console.log(err.message)
+          console.error(err.message)
         } else {
           // Bubble up all other unexpected errors.
-          console.log(err.stack || err.toString())
+          console.error(err.stack || err.toString())
         }
         return callback()
       }
 
       // Reprovision after each command as it may change contracts.
-      self.provision(function(err, abstractions) {
+      self.provision(function (err) {
         // Don't pass abstractions to the callback if they're there or else
         // they'll get printed in the repl.
         callback(err)
@@ -183,7 +181,9 @@ Console.prototype.interpret = function(cmd, context, filename, callback) {
   }
 
   // Resolve all promises. This will leave non-promises alone.
-  Promise.resolve(result).then(function(res) { callback(null, res) }).catch(callback)
+  Promise.resolve(result).then(function (res) {
+    callback(null, res)
+  }).catch(callback)
 }
 
 module.exports = Console

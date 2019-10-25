@@ -7,7 +7,6 @@ var command = {
     var Config = require('../../components/Config')
     var Console = require('../console')
     var Environment = require('../environment')
-    var TruffleError = require('@truffle/error')
 
     var TronWrap = require('../../components/TronWrap')
     const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
@@ -23,7 +22,7 @@ var command = {
         verify: true,
         log: options.log
       })
-    } catch(err) {
+    } catch (err) {
       logErrorAndExit(console, err.message)
     }
 
@@ -36,16 +35,16 @@ var command = {
       'serve'
     ]
 
-    var available_commands = Object.keys(commands).filter(function(name) {
+    var available_commands = Object.keys(commands).filter(function (name) {
       return excluded.indexOf(name) == -1
     })
 
     var console_commands = {}
-    available_commands.forEach(function(name) {
+    available_commands.forEach(function (name) {
       console_commands[name] = commands[name]
     })
 
-    Environment.detect(config, function(err) {
+    Environment.detect(config, function (err) {
       if (err) return done(err)
 
       var c = new Console(console_commands, config.with({

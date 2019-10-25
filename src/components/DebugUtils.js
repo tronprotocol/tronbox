@@ -5,25 +5,25 @@ var async = require('async')
 var debug = require('debug')('lib:debug')
 
 var commandReference = {
-  'o': 'step over',
-  'i': 'step into',
-  'u': 'step out',
-  'n': 'step next',
+  o: 'step over',
+  i: 'step into',
+  u: 'step out',
+  n: 'step next',
   ';': 'step instruction',
-  'p': 'print instruction',
-  'h': 'print this help',
-  'v': 'print variables and values',
+  p: 'print instruction',
+  h: 'print this help',
+  v: 'print variables and values',
   ':': 'evaluate expression - see `v`',
   '+': 'add watch expression (`+:<expr>`)',
   '-': 'remove watch expression (-:<expr>)',
   '?': 'list existing watch expressions',
-  'b': 'toggle breakpoint',
-  'c': 'continue until breakpoint',
-  'q': 'quit'
+  b: 'toggle breakpoint',
+  c: 'continue until breakpoint',
+  q: 'quit'
 }
 
 var DebugUtils = {
-  gatherArtifacts: function(config) {
+  gatherArtifacts: function (config) {
     return new Promise((accept, reject) => {
       // Gather all available contract artifacts
       dir.files(config.contracts_build_directory, (err, files) => {
@@ -38,10 +38,10 @@ var DebugUtils = {
         })
 
         async.each(contracts, (abstraction, finished) => {
-            finished()
+          finished()
         }, (err) => {
           if (err) return reject(err)
-          accept(contracts.map( (contract) => {
+          accept(contracts.map((contract) => {
             debug('contract.sourcePath: %o', contract.sourcePath)
 
             return {
@@ -60,7 +60,7 @@ var DebugUtils = {
     })
   },
 
-  formatStartMessage: function() {
+  formatStartMessage: function () {
     var lines = [
       '',
       'Gathering transaction data...',
@@ -70,14 +70,14 @@ var DebugUtils = {
     return lines.join(OS.EOL)
   },
 
-  formatCommandDescription: function(commandId) {
+  formatCommandDescription: function (commandId) {
     return '(' + commandId + ') ' + commandReference[commandId]
   },
 
-  formatAffectedInstances: function(instances) {
+  formatAffectedInstances: function (instances) {
     var hasAllSource = true
 
-    var lines = Object.keys(instances).map(function(address) {
+    var lines = Object.keys(instances).map(function (address) {
       var instance = instances[address]
 
       if (instance.contractName) {
@@ -100,7 +100,7 @@ var DebugUtils = {
     return lines.join(OS.EOL)
   },
 
-  formatHelp: function(lastCommand) {
+  formatHelp: function (lastCommand) {
     if (!lastCommand) {
       lastCommand = 'n'
     }
@@ -146,7 +146,7 @@ var DebugUtils = {
     return prefix + line.replace(/\t/g, tab)
   },
 
-  formatLinePointer: function(line, startCol, endCol, padding, tab) {
+  formatLinePointer: function (line, startCol, endCol, padding, tab) {
     if (!tab) {
       tab = '  '
     }
@@ -179,14 +179,7 @@ var DebugUtils = {
     return prefix + output
   },
 
-  formatRangeLines: function(source, range, contextBefore) {
-    var outputLines = []
-
-    // range is {
-    //   start: { line, column },
-    //   end: { line, column}
-    // }
-    //
+  formatRangeLines: function (source, range, contextBefore) {
 
     if (contextBefore == undefined) {
       contextBefore = 2
@@ -233,8 +226,8 @@ var DebugUtils = {
   formatInstruction: function (traceIndex, instruction) {
     return (
       '(' + traceIndex + ') ' +
-        instruction.name + ' ' +
-        (instruction.pushData || '')
+      instruction.name + ' ' +
+      (instruction.pushData || '')
     )
   },
 

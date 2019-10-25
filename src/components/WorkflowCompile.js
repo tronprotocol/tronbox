@@ -1,11 +1,8 @@
-var async = require('async')
-var fs = require('fs')
 var mkdirp = require('mkdirp')
 var path = require('path')
 var Config = require('./Config')
 var compile = require('./Compile')
 var expect = require('@truffle/expect')
-var _ = require('lodash')
 var Resolver = require('./Resolver')
 var Artifactor = require('./Artifactor')
 var OS = require('os')
@@ -27,7 +24,7 @@ async function getCompilerVersion(options) {
     })
     const networkInfo = await tronWrap._getNetworkInfo()
     return Promise.resolve(networkInfo || {})
-  } catch(err) {
+  } catch (err) {
     return Promise.resolve({})
   }
 }
@@ -42,7 +39,7 @@ var Contracts = {
   // network_id: network id to link saved contract artifacts.
   // quiet: Boolean. Suppress output. Defaults to false.
   // strict: Boolean. Return compiler warnings as errors. Defaults to false.
-  compile: function(options, callback) {
+  compile: function (options, callback) {
     var self = this
 
     expect.options(options, [
@@ -69,7 +66,7 @@ var Contracts = {
       if (err) return callback(err)
 
       if (contracts != null && Object.keys(contracts).length > 0) {
-        self.write_contracts(contracts, config, function(err, abstractions) {
+        self.write_contracts(contracts, config, function (err, abstractions) {
           callback(err, abstractions, paths)
         })
       } else {
@@ -77,8 +74,8 @@ var Contracts = {
       }
     }
 
-    function start () {
-      if(config.all === true || config.compileAll === true) {
+    function start() {
+      if (config.all === true || config.compileAll === true) {
         compile.all(config, finished)
       } else {
         compile.necessary(config, finished)
@@ -90,13 +87,13 @@ var Contracts = {
         config.networkInfo = networkInfo
         start()
       })
-      .catch(err => start())
+      .catch(start)
   },
 
-  write_contracts: function(contracts, options, callback) {
+  write_contracts: function (contracts, options, callback) {
     var logger = options.logger || console
 
-    mkdirp(options.contracts_build_directory, function(err, result) {
+    mkdirp(options.contracts_build_directory, function (err) {
       if (err != null) {
         callback(err)
         return
@@ -110,7 +107,7 @@ var Contracts = {
         network_id: options.network_id
       }
 
-      options.artifactor.saveAll(contracts, extra_opts).then(function() {
+      options.artifactor.saveAll(contracts, extra_opts).then(function () {
         callback(null, contracts)
       }).catch(callback)
     })

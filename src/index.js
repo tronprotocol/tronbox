@@ -1,6 +1,5 @@
 require('source-map-support/register')
 
-var Config = require('./components/Config')
 var Command = require('./lib/command')
 var TaskError = require('./lib/errors/taskerror')
 var TruffleError = require('@truffle/error')
@@ -22,12 +21,6 @@ if (commands[0] === '--download-compiler' && commands[1]) {
 
 } else {
 
-  var command = new Command(require('./lib/commands'))
-
-  var options = {
-    logger: console
-  }
-
   command.run(process.argv.slice(2), options, function (err) {
     if (err) {
       if (err instanceof TaskError) {
@@ -39,15 +32,17 @@ if (commands[0] === '--download-compiler' && commands[1]) {
           .showHelp()
       } else {
         if (err instanceof TruffleError) {
-          console.log(err.message)
+          console.error(err.message)
         } else if (typeof err == 'number') {
           // If a number is returned, exit with that number.
+          // eslint-disable-next-line no-process-exit
           process.exit(err)
         } else {
           // Bubble up all other unexpected errors.
-          console.log(err.stack || err.toString())
+          console.error(err.stack || err.toString())
         }
       }
+      // eslint-disable-next-line no-process-exit
       process.exit(1)
     }
 

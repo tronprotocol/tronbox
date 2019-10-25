@@ -4,10 +4,10 @@ var serveStatic = require('serve-static')
 var path = require('path')
 
 var Serve = {
-  start: function(options, done) {
+  start: function (options, done) {
     var serve = serveStatic(options.build_directory)
 
-    var server = http.createServer(function(req, res) {
+    var server = http.createServer(function (req, res) {
       var done = finalhandler(req, res)
       serve(req, res, done)
     })

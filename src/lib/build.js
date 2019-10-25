@@ -1,21 +1,18 @@
-var async = require('async')
 var mkdirp = require('mkdirp')
 var del = require('del')
-var fs = require('fs')
 var Contracts = require('../components/WorkflowCompile')
 var BuildError = require('./errors/builderror')
 var child_process = require('child_process')
 var spawnargs = require('spawn-args')
 var _ = require('lodash')
 var expect = require('@truffle/expect')
-var contract = require('../components/Contract')
 
 function CommandBuilder(command) {
   this.command = command
 }
 
-CommandBuilder.prototype.build = function(options, callback) {
-  console.log('Running `' + this.command + '`...')
+CommandBuilder.prototype.build = function (options, callback) {
+  console.debug('Running `' + this.command + '`...')
 
   var args = spawnargs(this.command)
   var ps = args.shift()
@@ -30,15 +27,15 @@ CommandBuilder.prototype.build = function(options, callback) {
     })
   })
 
-  cmd.stdout.on('data', function(data) {
-    console.log(data.toString())
+  cmd.stdout.on('data', function (data) {
+    console.debug(data.toString())
   })
 
-  cmd.stderr.on('data', function(data) {
-    console.log('build error: ' + data)
+  cmd.stderr.on('data', function (data) {
+    console.debug('build error: ' + data)
   })
 
-  cmd.on('close', function(code) {
+  cmd.on('close', function (code) {
     var error = null
     if (code !== 0) {
       error = 'Command exited with code ' + code
@@ -48,22 +45,20 @@ CommandBuilder.prototype.build = function(options, callback) {
 }
 
 var Build = {
-  clean: function(options, callback) {
+  clean: function (options, callback) {
 
     var destination = options.build_directory
     var contracts_build_directory = options.contracts_build_directory
 
     // Clean first.
-    del([destination + '/*', '!' + contracts_build_directory]).then(function() {
+    del([destination + '/*', '!' + contracts_build_directory]).then(function () {
       mkdirp(destination, callback)
     })
   },
 
   // Note: key is a legacy parameter that will eventually be removed.
   // It's specific to the default builder and we should phase it out.
-  build: function(options, callback) {
-    var self = this
-
+  build: function (options, callback) {
     expect.options(options, [
       'build_directory',
       'working_directory',
@@ -71,13 +66,6 @@ var Build = {
       'networks'
     ])
 
-    var key = 'build'
-
-    if (options.dist) {
-      key = 'dist'
-    }
-
-    var logger = options.logger || console
     var builder = options.build
 
     // Duplicate build directory for legacy purposes
@@ -106,18 +94,19 @@ var Build = {
 
     // Use our own clean method unless the builder supplies one.
     var clean = this.clean
+    // eslint-disable-next-line no-prototype-builtins
     if (builder.hasOwnProperty('clean')) {
       clean = builder.clean
     }
 
-    clean(options, function(err) {
+    clean(options, function (err) {
       if (err) return callback(err)
 
       // If necessary. This prevents errors due to the .sol.js files not existing.
-      Contracts.compile(options, function(err) {
+      Contracts.compile(options, function (err) {
         if (err) return callback(err)
 
-        builder.build(options, function(err) {
+        builder.build(options, function (err) {
           if (!err) return callback()
 
           if (typeof err == 'string') {
@@ -128,13 +117,6 @@ var Build = {
         })
       })
     })
-  },
-
-  // Deprecated: Specific to default builder.
-  dist: function(config, callback) {
-    this.build(config.with({
-      key: 'dist'
-    }), callback)
   }
 }
 

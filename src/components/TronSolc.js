@@ -21,8 +21,8 @@ function getWrapper(options = {}) {
         }
       }
     }
-  } catch(e) {
-
+  } // eslint-disable-next-line no-empty
+  catch (e) {
   }
 
   let compilerVersion = '0.5.4'
@@ -44,9 +44,11 @@ function getWrapper(options = {}) {
 TronBox supports only the following versions:
 ${supportedVersions.join(' - ')}
 `)
+        // eslint-disable-next-line no-process-exit
         process.exit()
       }
-    } catch (e) {
+    } // eslint-disable-next-line no-empty
+    catch (e) {
     }
   }
 

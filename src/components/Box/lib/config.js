@@ -20,7 +20,7 @@ function setDefaults(config) {
 
 function read(path) {
   return fs.readFile(path)
-    .catch(function() {
+    .catch(function () {
       return '{}'
     })
     .then(JSON.parse)

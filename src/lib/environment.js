@@ -2,9 +2,6 @@ var TruffleError = require('@truffle/error')
 var expect = require('@truffle/expect')
 var Resolver = require('../components/Resolver')
 var Artifactor = require('../components/Artifactor')
-// var TestRPC = require("ganache-cli");
-var spawn = require('child_process').spawn
-var path = require('path')
 var TronWrap = require('../components/TronWrap')
 
 var Environment = {
@@ -57,7 +54,7 @@ var Environment = {
         return done()
       }
 
-      tronWrap._getAccounts(function(err, accounts) {
+      tronWrap._getAccounts(function (err, accounts) {
         if (err) return done(err)
         config.networks[config.network].from = accounts[0]
         config.networks[config.network].privateKey = tronWrap._privateKeyByAccount[accounts[0]]
@@ -77,8 +74,6 @@ var Environment = {
       'from'
     ])
 
-    var upstreamNetwork = config.network
-    var upstreamConfig = config.networks[upstreamNetwork]
     var forkedNetwork = config.network + '-fork'
 
     config.networks[forkedNetwork] = {
@@ -96,14 +91,12 @@ var Environment = {
   },
 
   develop: function (config, testrpcOptions, callback) {
-    var self = this
 
     expect.options(config, [
       'networks',
     ])
 
     var network = config.network || 'develop'
-    var url = `http://${testrpcOptions.host}:${testrpcOptions.port}/`
 
     config.networks[network] = {
       network_id: testrpcOptions.network_id,
