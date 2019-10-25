@@ -3,12 +3,12 @@ var command = {
   description: 'Run migrations to deploy contracts',
   builder: {
     reset: {
-      type: "boolean",
+      type: 'boolean',
       default: false
     },
-    "compile-all": {
-      describe: "recompile all contracts",
-      type: "boolean",
+    'compile-all': {
+      describe: 'recompile all contracts',
+      type: 'boolean',
       default: false
     },
     // "dry-run": {
@@ -17,30 +17,30 @@ var command = {
     //   default: false
     // },
     f: {
-      describe: "Specify a migration number to run from",
-      type: "number"
+      describe: 'Specify a migration number to run from',
+      type: 'number'
     }
   },
   run: function (options, done) {
     process.env.CURRENT = 'migrate'
-    var OS = require("os");
-    var Config = require("../../components/Config");
-    var Contracts = require("../../components/WorkflowCompile");
-    var Resolver = require("../../components/Resolver");
-    var Artifactor = require("../../components/Artifactor");
-    var Migrate = require("../../components/Migrate");
-    var Environment = require("../environment");
-    var temp = require("temp");
-    var copy = require("../copy");
-    var TronWrap = require("../../components/TronWrap");
-    var {dlog} = require("../../components/TronWrap");
+    var OS = require('os')
+    var Config = require('../../components/Config')
+    var Contracts = require('../../components/WorkflowCompile')
+    var Resolver = require('../../components/Resolver')
+    var Artifactor = require('../../components/Artifactor')
+    var Migrate = require('../../components/Migrate')
+    var Environment = require('../environment')
+    var temp = require('temp')
+    var copy = require('../copy')
+    var TronWrap = require('../../components/TronWrap')
+    var {dlog} = require('../../components/TronWrap')
     const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
 
-    var config = Config.detect(options);
+    var config = Config.detect(options)
 
     // if "development" exists, default to using that
     if (!config.network && config.networks.development) {
-      config.network = "development";
+      config.network = 'development'
     }
     // init TronWeb
     try {
@@ -89,44 +89,44 @@ var command = {
 
     function runMigrations(callback) {
       if (options.f) {
-        Migrate.runFrom(options.f, config, done);
+        Migrate.runFrom(options.f, config, done)
       } else {
         Migrate.needsMigrating(config, function(err, needsMigrating) {
-          if (err) return callback(err);
+          if (err) return callback(err)
 
           if (needsMigrating) {
             dlog('Starting migration')
-            Migrate.run(config, done);
+            Migrate.run(config, done)
           } else {
-            config.logger.log("Network up to date.")
-            callback();
+            config.logger.log('Network up to date.')
+            callback()
           }
-        });
+        })
       }
-    };
+    }
 
     Contracts.compile(config, function(err) {
-      if (err) return done(err);
+      if (err) return done(err)
       Environment.detect(config, function(err) {
-        if (err) return done(err);
-        var dryRun = options.dryRun === true;
+        if (err) return done(err)
+        var dryRun = options.dryRun === true
 
-        var networkMessage = "Using network '" + config.network + "'";
+        var networkMessage = "Using network '" + config.network + "'"
 
         if (dryRun) {
-          networkMessage += " (dry run)";
+          networkMessage += ' (dry run)'
         }
 
-        config.logger.log(networkMessage + "." + OS.EOL);
+        config.logger.log(networkMessage + '.' + OS.EOL)
 
         // if (dryRun) {
         //   setupDryRunEnvironmentThenRunMigrations(done);
         // } else {
-          runMigrations(done);
+          runMigrations(done)
         // }
-      });
-    });
+      })
+    })
   }
 }
 
-module.exports = command;
+module.exports = command

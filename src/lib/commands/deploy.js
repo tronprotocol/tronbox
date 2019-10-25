@@ -1,4 +1,4 @@
-var migrate = require("./migrate");
+var migrate = require('./migrate')
 
 var command = {
   command: 'deploy',
@@ -7,4 +7,4 @@ var command = {
   run: migrate.run
 }
 
-module.exports = command;
+module.exports = command

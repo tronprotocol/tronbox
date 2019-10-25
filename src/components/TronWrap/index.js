@@ -1,37 +1,37 @@
-var _TronWeb = require("tronweb");
+var _TronWeb = require('tronweb')
 var chalk = require('chalk')
 var constants = require('./constants')
-var axios = require('axios');
+var axios = require('axios')
 var semver = require('semver')
 
-var instance;
+var instance
 
 function TronWrap() {
 
-  this._toNumber = toNumber;
-  this.EventList = [];
-  this.filterMatchFunction = filterMatchFunction;
-  instance = this;
-  return instance;
+  this._toNumber = toNumber
+  this.EventList = []
+  this.filterMatchFunction = filterMatchFunction
+  instance = this
+  return instance
 }
 
 function toNumber(value) {
-  if(!value) return null;
+  if(!value) return null
   if(typeof value === 'string') {
-    value = /^0x/.test(value) ? value : '0x' + value;
+    value = /^0x/.test(value) ? value : '0x' + value
   } else {
-    value = value.toNumber();
+    value = value.toNumber()
   }
-  return value;
+  return value
 }
 
 function filterMatchFunction(method, abi) {
-  let methodObj = abi.filter((item) => item.name === method);
+  let methodObj = abi.filter((item) => item.name === method)
   if(!methodObj || methodObj.length === 0) {
-    return null;
+    return null
   }
-  methodObj = methodObj[0];
-  let parametersObj = methodObj.inputs.map((item) => item.type);
+  methodObj = methodObj[0]
+  let parametersObj = methodObj.inputs.map((item) => item.type)
   return {
     function: methodObj.name + '(' + parametersObj.join(',') + ')',
     parameter: parametersObj,
@@ -41,7 +41,7 @@ function filterMatchFunction(method, abi) {
 }
 
 function sleep(millis) {
-  return new Promise(resolve => setTimeout(resolve, millis));
+  return new Promise(resolve => setTimeout(resolve, millis))
 }
 
 function filterNetworkConfig(options) {
@@ -85,14 +85,14 @@ function init(options, extraOptions = {}) {
     options.solidityNode || options.fullHost,
     options.eventServer || options.fullHost,
     options.privateKey
-  );
+  )
 
   const tronWrap = TronWrap.prototype
   // tronWrap._compilerVersion = 3
 
-  tronWrap.networkConfig = filterNetworkConfig(options);
+  tronWrap.networkConfig = filterNetworkConfig(options)
   if(extraOptions.log) {
-    tronWrap._log = extraOptions.log;
+    tronWrap._log = extraOptions.log
   }
 
   tronWrap._getNetworkInfo = async function () {
@@ -113,7 +113,7 @@ function init(options, extraOptions = {}) {
   }
 
   tronWrap._getNetwork = function (callback) {
-    callback && callback(null, options.network_id);
+    callback && callback(null, options.network_id)
   }
 
   const defaultAddress = tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey)
@@ -151,28 +151,28 @@ function init(options, extraOptions = {}) {
               self._accounts.push(address)
             }
           }
-          self._accountsRequested = true;
-          return cb();
+          self._accountsRequested = true
+          return cb()
         })
         .catch(err => {
-          self._accountsRequested = true;
+          self._accountsRequested = true
           return cb()
         })
     })
   }
 
   tronWrap._getContract = async function (address, callback) {
-    const contractInstance = await tronWrap.trx.getContract(address || "")
+    const contractInstance = await tronWrap.trx.getContract(address || '')
     if(contractInstance) {
-      callback && callback(null, contractInstance.contract_address);
+      callback && callback(null, contractInstance.contract_address)
     } else {
-      callback(new Error("no code"))
+      callback(new Error('no code'))
     }
   }
 
   tronWrap._deployContract = function (option, callback) {
 
-    const myContract = this.contract();
+    const myContract = this.contract()
     let originEnergyLimit = option.originEnergyLimit || this.networkConfig.originEnergyLimit
     if(originEnergyLimit < 0 || originEnergyLimit > constants.deployParameters.originEnergyLimit) {
       throw new Error('Origin Energy Limit must be > 0 and <= 10,000,000')
@@ -194,18 +194,18 @@ function init(options, extraOptions = {}) {
       name: option.contractName
     }, option.privateKey)
       .then(result => {
-        callback(null, myContract);
-        option.address = myContract.address;
+        callback(null, myContract)
+        option.address = myContract.address
       }).catch(function (reason) {
       callback(new Error(reason))
-    });
+    })
   }
 
   tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey, callback) {
 
     let signedTransaction
     try {
-      const address = tronWrap.address.fromPrivateKey(privateKey);
+      const address = tronWrap.address.fromPrivateKey(privateKey)
       const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
       signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
@@ -245,11 +245,11 @@ function init(options, extraOptions = {}) {
         throw new Error('Contract does not exist')
       }
 
-      myContract.address = contract.contract_address;
-      myContract.bytecode = contract.bytecode;
-      myContract.deployed = true;
+      myContract.address = contract.contract_address
+      myContract.bytecode = contract.bytecode
+      myContract.deployed = true
 
-      myContract.loadAbi(contract.abi.entrys);
+      myContract.loadAbi(contract.abi.entrys)
 
       dlog('Contract deployed')
       return Promise.resolve(myContract)
@@ -262,12 +262,12 @@ function init(options, extraOptions = {}) {
           '\nIf the transaction above is empty, most likely, your address had no bandwidth/energy to deploy the contract.'
       }
 
-      return Promise.reject(ex);
+      return Promise.reject(ex)
     }
   }
 
   tronWrap.triggerContract = function (option, callback) {
-    let myContract = this.contract(option.abi, option.address);
+    let myContract = this.contract(option.abi, option.address)
     var callSend = 'send' // constructor and fallback
     option.abi.forEach(function (val) {
       if(val.name === option.methodName) {
@@ -303,10 +303,10 @@ function init(options, extraOptions = {}) {
       } else {
         logErrorAndExit(console, reason)
       }
-    });
+    })
   }
 
-  return new TronWrap;
+  return new TronWrap
 }
 
 
@@ -328,7 +328,7 @@ const logErrorAndExit = (logger, err) => {
     }
     log(chalk.red(chalk.bold('ERROR:'), msg))
   } else {
-    log("Error encountered, bailing. Network state unknown.");
+    log('Error encountered, bailing. Network state unknown.')
   }
   process.exit()
 }
@@ -349,7 +349,7 @@ const dlog = function (...args) {
 }
 
 
-module.exports = init;
+module.exports = init
 
 module.exports.config = () => console.log('config')
 module.exports.constants = constants

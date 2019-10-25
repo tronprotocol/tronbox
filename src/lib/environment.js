@@ -1,85 +1,85 @@
-var TruffleError = require("@truffle/error");
-var expect = require("@truffle/expect");
-var Resolver = require("../components/Resolver");
-var Artifactor = require("../components/Artifactor");
+var TruffleError = require('@truffle/error')
+var expect = require('@truffle/expect')
+var Resolver = require('../components/Resolver')
+var Artifactor = require('../components/Artifactor')
 // var TestRPC = require("ganache-cli");
-var spawn = require("child_process").spawn;
-var path = require("path");
+var spawn = require('child_process').spawn
+var path = require('path')
 var TronWrap = require('../components/TronWrap')
 
 var Environment = {
   // It's important config is a Config object and not a vanilla object
   detect: function (config, callback) {
     expect.options(config, [
-      "networks"
-    ]);
+      'networks'
+    ])
 
     if (!config.resolver) {
-      config.resolver = new Resolver(config);
+      config.resolver = new Resolver(config)
     }
 
     if (!config.artifactor) {
       config.artifactor = new Artifactor(config.contracts_build_directory)
     }
 
-    if (!config.network && config.networks["development"]) {
-      config.network = "development";
+    if (!config.network && config.networks['development']) {
+      config.network = 'development'
     }
 
     if (!config.network) {
-      return callback(new Error("No network specified. Cannot determine current network."));
+      return callback(new Error('No network specified. Cannot determine current network.'))
     }
-    var network_config = config.networks[config.network];
+    var network_config = config.networks[config.network]
 
     if (!network_config) {
-      return callback(new TruffleError("Unknown network \"" + config.network + "\". See your tronbox configuration file for available networks."));
+      return callback(new TruffleError('Unknown network "' + config.network + '". See your tronbox configuration file for available networks.'))
     }
 
-    var network_id = config.networks[config.network].network_id;
+    var network_id = config.networks[config.network].network_id
 
     if (network_id == null) {
-      return callback(new Error("You must specify a network_id in your '" + config.network + "' configuration in order to use this network."));
+      return callback(new Error("You must specify a network_id in your '" + config.network + "' configuration in order to use this network."))
     }
 
-    let tronWrap = TronWrap();
+    let tronWrap = TronWrap()
 
     function detectNetworkId(done) {
-      if (network_id != "*") {
-        return done(null, network_id);
+      if (network_id != '*') {
+        return done(null, network_id)
       }
-      network_id = '*';
-      config.networks[config.network].network_id = network_id;
-      done(null, network_id);
+      network_id = '*'
+      config.networks[config.network].network_id = network_id
+      done(null, network_id)
     }
 
     function detectFromAddress(done) {
       if (config.from) {
-        return done();
+        return done()
       }
 
       tronWrap._getAccounts(function(err, accounts) {
-        if (err) return done(err);
-        config.networks[config.network].from = accounts[0];
-        config.networks[config.network].privateKey = tronWrap._privateKeyByAccount[accounts[0]];
-        done();
-      });
+        if (err) return done(err)
+        config.networks[config.network].from = accounts[0]
+        config.networks[config.network].privateKey = tronWrap._privateKeyByAccount[accounts[0]]
+        done()
+      })
     }
 
     detectNetworkId(function (err) {
-      if (err) return callback(err);
-      detectFromAddress(callback);
-    });
+      if (err) return callback(err)
+      detectFromAddress(callback)
+    })
   },
 
   // Ensure you call Environment.detect() first.
   fork: function (config, callback) {
     expect.options(config, [
-      "from"
-    ]);
+      'from'
+    ])
 
-    var upstreamNetwork = config.network;
-    var upstreamConfig = config.networks[upstreamNetwork];
-    var forkedNetwork = config.network + "-fork";
+    var upstreamNetwork = config.network
+    var upstreamConfig = config.networks[upstreamNetwork]
+    var forkedNetwork = config.network + '-fork'
 
     config.networks[forkedNetwork] = {
       network_id: config.network_id,
@@ -90,30 +90,30 @@ var Environment = {
       // }),
       from: config.from
     }
-    config.network = forkedNetwork;
+    config.network = forkedNetwork
 
-    callback();
+    callback()
   },
 
   develop: function (config, testrpcOptions, callback) {
-    var self = this;
+    var self = this
 
     expect.options(config, [
-      "networks",
-    ]);
+      'networks',
+    ])
 
-    var network = config.network || "develop";
-    var url = `http://${testrpcOptions.host}:${testrpcOptions.port}/`;
+    var network = config.network || 'develop'
+    var url = `http://${testrpcOptions.host}:${testrpcOptions.port}/`
 
     config.networks[network] = {
       network_id: testrpcOptions.network_id,
-      provider: ""
-    };
+      provider: ''
+    }
 
-    config.network = network;
+    config.network = network
 
-    Environment.detect(config, callback);
+    Environment.detect(config, callback)
   }
-};
+}
 
-module.exports = Environment;
+module.exports = Environment

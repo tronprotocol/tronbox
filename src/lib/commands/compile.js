@@ -3,18 +3,18 @@ var command = {
   description: 'Compile contract source files',
   builder: {
     all: {
-      type: "boolean",
+      type: 'boolean',
       default: false
     }
   },
   run: function (options, done) {
     process.env.CURRENT = 'compile'
-    var Config = require("../../components/Config");
-    var Contracts = require("../../components/WorkflowCompile");
+    var Config = require('../../components/Config')
+    var Contracts = require('../../components/WorkflowCompile')
 
-    var config = Config.detect(options);
-    Contracts.compile(config, done);
+    var config = Config.detect(options)
+    Contracts.compile(config, done)
   }
 }
 
-module.exports = command;
+module.exports = command

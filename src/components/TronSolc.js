@@ -1,8 +1,8 @@
-var wrapper = require('solc/wrapper');
-var {name} = require('../../package');
-var path = require('path');
-var fs = require('fs-extra');
-var homedir = require('homedir');
+var wrapper = require('solc/wrapper')
+var {name} = require('../../package')
+var path = require('path')
+var fs = require('fs-extra')
+var homedir = require('homedir')
 const {execSync} = require('child_process')
 
 var supportedVersions = [
@@ -26,7 +26,7 @@ function getWrapper(options = {}) {
   }
 
   let compilerVersion = '0.5.4'
-  let solcDir = path.join(homedir(), '.tronbox', 'solc');
+  let solcDir = path.join(homedir(), '.tronbox', 'solc')
 
   if (options.networks) {
     if (options.networks.useZeroFourCompiler) {
@@ -62,5 +62,5 @@ ${supportedVersions.join(' - ')}
   return wrapper(soljson)
 }
 
-module.exports.getWrapper = getWrapper;
-module.exports.supportedVersions = supportedVersions;
+module.exports.getWrapper = getWrapper
+module.exports.supportedVersions = supportedVersions

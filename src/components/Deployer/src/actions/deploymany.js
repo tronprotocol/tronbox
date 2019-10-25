@@ -1,20 +1,20 @@
-var deploy = require("./deploy");
+var deploy = require('./deploy')
 
 module.exports = function(arr, deployer) {
   return function() {
     var deployments = arr.map(function(args) {
-      var contract;
+      var contract
 
       if (Array.isArray(args)) {
-        contract = args.shift();
+        contract = args.shift()
       } else {
-        contract = args;
-        args = [];
+        contract = args
+        args = []
       }
 
-      return deploy(contract, args, deployer)();
-    });
+      return deploy(contract, args, deployer)()
+    })
 
-    return Promise.all(deployments);
-  };
-};
+    return Promise.all(deployments)
+  }
+}

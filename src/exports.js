@@ -1,14 +1,14 @@
-var pkg = require("../package.json");
+var pkg = require('../package.json')
 
 module.exports = {
-  build: require("./lib/build"),
-  create: require("./lib/create"),
-  config: require("./lib/config"),
-  console: require("./lib/repl"),
-  contracts: require("./components/WorkflowCompile"),
-  init: require("./lib/init"),
-  package: require("./lib/package"),
-  serve: require("./lib/serve"),
-  test: require("./lib/test"),
+  build: require('./lib/build'),
+  create: require('./lib/create'),
+  config: require('./lib/config'),
+  console: require('./lib/repl'),
+  contracts: require('./components/WorkflowCompile'),
+  init: require('./lib/init'),
+  package: require('./lib/package'),
+  serve: require('./lib/serve'),
+  test: require('./lib/test'),
   version: pkg.version
-};
+}

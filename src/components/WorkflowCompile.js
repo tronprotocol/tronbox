@@ -1,23 +1,23 @@
-var async = require("async");
-var fs = require("fs");
-var mkdirp = require("mkdirp");
-var path = require("path");
-var Config = require("./Config");
-var compile = require("./Compile");
-var expect = require("@truffle/expect");
-var _ = require("lodash");
-var Resolver = require("./Resolver");
-var Artifactor = require("./Artifactor");
-var OS = require("os");
-var TronWrap = require("./TronWrap");
+var async = require('async')
+var fs = require('fs')
+var mkdirp = require('mkdirp')
+var path = require('path')
+var Config = require('./Config')
+var compile = require('./Compile')
+var expect = require('@truffle/expect')
+var _ = require('lodash')
+var Resolver = require('./Resolver')
+var Artifactor = require('./Artifactor')
+var OS = require('os')
+var TronWrap = require('./TronWrap')
 
 async function getCompilerVersion(options) {
 
-  var config = Config.detect(options);
+  var config = Config.detect(options)
 
   // if "development" exists, default to using that
   if (!config.network && config.networks.development) {
-    config.network = "development";
+    config.network = 'development'
   }
   let tronWrap
   try {
@@ -43,45 +43,45 @@ var Contracts = {
   // quiet: Boolean. Suppress output. Defaults to false.
   // strict: Boolean. Return compiler warnings as errors. Defaults to false.
   compile: function(options, callback) {
-    var self = this;
+    var self = this
 
     expect.options(options, [
-      "contracts_build_directory"
-    ]);
+      'contracts_build_directory'
+    ])
 
     expect.one(options, [
-      "contracts_directory",
-      "files"
-    ]);
+      'contracts_directory',
+      'files'
+    ])
 
     // Use a config object to ensure we get the default sources.
-    var config = Config.default().merge(options);
+    var config = Config.default().merge(options)
 
     if (!config.resolver) {
-      config.resolver = new Resolver(config);
+      config.resolver = new Resolver(config)
     }
 
     if (!config.artifactor) {
-      config.artifactor = new Artifactor(config.contracts_build_directory);
+      config.artifactor = new Artifactor(config.contracts_build_directory)
     }
 
     function finished(err, contracts, paths) {
-      if (err) return callback(err);
+      if (err) return callback(err)
 
       if (contracts != null && Object.keys(contracts).length > 0) {
         self.write_contracts(contracts, config, function(err, abstractions) {
-          callback(err, abstractions, paths);
-        });
+          callback(err, abstractions, paths)
+        })
       } else {
-        callback(null, [], paths);
+        callback(null, [], paths)
       }
-    };
+    }
 
     function start () {
       if(config.all === true || config.compileAll === true) {
-        compile.all(config, finished);
+        compile.all(config, finished)
       } else {
-        compile.necessary(config, finished);
+        compile.necessary(config, finished)
       }
     }
 
@@ -94,27 +94,27 @@ var Contracts = {
   },
 
   write_contracts: function(contracts, options, callback) {
-    var logger = options.logger || console;
+    var logger = options.logger || console
 
     mkdirp(options.contracts_build_directory, function(err, result) {
       if (err != null) {
-        callback(err);
-        return;
+        callback(err)
+        return
       }
 
       if (options.quiet != true && options.quietWrite != true) {
-        logger.log("Writing artifacts to ." + path.sep + path.relative(options.working_directory, options.contracts_build_directory) + OS.EOL);
+        logger.log('Writing artifacts to .' + path.sep + path.relative(options.working_directory, options.contracts_build_directory) + OS.EOL)
       }
 
       var extra_opts = {
         network_id: options.network_id
-      };
+      }
 
       options.artifactor.saveAll(contracts, extra_opts).then(function() {
-        callback(null, contracts);
-      }).catch(callback);
-    });
+        callback(null, contracts)
+      }).catch(callback)
+    })
   }
-};
+}
 
-module.exports = Contracts;
+module.exports = Contracts

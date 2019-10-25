@@ -1,6 +1,6 @@
-var path = require('path');
-var fs = require('fs-extra');
-var homedir = require('homedir');
+var path = require('path')
+var fs = require('fs-extra')
+var homedir = require('homedir')
 var req = require('superagent')
 
 async function downloader(compilerVersion) {
@@ -18,7 +18,9 @@ async function downloader(compilerVersion) {
   } else {
     console.log('Error. Wrong Solidity compiler version.')
   }
+  // eslint-disable-next-line no-process-exit
   process.exit()
 }
 
 module.exports = downloader
+

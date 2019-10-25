@@ -1,4 +1,4 @@
-const utils = require("./lib/utils")
+const utils = require('./lib/utils')
 
 class Box {
 
@@ -10,13 +10,13 @@ class Box {
       }
     }
 
-    options.logger.log("Downloading...")
+    options.logger.log('Downloading...')
     await utils.downloadBox(url, destination)
 
-    options.logger.log("Unpacking...")
+    options.logger.log('Unpacking...')
     let boxConfig = await utils.unpackBox(destination)
 
-    options.logger.log("Setting up...")
+    options.logger.log('Setting up...')
     await utils.setupBox(boxConfig, destination)
     return boxConfig
   }

@@ -6,21 +6,21 @@ var command = {
   builder: {},
   run: function (options, done) {
     process.env.CURRENT = 'version'
-    var version = require("../version");
+    var version = require('../version')
 
-    var bundle_version;
+    var bundle_version
 
     if (version.bundle) {
-      bundle_version = "v" + version.bundle;
+      bundle_version = 'v' + version.bundle
     } else {
-      bundle_version = "(unbundled)";
+      bundle_version = '(unbundled)'
     }
 
-    options.logger.log("Tronbox " + bundle_version);
-    options.logger.log("Solidity v" + supportedVersions[supportedVersions.length - 1] + " (tron-solc)");
+    options.logger.log('Tronbox ' + bundle_version)
+    options.logger.log('Solidity v' + supportedVersions[supportedVersions.length - 1] + ' (tron-solc)')
 
-    done();
+    done()
   }
 }
 
-module.exports = command;
+module.exports = command
