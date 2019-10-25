@@ -25,7 +25,6 @@ var command = {
       process.exit(1);
     }
 
-    // defer to `truffle unbox` command with "bare" box as arg
     var url = "https://github.com/tronbox-boxes/bare-box.git";
     options._ = [url];
 

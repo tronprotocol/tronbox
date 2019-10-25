@@ -62,7 +62,7 @@ function filterNetworkConfig(options) {
   }
 }
 
-function init(options, extraOptions) {
+function init(options, extraOptions = {}) {
 
   if(instance) {
     return instance

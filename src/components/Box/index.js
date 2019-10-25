@@ -1,52 +1,26 @@
-var utils = require("./lib/utils");
-var tmp = require("tmp");
-var path = require("path");
+const utils = require("./lib/utils")
 
-var Config = require("../Config");
+class Box {
 
-var Box = {
-  unbox: function(url, destination, options) {
-    options = options || {};
-    options.logger = options.logger || {log: function() {}}
+  static async unbox(url, destination, options) {
 
-    return Promise.resolve()
-      .then(function() {
-        options.logger.log("Downloading...");
-        return utils.downloadBox(url, destination)
-      })
-      .then(function() {
-        options.logger.log("Unpacking...");
-        return utils.unpackBox(destination);
-      })
-      .then(function(boxConfig) {
-        options.logger.log("Setting up...");
-        return utils.setupBox(boxConfig, destination)
-      })
-      .then(function(boxConfig) {
-        return boxConfig;
-      });
-  },
-
-  sandbox: function(name, callback) {
-    var self = this;
-    if (typeof name === "function") {
-      callback = name;
-      name = "default";
+    options = options || {}
+    options.logger = options.logger || {
+      log: function () {
+      }
     }
 
-    tmp.dir(function(err, dir, cleanupCallback) {
-      if (err) {
-        return callback(err);
-      }
+    options.logger.log("Downloading...")
+    await utils.downloadBox(url, destination)
 
-      self.unbox("https://github.com/trufflesuite/truffle-init-" + name, dir)
-        .then(function() {
-          var config = Config.load(path.join(dir, "tronbox.js"), {});
-          callback(null, config);
-        })
-        .catch(callback);
-    });
+    options.logger.log("Unpacking...")
+    let boxConfig = await utils.unpackBox(destination)
+
+    options.logger.log("Setting up...")
+    await utils.setupBox(boxConfig, destination)
+    return boxConfig
   }
-};
 
-module.exports = Box;
+}
+
+module.exports = Box
