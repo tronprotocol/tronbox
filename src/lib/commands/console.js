@@ -36,7 +36,7 @@ var command = {
     ]
 
     var available_commands = Object.keys(commands).filter(function (name) {
-      return excluded.indexOf(name) == -1
+      return excluded.indexOf(name) === -1
     })
 
     var console_commands = {}

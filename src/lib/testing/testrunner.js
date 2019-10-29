@@ -106,7 +106,7 @@ TestRunner.prototype.startTest = function (mocha, callback) {
 }
 
 TestRunner.prototype.endTest = function (mocha, callback) {
-  if (mocha.currentTest.state != 'failed') {
+  if (mocha.currentTest.state !== 'failed') {
     return callback()
   }
   callback()
@@ -129,7 +129,7 @@ TestRunner.prototype.rpc = function (method, arg, cb) {
     method: method,
     id: new Date().getTime()
   }
-  if (arguments.length == 3) {
+  if (arguments.length === 3) {
     req.params = arg
   } else {
     cb = arg

@@ -34,14 +34,14 @@ var Environment = {
 
     var network_id = config.networks[config.network].network_id
 
-    if (network_id == null) {
+    if (!network_id) {
       return callback(new Error("You must specify a network_id in your '" + config.network + "' configuration in order to use this network."))
     }
 
     let tronWrap = TronWrap()
 
     function detectNetworkId(done) {
-      if (network_id != '*') {
+      if (network_id !== '*') {
         return done(null, network_id)
       }
       network_id = '*'

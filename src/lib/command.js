@@ -17,7 +17,7 @@ function Command(commands) {
 Command.prototype.getCommand = function (str, noAliases) {
   var argv = this.args.parse(str)
 
-  if (argv._.length == 0) {
+  if (argv._.length === 0) {
     return null
   }
 
@@ -37,11 +37,11 @@ Command.prototype.getCommand = function (str, noAliases) {
     while (currentLength <= input.length) {
       // Gather all possible commands that match with the current length
       var possibleCommands = availableCommandNames.filter(function (possibleCommand) {
-        return possibleCommand.substring(0, currentLength) == input.substring(0, currentLength)
+        return possibleCommand.substring(0, currentLength) === input.substring(0, currentLength)
       })
 
       // Did we find only one command that matches? If so, use that one.
-      if (possibleCommands.length == 1) {
+      if (possibleCommands.length === 1) {
         chosenCommand = possibleCommands[0]
         break
       }
@@ -50,7 +50,7 @@ Command.prototype.getCommand = function (str, noAliases) {
     }
   }
 
-  if (chosenCommand == null) {
+  if (!chosenCommand) {
     return null
   }
 
@@ -64,14 +64,14 @@ Command.prototype.getCommand = function (str, noAliases) {
 }
 
 Command.prototype.run = function (command, options, callback) {
-  if (typeof options == 'function') {
+  if (typeof options === 'function') {
     callback = options
     options = {}
   }
 
   var result = this.getCommand(command, typeof options.noAliases === 'boolean' ? options.noAliases : true)
 
-  if (result == null) {
+  if (!result) {
     return callback(new TaskError('Cannot find command: ' + command))
   }
 

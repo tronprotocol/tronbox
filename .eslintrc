@@ -10,7 +10,7 @@
         "quotes": [ 2, "single", "avoid-escape" ],
         "strict": [2, "never"],
         "no-unused-vars": [ 2, {"vars": "all", "args": "none"} ],
-//        "eqeqeq": [ 2, "smart" ],
+        "eqeqeq": [ 2, "smart" ],
         "key-spacing": [ 2, { "beforeColon": false, "afterColon": true } ],
         "node/exports-style": ["error", "module.exports"],
         "node/prefer-global/buffer": ["error", "always"],

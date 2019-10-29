@@ -24,10 +24,10 @@ var contract = (function (module) {
 
   var Utils = {
     is_object: function (val) {
-      return typeof val == 'object' && !Array.isArray(val)
+      return typeof val === 'object' && !Array.isArray(val)
     },
     is_big_number: function (val) {
-      if (typeof val != 'object') return false
+      if (typeof val !=='object') return false
 
       // Instanceof won't work because we have multiple versions of Web3.
       try {
@@ -41,7 +41,7 @@ var contract = (function (module) {
       return logs.map(function (log) {
         var logABI = C.events[log.topics[0]]
 
-        if (logABI == null) {
+        if (!logABI) {
           return null
         }
 
@@ -171,7 +171,7 @@ var contract = (function (module) {
                 // Reject on transaction failures, accept otherwise
                 // Handles "0x00" or hex 0
                 if (receipt != null) {
-                  if (parseInt(receipt.status, 16) == 0) {
+                  if (parseInt(receipt.status, 16) === 0) {
                     var statusError = new StatusError(tx_params, tx, receipt)
                     return reject(statusError)
                   } else {
@@ -268,7 +268,7 @@ var contract = (function (module) {
   function Contract(contract) {
     var constructor = this.constructor
     this.abi = constructor.abi
-    if (typeof contract == 'string') {
+    if (typeof contract === 'string') {
       this.address = contract
     } else {
       this.allEvents = contract.allEvents
@@ -315,7 +315,7 @@ var contract = (function (module) {
     new: function () {
       var self = this
 
-      if (this.currentProvider == null) {
+      if (!this.currentProvider) {
         throw new Error(this.contractName + ' error: Please call setProvider() first before calling new().')
       }
 
@@ -339,7 +339,7 @@ var contract = (function (module) {
             return true
           }
 
-          return name != arr[index + 1]
+          return name !== arr[index + 1]
         }).join(', ')
 
         throw new Error(self.contractName + ' contains unresolved libraries. You must deploy and link the following libraries before you can deploy a new version of ' + self._json.contractName + ': ' + unlinked_libraries)
@@ -366,7 +366,7 @@ var contract = (function (module) {
         }
         tx_params = Utils.merge(self.class_defaults, tx_params)
 
-        if (tx_params.data == null) {
+        if (!tx_params.data) {
           tx_params.data = self.binary
         }
 
@@ -478,11 +478,11 @@ var contract = (function (module) {
     },
 
     defaults: function (class_defaults) {
-      if (this.class_defaults == null) {
+      if (!this.class_defaults) {
         this.class_defaults = {}
       }
 
-      if (class_defaults == null) {
+      if (!class_defaults) {
         class_defaults = {}
       }
 
@@ -500,11 +500,11 @@ var contract = (function (module) {
     },
 
     isDeployed: function () {
-      if (this.network_id == null) {
+      if (!this.network_id) {
         return false
       }
 
-      if (this._json.networks[this.network_id] == null) {
+      if (!this._json.networks[this.network_id]) {
         return false
       }
 
@@ -524,10 +524,10 @@ var contract = (function (module) {
     link: function (name, address) {
       var self = this
 
-      if (typeof name == 'function') {
+      if (typeof name === 'function') {
         var contract = name
 
-        if (contract.isDeployed() == false) {
+        if (!contract.isDeployed()) {
           throw new Error('Cannot link contract without an address.')
         }
 
@@ -541,7 +541,7 @@ var contract = (function (module) {
         return
       }
 
-      if (typeof name == 'object') {
+      if (typeof name === 'object') {
         var obj = name
         Object.keys(obj).forEach(function (name) {
           var a = obj[name]
@@ -550,7 +550,7 @@ var contract = (function (module) {
         return
       }
 
-      if (this._json.networks[this.network_id] == null) {
+      if (!this._json.networks[this.network_id]) {
         this._json.networks[this.network_id] = {
           events: {},
           links: {}
@@ -578,7 +578,7 @@ var contract = (function (module) {
       var network_id
 
       // If we have a network id passed
-      if (typeof json != 'object') {
+      if (typeof json !== 'object') {
         network_id = json
         json = self._json
       }
@@ -601,7 +601,7 @@ var contract = (function (module) {
 
       // Copy over custom key/values to the contract class
       Object.keys(json).forEach(function (key) {
-        if (key.indexOf('x-') != 0) return
+        if (key.indexOf('x-') !== 0) return
         temp[key] = json[key]
       })
 
@@ -671,23 +671,23 @@ var contract = (function (module) {
     network: function () {
       var network_id = this.network_id
 
-      if (network_id == null) {
+      if (!network_id) {
         throw new Error(this.contractName + ' has no network id set, cannot lookup artifact data. Either set the network manually using ' + this.contractName + '.setNetwork(), run ' + this.contractName + '.detectNetwork(), or use new(), at() or deployed() as a thenable which will detect the network automatically.')
       }
 
       // TODO: this might be bad; setting a value on a get.
-      if (this._json.networks[network_id] == null) {
+      if (!this._json.networks[network_id]) {
         throw new Error(this.contractName + ' has no network configuration for its current network id (' + network_id + ').')
       }
 
       var returnVal = this._json.networks[network_id]
 
       // Normalize output
-      if (returnVal.links == null) {
+      if (!returnVal.links) {
         returnVal.links = {}
       }
 
-      if (returnVal.events == null) {
+      if (!returnVal.events) {
         returnVal.events = {}
       }
 
@@ -700,25 +700,25 @@ var contract = (function (module) {
       get: function () {
         var address = this.network.address
 
-        if (address == null) {
+        if (!address) {
           throw new Error('Cannot find deployed address: ' + this.contractName + ' not deployed or address not set.')
         }
 
         return address
       },
       set: function (val) {
-        if (val == null) {
+        if (!val) {
           throw new Error('Cannot set deployed address; malformed value: ' + val)
         }
 
         var network_id = this.network_id
 
-        if (network_id == null) {
+        if (!network_id) {
           throw new Error(this.contractName + ' has no network id set, cannot lookup artifact data. Either set the network manually using ' + this.contractName + '.setNetwork(), run ' + this.contractName + '.detectNetwork(), or use new(), at() or deployed() as a thenable which will detect the network automatically.')
         }
 
         // Create a network if we don't have one.
-        if (this._json.networks[network_id] == null) {
+        if (!this._json.networks[network_id]) {
           this._json.networks[network_id] = {
             events: {},
             links: {}
@@ -748,7 +748,7 @@ var contract = (function (module) {
         throw new Error(this.contractName + ' has no network id set, cannot lookup artifact data. Either set the network manually using ' + this.contractName + '.setNetwork(), run ' + this.contractName + '.detectNetwork(), or use new(), at() or deployed() as a thenable which will detect the network automatically.')
       }
 
-      if (this._json.networks[this.network_id] == null) {
+      if (!this._json.networks[this.network_id]) {
         return {}
       }
 
@@ -785,7 +785,7 @@ var contract = (function (module) {
       get: function () {
         var code = this._json.deployedBytecode
 
-        if (code.indexOf('0x') != 0) {
+        if (code.indexOf('0x') !== 0) {
           code = '0x' + code
         }
 
@@ -794,7 +794,7 @@ var contract = (function (module) {
       set: function (val) {
         var code = val
 
-        if (val.indexOf('0x') != 0) {
+        if (val.indexOf('0x') !== 0) {
           code = '0x' + code
         }
 

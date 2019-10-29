@@ -13,7 +13,7 @@ Artifactor.prototype.save = function (object) {
   return new Promise(function (accept, reject) {
     object = Schema.normalize(object)
 
-    if (object.contractName == null) {
+    if (!object.contractName) {
       return reject(new Error('You must specify a contract name.'))
     }
 

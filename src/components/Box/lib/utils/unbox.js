@@ -49,7 +49,7 @@ function verifyURL(url) {
         ))
       } else if (r.statusCode === 404) {
         return reject(new Error('tronbox Box at URL ' + url + " doesn't exist. If you believe this is an error, please contact tronbox support."))
-      } else if (r.statusCode != 200) {
+      } else if (r.statusCode !== 200) {
         return reject(new Error('Error connecting to github.com. Please check your internet connection and try again.'))
       }
       accept()

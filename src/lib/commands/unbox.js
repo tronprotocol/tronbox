@@ -8,16 +8,16 @@ function normalizeURL(url) {
   url = url || 'https://github.com/tronbox-boxes/bare-box'
 
   // full URL already
-  if (url.indexOf('://') != -1 || url.indexOf('git@') != -1) {
+  if (url.indexOf('://') !== -1 || url.indexOf('git@') !== -1) {
     return url
   }
 
-  if (url.split('/').length == 2) { // `org/repo`
+  if (url.split('/').length === 2) { // `org/repo`
     return 'https://github.com/' + url
   }
 
-  if (url.indexOf('/') == -1) { // repo name only
-    if (url.indexOf('-box') == -1) {
+  if (url.indexOf('/') === -1) { // repo name only
+    if (url.indexOf('-box') === -1) {
       url = url + '-box'
     }
     return 'https://github.com/tronbox-boxes/' + url

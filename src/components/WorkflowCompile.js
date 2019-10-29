@@ -99,7 +99,7 @@ var Contracts = {
         return
       }
 
-      if (options.quiet != true && options.quietWrite != true) {
+      if (!options.quiet && !options.quietWrite) {
         logger.log('Writing artifacts to .' + path.sep + path.relative(options.working_directory, options.contracts_build_directory) + OS.EOL)
       }
 

@@ -33,7 +33,7 @@ if (commands[0] === '--download-compiler' && commands[1]) {
       } else {
         if (err instanceof TruffleError) {
           console.error(err.message)
-        } else if (typeof err == 'number') {
+        } else if (typeof err === 'number') {
           // If a number is returned, exit with that number.
           // eslint-disable-next-line no-process-exit
           process.exit(err)

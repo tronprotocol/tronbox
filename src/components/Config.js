@@ -115,7 +115,7 @@ function Config(truffle_directory, working_directory, network) {
       get: function () {
         var network = self.network
 
-        if (network == null) {
+        if (!network) {
           throw new Error('Network not set. Cannot determine network to use.')
         }
 
@@ -352,7 +352,7 @@ Config.detect = function (options, filename) {
 
   var file = findUp.sync(search, {cwd: options.working_directory || options.workingDirectory})
 
-  if (file == null) {
+  if (!file) {
     throw new TruffleError('Could not find suitable configuration file.')
   }
 

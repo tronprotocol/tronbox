@@ -20,12 +20,12 @@ var Config = require('../Config')
 var preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning
 
 var compile = function (sources, options, callback) {
-  if (typeof options == 'function') {
+  if (typeof options === 'function') {
     callback = options
     options = {}
   }
 
-  if (options.logger == null) {
+  if (!options.logger) {
     options.logger = console
   }
 
@@ -57,7 +57,7 @@ var compile = function (sources, options, callback) {
     var replacement = source.replace(/\\/g, '/')
 
     // Turn G:/.../ into /G/.../ for Windows
-    if (replacement.length >= 2 && replacement[1] == ':') {
+    if (replacement.length >= 2 && replacement[1] === ':') {
       replacement = '/' + replacement
       replacement = replacement.replace(':', '')
     }
@@ -94,7 +94,7 @@ var compile = function (sources, options, callback) {
   }
 
   // Nothing to compile? Bail.
-  if (Object.keys(sources).length == 0) {
+  if (!Object.keys(sources).length) {
     return callback(null, [], [])
   }
 
@@ -117,7 +117,7 @@ var compile = function (sources, options, callback) {
     })
 
     errors = errors.filter(function (error) {
-      return error.severity != 'warning'
+      return error.severity !== 'warning'
     })
 
     if (options.quiet !== true && warnings.length > 0) {
@@ -245,7 +245,7 @@ function orderABI(contract) {
   if (!contract_definition.children) return contract.abi
 
   contract_definition.children.forEach(function (child) {
-    if (child.name == 'FunctionDefinition') {
+    if (child.name === 'FunctionDefinition') {
       ordered_function_names.push(child.attributes.name)
     }
   })
@@ -307,7 +307,7 @@ compile.necessary = function (options, callback) {
   Profiler.updated(options, function (err, updated) {
     if (err) return callback(err)
 
-    if (updated.length == 0 && options.quiet != true) {
+    if (updated.length === 0 && options.quiet !== true) {
       return callback(null, [], {})
     }
 
@@ -336,7 +336,7 @@ compile.with_dependencies = function (options, callback) {
   }), function (err, result) {
     if (err) return callback(err)
 
-    if (options.quiet != true) {
+    if (!options.quiet) {
       Object.keys(result).sort().forEach(function (import_path) {
         var display_path = import_path
         if (path.isAbsolute(import_path)) {

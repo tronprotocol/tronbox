@@ -60,7 +60,7 @@ module.exports = {
           }
 
           build_files = build_files.filter(function (build_file) {
-            return path.extname(build_file) == '.json'
+            return path.extname(build_file) === '.json'
           })
 
           async.map(build_files, function (buildFile, finished) {
@@ -76,7 +76,7 @@ module.exports = {
                 var data = JSON.parse(jsonData[i])
 
                 // In case there are artifacts from other source locations.
-                if (sourceFilesArtifacts[data.sourcePath] == null) {
+                if (!sourceFilesArtifacts[data.sourcePath]) {
                   sourceFilesArtifacts[data.sourcePath] = []
                 }
 
@@ -106,7 +106,7 @@ module.exports = {
           }, Number.MAX_SAFE_INTEGER)
 
           // Empty array?
-          if (sourceFilesArtifactsUpdatedTimes[sourceFile] == Number.MAX_SAFE_INTEGER) {
+          if (sourceFilesArtifactsUpdatedTimes[sourceFile] === Number.MAX_SAFE_INTEGER) {
             sourceFilesArtifactsUpdatedTimes[sourceFile] = 0
           }
         })
@@ -135,7 +135,7 @@ module.exports = {
             var sourceFileStat = sourceFileStats[index]
 
             // Ignore updating artifacts if source file has been removed.
-            if (sourceFileStat == null) {
+            if (!sourceFileStat) {
               return
             }
 
@@ -244,7 +244,7 @@ module.exports = {
   },
 
   isExplicitlyRelative: function (import_path) {
-    return import_path.indexOf('.') == 0
+    return import_path.indexOf('.') === 0
   },
 
   dependency_graph: function (paths, resolver, callback) {

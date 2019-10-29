@@ -118,7 +118,7 @@ var Test = {
     }
 
     // Default to true if configuration isn't set anywhere.
-    if (mochaConfig.useColors == null) {
+    if (!mochaConfig.useColors) {
       mochaConfig.useColors = true
     }
 

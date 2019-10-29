@@ -15,7 +15,7 @@ TestSource.prototype.require = function () {
 TestSource.prototype.resolve = function (import_path, callback) {
   var self = this
 
-  if (import_path == 'truffle/DeployedAddresses.sol') {
+  if (import_path === 'truffle/DeployedAddresses.sol') {
     return find_contracts(this.config.contracts_directory, function (err, source_files) {
       // Ignore this error. Continue on.
 
@@ -78,7 +78,7 @@ TestSource.prototype.resolve = function (import_path, callback) {
     })
   }
 
-  if (import_path == 'truffle/Assert.sol') {
+  if (import_path === 'truffle/Assert.sol') {
     return fs.readFile(path.resolve(path.join(__dirname, 'Assert.sol')), {encoding: 'utf8'}, function (err, body) {
       callback(err, body, import_path)
     })

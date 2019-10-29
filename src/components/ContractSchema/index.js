@@ -50,7 +50,7 @@ var properties = {
       'bytecode', 'binary', 'unlinked_binary', 'evm.bytecode.object'
     ],
     transform: function (value) {
-      if (value && value.indexOf('0x') != 0) {
+      if (value && value.indexOf('0x') !==0) {
         value = '0x' + value
       }
       return value
@@ -61,7 +61,7 @@ var properties = {
       'deployedBytecode', 'runtimeBytecode', 'evm.deployedBytecode.object'
     ],
     transform: function (value) {
-      if (value && value.indexOf('0x') != 0) {
+      if (value && value.indexOf('0x') !==0) {
         value = '0x' + value
       }
       return value

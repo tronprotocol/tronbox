@@ -61,7 +61,7 @@ var command = {
         return
       }
 
-      if (needs_rebuild == true) {
+      if (needs_rebuild) {
         needs_rebuild = false
 
         if (config.build != null) {
@@ -77,7 +77,7 @@ var command = {
             working = false
           })
         }
-      } else if (needs_recompile == true) {
+      } else if (needs_recompile) {
         needs_recompile = false
         working = true
 

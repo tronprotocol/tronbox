@@ -210,7 +210,7 @@ var Migrate = {
       send: function (payload) {
         var result = provider.send(payload)
 
-        if (payload.method == 'eth_sendTransaction') {
+        if (payload.method === 'eth_sendTransaction') {
           printTransaction(result.result)
         }
 
@@ -220,7 +220,7 @@ var Migrate = {
         provider.sendAsync(payload, function (err, result) {
           if (err) return callback(err)
 
-          if (payload.method == 'eth_sendTransaction') {
+          if (payload.method === 'eth_sendTransaction') {
             printTransaction(result.result)
           }
 
@@ -266,7 +266,7 @@ var Migrate = {
         : migrations.call('lastCompletedMigration')
 
     }).then(function (completed_migration) {
-      var value = typeof completed_migration == 'object' ? completed_migration : '0'
+      var value = typeof completed_migration === 'object' ? completed_migration : '0'
       callback(null, tronWrap._toNumber(value))
     }).catch(() => {
       // first migration:
@@ -277,7 +277,7 @@ var Migrate = {
   needsMigrating: function (options, callback) {
     var self = this
 
-    if (options.reset == true) {
+    if (options.reset) {
       return callback(null, true)
     }
 

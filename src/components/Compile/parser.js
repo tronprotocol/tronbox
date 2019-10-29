@@ -84,7 +84,7 @@ module.exports = {
     //   return solidity_error.severity == 'warning'
     // }) : []
     errors = output.errors ? output.errors.filter(function (solidity_error) {
-      return solidity_error.severity != 'warning'
+      return solidity_error.severity !== 'warning'
     }) : []
 
     if (errors.length > 0) {

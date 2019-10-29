@@ -72,17 +72,17 @@ var Build = {
     options.destination_directory = options.build_directory
 
     // No builder specified. Ignore the build then.
-    if (typeof builder == 'undefined') {
-      if (options.quiet != true) {
+    if (typeof builder === 'undefined') {
+      if (!options.quiet) {
         return callback(new BuildError("No build configuration specified. Can't build."))
       }
       return callback()
     }
 
-    if (typeof builder == 'string') {
+    if (typeof builder === 'string') {
       builder = new CommandBuilder(builder)
     } else if (typeof builder !== 'function') {
-      if (builder.build == null) {
+      if (!builder.build) {
         return callback(new BuildError('Build configuration can no longer be specified as an object. Please see our documentation for an updated list of supported build configurations.'))
       }
     } else {
@@ -109,7 +109,7 @@ var Build = {
         builder.build(options, function (err) {
           if (!err) return callback()
 
-          if (typeof err == 'string') {
+          if (typeof err === 'string') {
             err = new BuildError(err)
           }
 

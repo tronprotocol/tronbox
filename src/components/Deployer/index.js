@@ -77,7 +77,7 @@ Deployer.prototype.then = function (fn) {
 
 Deployer.prototype.queueOrExec = function (fn) {
 
-  if (this.chain.started == true) {
+  if (this.chain.started) {
     return new Promise(function (accept) {
       accept()
     }).then(fn)
