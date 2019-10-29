@@ -1,10 +1,10 @@
-var TruffleError = require('@truffle/error')
-var expect = require('@truffle/expect')
-var Resolver = require('../components/Resolver')
-var Artifactor = require('../components/Artifactor')
-var TronWrap = require('../components/TronWrap')
+const TruffleError = require('@truffle/error')
+const expect = require('@truffle/expect')
+const Resolver = require('../components/Resolver')
+const Artifactor = require('../components/Artifactor')
+const TronWrap = require('../components/TronWrap')
 
-var Environment = {
+const Environment = {
   // It's important config is a Config object and not a vanilla object
   detect: function (config, callback) {
     expect.options(config, [
@@ -26,19 +26,19 @@ var Environment = {
     if (!config.network) {
       return callback(new Error('No network specified. Cannot determine current network.'))
     }
-    var network_config = config.networks[config.network]
+    const network_config = config.networks[config.network]
 
     if (!network_config) {
       return callback(new TruffleError('Unknown network "' + config.network + '". See your tronbox configuration file for available networks.'))
     }
 
-    var network_id = config.networks[config.network].network_id
+    let network_id = config.networks[config.network].network_id
 
     if (!network_id) {
       return callback(new Error("You must specify a network_id in your '" + config.network + "' configuration in order to use this network."))
     }
 
-    let tronWrap = TronWrap()
+    const tronWrap = TronWrap()
 
     function detectNetworkId(done) {
       if (network_id !== '*') {
@@ -74,7 +74,7 @@ var Environment = {
       'from'
     ])
 
-    var forkedNetwork = config.network + '-fork'
+    const forkedNetwork = config.network + '-fork'
 
     config.networks[forkedNetwork] = {
       network_id: config.network_id,
@@ -96,7 +96,7 @@ var Environment = {
       'networks',
     ])
 
-    var network = config.network || 'develop'
+    const network = config.network || 'develop'
 
     config.networks[network] = {
       network_id: testrpcOptions.network_id,

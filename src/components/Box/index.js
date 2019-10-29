@@ -14,7 +14,7 @@ class Box {
     await utils.downloadBox(url, destination)
 
     options.logger.log('Unpacking...')
-    let boxConfig = await utils.unpackBox(destination)
+    const boxConfig = await utils.unpackBox(destination)
 
     options.logger.log('Setting up...')
     await utils.setupBox(boxConfig, destination)

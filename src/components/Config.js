@@ -1,18 +1,18 @@
-var _ = require('lodash')
-var path = require('path')
-var {constants} = require('./TronWrap')
-var Provider = require('./Provider')
-var TruffleError = require('@truffle/error')
-var Module = require('module')
-var findUp = require('find-up')
-var originalrequire = require('original-require')
+const _ = require('lodash')
+const path = require('path')
+const {constants} = require('./TronWrap')
+const Provider = require('./Provider')
+const TruffleError = require('@truffle/error')
+const Module = require('module')
+const findUp = require('find-up')
+const originalrequire = require('original-require')
 
-var DEFAULT_CONFIG_FILENAME = 'tronbox.js'
-var BACKUP_CONFIG_FILENAME = 'tronbox-config.js' // For Windows + Command Prompt
+const DEFAULT_CONFIG_FILENAME = 'tronbox.js'
+const BACKUP_CONFIG_FILENAME = 'tronbox-config.js' // For Windows + Command Prompt
 
 function Config(truffle_directory, working_directory, network) {
-  var self = this
-  var default_tx_values = constants.deployParameters
+  const self = this
+  const default_tx_values = constants.deployParameters
   this._values = {
     truffle_directory: truffle_directory || path.resolve(path.join(__dirname, '../')),
     working_directory: working_directory || process.cwd(),
@@ -53,7 +53,7 @@ function Config(truffle_directory, working_directory, network) {
     }
   }
 
-  var props = {
+  const props = {
     // These are already set.
     truffle_directory: function () {
     },
@@ -113,7 +113,7 @@ function Config(truffle_directory, working_directory, network) {
     },
     network_config: {
       get: function () {
-        var network = self.network
+        const network = self.network
 
         if (!network) {
           throw new Error('Network not set. Cannot determine network to use.')
@@ -263,7 +263,7 @@ function Config(truffle_directory, working_directory, network) {
           return null
         }
 
-        var options = self.network_config
+        const options = self.network_config
         options.verboseRpc = self.verboseRpc
         return Provider.create(options)
       },
@@ -305,7 +305,7 @@ Config.prototype.addProp = function (key, obj) {
 }
 
 Config.prototype.normalize = function (obj) {
-  var clone = {}
+  const clone = {}
   Object.keys(obj).forEach(function (key) {
     try {
       clone[key] = obj[key]
@@ -317,15 +317,15 @@ Config.prototype.normalize = function (obj) {
 }
 
 Config.prototype.with = function (obj) {
-  var normalized = this.normalize(obj)
-  var current = this.normalize(this)
+  const normalized = this.normalize(obj)
+  const current = this.normalize(this)
 
   return _.extend({}, current, normalized)
 }
 
 Config.prototype.merge = function (obj) {
-  var self = this
-  var clone = this.normalize(obj)
+  const self = this
+  const clone = this.normalize(obj)
 
   // Only set keys for values that don't throw.
   Object.keys(obj).forEach(function (key) {
@@ -344,13 +344,13 @@ Config.default = function () {
 }
 
 Config.detect = function (options, filename) {
-  var search;
+  let search;
 
   (!filename)
     ? search = [DEFAULT_CONFIG_FILENAME, BACKUP_CONFIG_FILENAME]
     : search = filename
 
-  var file = findUp.sync(search, {cwd: options.working_directory || options.workingDirectory})
+  const file = findUp.sync(search, {cwd: options.working_directory || options.workingDirectory})
 
   if (!file) {
     throw new TruffleError('Could not find suitable configuration file.')
@@ -360,14 +360,14 @@ Config.detect = function (options, filename) {
 }
 
 Config.load = function (file, options) {
-  var config = new Config()
+  const config = new Config()
 
   config.working_directory = path.dirname(path.resolve(file))
 
   // The require-nocache module used to do this for us, but
   // it doesn't bundle very well. So we've pulled it out ourselves.
   delete require.cache[Module._resolveFilename(file, module)]
-  var static_config = originalrequire(file)
+  const static_config = originalrequire(file)
 
   config.merge(static_config)
   config.merge(options)

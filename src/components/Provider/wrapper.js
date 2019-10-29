@@ -1,4 +1,4 @@
-var ProviderError = require('./error')
+const ProviderError = require('./error')
 
 module.exports = {
   /*
@@ -19,11 +19,11 @@ module.exports = {
     options.verbose = options.verbose || options.verboseRpc || false
 
     /* create wrapper functions for before/after send */
-    var preHook = this.preHook(options)
-    var postHook = this.postHook(options)
+    const preHook = this.preHook(options)
+    const postHook = this.postHook(options)
 
-    var originalSend = provider.send.bind(provider)
-    var originalSendAsync = provider.sendAsync.bind(provider)
+    const originalSend = provider.send.bind(provider)
+    const originalSendAsync = provider.sendAsync.bind(provider)
 
     /* overwrite methods */
     provider.send = this.send(originalSend, preHook, postHook)
@@ -95,8 +95,8 @@ module.exports = {
   // returns a function(payload) to replace `provider.send`
   send: function (originalSend, preHook, postHook) {
     return function (payload) {
-      var result = null
-      var error = null
+      let result = null
+      let error = null
 
       payload = preHook(payload)
 
@@ -106,7 +106,7 @@ module.exports = {
         error = e
       }
 
-      var modified = postHook(payload, error, result)
+      const modified = postHook(payload, error, result)
       payload = modified[0]
       error = modified[1]
       result = modified[2]
@@ -126,7 +126,7 @@ module.exports = {
       payload = preHook(payload)
 
       originalSendAsync(payload, function (error, result) {
-        var modified = postHook(payload, error, result)
+        const modified = postHook(payload, error, result)
         payload = modified[0]
         error = modified[1]
         result = modified[2]

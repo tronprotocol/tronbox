@@ -1,16 +1,16 @@
-var path = require('path')
-var fs = require('fs-extra')
-var homedir = require('homedir')
-var req = require('superagent')
+const path = require('path')
+const fs = require('fs-extra')
+const homedir = require('homedir')
+const req = require('superagent')
 
 async function downloader(compilerVersion) {
 
-  let dir = path.join(homedir(), '.tronbox', 'solc')
-  let soljsonPath = path.join(dir, `soljson_v${compilerVersion}.js`)
+  const dir = path.join(homedir(), '.tronbox', 'solc')
+  const soljsonPath = path.join(dir, `soljson_v${compilerVersion}.js`)
 
   await fs.ensureDir(path.join(dir))
 
-  let res = await req.get(`https://tron-us.github.io/tron-solc-bin/bin/soljson_v${compilerVersion}.js`)
+  const res = await req.get(`https://tron-us.github.io/tron-solc-bin/bin/soljson_v${compilerVersion}.js`)
     .responseType('blob')
 
   if (res && res.body) {

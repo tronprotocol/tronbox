@@ -1,9 +1,9 @@
-var inherits = require('util').inherits
-var TruffleError = require('@truffle/error')
+const inherits = require('util').inherits
+const TruffleError = require('@truffle/error')
 
 // HACK: string comparison seems to be only way to identify being unable to
 // connect to RPC node.
-var NOT_CONNECTED_MESSAGE = 'Invalid JSON RPC response: ""'
+const NOT_CONNECTED_MESSAGE = 'Invalid JSON RPC response: ""'
 
 function ProviderError(message) {
   if (message === NOT_CONNECTED_MESSAGE) {

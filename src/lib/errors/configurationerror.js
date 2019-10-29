@@ -1,5 +1,5 @@
-var TruffleError = require('@truffle/error')
-var inherits = require('util').inherits
+const TruffleError = require('@truffle/error')
+const inherits = require('util').inherits
 
 inherits(ConfigurationError, TruffleError)
 

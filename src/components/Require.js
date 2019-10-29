@@ -13,14 +13,14 @@ const Config = require('./Config')
 //   function is run.
 const Require = {
   file: options => {
-    let source
+
     const file = options.file
 
     expect.options(options, ['file'])
 
     options = Config.default().with(options)
 
-    source = fs.readFileSync(options.file, {encoding: 'utf8'})
+    const source = fs.readFileSync(options.file, {encoding: 'utf8'})
 
     // Modified from here: https://gist.github.com/anatoliychakkaev/1599423
     const m = new Module(file)
@@ -54,7 +54,7 @@ const Require = {
           // Try local first.
           // Here we have to require from the node_modules directory directly.
 
-          var moduleDir = path.dirname(file)
+          let moduleDir = path.dirname(file)
           // eslint-disable-next-line no-constant-condition
           while (true) {
             try {
@@ -64,7 +64,7 @@ const Require = {
             } // eslint-disable-next-line no-empty
             catch (e) {
             }
-            var oldModuleDir = moduleDir
+            const oldModuleDir = moduleDir
             moduleDir = path.join(moduleDir, '..')
             if (moduleDir === oldModuleDir) break
           }

@@ -1,14 +1,14 @@
-var {supportedVersions} = require('../../components/TronSolc')
+const {supportedVersions} = require('../../components/TronSolc')
 
-var command = {
+const command = {
   command: 'version',
   description: 'Show version number and exit',
   builder: {},
   run: function (options, done) {
     process.env.CURRENT = 'version'
-    var version = require('../version')
+    const version = require('../version')
 
-    var bundle_version
+    let bundle_version
 
     if (version.bundle) {
       bundle_version = 'v' + version.bundle

@@ -1,9 +1,9 @@
-var pkgVersion = '2.0.1'
-var Ajv = require('ajv')
+const pkgVersion = '2.0.1'
+const Ajv = require('ajv')
 
-var contractObjectSchema = require('./spec/contract-object.spec.json')
-var networkObjectSchema = require('./spec/network-object.spec.json')
-var abiSchema = require('./spec/abi.spec.json')
+const contractObjectSchema = require('./spec/contract-object.spec.json')
+const networkObjectSchema = require('./spec/network-object.spec.json')
+const abiSchema = require('./spec/abi.spec.json')
 
 
 /**
@@ -28,7 +28,7 @@ var abiSchema = require('./spec/abi.spec.json')
  * The optional `transform` parameter standardizes value regardless of source,
  * for purposes of ensuring data type and/or string schemas.
  */
-var properties = {
+const properties = {
   contractName: {
     sources: ['contractName', 'contract_name']
   },
@@ -78,7 +78,7 @@ var properties = {
   ast: {},
   legacyAST: {
     transform: function (value, obj) {
-      var schemaVersion = obj.schemaVersion || '0.0.0'
+      const schemaVersion = obj.schemaVersion || '0.0.0'
 
       // legacyAST introduced in v2.0.0
       if (schemaVersion[0] < 2) {
@@ -146,7 +146,7 @@ function getter(key, transform) {
  * of operations.
  */
 function chain() {
-  var getters = Array.prototype.slice.call(arguments)
+  const getters = Array.prototype.slice.call(arguments)
   return function (obj) {
     return getters.reduce(function (cur, get) {
       return get(cur)
@@ -158,12 +158,12 @@ function chain() {
 // Schema module
 //
 
-var TruffleContractSchema = {
+const TruffleContractSchema = {
   // Return a promise to validate a contract object
   // - Resolves as validated `contractObj`
   // - Rejects with list of errors from schema validator
   validate: function (contractObj) {
-    var ajv = new Ajv({useDefaults: true})
+    const ajv = new Ajv({useDefaults: true})
     ajv.addSchema(abiSchema)
     ajv.addSchema(networkObjectSchema)
     ajv.addSchema(contractObjectSchema)
@@ -178,24 +178,24 @@ var TruffleContractSchema = {
   // returns a contract object
   normalize: function (objDirty, options) {
     options = options || {}
-    var normalized = {}
+    const normalized = {}
 
     // iterate over each property
     Object.keys(properties).forEach(function (key) {
-      var property = properties[key]
-      var value  // normalized value || undefined
+      const property = properties[key]
+      let value  // normalized value || undefined
 
       // either used the defined sources or assume the key will only ever be
       // listed as its canonical name (itself)
-      var sources = property.sources || [key]
+      const sources = property.sources || [key]
 
       // iterate over sources until value is defined or end of list met
-      for (var i = 0; value === undefined && i < sources.length; i++) {
-        var source = sources[i]
+      for (let i = 0; value === undefined && i < sources.length; i++) {
+        let source = sources[i]
         // string refers to path to value in objDirty, split and chain
         // getters
         if (typeof source === 'string') {
-          var traversals = source.split('.')
+          const traversals = source.split('.')
             .map(function (k) {
               return getter(k)
             })

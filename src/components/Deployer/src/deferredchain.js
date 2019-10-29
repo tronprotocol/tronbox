@@ -1,5 +1,5 @@
 function DeferredChain() {
-  var self = this
+  const self = this
   this.chain = new Promise(function (accept, reject) {
     self._accept = accept
     self._reject = reject
@@ -13,9 +13,9 @@ function DeferredChain() {
 }
 
 DeferredChain.prototype.then = function (fn) {
-  var self = this
+  const self = this
   this.chain = this.chain.then(function () {
-    var args = Array.prototype.slice.call(arguments)
+    const args = Array.prototype.slice.call(arguments)
 
     return fn.apply(null, args)
   })
@@ -28,7 +28,7 @@ DeferredChain.prototype.then = function (fn) {
 
 DeferredChain.prototype.catch = function (fn) {
   this.chain = this.chain.catch(function () {
-    var args = Array.prototype.slice.call(arguments)
+    const args = Array.prototype.slice.call(arguments)
 
     return fn.apply(null, args)
   })

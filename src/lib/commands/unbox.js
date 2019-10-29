@@ -35,39 +35,39 @@ function normalizeURL(url) {
  * are aligned
  */
 function formatCommands(commands) {
-  var names = Object.keys(commands)
+  const names = Object.keys(commands)
 
-  var maxLength = Math.max.apply(
+  const maxLength = Math.max.apply(
     null, names.map(function (name) {
       return name.length
     })
   )
 
   return names.map(function (name) {
-    var spacing = Array(maxLength - name.length + 1).join(' ')
+    const spacing = Array(maxLength - name.length + 1).join(' ')
     return '  ' + name + ': ' + spacing + commands[name]
   })
 }
 
-var command = {
+const command = {
   command: 'unbox',
   description: 'Download a tronbox Box, a pre-built tronbox project',
   builder: {},
   run: function (options, done) {
-    var Config = require('../../components/Config')
-    var Box = require('../../components/Box')
-    var OS = require('os')
+    const Config = require('../../components/Config')
+    const Box = require('../../components/Box')
+    const OS = require('os')
 
-    var config = Config.default().with({
+    const config = Config.default().with({
       logger: console
     })
 
-    var url = normalizeURL(options._[0])
+    const url = normalizeURL(options._[0])
     Box.unbox(url, options.working_directory || config.working_directory, {logger: config.logger})
       .then(function (boxConfig) {
         config.logger.log('Unbox successful. Sweet!' + OS.EOL)
 
-        var commandMessages = formatCommands(boxConfig.commands)
+        const commandMessages = formatCommands(boxConfig.commands)
         if (commandMessages.length > 0) {
           config.logger.log('Commands:' + OS.EOL)
         }

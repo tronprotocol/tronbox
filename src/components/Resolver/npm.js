@@ -1,5 +1,5 @@
-var path = require('path')
-var fs = require('fs')
+const path = require('path')
+const fs = require('fs')
 
 function NPM(working_directory) {
   this.working_directory = working_directory
@@ -9,16 +9,16 @@ NPM.prototype.require = function (import_path, search_path) {
   if (import_path.indexOf('.') === 0 || import_path.indexOf('/') === 0) {
     return null
   }
-  var contract_name = path.basename(import_path, '.sol')
-  var regex = new RegExp(`(.*)/${contract_name}`)
+  const contract_name = path.basename(import_path, '.sol')
+  const regex = new RegExp(`(.*)/${contract_name}`)
   let package_name = ''
-  var matched = regex.exec(import_path)
+  const matched = regex.exec(import_path)
   if (matched) {
     package_name = matched[1]
   }
-  var expected_path = path.join((search_path || this.working_directory), 'node_modules', package_name, 'build', 'contracts', contract_name + '.json')
+  const expected_path = path.join((search_path || this.working_directory), 'node_modules', package_name, 'build', 'contracts', contract_name + '.json')
   try {
-    var result = fs.readFileSync(expected_path, 'utf8')
+    const result = fs.readFileSync(expected_path, 'utf8')
     return JSON.parse(result)
   } catch (e) {
     return null
@@ -28,12 +28,12 @@ NPM.prototype.require = function (import_path, search_path) {
 NPM.prototype.resolve = function (import_path, imported_from, callback) {
 
   // If nothing's found, body returns `undefined`
-  var body
-  var modulesDir = this.working_directory
+  let body
+  let modulesDir = this.working_directory
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    var expected_path = path.join(modulesDir, 'node_modules', import_path)
+    const expected_path = path.join(modulesDir, 'node_modules', import_path)
 
     try {
       body = fs.readFileSync(expected_path, {encoding: 'utf8'})
@@ -43,7 +43,7 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
     }
 
     // Recurse outwards until impossible
-    var oldModulesDir = modulesDir
+    const oldModulesDir = modulesDir
     modulesDir = path.join(modulesDir, '..')
     if (modulesDir === oldModulesDir) {
       break
@@ -58,7 +58,7 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
 // we're going to resolve it to some_module/contracts/AnotherContract.sol, ensuring
 // that when this path is evaluated this source is used again.
 NPM.prototype.resolve_dependency_path = function (import_path, dependency_path) {
-  var dirname = path.dirname(import_path)
+  const dirname = path.dirname(import_path)
   return path.join(dirname, dependency_path)
 }
 

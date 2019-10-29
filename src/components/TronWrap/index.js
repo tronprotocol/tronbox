@@ -1,9 +1,9 @@
-var _TronWeb = require('tronweb')
-var chalk = require('chalk')
-var constants = require('./constants')
-var axios = require('axios')
+const _TronWeb = require('tronweb')
+const chalk = require('chalk')
+const constants = require('./constants')
+const axios = require('axios')
 
-var instance
+let instance
 
 function TronWrap() {
 
@@ -30,7 +30,7 @@ function filterMatchFunction(method, abi) {
     return null
   }
   methodObj = methodObj[0]
-  let parametersObj = methodObj.inputs.map((item) => item.type)
+  const parametersObj = methodObj.inputs.map((item) => item.type)
   return {
     function: methodObj.name + '(' + parametersObj.join(',') + ')',
     parameter: parametersObj,
@@ -44,7 +44,7 @@ function sleep(millis) {
 }
 
 function filterNetworkConfig(options) {
-  let userFeePercentage =
+  const userFeePercentage =
     typeof options.userFeePercentage === 'number'
       ? options.userFeePercentage
       : typeof options.consume_user_resource_percent === 'number'
@@ -95,11 +95,11 @@ function init(options, extraOptions = {}) {
   }
 
   tronWrap._getNetworkInfo = async function () {
-    let info = {
+    const info = {
       parameters: {}, nodeinfo: {}
     }
     try {
-      let res = await Promise.all([
+      const res = await Promise.all([
         tronWrap.trx.getChainParameters(),
         tronWrap.trx.getNodeInfo()
       ])
@@ -143,8 +143,8 @@ function init(options, extraOptions = {}) {
           if (data.length > 0 && data[0].length === 64) {
             self._accounts = []
             self._privateKeyByAccount = {}
-            for (let account of data) {
-              let address = this.address.fromPrivateKey(account)
+            for (const account of data) {
+              const address = this.address.fromPrivateKey(account)
               self._privateKeyByAccount[address] = account
               self._accounts.push(address)
             }
@@ -171,12 +171,12 @@ function init(options, extraOptions = {}) {
   tronWrap._deployContract = function (option, callback) {
 
     const myContract = this.contract()
-    let originEnergyLimit = option.originEnergyLimit || this.networkConfig.originEnergyLimit
+    const originEnergyLimit = option.originEnergyLimit || this.networkConfig.originEnergyLimit
     if (originEnergyLimit < 0 || originEnergyLimit > constants.deployParameters.originEnergyLimit) {
       throw new Error('Origin Energy Limit must be > 0 and <= 10,000,000')
     }
 
-    let userFeePercentage =
+    const userFeePercentage =
       typeof options.userFeePercentage === 'number'
         ? options.userFeePercentage
         : this.networkConfig.userFeePercentage
@@ -255,7 +255,7 @@ function init(options, extraOptions = {}) {
     } catch (ex) {
       let e
       if (ex.toString().includes('does not exist')) {
-        let url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
+        const url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
 
         // eslint-disable-next-line no-ex-assign
         e = 'Contract ' + chalk.bold(options.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url) +
@@ -267,8 +267,8 @@ function init(options, extraOptions = {}) {
   }
 
   tronWrap.triggerContract = function (option, callback) {
-    let myContract = this.contract(option.abi, option.address)
-    var callSend = 'send' // constructor and fallback
+    const myContract = this.contract(option.abi, option.address)
+    let callSend = 'send' // constructor and fallback
     option.abi.forEach(function (val) {
       if (val.name === option.methodName) {
         callSend = /payable/.test(val.stateMutability) ? 'send' : 'call'
@@ -279,7 +279,7 @@ function init(options, extraOptions = {}) {
 
     dlog(option.methodName, option.args, options.methodArgs)
 
-    var privateKey
+    let privateKey
     if (callSend === 'send' && option.methodArgs.from) {
       privateKey = this._privateKeyByAccount[option.methodArgs.from]
     }

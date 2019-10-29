@@ -1,4 +1,4 @@
-var Linker = require('../linker')
+const Linker = require('../linker')
 
 module.exports = function (library, destinations, deployer) {
   return function () {

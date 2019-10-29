@@ -1,13 +1,13 @@
-var command = {
+const command = {
   command: 'build',
   description: 'Execute build pipeline (if configuration present)',
   builder: {},
   run: function (options, done) {
     process.env.CURRENT = 'build'
-    var Config = require('../../components/Config')
-    var Build = require('../build')
+    const Config = require('../../components/Config')
+    const Build = require('../build')
 
-    var config = Config.detect(options)
+    const config = Config.detect(options)
     Build.build(config, done)
   }
 }

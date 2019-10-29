@@ -1,14 +1,14 @@
-var command = {
+const command = {
   command: 'init',
   description: 'Initialize new and empty tronBox project',
   builder: {},
   run: function (options, done) {
     process.env.CURRENT = 'init'
-    var Config = require('../../components/Config')
-    var OS = require('os')
-    var UnboxCommand = require('./unbox')
+    const Config = require('../../components/Config')
+    const OS = require('os')
+    const UnboxCommand = require('./unbox')
 
-    var config = Config.default().with({
+    const config = Config.default().with({
       logger: console
     })
 
@@ -26,7 +26,7 @@ var command = {
       process.exit(1)
     }
 
-    var url = 'https://github.com/tronbox-boxes/bare-box.git'
+    const url = 'https://github.com/tronbox-boxes/bare-box.git'
     options._ = [url]
 
     UnboxCommand.run(options, done)

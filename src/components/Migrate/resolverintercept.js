@@ -16,7 +16,7 @@ ResolverIntercept.prototype.require = function (import_path) {
   }
 
   // Note, will error if nothing is found.
-  var resolved = this.resolver.require(import_path)
+  const resolved = this.resolver.require(import_path)
 
   this.cache[import_path] = resolved
 
@@ -29,7 +29,7 @@ ResolverIntercept.prototype.require = function (import_path) {
 }
 
 ResolverIntercept.prototype.contracts = function () {
-  var self = this
+  const self = this
   return Object.keys(this.cache).map(function (key) {
     return self.cache[key]
   })

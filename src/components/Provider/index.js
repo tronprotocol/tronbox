@@ -1,5 +1,5 @@
-var {TronWeb} = require('../TronWrap')
-var wrapper = require('./wrapper')
+const {TronWeb} = require('../TronWrap')
+const wrapper = require('./wrapper')
 
 module.exports = {
   wrap: function (provider, options) {
@@ -7,7 +7,7 @@ module.exports = {
   },
 
   create: function (options) {
-    var provider
+    let provider
 
     if (options.provider && typeof options.provider === 'function') {
       provider = options.provider()
@@ -18,7 +18,7 @@ module.exports = {
       const HttpProvider = TronWeb.providers.HttpProvider
 
       HttpProvider.prototype.send = function (payload) {
-        var request = this.prepareRequest(false)
+        const request = this.prepareRequest(false)
 
         try {
           request.send(JSON.stringify(payload))
@@ -26,7 +26,7 @@ module.exports = {
           throw new Error(`Invalid Connection (${this.host})`)
         }
 
-        var result = request.responseText
+        let result = request.responseText
 
         try {
           result = JSON.parse(result)
@@ -38,12 +38,12 @@ module.exports = {
       }
 
       HttpProvider.prototype.sendAsync = function (payload, callback) {
-        var request = this.prepareRequest(true)
+        const request = this.prepareRequest(true)
 
         request.onreadystatechange = function () {
           if (request.readyState === 4 && request.timeout !== 1) {
-            var result = request.responseText
-            var error = null
+            let result = request.responseText
+            let error = null
 
             try {
               result = JSON.parse(result)

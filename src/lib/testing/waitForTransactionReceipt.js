@@ -1,7 +1,7 @@
 // thanks Xavier Leprêtre
 // https://gist.github.com/xavierlepretre/88682e871f4ad07be4534ae560692ee6
 
-var waitForTransactionReceipt = (tronWeb) => (txHash = false, interval = 500) => {
+const waitForTransactionReceipt = (tronWeb) => (txHash = false, interval = 500) => {
   const transactionReceiptAsync = (resolve, reject) => {
     tronWeb.trx.getTransactionInfo(txHash, (error, receipt) => {
       if (error) {

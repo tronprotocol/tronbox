@@ -1,4 +1,4 @@
-var provision = function (abstraction, options) {
+const provision = function (abstraction, options) {
   if (options.provider) {
     abstraction.setProvider(options.provider)
   }
@@ -9,7 +9,7 @@ var provision = function (abstraction, options) {
 
   ['from', 'fee_limit', 'consume_user_resource_percent', 'privateKey', 'call_value'].forEach(function (key) {
     if (options[key]) {
-      var obj = {}
+      const obj = {}
       obj[key] = options[key]
       abstraction.defaults(obj)
     }

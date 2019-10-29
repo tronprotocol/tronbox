@@ -1,10 +1,10 @@
-var OS = require('os')
-var dir = require('node-dir')
-var path = require('path')
-var async = require('async')
-var debug = require('debug')('lib:debug')
+const OS = require('os')
+const dir = require('node-dir')
+const path = require('path')
+const async = require('async')
+const debug = require('debug')('lib:debug')
 
-var commandReference = {
+const commandReference = {
   o: 'step over',
   i: 'step into',
   u: 'step out',
@@ -22,14 +22,14 @@ var commandReference = {
   q: 'quit'
 }
 
-var DebugUtils = {
+const DebugUtils = {
   gatherArtifacts: function (config) {
     return new Promise((accept, reject) => {
       // Gather all available contract artifacts
       dir.files(config.contracts_build_directory, (err, files) => {
         if (err) return reject(err)
 
-        var contracts = files.filter((file_path) => {
+        const contracts = files.filter((file_path) => {
           return path.extname(file_path) === '.json'
         }).map((file_path) => {
           return path.basename(file_path, '.json')
@@ -61,7 +61,7 @@ var DebugUtils = {
   },
 
   formatStartMessage: function () {
-    var lines = [
+    const lines = [
       '',
       'Gathering transaction data...',
       ''
@@ -75,10 +75,10 @@ var DebugUtils = {
   },
 
   formatAffectedInstances: function (instances) {
-    var hasAllSource = true
+    let hasAllSource = true
 
-    var lines = Object.keys(instances).map(function (address) {
-      var instance = instances[address]
+    const lines = Object.keys(instances).map(function (address) {
+      const instance = instances[address]
 
       if (instance.contractName) {
         return ' ' + address + ' - ' + instance.contractName
@@ -105,12 +105,12 @@ var DebugUtils = {
       lastCommand = 'n'
     }
 
-    var prefix = [
+    const prefix = [
       'Commands:',
       '(enter) last command entered (' + commandReference[lastCommand] + ')'
     ]
 
-    var commandSections = [
+    const commandSections = [
       ['o', 'i', 'u', 'n'],
       [';', 'p', 'h', 'q'],
       ['b', 'c'],
@@ -123,11 +123,11 @@ var DebugUtils = {
         .join(', ')
     })
 
-    var suffix = [
+    const suffix = [
       ''
     ]
 
-    var lines = prefix.concat(commandSections).concat(suffix)
+    const lines = prefix.concat(commandSections).concat(suffix)
 
     return lines.join(OS.EOL)
   },
@@ -137,7 +137,7 @@ var DebugUtils = {
       tab = '  '
     }
 
-    var prefix = number + ''
+    let prefix = number + ''
     while (prefix.length < cols) {
       prefix = ' ' + prefix
     }
@@ -152,17 +152,17 @@ var DebugUtils = {
     }
 
     padding += 2 // account for ": "
-    var prefix = ''
+    let prefix = ''
     while (prefix.length < padding) {
       prefix += ' '
     }
 
-    var output = ''
-    for (var i = 0; i < line.length; i++) {
-      var pointedAt = (i >= startCol && i < endCol)
-      var isTab = (line[i] === '\t')
+    let output = ''
+    for (let i = 0; i < line.length; i++) {
+      const pointedAt = (i >= startCol && i < endCol)
+      const isTab = (line[i] === '\t')
 
-      var additional
+      let additional
       if (isTab) {
         additional = tab
       } else {
@@ -185,26 +185,26 @@ var DebugUtils = {
       contextBefore = 2
     }
 
-    var startBeforeIndex = Math.max(
+    const startBeforeIndex = Math.max(
       range.start.line - contextBefore, 0
     )
 
-    var prefixLength = ((range.start.line + 1) + '').length
+    const prefixLength = ((range.start.line + 1) + '').length
 
-    var beforeLines = source
+    const beforeLines = source
       .filter(function (line, index) {
         return index >= startBeforeIndex && index < range.start.line
       })
       .map(function (line, index) {
-        var number = startBeforeIndex + index + 1  // 1 to account for 0-index
+        const number = startBeforeIndex + index + 1  // 1 to account for 0-index
         return DebugUtils.formatLineNumberPrefix(line, number, prefixLength)
       })
 
-    var line = source[range.start.line]
-    var number = range.start.line + 1 // zero-index
+    const line = source[range.start.line]
+    const number = range.start.line + 1 // zero-index
 
-    var pointerStart = range.start.column
-    var pointerEnd
+    const pointerStart = range.start.column
+    let pointerEnd
 
     // range.end is undefined in some cases
     // null/undefined check to avoid exceptions
@@ -215,7 +215,7 @@ var DebugUtils = {
       pointerEnd = line.length
     }
 
-    var allLines = beforeLines.concat([
+    const allLines = beforeLines.concat([
       DebugUtils.formatLineNumberPrefix(line, number, prefixLength),
       DebugUtils.formatLinePointer(line, pointerStart, pointerEnd, prefixLength)
     ])
@@ -232,7 +232,7 @@ var DebugUtils = {
   },
 
   formatStack: function (stack) {
-    var formatted = stack.map(function (item, index) {
+    const formatted = stack.map(function (item, index) {
       item = '  ' + item
       if (index === stack.length - 1) {
         item += ' (top)'

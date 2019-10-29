@@ -1,14 +1,14 @@
-var Schema = require('./ContractSchema')
-var fs = require('fs-extra')
-var path = require('path')
-var _ = require('lodash')
+const Schema = require('./ContractSchema')
+const fs = require('fs-extra')
+const path = require('path')
+const _ = require('lodash')
 
 function Artifactor(destination) {
   this.destination = destination
 }
 
 Artifactor.prototype.save = function (object) {
-  var self = this
+  const self = this
 
   return new Promise(function (accept, reject) {
     object = Schema.normalize(object)
@@ -17,7 +17,7 @@ Artifactor.prototype.save = function (object) {
       return reject(new Error('You must specify a contract name.'))
     }
 
-    var output_path = object.contractName
+    let output_path = object.contractName
 
     // Create new path off of destination.
     output_path = path.join(self.destination, output_path)
@@ -30,10 +30,10 @@ Artifactor.prototype.save = function (object) {
       // No need to handle the error. If the file doesn't exist then we'll start afresh
       // with a new object.
 
-      var finalObject = object
+      let finalObject = object
 
       if (!err) {
-        var existingObjDirty
+        let existingObjDirty
         try {
           existingObjDirty = JSON.parse(json)
         } catch (e) {
@@ -44,7 +44,7 @@ Artifactor.prototype.save = function (object) {
         finalObject = Schema.normalize(existingObjDirty)
 
         // merge networks
-        var finalNetworks = {}
+        const finalNetworks = {}
         _.merge(finalNetworks, finalObject.networks, object.networks)
 
         // update existing with new
@@ -65,10 +65,10 @@ Artifactor.prototype.save = function (object) {
 }
 
 Artifactor.prototype.saveAll = function (objects) {
-  var self = this
+  const self = this
 
   if (Array.isArray(objects)) {
-    var array = objects
+    const array = objects
     objects = {}
 
     array.forEach(function (item) {
@@ -84,10 +84,10 @@ Artifactor.prototype.saveAll = function (objects) {
       accept()
     })
   }).then(function () {
-    var promises = []
+    const promises = []
 
     Object.keys(objects).forEach(function (contractName) {
-      var object = objects[contractName]
+      const object = objects[contractName]
       object.contractName = contractName
       promises.push(self.save(object))
     })

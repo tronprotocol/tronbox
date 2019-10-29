@@ -1,13 +1,13 @@
-var expect = require('@truffle/expect')
-var DeferredChain = require('./src/deferredchain')
-var deploy = require('./src/actions/deploy')
-var deployMany = require('./src/actions/deploymany')
-var link = require('./src/actions/link')
-var create = require('./src/actions/new')
-var {dlog} = require('../TronWrap')
+const expect = require('@truffle/expect')
+const DeferredChain = require('./src/deferredchain')
+const deploy = require('./src/actions/deploy')
+const deployMany = require('./src/actions/deploymany')
+const link = require('./src/actions/link')
+const create = require('./src/actions/new')
+const {dlog} = require('../TronWrap')
 
 function Deployer(options) {
-  var self = this
+  const self = this
   options = options || {}
 
   expect.options(options, [
@@ -43,8 +43,8 @@ Deployer.prototype.link = function (library, destinations) {
 }
 
 Deployer.prototype.deploy = function () {
-  var args = Array.prototype.slice.call(arguments)
-  var contract = args.shift()
+  const args = Array.prototype.slice.call(arguments)
+  const contract = args.shift()
 
   if (Array.isArray(contract)) {
     dlog('Deploy many')
@@ -56,8 +56,8 @@ Deployer.prototype.deploy = function () {
 }
 
 Deployer.prototype.new = function () {
-  var args = Array.prototype.slice.call(arguments)
-  var contract = args.shift()
+  const args = Array.prototype.slice.call(arguments)
+  const contract = args.shift()
 
   return this.queueOrExec(create(contract, args, this))
 }
@@ -67,7 +67,7 @@ Deployer.prototype.exec = function () {
 }
 
 Deployer.prototype.then = function (fn) {
-  var self = this
+  const self = this
 
   return this.queueOrExec(function () {
     self.logger.log('Running step...')

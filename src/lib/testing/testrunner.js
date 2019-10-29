@@ -1,16 +1,16 @@
-var Config = require('../../components/Config')
-var Migrate = require('../../components/Migrate')
-var TestResolver = require('./testresolver')
-var TestSource = require('./testsource')
-var expect = require('@truffle/expect')
-var contract = require('../../components/Contract')
-var path = require('path')
-var _ = require('lodash')
-var async = require('async')
-var fs = require('fs')
-var TronWrap = require('../../components/TronWrap')
-var TronWeb = require('tronweb')
-var waitForTransactionReceipt = require('./waitForTransactionReceipt')
+const Config = require('../../components/Config')
+const Migrate = require('../../components/Migrate')
+const TestResolver = require('./testresolver')
+const TestSource = require('./testsource')
+const expect = require('@truffle/expect')
+const contract = require('../../components/Contract')
+const path = require('path')
+const _ = require('lodash')
+const async = require('async')
+const fs = require('fs')
+const TronWrap = require('../../components/TronWrap')
+const TronWeb = require('tronweb')
+const waitForTransactionReceipt = require('./waitForTransactionReceipt')
 
 function TestRunner(options) {
   options = options || {}
@@ -51,12 +51,12 @@ function TestRunner(options) {
 }
 
 TestRunner.prototype.initialize = function (callback) {
-  var self = this
+  const self = this
 
-  var test_source = new TestSource(self.config)
+  const test_source = new TestSource(self.config)
   this.config.resolver = new TestResolver(self.initial_resolver, test_source, self.config.contracts_build_directory)
 
-  var afterStateReset = function (err) {
+  const afterStateReset = function (err) {
     if (err) return callback(err)
 
     fs.readdir(self.config.contracts_build_directory, function (err, files) {
@@ -71,12 +71,12 @@ TestRunner.prototype.initialize = function (callback) {
       }, function (err, data) {
         if (err) return callback(err)
 
-        var contracts = data.map(JSON.parse).map(contract)
-        var abis = _.flatMap(contracts, 'abi')
+        const contracts = data.map(JSON.parse).map(contract)
+        const abis = _.flatMap(contracts, 'abi')
 
         abis.map(function (abi) {
           if (/event/i.test(abi.type)) {
-            var signature = abi.name + '(' + _.map(abi.inputs, 'type').join(',') + ')'
+            const signature = abi.name + '(' + _.map(abi.inputs, 'type').join(',') + ')'
             self.known_events[self.tronwrap.sha3(signature)] = {
               signature: signature,
               abi_entry: abi
@@ -124,7 +124,7 @@ TestRunner.prototype.snapshot = function (callback) {
   }
 
 TestRunner.prototype.rpc = function (method, arg, cb) {
-  var req = {
+  const req = {
     jsonrpc: '2.0',
     method: method,
     id: new Date().getTime()
@@ -135,7 +135,7 @@ TestRunner.prototype.rpc = function (method, arg, cb) {
     cb = arg
   }
 
-  var intermediary = function (err, result) {
+  const intermediary = function (err, result) {
     if (err != null) {
       cb(err)
       return

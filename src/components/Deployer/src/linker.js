@@ -11,7 +11,7 @@ module.exports = {
       throw new Error('Cannot link a library with no name.')
     }
 
-    var hasAddress = false
+    let hasAddress = false
 
     // Abstractions; don't want to use .address directly because it will throw.
     // eslint-disable-next-line no-constant-condition

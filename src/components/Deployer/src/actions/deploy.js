@@ -4,13 +4,13 @@ const {dlog} = require('../../../TronWrap')
 
 module.exports = function (contract, args, deployer) {
   return function () {
-    var should_deploy = true
+    let should_deploy = true
 
     // Evaluate any arguments if they're promises (we need to do this in all cases to maintain consistency)
     return Promise.all(args).then(function (new_args) {
       // Check the last argument. If it's an object that tells us not to overwrite, then lets not.
       if (new_args.length > 0) {
-        var last_arg = new_args[new_args.length - 1]
+        const last_arg = new_args[new_args.length - 1]
         if (typeof last_arg === 'object' && last_arg.overwrite === false && contract.isDeployed()) {
           should_deploy = false
         }
@@ -18,7 +18,7 @@ module.exports = function (contract, args, deployer) {
       }
 
       if (should_deploy === true) {
-        var prefix = 'Deploying '
+        let prefix = 'Deploying '
         if (contract.isDeployed()) {
           prefix = 'Replacing '
         }
@@ -29,7 +29,7 @@ module.exports = function (contract, args, deployer) {
         return contract.deployed()
       }
     }).then(function (instance) {
-      var tronWrap = TronWrap()
+      const tronWrap = TronWrap()
       if (should_deploy === true) {
         deployer.logger.log(contract.contract_name + ':\n    (base58) ' + tronWrap.address.fromHex(instance.address) + '\n    (hex) ' + instance.address)
       } else {

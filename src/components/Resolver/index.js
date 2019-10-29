@@ -1,10 +1,10 @@
-var EPMSource = require('./epm')
-var NPMSource = require('./npm')
-var FSSource = require('./fs')
-var whilst = require('async/whilst')
-var contract = require('../Contract')
-var expect = require('@truffle/expect')
-var provision = require('../Provisioner')
+const EPMSource = require('./epm')
+const NPMSource = require('./npm')
+const FSSource = require('./fs')
+const whilst = require('async/whilst')
+const contract = require('../Contract')
+const expect = require('@truffle/expect')
+const provision = require('../Provisioner')
 
 function Resolver(options) {
   expect.options(options, [
@@ -23,14 +23,14 @@ function Resolver(options) {
 
 // This function might be doing too much. If so, too bad (for now).
 Resolver.prototype.require = function (import_path, search_path) {
-  var self = this
+  const self = this
 
-  for (var i = 0; i < this.sources.length; i++) {
-    var source = this.sources[i]
-    var result = source.require(import_path, search_path)
+  for (let i = 0; i < this.sources.length; i++) {
+    const source = this.sources[i]
+    const result = source.require(import_path, search_path)
     if (result) {
 
-      var abstraction = contract(result)
+      const abstraction = contract(result)
       provision(abstraction, self.options)
       return abstraction
     }
@@ -39,17 +39,17 @@ Resolver.prototype.require = function (import_path, search_path) {
 }
 
 Resolver.prototype.resolve = function (import_path, imported_from, callback) {
-  var self = this
+  const self = this
 
   if (typeof imported_from === 'function') {
     callback = imported_from
     imported_from = null
   }
 
-  var resolved_body = null
-  var resolved_path = null
-  var current_index = -1
-  var current_source
+  let resolved_body = null
+  let resolved_path = null
+  let current_index = -1
+  let current_source
 
   whilst(function () {
     return !resolved_body && current_index < self.sources.length - 1
@@ -68,7 +68,7 @@ Resolver.prototype.resolve = function (import_path, imported_from, callback) {
     if (err) return callback(err)
 
     if (!resolved_body) {
-      var message = 'Could not find ' + import_path + ' from any sources'
+      let message = 'Could not find ' + import_path + ' from any sources'
 
       if (imported_from) {
         message += '; imported from ' + imported_from

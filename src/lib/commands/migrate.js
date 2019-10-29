@@ -1,4 +1,4 @@
-var command = {
+const command = {
   command: 'migrate',
   description: 'Run migrations to deploy contracts',
   builder: {
@@ -23,16 +23,16 @@ var command = {
   },
   run: function (options, done) {
     process.env.CURRENT = 'migrate'
-    var OS = require('os')
-    var Config = require('../../components/Config')
-    var Contracts = require('../../components/WorkflowCompile')
-    var Migrate = require('../../components/Migrate')
-    var Environment = require('../environment')
-    var TronWrap = require('../../components/TronWrap')
-    var {dlog} = require('../../components/TronWrap')
+    const OS = require('os')
+    const Config = require('../../components/Config')
+    const Contracts = require('../../components/WorkflowCompile')
+    const Migrate = require('../../components/Migrate')
+    const Environment = require('../environment')
+    const TronWrap = require('../../components/TronWrap')
+    const {dlog} = require('../../components/TronWrap')
     const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
 
-    var config = Config.detect(options)
+    const config = Config.detect(options)
 
     // if "development" exists, default to using that
     if (!config.network && config.networks.development) {
@@ -70,9 +70,9 @@ var command = {
       if (err) return done(err)
       Environment.detect(config, function (err) {
         if (err) return done(err)
-        var dryRun = options.dryRun === true
+        const dryRun = options.dryRun === true
 
-        var networkMessage = "Using network '" + config.network + "'"
+        let networkMessage = "Using network '" + config.network + "'"
 
         if (dryRun) {
           networkMessage += ' (dry run)'

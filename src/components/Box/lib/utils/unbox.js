@@ -1,22 +1,22 @@
-var fs = require('fs-extra')
-var path = require('path')
-var ghdownload = require('github-download')
-var request = require('request')
-var vcsurl = require('vcsurl')
+const fs = require('fs-extra')
+const path = require('path')
+const ghdownload = require('github-download')
+const request = require('request')
+const vcsurl = require('vcsurl')
 // eslint-disable-next-line node/no-deprecated-api
-var parseURL = require('url').parse
-var tmp = require('tmp')
-var exec = require('child_process').exec
-var cwd = process.cwd()
+const parseURL = require('url').parse
+const tmp = require('tmp')
+const exec = require('child_process').exec
+const cwd = process.cwd()
 
-var config = require('../config')
+const config = require('../config')
 
 function checkDestination(destination) {
   return Promise.resolve().then(function () {
 
-    var contents = fs.readdirSync(destination)
+    const contents = fs.readdirSync(destination)
     if (contents.length) {
-      var err = 'Something already exists at the destination. ' +
+      const err = 'Something already exists at the destination. ' +
         '`tronbox init` and `tronbox unbox` must be executed in an empty folder. ' +
         'Stopping to prevent overwriting data.'
 
@@ -30,14 +30,14 @@ function verifyURL(url) {
   // will fail spectacularly in a way we can't catch, so we have to do it ourselves.
   return new Promise(function (accept, reject) {
 
-    var configURL = parseURL(
+    const configURL = parseURL(
       vcsurl(url)
         .replace('github.com', 'raw.githubusercontent.com')
         .replace(/#.*/, '') +
       '/master/tronbox.js'
     )
 
-    var options = {
+    const options = {
       method: 'HEAD',
       uri: 'https://' + configURL.host + configURL.path
     }
@@ -90,12 +90,12 @@ function copyTempIntoDestination(tmpDir, destination) {
 }
 
 function readBoxConfig(destination) {
-  var possibleConfigs = [
+  const possibleConfigs = [
     path.join(destination, 'tronbox.json'),
     path.join(destination, 'tronbox-init.json')
   ]
 
-  var configPath = possibleConfigs.reduce(function (path, alt) {
+  const configPath = possibleConfigs.reduce(function (path, alt) {
     return path || fs.existsSync(alt) && alt
   }, undefined)
 
@@ -103,13 +103,13 @@ function readBoxConfig(destination) {
 }
 
 function cleanupUnpack(boxConfig, destination) {
-  var needingRemoval = boxConfig.ignore || []
+  const needingRemoval = boxConfig.ignore || []
 
   // remove box config file
   needingRemoval.push('tronbox.json')
   needingRemoval.push('tronbox-init.json')
 
-  var promises = needingRemoval.map(function (file_path) {
+  const promises = needingRemoval.map(function (file_path) {
     return path.join(destination, file_path)
   }).map(function (file_path) {
     return new Promise(function (accept, reject) {
@@ -124,7 +124,7 @@ function cleanupUnpack(boxConfig, destination) {
 }
 
 function installBoxDependencies(boxConfig, destination) {
-  var postUnpack = boxConfig.hooks['post-unpack']
+  const postUnpack = boxConfig.hooks['post-unpack']
 
   return new Promise(function (accept, reject) {
     if (postUnpack.length === 0) {

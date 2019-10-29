@@ -1,15 +1,15 @@
-var ReplManager = require('./repl')
-var Command = require('./command')
-var provision = require('../components/Provisioner')
-var contract = require('../components/Contract')
-var TronWrap = require('../components/TronWrap')
-var vm = require('vm')
-var expect = require('@truffle/expect')
-var TruffleError = require('@truffle/error')
-var fs = require('fs')
-var path = require('path')
-var EventEmitter = require('events')
-var inherits = require('util').inherits
+const ReplManager = require('./repl')
+const Command = require('./command')
+const provision = require('../components/Provisioner')
+const contract = require('../components/Contract')
+const TronWrap = require('../components/TronWrap')
+const vm = require('vm')
+const expect = require('@truffle/expect')
+const TruffleError = require('@truffle/error')
+const fs = require('fs')
+const path = require('path')
+const EventEmitter = require('events')
+const inherits = require('util').inherits
 const logErrorAndExit = require('../components/TronWrap').logErrorAndExit
 
 inherits(Console, EventEmitter)
@@ -17,7 +17,7 @@ inherits(Console, EventEmitter)
 function Console(tasks, options) {
   EventEmitter.call(this)
 
-  var self = this
+  const self = this
 
   expect.options(options, [
     'working_directory',
@@ -59,7 +59,7 @@ function Console(tasks, options) {
 }
 
 Console.prototype.start = function (callback) {
-  var self = this
+  const self = this
 
   if (!this.repl) {
     this.repl = new ReplManager(this.options)
@@ -90,7 +90,7 @@ Console.prototype.start = function (callback) {
 }
 
 Console.prototype.provision = function (callback) {
-  var self = this
+  const self = this
 
   fs.readdir(this.options.contracts_build_directory, function (err, files) {
     if (err) {
@@ -100,7 +100,7 @@ Console.prototype.provision = function (callback) {
       // doesn't exist" 99.9% of the time.
     }
 
-    var promises = []
+    const promises = []
     files = files || []
 
     files.forEach(function (file) {
@@ -119,8 +119,8 @@ Console.prototype.provision = function (callback) {
     })
 
     Promise.all(promises).then(function (json_blobs) {
-      var abstractions = json_blobs.map(function (json) {
-        var abstraction = contract(json)
+      const abstractions = json_blobs.map(function (json) {
+        const abstraction = contract(json)
         provision(abstraction, self.options)
         return abstraction
       })
@@ -133,11 +133,11 @@ Console.prototype.provision = function (callback) {
 }
 
 Console.prototype.resetContractsInConsoleContext = function (abstractions) {
-  var self = this
+  const self = this
 
   abstractions = abstractions || []
 
-  var contextVars = {}
+  const contextVars = {}
 
   abstractions.forEach(function (abstraction) {
     contextVars[abstraction.contract_name] = abstraction
@@ -147,7 +147,7 @@ Console.prototype.resetContractsInConsoleContext = function (abstractions) {
 }
 
 Console.prototype.interpret = function (cmd, context, filename, callback) {
-  var self = this
+  const self = this
 
   if (this.command.getCommand(cmd.trim(), this.options.noAliases) != null) {
     return self.command.run(cmd.trim(), this.options, function (err) {
@@ -171,7 +171,7 @@ Console.prototype.interpret = function (cmd, context, filename, callback) {
     })
   }
 
-  var result
+  let result
   try {
     result = vm.runInContext(cmd, context, {
       displayErrors: false

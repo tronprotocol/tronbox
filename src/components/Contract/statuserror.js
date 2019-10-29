@@ -1,13 +1,13 @@
-var TruffleError = require('@truffle/error')
-var inherits = require('util').inherits
+const TruffleError = require('@truffle/error')
+const inherits = require('util').inherits
 
 inherits(StatusError, TruffleError)
 
-var defaultGas = 90000
+const defaultGas = 90000
 
 function StatusError(args, tx, receipt) {
-  var message
-  var gasLimit = parseInt(args.gas) || defaultGas
+  let message
+  const gasLimit = parseInt(args.gas) || defaultGas
 
   if (receipt.gasUsed === gasLimit) {
 

@@ -1,11 +1,11 @@
-var TaskError = require('./errors/taskerror')
-var yargs = require('yargs/yargs')
-var _ = require('lodash')
+const TaskError = require('./errors/taskerror')
+const yargs = require('yargs/yargs')
+const _ = require('lodash')
 
 function Command(commands) {
   this.commands = commands
 
-  var args = yargs()
+  let args = yargs()
 
   Object.keys(this.commands).forEach(function (command) {
     args = args.command(commands[command])
@@ -15,28 +15,28 @@ function Command(commands) {
 }
 
 Command.prototype.getCommand = function (str, noAliases) {
-  var argv = this.args.parse(str)
+  const argv = this.args.parse(str)
 
   if (argv._.length === 0) {
     return null
   }
 
-  var input = argv._[0]
-  var chosenCommand = null
+  const input = argv._[0]
+  let chosenCommand = null
 
   // If the command wasn't specified directly, go through a process
   // for inferring the command.
   if (this.commands[input]) {
     chosenCommand = input
   } else if (noAliases !== true) {
-    var currentLength = 1
-    var availableCommandNames = Object.keys(this.commands)
+    let currentLength = 1
+    const availableCommandNames = Object.keys(this.commands)
 
     // Loop through each letter of the input until we find a command
     // that uniquely matches.
     while (currentLength <= input.length) {
       // Gather all possible commands that match with the current length
-      var possibleCommands = availableCommandNames.filter(function (possibleCommand) {
+      const possibleCommands = availableCommandNames.filter(function (possibleCommand) {
         return possibleCommand.substring(0, currentLength) === input.substring(0, currentLength)
       })
 
@@ -54,7 +54,7 @@ Command.prototype.getCommand = function (str, noAliases) {
     return null
   }
 
-  var command = this.commands[chosenCommand]
+  const command = this.commands[chosenCommand]
 
   return {
     name: chosenCommand,
@@ -69,13 +69,13 @@ Command.prototype.run = function (command, options, callback) {
     options = {}
   }
 
-  var result = this.getCommand(command, typeof options.noAliases === 'boolean' ? options.noAliases : true)
+  const result = this.getCommand(command, typeof options.noAliases === 'boolean' ? options.noAliases : true)
 
   if (!result) {
     return callback(new TaskError('Cannot find command: ' + command))
   }
 
-  var argv = result.argv
+  const argv = result.argv
 
   // Remove the task name itself.
   if (argv._) {
@@ -86,7 +86,7 @@ Command.prototype.run = function (command, options, callback) {
   delete argv['$0']
 
   // Some options might throw if options is a Config object. If so, let's ignore those options.
-  var clone = {}
+  const clone = {}
   Object.keys(options).forEach(function (key) {
     try {
       clone[key] = options[key]

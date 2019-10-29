@@ -3,7 +3,7 @@ const fs = require('fs-extra')
 function setDefaults(config) {
   config = config || {}
 
-  let hooks = config.hooks || {}
+  const hooks = config.hooks || {}
 
   return {
     ignore: config.ignore || [],

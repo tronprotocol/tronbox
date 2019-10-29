@@ -1,9 +1,9 @@
-var unbox = require('./unbox')
+const unbox = require('./unbox')
 
 module.exports = {
   downloadBox: function (url, destination) {
-    var tmpDir
-    var tmpCleanup
+    let tmpDir
+    let tmpCleanup
 
     return Promise.resolve()
       .then(function () {
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   unpackBox: function (destination) {
-    var boxConfig
+    let boxConfig
 
     return Promise.resolve()
       .then(function () {

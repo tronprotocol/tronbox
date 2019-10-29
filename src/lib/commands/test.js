@@ -1,21 +1,21 @@
-var command = {
+const command = {
   command: 'test',
   description: 'Run JavaScript and Solidity tests',
   builder: {},
   run: function (options, done) {
-    var OS = require('os')
-    var dir = require('node-dir')
-    var temp = require('temp')
-    var Config = require('../../components/Config')
-    var Artifactor = require('../../components/Artifactor')
-    var Test = require('../test')
-    var fs = require('fs')
-    var copy = require('../copy')
-    var Environment = require('../environment')
-    var TronWrap = require('../../components/TronWrap')
+    const OS = require('os')
+    const dir = require('node-dir')
+    const temp = require('temp')
+    const Config = require('../../components/Config')
+    const Artifactor = require('../../components/Artifactor')
+    const Test = require('../test')
+    const fs = require('fs')
+    const copy = require('../copy')
+    const Environment = require('../environment')
+    const TronWrap = require('../../components/TronWrap')
     const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
 
-    var config = Config.detect(options)
+    const config = Config.detect(options)
 
     // if "development" exists, default to using that for testing
     if (!config.network) {
@@ -40,9 +40,9 @@ var command = {
     }
     process.env.CURRENT = 'test'
 
-    var ipcDisconnect
+    let ipcDisconnect
 
-    var files = []
+    let files = []
 
     if (options.file) {
       files = [options.file]
@@ -69,7 +69,7 @@ var command = {
         if (err) return done(err)
 
         function cleanup() {
-          var args = arguments
+          const args = arguments
           // Ensure directory cleanup.
           temp.cleanup(function () {
             // Ignore cleanup errors.
@@ -91,7 +91,7 @@ var command = {
           }), cleanup)
         }
 
-        var environmentCallback = function (err) {
+        const environmentCallback = function (err) {
           if (err) return done(err)
           // Copy all the built files over to a temporary directory, because we
           // don't want to save any tests artifacts. Only do this if the build directory

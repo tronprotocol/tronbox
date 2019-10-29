@@ -1,13 +1,13 @@
 // Compares .sol files to their .sol.js counterparts,
 // determines which .sol files have been updated.
 
-var path = require('path')
-var async = require('async')
-var fs = require('fs')
-var Graph = require('graphlib').Graph
-var Parser = require('./parser')
-var expect = require('@truffle/expect')
-var find_contracts = require('@truffle/contract-sources')
+const path = require('path')
+const async = require('async')
+const fs = require('fs')
+const Graph = require('graphlib').Graph
+const Parser = require('./parser')
+const expect = require('@truffle/expect')
+const find_contracts = require('@truffle/contract-sources')
 
 module.exports = {
   updated: function (options, callback) {
@@ -16,8 +16,8 @@ module.exports = {
       'resolver'
     ])
 
-    var contracts_directory = options.contracts_directory
-    var build_directory = options.contracts_build_directory
+    const contracts_directory = options.contracts_directory
+    const build_directory = options.contracts_build_directory
 
     function getFiles(done) {
       if (options.files) {
@@ -27,10 +27,10 @@ module.exports = {
       }
     }
 
-    var sourceFilesArtifacts = {}
-    var sourceFilesArtifactsUpdatedTimes = {}
+    const sourceFilesArtifacts = {}
+    const sourceFilesArtifactsUpdatedTimes = {}
 
-    var updatedFiles = []
+    const updatedFiles = []
 
     async.series([
       // Get all the source files and create an object out of them.
@@ -72,8 +72,8 @@ module.exports = {
             if (err) return c(err)
 
             try {
-              for (var i = 0; i < jsonData.length; i++) {
-                var data = JSON.parse(jsonData[i])
+              for (let i = 0; i < jsonData.length; i++) {
+                const data = JSON.parse(jsonData[i])
 
                 // In case there are artifacts from other source locations.
                 if (!sourceFilesArtifacts[data.sourcePath]) {
@@ -94,10 +94,10 @@ module.exports = {
         // Get the minimum updated time for all of a source file's artifacts
         // (note: one source file might have multiple artifacts).
         Object.keys(sourceFilesArtifacts).forEach(function (sourceFile) {
-          var artifacts = sourceFilesArtifacts[sourceFile]
+          const artifacts = sourceFilesArtifacts[sourceFile]
 
           sourceFilesArtifactsUpdatedTimes[sourceFile] = artifacts.reduce(function (minimum, current) {
-            var updatedAt = new Date(current.updatedAt).getTime()
+            const updatedAt = new Date(current.updatedAt).getTime()
 
             if (updatedAt < minimum) {
               return updatedAt
@@ -116,7 +116,7 @@ module.exports = {
       // Stat all the source files, getting there updated times, and comparing them to
       // the artifact updated times.
       function (c) {
-        var sourceFiles = Object.keys(sourceFilesArtifacts)
+        const sourceFiles = Object.keys(sourceFilesArtifacts)
 
         async.map(sourceFiles, function (sourceFile, finished) {
           fs.stat(sourceFile, function (err, stat) {
@@ -132,15 +132,15 @@ module.exports = {
           if (err) return callback(err)
 
           sourceFiles.forEach(function (sourceFile, index) {
-            var sourceFileStat = sourceFileStats[index]
+            const sourceFileStat = sourceFileStats[index]
 
             // Ignore updating artifacts if source file has been removed.
             if (!sourceFileStat) {
               return
             }
 
-            var artifactsUpdatedTime = sourceFilesArtifactsUpdatedTimes[sourceFile] || 0
-            var sourceFileUpdatedTime = (sourceFileStat.mtime || sourceFileStat.ctime).getTime()
+            const artifactsUpdatedTime = sourceFilesArtifactsUpdatedTimes[sourceFile] || 0
+            const sourceFileUpdatedTime = (sourceFileStat.mtime || sourceFileStat.ctime).getTime()
 
             if (sourceFileUpdatedTime > artifactsUpdatedTime) {
               updatedFiles.push(sourceFile)
@@ -156,7 +156,7 @@ module.exports = {
   },
 
   required_sources: function (options, callback) {
-    var self = this
+    const self = this
 
     expect.options(options, [
       'paths',
@@ -164,10 +164,10 @@ module.exports = {
       'resolver'
     ])
 
-    var paths = this.convert_to_absolute_paths(options.paths, options.base_path)
+    const paths = this.convert_to_absolute_paths(options.paths, options.base_path)
 
     function findRequiredSources(dependsGraph, done) {
-      var required = {}
+      const required = {}
 
       function hasBeenTraversed(import_path) {
         return required[import_path] != null
@@ -184,7 +184,7 @@ module.exports = {
 
         include(import_path)
 
-        var dependencies = dependsGraph.successors(import_path)
+        const dependencies = dependsGraph.successors(import_path)
 
         if (dependencies.length > 0) {
           dependencies.forEach(walk_down)
@@ -196,8 +196,8 @@ module.exports = {
           return
         }
 
-        var ancestors = dependsGraph.predecessors(import_path)
-        var dependencies = dependsGraph.successors(import_path)
+        const ancestors = dependsGraph.predecessors(import_path)
+        const dependencies = dependsGraph.successors(import_path)
 
         include(import_path)
 
@@ -230,7 +230,7 @@ module.exports = {
   },
 
   convert_to_absolute_paths: function (paths, base) {
-    var self = this
+    const self = this
     return paths.map(function (p) {
       // If it's anabsolute paths, leave it alone.
       if (path.isAbsolute(p)) return p
@@ -248,12 +248,12 @@ module.exports = {
   },
 
   dependency_graph: function (paths, resolver, callback) {
-    var self = this
+    const self = this
 
     // Iterate through all the contracts looking for libraries and building a dependency graph
-    var dependsGraph = new Graph()
+    const dependsGraph = new Graph()
 
-    var imports_cache = {}
+    const imports_cache = {}
 
     // For the purposes of determining correct error messages.
     // The second array item denotes which path imported the current path.
@@ -265,9 +265,9 @@ module.exports = {
     async.whilst(function () {
         return paths.length > 0
       }, function (finished) {
-        var current = paths.shift()
-        var import_path = current[0]
-        var imported_from = current[1]
+        const current = paths.shift()
+        const import_path = current[0]
+        const imported_from = current[1]
 
         if (dependsGraph.hasNode(import_path) && imports_cache[import_path] != null) {
           return finished()
@@ -283,7 +283,7 @@ module.exports = {
           // Add the contract to the depends graph.
           dependsGraph.setNode(resolved_path, resolved_body)
 
-          var imports
+          let imports
 
           try {
             imports = Parser.parseImports(resolved_body, resolver.options)
@@ -337,12 +337,12 @@ module.exports = {
     getFiles(function (err, files) {
       if (err) return callback(err)
 
-      var promises = files.map(function (file) {
+      const promises = files.map(function (file) {
         return new Promise(function (accept, reject) {
           fs.readFile(file, 'utf8', function (err, body) {
             if (err) return reject(err)
 
-            var output
+            let output
 
             try {
               output = Parser.parse(body)
@@ -354,7 +354,7 @@ module.exports = {
             accept(output.contracts)
           })
         }).then(function (contract_names) {
-          var returnVal = {}
+          const returnVal = {}
 
           contract_names.forEach(function (contract_name) {
             returnVal[contract_name] = file
@@ -365,7 +365,7 @@ module.exports = {
       })
 
       Promise.all(promises).then(function (objects) {
-        var contract_source_paths = {}
+        const contract_source_paths = {}
 
         objects.forEach(function (object) {
           Object.keys(object).forEach(function (contract_name) {

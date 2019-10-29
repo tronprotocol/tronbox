@@ -1,24 +1,24 @@
-var command = {
+const command = {
   command: 'watch',
   description: 'Watch filesystem for changes and rebuild the project automatically',
   builder: {},
   run: function (options) {
     process.env.CURRENT = 'watch'
-    var Build = require('../build')
-    var Config = require('../../components/Config')
-    var chokidar = require('chokidar')
-    var path = require('path')
-    var colors = require('colors')
-    var Contracts = require('../../components/WorkflowCompile')
-    var TruffleError = require('@truffle/error')
+    const Build = require('../build')
+    const Config = require('../../components/Config')
+    const chokidar = require('chokidar')
+    const path = require('path')
+    const colors = require('colors')
+    const Contracts = require('../../components/WorkflowCompile')
+    const TruffleError = require('@truffle/error')
 
-    var config = Config.detect(options)
+    const config = Config.detect(options)
 
-    var printSuccess = function () {
+    const printSuccess = function () {
       config.logger.log(colors.green('Completed without errors on ' + new Date().toString()))
     }
 
-    var printFailure = function (err) {
+    const printFailure = function (err) {
       if (err instanceof TruffleError) {
         console.error(err.message)
       } else {
@@ -27,11 +27,11 @@ var command = {
       }
     }
 
-    var working = false
-    var needs_rebuild = true
-    var needs_recompile = true
+    let working = false
+    let needs_rebuild = true
+    let needs_recompile = true
 
-    var watchPaths = [
+    const watchPaths = [
       path.join(config.working_directory, 'app/**/*'),
       path.join(config.contracts_build_directory, '/**/*'),
       path.join(config.contracts_directory, '/**/*'),
@@ -45,7 +45,7 @@ var command = {
       ignoreInitial: true
     }).on('all', function (event, filePath) {
       // On changed/added/deleted
-      var display_path = path.join('./', filePath.replace(config.working_directory, ''))
+      const display_path = path.join('./', filePath.replace(config.working_directory, ''))
       config.logger.log(colors.cyan('>> File ' + display_path + ' changed.'))
 
       needs_rebuild = true
@@ -55,7 +55,7 @@ var command = {
       }
     })
 
-    var check_rebuild = function () {
+    const check_rebuild = function () {
       if (working) {
         setTimeout(check_rebuild, 200)
         return

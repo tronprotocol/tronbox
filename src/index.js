@@ -1,19 +1,19 @@
 require('source-map-support/register')
 
-var Command = require('./lib/command')
-var TaskError = require('./lib/errors/taskerror')
-var TruffleError = require('@truffle/error')
-var version = require('./lib/version')
-var OS = require('os')
-var downloader = require('./downloader')
+const Command = require('./lib/command')
+const TaskError = require('./lib/errors/taskerror')
+const TruffleError = require('@truffle/error')
+const version = require('./lib/version')
+const OS = require('os')
+const downloader = require('./downloader')
 
-var command = new Command(require('./lib/commands'))
+const command = new Command(require('./lib/commands'))
 
-var options = {
+const options = {
   logger: console
 }
 
-var commands = process.argv.slice(2)
+const commands = process.argv.slice(2)
 
 if (commands[0] === '--download-compiler' && commands[1]) {
 

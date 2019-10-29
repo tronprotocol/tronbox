@@ -1,23 +1,23 @@
-var Mocha = require('mocha')
-var chai = require('chai')
-var path = require('path')
-var Config = require('../components/Config')
-var Contracts = require('../components/WorkflowCompile')
-var Resolver = require('../components/Resolver')
-var TestRunner = require('./testing/testrunner')
-var TestResolver = require('./testing/testresolver')
-var TestSource = require('./testing/testsource')
-var expect = require('@truffle/expect')
-var Migrate = require('../components/Migrate')
-var Profiler = require('../components/Compile/profiler')
-var originalrequire = require('original-require')
-var TronWrap = require('../components/TronWrap')
+const Mocha = require('mocha')
+const chai = require('chai')
+const path = require('path')
+const Config = require('../components/Config')
+const Contracts = require('../components/WorkflowCompile')
+const Resolver = require('../components/Resolver')
+const TestRunner = require('./testing/testrunner')
+const TestResolver = require('./testing/testresolver')
+const TestSource = require('./testing/testsource')
+const expect = require('@truffle/expect')
+const Migrate = require('../components/Migrate')
+const Profiler = require('../components/Compile/profiler')
+const originalrequire = require('original-require')
+const TronWrap = require('../components/TronWrap')
 
 chai.use(require('./assertions'))
 
-var Test = {
+const Test = {
   run: function (options, callback) {
-    var self = this
+    const self = this
 
     expect.options(options, [
       'contracts_directory',
@@ -29,27 +29,27 @@ var Test = {
       'provider',
     ])
 
-    var config = Config.default().merge(options)
+    const config = Config.default().merge(options)
 
     config.test_files = config.test_files.map(function (test_file) {
       return path.resolve(test_file)
     })
 
     // Output looks like this during tests: https://gist.github.com/tcoulter/1988349d1ec65ce6b958
-    var warn = config.logger.warn
+    const warn = config.logger.warn
     config.logger.warn = function (message) {
       if (message !== 'cannot find event for log' && warn) {
         warn.apply(console, arguments)
       }
     }
 
-    var mocha = this.createMocha(config)
+    const mocha = this.createMocha(config)
 
-    var js_tests = config.test_files.filter(function (file) {
+    const js_tests = config.test_files.filter(function (file) {
       return path.extname(file) !== '.sol'
     })
 
-    var sol_tests = config.test_files.filter(function (file) {
+    const sol_tests = config.test_files.filter(function (file) {
       return path.extname(file) === '.sol'
     })
 
@@ -64,11 +64,11 @@ var Test = {
       mocha.addFile(file)
     })
 
-    var accounts = []
-    var runner
-    var test_resolver
+    let accounts = []
+    let runner
+    let test_resolver
 
-    var tronWrap = TronWrap()
+    const tronWrap = TronWrap()
 
     tronWrap._getAccounts().then(accs => {
       accounts = accs
@@ -81,7 +81,7 @@ var Test = {
         config.resolver = new Resolver(config)
       }
 
-      var test_source = new TestSource(config)
+      const test_source = new TestSource(config)
       test_resolver = new TestResolver(config.resolver, test_source, config.contracts_build_directory)
       test_resolver.cache_on = false
 
@@ -110,7 +110,7 @@ var Test = {
 
   createMocha: function (config) {
     // Allow people to specify config.mocha in their config.
-    var mochaConfig = config.mocha || {}
+    const mochaConfig = config.mocha || {}
 
     // If the command line overrides color usage, use that.
     if (config.colors != null) {
@@ -122,7 +122,7 @@ var Test = {
       mochaConfig.useColors = true
     }
 
-    var mocha = new Mocha(mochaConfig)
+    const mocha = new Mocha(mochaConfig)
 
     return mocha
   },
@@ -174,7 +174,7 @@ var Test = {
         }
       }
 
-      var template = function (tests) {
+      const template = function (tests) {
         this.timeout(runner.TEST_TIMEOUT)
 
         before('prepare suite', function (done) {

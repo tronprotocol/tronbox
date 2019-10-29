@@ -1,5 +1,5 @@
-var path = require('path')
-var fs = require('fs')
+const path = require('path')
+const fs = require('fs')
 
 function EPM(working_directory, contracts_build_directory) {
   this.working_directory = working_directory
@@ -12,14 +12,14 @@ EPM.prototype.require = function (import_path) {
   }
 
   // Look to see if we've compiled our own version first.
-  var contract_name = path.basename(import_path, '.sol')
+  const contract_name = path.basename(import_path, '.sol')
 
   // We haven't compiled our own version. Assemble from data in the lockfile.
-  var separator = import_path.indexOf('/')
-  var package_name = import_path.substring(0, separator)
+  const separator = import_path.indexOf('/')
+  const package_name = import_path.substring(0, separator)
 
-  var install_directory = path.join(this.working_directory, 'installed_contracts')
-  var lockfile = path.join(install_directory, package_name, 'lock.json')
+  const install_directory = path.join(this.working_directory, 'installed_contracts')
+  let lockfile = path.join(install_directory, package_name, 'lock.json')
 
   try {
     lockfile = fs.readFileSync(lockfile, 'utf8')
@@ -29,7 +29,7 @@ EPM.prototype.require = function (import_path) {
 
   lockfile = JSON.parse(lockfile)
 
-  var json = {
+  const json = {
     contract_name: contract_name,
     networks: {}
   }
@@ -37,8 +37,8 @@ EPM.prototype.require = function (import_path) {
   // TODO: contracts that reference other types
   // TODO: contract types that specify a hash as their key
   // TODO: imported name doesn't match type but matches deployment name
-  var contract_types = lockfile.contract_types || {}
-  var type = contract_types[contract_name]
+  const contract_types = lockfile.contract_types || {}
+  const type = contract_types[contract_name]
 
   // No contract name of the type asked.
   if (!type) return null
@@ -48,10 +48,10 @@ EPM.prototype.require = function (import_path) {
 
   // Go through deployments and save all of them
   Object.keys(lockfile.deployments || {}).forEach(function (blockchain) {
-    var deployments = lockfile.deployments[blockchain]
+    const deployments = lockfile.deployments[blockchain]
 
     Object.keys(deployments).forEach(function (name) {
-      var deployment = deployments[name]
+      const deployment = deployments[name]
       if (deployment.contract_type === contract_name) {
         json.networks[blockchain] = {
           events: {},
@@ -66,17 +66,17 @@ EPM.prototype.require = function (import_path) {
 }
 
 EPM.prototype.resolve = function (import_path, imported_from, callback) {
-  var separator = import_path.indexOf('/')
-  var package_name = import_path.substring(0, separator)
-  var internal_path = import_path.substring(separator + 1)
-  var installDir = this.working_directory
+  const separator = import_path.indexOf('/')
+  const package_name = import_path.substring(0, separator)
+  const internal_path = import_path.substring(separator + 1)
+  let installDir = this.working_directory
 
   // If nothing's found, body returns `undefined`
-  var body
+  let body
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    var file_path = path.join(installDir, 'installed_contracts', import_path)
+    let file_path = path.join(installDir, 'installed_contracts', import_path)
 
     try {
       body = fs.readFileSync(file_path, {encoding: 'utf8'})
@@ -95,7 +95,7 @@ EPM.prototype.resolve = function (import_path, imported_from, callback) {
     }
 
     // Recurse outwards until impossible
-    var oldInstallDir = installDir
+    const oldInstallDir = installDir
     installDir = path.join(installDir, '..')
     if (installDir === oldInstallDir) {
       break
@@ -111,8 +111,8 @@ EPM.prototype.resolve = function (import_path, imported_from, callback) {
 // we're going to resolve it to some_module/contracts/AnotherContract.sol, ensuring
 // that when this path is evaluated this source is used again.
   EPM.prototype.resolve_dependency_path = function (import_path, dependency_path) {
-    var dirname = path.dirname(import_path)
-    var resolved_dependency_path = path.join(dirname, dependency_path)
+    const dirname = path.dirname(import_path)
+    let resolved_dependency_path = path.join(dirname, dependency_path)
 
     // Note: We use `path.join()` here to take care of path idiosyncrasies
     // like joining "something/" and "./something_else.sol". However, this makes

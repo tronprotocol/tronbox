@@ -1,6 +1,6 @@
-var path = require('path')
-var fs = require('fs')
-var eachSeries = require('async/eachSeries')
+const path = require('path')
+const fs = require('fs')
+const eachSeries = require('async/eachSeries')
 
 function FS(working_directory, contracts_build_directory) {
   this.working_directory = working_directory
@@ -14,7 +14,7 @@ FS.prototype.require = function (import_path, search_path) {
   // by converting all '/' to the default (path.sep);
   import_path = import_path.replace(/\//g, path.sep)
 
-  var contract_name = this.getContractName(import_path, search_path)
+  const contract_name = this.getContractName(import_path, search_path)
 
   // If we have an absoulte path, only check the file if it's a child of the working_directory.
   if (path.isAbsolute(import_path)) {
@@ -25,7 +25,7 @@ FS.prototype.require = function (import_path, search_path) {
   }
 
   try {
-    var result = fs.readFileSync(path.join(search_path, contract_name + '.json'), 'utf8')
+    const result = fs.readFileSync(path.join(search_path, contract_name + '.json'), 'utf8')
     return JSON.parse(result)
   } catch (e) {
     return null
@@ -35,11 +35,11 @@ FS.prototype.require = function (import_path, search_path) {
 FS.prototype.getContractName = function (sourcePath, searchPath) {
   searchPath = searchPath || this.contracts_build_directory
 
-  var filenames = fs.readdirSync(searchPath)
-  for (var i = 0; i < filenames.length; i++) {
-    var filename = filenames[i]
+  const filenames = fs.readdirSync(searchPath)
+  for (let i = 0; i < filenames.length; i++) {
+    const filename = filenames[i]
 
-    var artifact = JSON.parse(
+    const artifact = JSON.parse(
       fs.readFileSync(path.resolve(searchPath, filename))
     )
 
@@ -55,13 +55,13 @@ FS.prototype.getContractName = function (sourcePath, searchPath) {
 FS.prototype.resolve = function (import_path, imported_from, callback) {
   imported_from = imported_from || ''
 
-  var possible_paths = [
+  const possible_paths = [
     import_path,
     path.join(path.dirname(imported_from), import_path)
   ]
 
-  var resolved_body = null
-  var resolved_path = null
+  let resolved_body = null
+  let resolved_path = null
 
   eachSeries(possible_paths, function (possible_path, finished) {
     if (resolved_body != null) {
@@ -88,7 +88,7 @@ FS.prototype.resolve = function (import_path, imported_from, callback) {
 
 // Here we're resolving from local files to local files, all absolute.
 FS.prototype.resolve_dependency_path = function (import_path, dependency_path) {
-  var dirname = path.dirname(import_path)
+  const dirname = path.dirname(import_path)
   return path.resolve(path.join(dirname, dependency_path))
 }
 

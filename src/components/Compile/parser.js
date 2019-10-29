@@ -1,20 +1,20 @@
-var CompileError = require('./compileerror')
+const CompileError = require('./compileerror')
 const {getWrapper} = require('../TronSolc')
-var fs = require('fs')
-var path = require('path')
+const fs = require('fs')
+const path = require('path')
 
 // Clean up after solc.
-var listeners = process.listeners('uncaughtException')
-var solc_listener = listeners[listeners.length - 1]
+const listeners = process.listeners('uncaughtException')
+const solc_listener = listeners[listeners.length - 1]
 
 if (solc_listener) {
   process.removeListener('uncaughtException', solc_listener)
 }
 
 // Warning issued by a pre-release compiler version, ignored by this component.
-var preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning
+const preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning
 
-var installedContractsDir = 'installed_contracts'
+const installedContractsDir = 'installed_contracts'
 
 module.exports = {
   parse: function (body, fileName, options) {
@@ -22,14 +22,14 @@ module.exports = {
     // get around that is to tell the compiler, as they happen, that we
     // have source for them (an empty file).
 
-    var build_remappings = function () {
+    const build_remappings = function () {
       // Maps import paths to paths from EthPM installed contracts, so we can correctly solve imports
       // e.g. "my_pkg/=installed_contracts/my_pkg/contracts/"
-      var remappings = []
+      const remappings = []
 
       if (fs.existsSync('ethpm.json')) {
-        let ethpm = JSON.parse(fs.readFileSync('ethpm.json'))
-        for (let pkg in ethpm.dependencies) {
+        const ethpm = JSON.parse(fs.readFileSync('ethpm.json'))
+        for (const pkg in ethpm.dependencies) {
           remappings.push(pkg + '/=' + path.join(installedContractsDir, pkg, 'contracts', '/'))
         }
       }
@@ -39,9 +39,9 @@ module.exports = {
 
     fileName = fileName || 'ParsedContract.sol'
 
-    var remappings = build_remappings()
+    const remappings = build_remappings()
 
-    var solcStandardInput = {
+    const solcStandardInput = {
       language: 'Solidity',
       sources: {
         [fileName]: {
@@ -60,8 +60,8 @@ module.exports = {
       }
     }
 
-    var solc = getWrapper(options)
-    var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function (file_path) {
+    const solc = getWrapper(options)
+    let output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function (file_path) {
       // Resolve dependency manually.
       let contents
       if (fs.existsSync(file_path)) {
@@ -75,7 +75,7 @@ module.exports = {
     output = JSON.parse(output)
 
     // Filter out the "pre-release compiler" warning, if present.
-    var errors = output.errors ? output.errors.filter(function (solidity_error) {
+    let errors = output.errors ? output.errors.filter(function (solidity_error) {
       return solidity_error.message.indexOf(preReleaseCompilerWarning) < 0
     }) : []
 
@@ -110,14 +110,14 @@ module.exports = {
     // the imports speedily without doing extra work.
 
     // Helper to detect import errors with an easy regex.
-    var importErrorKey = 'TRUFFLE_IMPORT'
+    const importErrorKey = 'TRUFFLE_IMPORT'
 
     // Inject failing import.
-    var failingImportFileName = '__Truffle__NotFound.sol'
+    const failingImportFileName = '__Truffle__NotFound.sol'
 
     body = body + "\n\nimport '" + failingImportFileName + "';\n"
 
-    var solcStandardInput = {
+    const solcStandardInput = {
       language: 'Solidity',
       sources: {
         'ParsedContract.sol': {
@@ -133,8 +133,8 @@ module.exports = {
       }
     }
 
-    var solc = getWrapper(options)
-    var output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function () {
+    const solc = getWrapper(options)
+    let output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function () {
       // The existence of this function ensures we get a parsable error message.
       // Without this, we'll get an error message we *can* detect, but the key will make it easier.
       // Note: This is not a normal callback. See docs here: https://github.com/ethereum/solc-js#from-version-021
@@ -144,11 +144,11 @@ module.exports = {
     output = JSON.parse(output)
 
     // Filter out the "pre-release compiler" warning, if present.
-    var errors = output.errors.filter(function (solidity_error) {
+    const errors = output.errors.filter(function (solidity_error) {
       return solidity_error.message.indexOf(preReleaseCompilerWarning) < 0
     })
 
-    var nonImportErrors = errors.filter(function (solidity_error) {
+    const nonImportErrors = errors.filter(function (solidity_error) {
       // If the import error key is not found, we must not have an import error.
       // This means we have a *different* parsing error which we should show to the user.
       // Note: solc can return multiple parsing errors at once.
@@ -163,10 +163,10 @@ module.exports = {
 
     // Now, all errors must be import errors.
     // Filter out our forced import, then get the import paths of the rest.
-    var imports = errors.filter(function (solidity_error) {
+    const imports = errors.filter(function (solidity_error) {
       return solidity_error.message.indexOf(failingImportFileName) < 0
     }).map(function (solidity_error) {
-      var matches = solidity_error.formattedMessage.match(/import[^'"]+("|')([^'"]+)("|');/)
+      const matches = solidity_error.formattedMessage.match(/import[^'"]+("|')([^'"]+)("|');/)
 
       // Return the item between the quotes.
       return matches[2]

@@ -1,36 +1,114 @@
 {
-    "env": {
-        "node": true,
-        "browser": true,
-        "mocha": true
-    },
-    "globals": {},
-    "rules": {
-        "semi": [ 2, "never" ],
-        "quotes": [ 2, "single", "avoid-escape" ],
-        "strict": [2, "never"],
-        "no-unused-vars": [ 2, {"vars": "all", "args": "none"} ],
-        "eqeqeq": [ 2, "smart" ],
-        "key-spacing": [ 2, { "beforeColon": false, "afterColon": true } ],
-        "node/exports-style": ["error", "module.exports"],
-        "node/prefer-global/buffer": ["error", "always"],
-        "node/prefer-global/console": ["error", "always"],
-        "node/prefer-global/process": ["error", "always"],
-        "node/prefer-global/url-search-params": ["error", "always"],
-        "node/prefer-global/url": ["error", "always"],
-        "node/no-extraneous-require": ["error", {
-            "allowModules": ["tronweb"]
-        }],
-        "quote-props": ["error", "as-needed"],
-        "no-console": ["error", { "allow": ["debug", "info", "warn", "error"] }],
-        "no-empty": ["error", { "allowEmptyCatch": true }]
-    },
-    "parserOptions": {
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
-    "plugins": [],
-    "extends": ["eslint:recommended", "plugin:node/recommended"]
+  "env": {
+    "node": true,
+    "browser": true,
+    "mocha": true
+  },
+  "globals": {},
+  "rules": {
+    "semi": [
+      2,
+      "never"
+    ],
+    "quotes": [
+      2,
+      "single",
+      "avoid-escape"
+    ],
+    "strict": [
+      2,
+      "never"
+    ],
+    "no-unused-vars": [
+      2,
+      {
+        "vars": "all",
+        "args": "none"
+      }
+    ],
+    "eqeqeq": [
+      2,
+      "smart"
+    ],
+    "key-spacing": [
+      2,
+      {
+        "beforeColon": false,
+        "afterColon": true
+      }
+    ],
+    "node/exports-style": [
+      "error",
+      "module.exports"
+    ],
+    "node/prefer-global/buffer": [
+      "error",
+      "always"
+    ],
+    "node/prefer-global/console": [
+      "error",
+      "always"
+    ],
+    "node/prefer-global/process": [
+      "error",
+      "always"
+    ],
+    "node/prefer-global/url-search-params": [
+      "error",
+      "always"
+    ],
+    "node/prefer-global/url": [
+      "error",
+      "always"
+    ],
+    "node/no-extraneous-require": [
+      "error",
+      {
+        "allowModules": [
+          "tronweb"
+        ]
+      }
+    ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "debug",
+          "info",
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "no-empty": [
+      "error",
+      {
+        "allowEmptyCatch": true
+      }
+    ],
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "all"
+      }
+    ],
+    "no-var": [
+      "error"
+    ]
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended"
+  ]
 }
