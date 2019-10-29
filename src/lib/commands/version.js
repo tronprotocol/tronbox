@@ -1,4 +1,4 @@
-const {supportedVersions} = require('../../components/TronSolc')
+const {maxVersion} = require('../../components/TronSolc')
 
 const command = {
   command: 'version',
@@ -17,7 +17,7 @@ const command = {
     }
 
     options.logger.log('Tronbox ' + bundle_version)
-    options.logger.log('Solidity v' + supportedVersions[supportedVersions.length - 1] + ' (tron-solc)')
+    options.logger.log('Solidity v' + maxVersion + ' (tron-solc)')
 
     done()
   }

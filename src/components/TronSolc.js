@@ -9,6 +9,8 @@ const supportedVersions = [
   '0.4.24', '0.4.25', '0.5.4', '0.5.8'
 ]
 
+const maxVersion = '0.5.9'
+
 function getWrapper(options = {}) {
 
   try {
@@ -66,3 +68,4 @@ ${supportedVersions.join(' - ')}
 
 module.exports.getWrapper = getWrapper
 module.exports.supportedVersions = supportedVersions
+module.exports.maxVersion = maxVersion
