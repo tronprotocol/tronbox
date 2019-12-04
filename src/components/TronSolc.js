@@ -60,7 +60,19 @@ ${supportedVersions.join(' - ')}
     if (process.env.TRONBOX_NAME) {
       name = process.env.TRONBOX_NAME
     }
-    execSync(`${name} --download-compiler ${compilerVersion}`).toString()
+    const output = execSync(`${name} --download-compiler ${compilerVersion}`).toString()
+    if (output.indexOf('Permission required') !== -1) {
+      console.error(`
+Error: Permissions required.
+
+Most likely, you installed Node as root.
+Please, download the compiler manually, running:
+
+tronbox --download-compiler ${compilerVersion}
+`)
+      // eslint-disable-next-line no-process-exit
+      process.exit()
+    }
   }
   const soljson = eval('require')(soljsonPath)
   return wrapper(soljson)

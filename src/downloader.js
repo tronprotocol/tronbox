@@ -15,6 +15,12 @@ async function downloader(compilerVersion) {
 
   if (res && res.body) {
     await fs.writeFile(soljsonPath, res.body)
+    // double check
+    if (!fs.existsSync(soljsonPath)) {
+      console.error('Error. Permission required.')
+    } else {
+      console.info('Compiler downloaded.')
+    }
   } else {
     console.error('Error. Wrong Solidity compiler version.')
   }

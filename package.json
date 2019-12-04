@@ -2,7 +2,7 @@
   "name": "tronbox",
   "namespace": "tronprotocol",
   "version": "2.7.5",
-  "description": "TronBox - Simple development framework for tronweb",
+  "description": "TronBox - Simple development framework for Tron",
   "dependencies": {
     "@truffle/contract-sources": "^0.1.6",
     "@truffle/error": "0.0.7",
