@@ -1,6 +1,6 @@
 # TronBox
-Simple development framework for tronweb  
-**TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)** 
+Simple development framework for tronweb
+**TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
 [TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
 
@@ -91,7 +91,7 @@ Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mo
 `tronbox migrate`
 <br>
 
-This command will invoke all migration scripts within the migrations directory. If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command will have no operational effect. Instead, you can use the option `--reset` to restart the migration script.<br> 
+This command will invoke all migration scripts within the migrations directory. If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command will have no operational effect. Instead, you can use the option `--reset` to restart the migration script.<br>
 
 `tronbox migrate --reset`
 <br>
@@ -123,7 +123,7 @@ This will use the default network to start a console. It will automatically conn
 
 `tronbox console`<br>
 
-The console supports the `tronbox` command. For example, you can invoke `migrate --reset` in the console. The result is the same as invoking `tronbox migrate --reset` in the command. 
+The console supports the `tronbox` command. For example, you can invoke `migrate --reset` in the console. The result is the same as invoking `tronbox migrate --reset` in the command.
 <br>
 
 ## Extra Features in TronBox console:<br>
@@ -230,7 +230,7 @@ lerna bootstrap
 
 ## Solc versions
 
-TronBox does not supports all the Solidity compilers.  
+TronBox does not supports all the Solidity compilers.
 Supported versions:
 ```
 0.4.24
@@ -238,18 +238,22 @@ Supported versions:
 0.5.4
 0.5.8
 0.5.9
-``` 
+```
 
-## Latest version is 2.3.16
+## Latest version is 2.7.5
 
 ## Recent history (selected)
 
-__3.0.0__
-* Full refactoring
-* Add support for Solidity compiler 0.5.9 
+__2.7.5__
+* More refactoring
+* Show alert if compilers cannot be downloaded
+
+__2.7.4__
+* Partial refactoring
+* Add support for Solidity compiler 0.5.9
 
 __2.5.2__
-* Fix bug in compiler wrapper calls 
+* Fix bug in compiler wrapper calls
 
 __2.5.0__
 * Add support for JavaTron 3.6 and Solidity compiler for `^0.5.4`
