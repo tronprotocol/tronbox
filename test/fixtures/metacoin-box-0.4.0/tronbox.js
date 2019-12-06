@@ -17,15 +17,15 @@ Then, run the migration with:
 */
       userFeePercentage: 100,
       feeLimit: 1e8,
-      fullHost: "https://api.trongrid.io",
-      network_id: "1"
+      fullHost: 'https://api.trongrid.io',
+      network_id: '1'
     },
     shasta: {
       privateKey: process.env.PRIVATE_KEY_SHASTA,
       userFeePercentage: 50,
       feeLimit: 1e8,
-      fullHost: "https://api.shasta.trongrid.io",
-      network_id: "2"
+      fullHost: 'https://api.shasta.trongrid.io',
+      network_id: '2'
     },
     development: {
       // For trontools/quickstart docker image
@@ -33,7 +33,12 @@ Then, run the migration with:
       userFeePercentage: 0,
       feeLimit: 1e8,
       fullHost: 'http://127.0.0.1:' + port,
-      network_id: "9"
+      network_id: '9'
+    },
+    compilers: {
+      solc: {
+        version: '0.4.25'
+      }
     }
   },
   useZeroFourCompiler: true

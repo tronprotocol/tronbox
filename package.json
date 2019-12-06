@@ -1,14 +1,14 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.7.4",
-  "description": "TronBox - Simple development framework for tronweb",
+  "version": "2.7.5",
+  "description": "TronBox - Simple development framework for Tron",
   "dependencies": {
     "@truffle/contract-sources": "^0.1.6",
     "@truffle/error": "0.0.7",
     "@truffle/expect": "0.0.11",
-    "@truffle/require": "^2.0.24",
     "@truffle/solidity-utils": "^1.2.5",
+    "ajv": "^6.10.2",
     "async": "2.6.1",
     "axios": "^0.18.0",
     "bignumber.js": "^7.2.1",
@@ -24,7 +24,9 @@
     "ethpm": "0.0.16",
     "ethpm-registry": "0.1.0-next.3",
     "finalhandler": "^1.1.2",
+    "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
+    "github-download": "^0.5.0",
     "graphlib": "^2.1.7",
     "homedir": "^0.6.0",
     "lodash": "^4.17.15",
@@ -33,6 +35,7 @@
     "node-dir": "0.1.17",
     "node-emoji": "^1.8.1",
     "original-require": "1.0.1",
+    "request": "^2.88.0",
     "safe-eval": "^0.4.1",
     "semver": "^6.1.1",
     "serve-static": "^1.10.0",
@@ -42,7 +45,7 @@
     "superagent": "^5.1.0",
     "temp": "^0.8.3",
     "tronweb": "^2.7.2",
-    "truffle-init": "^1.0.7",
+    "vcsurl": "^0.1.1",
     "web3-mock": "1.0.1",
     "yargs": "^8.0.2"
   },
@@ -51,6 +54,8 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "electron": "^6.0.12",
+    "eslint": "^6.6.0",
+    "eslint-plugin-node": "^10.0.0",
     "glob": "^7.1.2",
     "js-scrypt": "^0.2.0",
     "meta-npm": "^0.0.22",
@@ -68,6 +73,7 @@
   "scripts": {
     "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
     "prepare": "npm run build",
+    "lint": "find src -name '*.js' | xargs node_modules/.bin/eslint",
     "build": "scripts/build.sh"
   },
   "repository": {

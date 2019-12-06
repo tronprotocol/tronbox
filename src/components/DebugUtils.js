@@ -1,48 +1,48 @@
-var OS = require("os");
-var dir = require("node-dir");
-var path = require("path");
-var async = require("async");
-var debug = require("debug")("lib:debug");
+const OS = require('os')
+const dir = require('node-dir')
+const path = require('path')
+const async = require('async')
+const debug = require('debug')('lib:debug')
 
-var commandReference = {
-  "o": "step over",
-  "i": "step into",
-  "u": "step out",
-  "n": "step next",
-  ";": "step instruction",
-  "p": "print instruction",
-  "h": "print this help",
-  "v": "print variables and values",
-  ":": "evaluate expression - see `v`",
-  "+": "add watch expression (`+:<expr>`)",
-  "-": "remove watch expression (-:<expr>)",
-  "?": "list existing watch expressions",
-  "b": "toggle breakpoint",
-  "c": "continue until breakpoint",
-  "q": "quit"
-};
+const commandReference = {
+  o: 'step over',
+  i: 'step into',
+  u: 'step out',
+  n: 'step next',
+  ';': 'step instruction',
+  p: 'print instruction',
+  h: 'print this help',
+  v: 'print variables and values',
+  ':': 'evaluate expression - see `v`',
+  '+': 'add watch expression (`+:<expr>`)',
+  '-': 'remove watch expression (-:<expr>)',
+  '?': 'list existing watch expressions',
+  b: 'toggle breakpoint',
+  c: 'continue until breakpoint',
+  q: 'quit'
+}
 
-var DebugUtils = {
-  gatherArtifacts: function(config) {
+const DebugUtils = {
+  gatherArtifacts: function (config) {
     return new Promise((accept, reject) => {
       // Gather all available contract artifacts
       dir.files(config.contracts_build_directory, (err, files) => {
-        if (err) return reject(err);
+        if (err) return reject(err)
 
-        var contracts = files.filter((file_path) => {
-          return path.extname(file_path) == ".json";
+        const contracts = files.filter((file_path) => {
+          return path.extname(file_path) === '.json'
         }).map((file_path) => {
-          return path.basename(file_path, ".json");
+          return path.basename(file_path, '.json')
         }).map((contract_name) => {
-          return config.resolver.require(contract_name);
-        });
+          return config.resolver.require(contract_name)
+        })
 
         async.each(contracts, (abstraction, finished) => {
-            finished();
+          finished()
         }, (err) => {
-          if (err) return reject(err);
-          accept(contracts.map( (contract) => {
-            debug("contract.sourcePath: %o", contract.sourcePath);
+          if (err) return reject(err)
+          accept(contracts.map((contract) => {
+            debug('contract.sourcePath: %o', contract.sourcePath)
 
             return {
               contractName: contract.contractName,
@@ -53,207 +53,200 @@ var DebugUtils = {
               ast: contract.ast,
               deployedBinary: contract.deployedBinary,
               deployedSourceMap: contract.deployedSourceMap
-            };
-          }));
-        });
-      });
-    });
+            }
+          }))
+        })
+      })
+    })
   },
 
-  formatStartMessage: function() {
-    var lines = [
-      "",
-      "Gathering transaction data...",
-      ""
-    ];
+  formatStartMessage: function () {
+    const lines = [
+      '',
+      'Gathering transaction data...',
+      ''
+    ]
 
-    return lines.join(OS.EOL);
+    return lines.join(OS.EOL)
   },
 
-  formatCommandDescription: function(commandId) {
-    return "(" + commandId + ") " + commandReference[commandId];
+  formatCommandDescription: function (commandId) {
+    return '(' + commandId + ') ' + commandReference[commandId]
   },
 
-  formatAffectedInstances: function(instances) {
-    var hasAllSource = true;
+  formatAffectedInstances: function (instances) {
+    let hasAllSource = true
 
-    var lines = Object.keys(instances).map(function(address) {
-      var instance = instances[address];
+    const lines = Object.keys(instances).map(function (address) {
+      const instance = instances[address]
 
       if (instance.contractName) {
-        return " " + address + " - " + instance.contractName;
+        return ' ' + address + ' - ' + instance.contractName
       }
 
       if (!instance.source) {
-        hasAllSource = false;
+        hasAllSource = false
       }
 
-      return " " + address + "(UNKNOWN)";
-    });
+      return ' ' + address + '(UNKNOWN)'
+    })
 
 
     if (!hasAllSource) {
-      lines.push("");
-      lines.push("Warning: The source code for one or more contracts could not be found.");
+      lines.push('')
+      lines.push('Warning: The source code for one or more contracts could not be found.')
     }
 
-    return lines.join(OS.EOL);
+    return lines.join(OS.EOL)
   },
 
-  formatHelp: function(lastCommand) {
+  formatHelp: function (lastCommand) {
     if (!lastCommand) {
-      lastCommand = "n";
+      lastCommand = 'n'
     }
 
-    var prefix = [
-      "Commands:",
-      "(enter) last command entered (" + commandReference[lastCommand] + ")"
-    ];
+    const prefix = [
+      'Commands:',
+      '(enter) last command entered (' + commandReference[lastCommand] + ')'
+    ]
 
-    var commandSections = [
-      ["o", "i", "u", "n"],
-      [";", "p", "h", "q"],
-      ["b", "c"],
-      ["+", "-"],
-      ["?"],
-      ["v", ":"]
+    const commandSections = [
+      ['o', 'i', 'u', 'n'],
+      [';', 'p', 'h', 'q'],
+      ['b', 'c'],
+      ['+', '-'],
+      ['?'],
+      ['v', ':']
     ].map(function (shortcuts) {
       return shortcuts
         .map(DebugUtils.formatCommandDescription)
-        .join(", ");
+        .join(', ')
     })
 
-    var suffix = [
-      ""
-    ];
+    const suffix = [
+      ''
+    ]
 
-    var lines = prefix.concat(commandSections).concat(suffix);
+    const lines = prefix.concat(commandSections).concat(suffix)
 
-    return lines.join(OS.EOL);
+    return lines.join(OS.EOL)
   },
 
   formatLineNumberPrefix: function (line, number, cols, tab) {
     if (!tab) {
-      tab = "  ";
+      tab = '  '
     }
 
-    var prefix = number + "";
+    let prefix = number + ''
     while (prefix.length < cols) {
-      prefix = " " + prefix;
+      prefix = ' ' + prefix
     }
 
-    prefix += ": ";
-    return prefix + line.replace(/\t/g, tab);
+    prefix += ': '
+    return prefix + line.replace(/\t/g, tab)
   },
 
-  formatLinePointer: function(line, startCol, endCol, padding, tab) {
+  formatLinePointer: function (line, startCol, endCol, padding, tab) {
     if (!tab) {
-      tab = "  ";
+      tab = '  '
     }
 
-    padding += 2; // account for ": "
-    var prefix = "";
+    padding += 2 // account for ": "
+    let prefix = ''
     while (prefix.length < padding) {
-      prefix += " ";
+      prefix += ' '
     }
 
-    var output = "";
-    for (var i = 0; i < line.length; i++) {
-      var pointedAt = (i >= startCol && i < endCol);
-      var isTab = (line[i] == "\t");
+    let output = ''
+    for (let i = 0; i < line.length; i++) {
+      const pointedAt = (i >= startCol && i < endCol)
+      const isTab = (line[i] === '\t')
 
-      var additional;
+      let additional
       if (isTab) {
-        additional = tab;
+        additional = tab
       } else {
-        additional = " "; // just a space
+        additional = ' ' // just a space
       }
 
       if (pointedAt) {
-        additional = additional.replace(/./g, "^");
+        additional = additional.replace(/./g, '^')
       }
 
-      output += additional;
+      output += additional
     }
 
-    return prefix + output;
+    return prefix + output
   },
 
-  formatRangeLines: function(source, range, contextBefore) {
-    var outputLines = [];
+  formatRangeLines: function (source, range, contextBefore) {
 
-    // range is {
-    //   start: { line, column },
-    //   end: { line, column}
-    // }
-    //
+    if (!contextBefore) {
+      contextBefore = 2
+    }
 
-    if (contextBefore == undefined) {
-      contextBefore = 2;
-    };
-
-    var startBeforeIndex = Math.max(
+    const startBeforeIndex = Math.max(
       range.start.line - contextBefore, 0
-    );
+    )
 
-    var prefixLength = ((range.start.line + 1) + "").length;
+    const prefixLength = ((range.start.line + 1) + '').length
 
-    var beforeLines = source
+    const beforeLines = source
       .filter(function (line, index) {
         return index >= startBeforeIndex && index < range.start.line
       })
       .map(function (line, index) {
-        var number = startBeforeIndex + index + 1;  // 1 to account for 0-index
+        const number = startBeforeIndex + index + 1  // 1 to account for 0-index
         return DebugUtils.formatLineNumberPrefix(line, number, prefixLength)
-      });
+      })
 
-    var line = source[range.start.line];
-    var number = range.start.line + 1; // zero-index
+    const line = source[range.start.line]
+    const number = range.start.line + 1 // zero-index
 
-    var pointerStart = range.start.column;
-    var pointerEnd;
+    const pointerStart = range.start.column
+    let pointerEnd
 
     // range.end is undefined in some cases
     // null/undefined check to avoid exceptions
-    if (range.end && range.start.line == range.end.line) {
+    if (range.end && range.start.line === range.end.line) {
       // start and end are same line: pointer ends at column
-      pointerEnd = range.end.column;
+      pointerEnd = range.end.column
     } else {
-      pointerEnd = line.length;
+      pointerEnd = line.length
     }
 
-    var allLines = beforeLines.concat([
+    const allLines = beforeLines.concat([
       DebugUtils.formatLineNumberPrefix(line, number, prefixLength),
       DebugUtils.formatLinePointer(line, pointerStart, pointerEnd, prefixLength)
-    ]);
+    ])
 
-    return allLines.join(OS.EOL);
+    return allLines.join(OS.EOL)
   },
 
   formatInstruction: function (traceIndex, instruction) {
     return (
-      "(" + traceIndex + ") " +
-        instruction.name + " " +
-        (instruction.pushData || "")
-    );
+      '(' + traceIndex + ') ' +
+      instruction.name + ' ' +
+      (instruction.pushData || '')
+    )
   },
 
   formatStack: function (stack) {
-    var formatted = stack.map(function (item, index) {
-      item = "  " + item;
-      if (index == stack.length - 1) {
-        item += " (top)";
+    const formatted = stack.map(function (item, index) {
+      item = '  ' + item
+      if (index === stack.length - 1) {
+        item += ' (top)'
       }
 
-      return item;
-    });
+      return item
+    })
 
-    if (stack.length == 0) {
-      formatted.push("  No data on stack.");
+    if (!stack.length) {
+      formatted.push('  No data on stack.')
     }
 
-    return formatted.join(OS.EOL);
+    return formatted.join(OS.EOL)
   }
-};
+}
 
-module.exports = DebugUtils;
+module.exports = DebugUtils

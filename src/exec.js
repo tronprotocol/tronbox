@@ -1,30 +1,30 @@
-#!/usr/bin/env node
-var path = require("path");
-var spawn = require("child_process").spawn;
+const path = require('path')
+const spawn = require('child_process').spawn
 
-var cli_path = path.resolve(path.join(__dirname, "./index.js"));
+const cli_path = path.resolve(path.join(__dirname, './index.js'))
 
-var args = [
+const args = [
   cli_path,
-  "exec"
-];
+  'exec'
+]
 
-Array.prototype.push.apply(args, process.argv.slice(2));
+Array.prototype.push.apply(args, process.argv.slice(2))
 
-var cmd = spawn("node", args);
+const cmd = spawn('node', args)
 
 cmd.stdout.on('data', (data) => {
-  console.log(data.toString());
-});
-
-cmd.stderr.on('data', (data) => {
-  console.error(data.toString());
-});
-
-cmd.on('close', (code) => {
-  process.exit(code);
+  console.info(data.toString())
 })
 
-cmd.on('error', function(err) {
-  throw err;
-});
+cmd.stderr.on('data', (data) => {
+  console.error(data.toString())
+})
+
+cmd.on('close', (code) => {
+  // eslint-disable-next-line no-process-exit
+  process.exit(code)
+})
+
+cmd.on('error', function (err) {
+  throw err
+})

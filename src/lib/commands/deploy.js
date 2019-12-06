@@ -1,10 +1,10 @@
-var migrate = require("./migrate");
+const migrate = require('./migrate')
 
-var command = {
+const command = {
   command: 'deploy',
   description: '(alias for migrate)',
   builder: migrate.builder,
   run: migrate.run
 }
 
-module.exports = command;
+module.exports = command

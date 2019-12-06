@@ -1,20 +1,19 @@
 require('source-map-support/register')
 
-var Config = require("./components/Config");
-var Command = require("./lib/command");
-var TaskError = require("./lib/errors/taskerror");
-var TruffleError = require("@truffle/error");
-var version = require("./lib/version");
-var OS = require("os");
-var downloader = require("./downloader");
+const Command = require('./lib/command')
+const TaskError = require('./lib/errors/taskerror')
+const TruffleError = require('@truffle/error')
+const version = require('./lib/version')
+const OS = require('os')
+const downloader = require('./downloader')
 
-var command = new Command(require("./lib/commands"));
+const command = new Command(require('./lib/commands'))
 
-var options = {
+const options = {
   logger: console
-};
+}
 
-var commands = process.argv.slice(2)
+const commands = process.argv.slice(2)
 
 if (commands[0] === '--download-compiler' && commands[1]) {
 
@@ -22,33 +21,29 @@ if (commands[0] === '--download-compiler' && commands[1]) {
 
 } else {
 
-  var command = new Command(require("./lib/commands"));
-
-  var options = {
-    logger: console
-  };
-
   command.run(process.argv.slice(2), options, function (err) {
     if (err) {
       if (err instanceof TaskError) {
         command.args
-          .usage("Tronbox v" + (version.bundle || version.core) + " - a development framework for tronweb"
+          .usage('Tronbox v' + (version.bundle || version.core) + ' - a development framework for tronweb'
             + OS.EOL + OS.EOL
             + 'Usage: tronbox <command> [options]')
-          .epilog("See more at https://developers.tron.network/docs/tron-box-user-guide")
-          .showHelp();
+          .epilog('See more at https://developers.tron.network/docs/tron-box-user-guide')
+          .showHelp()
       } else {
         if (err instanceof TruffleError) {
-          console.log(err.message);
-        } else if (typeof err == "number") {
+          console.error(err.message)
+        } else if (typeof err === 'number') {
           // If a number is returned, exit with that number.
-          process.exit(err);
+          // eslint-disable-next-line no-process-exit
+          process.exit(err)
         } else {
           // Bubble up all other unexpected errors.
-          console.log(err.stack || err.toString());
+          console.error(err.stack || err.toString())
         }
       }
-      process.exit(1);
+      // eslint-disable-next-line no-process-exit
+      process.exit(1)
     }
 
     // Don't exit if no error; if something is keeping the process open,
@@ -56,12 +51,12 @@ if (commands[0] === '--download-compiler' && commands[1]) {
 
     // Clear any polling or open sockets - `provider-engine` in HDWallet
     // and `web3 1.0 confirmations` both leave interval timers etc wide open.
-    const handles = process._getActiveHandles();
+    const handles = process._getActiveHandles()
     handles.forEach(handle => {
       if (typeof handle.close === 'function') {
-        handle.close();
+        handle.close()
       }
     })
-  });
+  })
 
 }

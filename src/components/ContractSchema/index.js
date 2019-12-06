@@ -1,10 +1,9 @@
-var sha3 = require("crypto-js/sha3");
-var pkgVersion = "2.0.1";
-var Ajv = require("ajv");
+const pkgVersion = '2.0.1'
+const Ajv = require('ajv')
 
-var contractObjectSchema = require("./spec/contract-object.spec.json");
-var networkObjectSchema = require("./spec/network-object.spec.json");
-var abiSchema = require("./spec/abi.spec.json");
+const contractObjectSchema = require('./spec/contract-object.spec.json')
+const networkObjectSchema = require('./spec/network-object.spec.json')
+const abiSchema = require('./spec/abi.spec.json')
 
 
 /**
@@ -29,88 +28,88 @@ var abiSchema = require("./spec/abi.spec.json");
  * The optional `transform` parameter standardizes value regardless of source,
  * for purposes of ensuring data type and/or string schemas.
  */
-var properties = {
-  "contractName": {
-    "sources": ["contractName", "contract_name"]
+const properties = {
+  contractName: {
+    sources: ['contractName', 'contract_name']
   },
-  "abi": {
-    "sources": ["abi", "interface"],
-    "transform": function(value) {
-      if (typeof value === "string") {
+  abi: {
+    sources: ['abi', 'interface'],
+    transform: function (value) {
+      if (typeof value === 'string') {
         try {
           value = JSON.parse(value)
         } catch (e) {
-          value = undefined;
+          value = undefined
         }
       }
-      return value;
+      return value
     }
   },
-  "bytecode": {
-    "sources": [
-      "bytecode", "binary", "unlinked_binary", "evm.bytecode.object"
+  bytecode: {
+    sources: [
+      'bytecode', 'binary', 'unlinked_binary', 'evm.bytecode.object'
     ],
-    "transform": function(value) {
-      if (value && value.indexOf("0x") != 0) {
-        value = "0x" + value;
+    transform: function (value) {
+      if (value && value.indexOf('0x') !==0) {
+        value = '0x' + value
       }
-      return value;
+      return value
     }
   },
-  "deployedBytecode": {
-    "sources": [
-      "deployedBytecode", "runtimeBytecode", "evm.deployedBytecode.object"
+  deployedBytecode: {
+    sources: [
+      'deployedBytecode', 'runtimeBytecode', 'evm.deployedBytecode.object'
     ],
-    "transform": function(value) {
-      if (value && value.indexOf("0x") != 0) {
-        value = "0x" + value;
+    transform: function (value) {
+      if (value && value.indexOf('0x') !==0) {
+        value = '0x' + value
       }
-      return value;
+      return value
     }
   },
-  "sourceMap": {
-    "sources": ["sourceMap", "srcmap", "evm.bytecode.sourceMap"]
+  sourceMap: {
+    sources: ['sourceMap', 'srcmap', 'evm.bytecode.sourceMap']
   },
-  "deployedSourceMap": {
-    "sources": ["deployedSourceMap", "srcmapRuntime", "evm.deployedBytecode.sourceMap"]
+  deployedSourceMap: {
+    sources: ['deployedSourceMap', 'srcmapRuntime', 'evm.deployedBytecode.sourceMap']
   },
-  "source": {},
-  "sourcePath": {},
-  "ast": {},
-  "legacyAST": {
-    "transform": function(value, obj) {
-      var schemaVersion = obj.schemaVersion || "0.0.0";
+  source: {},
+  sourcePath: {},
+  ast: {},
+  legacyAST: {
+    transform: function (value, obj) {
+      const schemaVersion = obj.schemaVersion || '0.0.0'
 
       // legacyAST introduced in v2.0.0
       if (schemaVersion[0] < 2) {
-        return obj.ast;
+        return obj.ast
       } else {
         return value
       }
     }
   },
-  "compiler": {},
-  "networks": {
-    "transform": function(value) {
+  compiler: {},
+  networks: {
+    transform: function (value) {
       if (value === undefined) {
         value = {}
       }
-      return value;
+      return value
     }
   },
-  "schemaVersion": {
-    "sources": ["schemaVersion", "schema_version"]
+  schemaVersion: {
+    sources: ['schemaVersion', 'schema_version']
   },
-  "updatedAt": {
-    "sources": ["updatedAt", "updated_at"],
-    "transform": function(value) {
-      if (typeof value === "number") {
-        value = new Date(value).toISOString();
+  updatedAt: {
+    sources: ['updatedAt', 'updated_at'],
+    transform: function (value) {
+      if (typeof value === 'number') {
+        value = new Date(value).toISOString()
       }
-      return value;
+      return value
     }
   }
-};
+}
 
 
 /**
@@ -121,14 +120,16 @@ var properties = {
  */
 function getter(key, transform) {
   if (transform === undefined) {
-    transform = function(x) { return x };
+    transform = function (x) {
+      return x
+    }
   }
 
-  return function(obj) {
+  return function (obj) {
     try {
-      return transform(obj[key]);
+      return transform(obj[key])
     } catch (e) {
-      return undefined;
+      return undefined
     }
   }
 }
@@ -145,11 +146,11 @@ function getter(key, transform) {
  * of operations.
  */
 function chain() {
-  var getters = Array.prototype.slice.call(arguments);
-  return function(obj) {
+  const getters = Array.prototype.slice.call(arguments)
+  return function (obj) {
     return getters.reduce(function (cur, get) {
-      return get(cur);
-    }, obj);
+      return get(cur)
+    }, obj)
   }
 }
 
@@ -157,79 +158,81 @@ function chain() {
 // Schema module
 //
 
-var TruffleContractSchema = {
+const TruffleContractSchema = {
   // Return a promise to validate a contract object
   // - Resolves as validated `contractObj`
   // - Rejects with list of errors from schema validator
-  validate: function(contractObj) {
-    var ajv = new Ajv({ useDefaults: true });
-    ajv.addSchema(abiSchema);
-    ajv.addSchema(networkObjectSchema);
-    ajv.addSchema(contractObjectSchema);
-    if (ajv.validate("contract-object.spec.json", contractObj)) {
-      return contractObj;
+  validate: function (contractObj) {
+    const ajv = new Ajv({useDefaults: true})
+    ajv.addSchema(abiSchema)
+    ajv.addSchema(networkObjectSchema)
+    ajv.addSchema(contractObjectSchema)
+    if (ajv.validate('contract-object.spec.json', contractObj)) {
+      return contractObj
     } else {
-      throw ajv.errors;
+      throw ajv.errors
     }
   },
 
   // accepts as argument anything that can be turned into a contract object
   // returns a contract object
-  normalize: function(objDirty, options) {
-    options = options || {};
-    var normalized = {};
+  normalize: function (objDirty, options) {
+    options = options || {}
+    const normalized = {}
 
     // iterate over each property
-    Object.keys(properties).forEach(function(key) {
-      var property = properties[key];
-      var value;  // normalized value || undefined
+    Object.keys(properties).forEach(function (key) {
+      const property = properties[key]
+      let value  // normalized value || undefined
 
       // either used the defined sources or assume the key will only ever be
       // listed as its canonical name (itself)
-      var sources = property.sources || [key];
+      const sources = property.sources || [key]
 
       // iterate over sources until value is defined or end of list met
-      for (var i = 0; value === undefined && i < sources.length; i++) {
-        var source = sources[i];
+      for (let i = 0; value === undefined && i < sources.length; i++) {
+        let source = sources[i]
         // string refers to path to value in objDirty, split and chain
         // getters
-        if (typeof source === "string") {
-          var traversals = source.split(".")
-            .map(function(k) { return getter(k) });
-          source = chain.apply(null, traversals);
+        if (typeof source === 'string') {
+          const traversals = source.split('.')
+            .map(function (k) {
+              return getter(k)
+            })
+          source = chain.apply(null, traversals)
         }
 
         // source should be a function that takes the objDirty and returns
         // value or undefined
-        value = source(objDirty);
+        value = source(objDirty)
       }
 
       // run source-agnostic transform on value
       // (e.g. make sure bytecode begins 0x)
       if (property.transform) {
-        value = property.transform(value, objDirty);
+        value = property.transform(value, objDirty)
       }
 
       // add resulting (possibly undefined) to normalized obj
-      normalized[key] = value;
-    });
+      normalized[key] = value
+    })
 
     // Copy x- options
-    Object.keys(objDirty).forEach(function(key) {
-      if (key.indexOf("x-") === 0) {
-        normalized[key] = getter(key)(objDirty);
+    Object.keys(objDirty).forEach(function (key) {
+      if (key.indexOf('x-') === 0) {
+        normalized[key] = getter(key)(objDirty)
       }
-    });
+    })
 
     // update schema version
-    normalized.schemaVersion = pkgVersion;
+    normalized.schemaVersion = pkgVersion
 
     if (options.validate) {
-      this.validate(normalized);
+      this.validate(normalized)
     }
 
     return normalized
   }
-};
+}
 
-module.exports = TruffleContractSchema;
+module.exports = TruffleContractSchema

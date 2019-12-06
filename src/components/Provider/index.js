@@ -1,78 +1,78 @@
-var {TronWeb} = require("../TronWrap");
-var wrapper = require('./wrapper');
+const {TronWeb} = require('../TronWrap')
+const wrapper = require('./wrapper')
 
 module.exports = {
-  wrap: function(provider, options) {
-    return wrapper.wrap(provider, options);
+  wrap: function (provider, options) {
+    return wrapper.wrap(provider, options)
   },
 
-  create: function(options) {
-    var provider;
+  create: function (options) {
+    let provider
 
-    if (options.provider && typeof options.provider == "function") {
-      provider = options.provider();
+    if (options.provider && typeof options.provider === 'function') {
+      provider = options.provider()
     } else if (options.provider) {
-      provider = options.provider;
+      provider = options.provider
     } else {
 
       const HttpProvider = TronWeb.providers.HttpProvider
 
       HttpProvider.prototype.send = function (payload) {
-        var request = this.prepareRequest(false);
+        const request = this.prepareRequest(false)
 
         try {
-          request.send(JSON.stringify(payload));
+          request.send(JSON.stringify(payload))
         } catch (error) {
-          throw errors.InvalidConnection(this.host);
+          throw new Error(`Invalid Connection (${this.host})`)
         }
 
-        var result = request.responseText;
+        let result = request.responseText
 
         try {
-          result = JSON.parse(result);
+          result = JSON.parse(result)
         } catch (e) {
-          throw errors.InvalidResponse(request.responseText);
+          throw new Error(`Invalid Response (${request.responseText})`)
         }
 
-        return result;
-      };
+        return result
+      }
 
       HttpProvider.prototype.sendAsync = function (payload, callback) {
-        var request = this.prepareRequest(true);
+        const request = this.prepareRequest(true)
 
         request.onreadystatechange = function () {
           if (request.readyState === 4 && request.timeout !== 1) {
-            var result = request.responseText;
-            var error = null;
+            let result = request.responseText
+            let error = null
 
             try {
-              result = JSON.parse(result);
+              result = JSON.parse(result)
             } catch (e) {
-              error = errors.InvalidResponse(request.responseText);
+              error = new Error(`Invalid Response (${request.responseText})`)
             }
 
-            callback(error, result);
+            callback(error, result)
           }
-        };
+        }
 
         request.ontimeout = function () {
-          callback(errors.ConnectionTimeout(this.timeout));
-        };
+          throw new Error(`Connection Timeout (${this.timeout})`)
+        }
 
         try {
-          request.send(JSON.stringify(payload));
+          request.send(JSON.stringify(payload))
         } catch (error) {
-          callback(errors.InvalidConnection(this.host));
+          callback(new Error(`Invalid Connection (${this.host})`))
         }
-        return request;
-      };
+        return request
+      }
 
-      provider = new HttpProvider(options.fullHost);
+      provider = new HttpProvider(options.fullHost)
     }
-    return this.wrap(provider, options);
+    return this.wrap(provider, options)
   },
 
-  test_connection: function(provider, callback) {
+  test_connection: function (provider, callback) {
     callback(null, true)
   }
-};
+}
