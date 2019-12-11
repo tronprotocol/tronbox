@@ -240,9 +240,12 @@ Supported versions:
 0.5.9
 ```
 
-## Latest version is 2.7.5
+## Latest version is 2.7.7
 
 ## Recent history (selected)
+
+__2.7.7__
+* Fix Babel bug involving generators
 
 __2.7.5__
 * More refactoring
