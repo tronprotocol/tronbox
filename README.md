@@ -240,12 +240,16 @@ Supported versions:
 0.5.9
 ```
 
-## Latest version is 2.7.5
+## Latest version is 2.7.7
 
 ## Recent history (selected)
 
-__2.7.6__
+__2.7.8__
 * Update to Tronweb 2.1.0, which allows to deploy contract requiring arrays of addresses
+
+__2.7.7__
+* Fix Babel bug involving generators
+>>>>>>> master
 
 __2.7.5__
 * More refactoring
