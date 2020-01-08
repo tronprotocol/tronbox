@@ -244,6 +244,9 @@ Supported versions:
 
 ## Recent history (selected)
 
+__2.7.6__
+* Update to Tronweb 2.1.0, which allows to deploy contract requiring arrays of addresses
+
 __2.7.5__
 * More refactoring
 * Show alert if compilers cannot be downloaded
