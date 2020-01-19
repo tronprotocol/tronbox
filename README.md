@@ -244,6 +244,9 @@ Supported versions:
 
 ## Recent history (selected)
 
+__2.7.10__
+* Fix for no module '.' found issue
+
 __2.7.8__
 * Update to Tronweb 2.1.0, which allows to deploy contract requiring arrays of addresses
 
