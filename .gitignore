@@ -5,6 +5,7 @@ dependencies
 build
 tmp
 dist
+.idea
 
 # for now
 CONTRIBUTING.md
