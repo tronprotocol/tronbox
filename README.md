@@ -244,6 +244,9 @@ Supported versions:
 
 ## Recent history (selected)
 
+__2.7.11__
+* Add support for Solidity compiler 0.5.10
+
 __2.7.10__
 * Fix for no module '.' found issue
 
