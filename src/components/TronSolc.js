@@ -5,11 +5,11 @@ const fs = require('fs-extra')
 const homedir = require('homedir')
 const {execSync} = require('child_process')
 
-const supportedVersions = [
-  '0.4.24', '0.4.25', '0.5.4', '0.5.8'
+let supportedVersions = [
+  '0.4.24', '0.4.25', '0.5.4', '0.5.8', '0.5.10'
 ]
 
-const maxVersion = '0.5.9'
+const maxVersion = '0.5.10'
 
 function getWrapper(options = {}) {
 
@@ -17,7 +17,7 @@ function getWrapper(options = {}) {
     const params = options.networkInfo.parameters
     for (const p of params) {
       if (p.key === 'getAllowTvmSolidity059') {
-        if (p.value) {
+        if (p.value && !supportedVersions.includes('0.5.9')) {
           supportedVersions.push('0.5.9')
           break
         }
@@ -26,6 +26,9 @@ function getWrapper(options = {}) {
   } // eslint-disable-next-line no-empty
   catch (e) {
   }
+  supportedVersions =
+    supportedVersions.map( a => a.split('.').map( n => +n+100000 ).join('.')).sort()
+      .map( a => a.split('.').map( n => +n-100000 ).join('.'));
 
   let compilerVersion = '0.5.4'
   const solcDir = path.join(homedir(), '.tronbox', 'solc')
