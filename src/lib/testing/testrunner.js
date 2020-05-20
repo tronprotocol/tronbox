@@ -33,15 +33,24 @@ function TestRunner(options) {
   this.known_events = {}
   this.tronwrap = TronWrap()
 
-  global.tronWeb = new TronWeb(
-    this.tronwrap.fullNode,
-    this.tronwrap.solidityNode,
-    this.tronwrap.eventServer,
-    this.tronwrap.defaultPrivateKey
-  )
+  if(this.tronwrap.sunWeb) {
+    global.sunWeb = this.tronwrap.sunWeb
+    global.tronWeb = this.tronwrap.sunWeb.mainchain
+  } else {
+    global.tronWeb = new TronWeb(
+      this.tronwrap.fullNode,
+      this.tronwrap.solidityNode,
+      this.tronwrap.eventServer,
+      this.tronwrap.defaultPrivateKey
+    )
+  }
 
   // eslint-disable-next-line no-undef
-  global.waitForTransactionReceipt = waitForTransactionReceipt(tronWeb)
+  if(this.tronwrap.sunWeb) {
+    global.waitForTransactionReceipt = waitForTransactionReceipt(sunWeb.sidechain)
+  } else {
+    global.waitForTransactionReceipt = waitForTransactionReceipt(tronWeb)
+  }
 
   // For each test
   this.currentTestStartBlock = null
