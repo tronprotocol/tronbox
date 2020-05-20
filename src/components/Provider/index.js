@@ -67,7 +67,7 @@ module.exports = {
         return request
       }
 
-      provider = new HttpProvider(options.fullHost)
+      provider = new HttpProvider(options.fullHost || options.fullNode || options.mainChainFullNode)
     }
     return this.wrap(provider, options)
   },

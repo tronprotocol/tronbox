@@ -24,6 +24,14 @@ function Config(truffle_directory, working_directory, network) {
     fullNode: null,
     solidityNode: null,
     eventServer: null,
+    deployOnSideChain: null,
+    mainChainFullNode: null,
+    mainChainEventNode: null,
+    sideChainFullNode: null,
+    sideChainEventNode: null,
+    mainChainGateway: null,
+    sideChainGateway: null,
+    sideChainId: null,
     feeLimit: null,
     userFeePercentage: null,
     originEnergyLimit: null,
@@ -194,6 +202,102 @@ function Config(truffle_directory, working_directory, network) {
       },
       set: function () {
         throw new Error("Don't set config.eventServer directly. Instead, set config.networks and then config.networks[<network name>].eventServer")
+      }
+    },
+    deployOnSideChain: {
+      get: function () {
+        try {
+          return self.network_config.deployOnSideChain
+        } catch (e) {
+          return default_tx_values.deployOnSideChain
+        }
+      },
+      set: function () {
+        throw new Error("Don't set config.deployOnSideChain directly. Instead, set config.networks and then config.networks[<network name>].deployOnSideChain")
+      }
+    },
+    mainChainFullNode: {
+      get: function () {
+        try {
+          return self.network_config.mainChainFullNode
+        } catch (e) {
+          return default_tx_values.mainChainFullNode
+        }
+      },
+      set: function () {
+        throw new Error("Don't set config.mainChainFullNode directly. Instead, set config.networks and then config.networks[<network name>].mainChainFullNode")
+      }
+    },
+    mainChainEventNode: {
+      get: function () {
+        try {
+          return self.network_config.mainChainEventNode
+        } catch (e) {
+          return default_tx_values.mainChainEventNode
+        }
+      },
+      set: function () {
+        throw new Error("Don't set config.mainChainEventNode directly. Instead, set config.networks and then config.networks[<network name>].mainChainEventNode")
+      }
+    },
+    sideChainFullNode: {
+      get: function () {
+        try {
+          return self.network_config.sideChainFullNode
+        } catch (e) {
+          return default_tx_values.sideChainFullNode
+        }
+      },
+      set: function () {
+        throw new Error("Don't set config.sideChainFullNode directly. Instead, set config.networks and then config.networks[<network name>].sideChainFullNode")
+      }
+    },
+    sideChainEventNode: {
+      get: function () {
+        try {
+          return self.network_config.sideChainEventNode
+        } catch (e) {
+          return default_tx_values.sideChainEventNode
+        }
+      },
+      set: function () {
+        throw new Error("Don't set config.sideChainEventNode directly. Instead, set config.networks and then config.networks[<network name>].sideChainEventNode")
+      }
+    },
+    mainChainGateway: {
+      get: function () {
+        try {
+          return self.network_config.mainChainGateway
+        } catch (e) {
+          return default_tx_values.mainChainGateway
+        }
+      },
+      set: function () {
+        throw new Error("Don't set config.mainChainGateway directly. Instead, set config.networks and then config.networks[<network name>].mainChainGateway")
+      }
+    },
+    sideChainGateway: {
+      get: function () {
+        try {
+          return self.network_config.sideChainGateway
+        } catch (e) {
+          return default_tx_values.sideChainGateway
+        }
+      },
+      set: function () {
+        throw new Error("Don't set config.sideChainGateway directly. Instead, set config.networks and then config.networks[<network name>].sideChainGateway")
+      }
+    },
+    sideChainId: {
+      get: function () {
+        try {
+          return self.network_config.sideChainId
+        } catch (e) {
+          return default_tx_values.sideChainId
+        }
+      },
+      set: function () {
+        throw new Error("Don't set config.sideChainId directly. Instead, set config.networks and then config.networks[<network name>].sideChainId")
       }
     },
     userFeePercentage: {

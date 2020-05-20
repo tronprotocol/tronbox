@@ -1,4 +1,5 @@
 const _TronWeb = require('tronweb')
+const _SunWeb = require('sunweb')
 const chalk = require('chalk')
 const constants = require('./constants')
 const axios = require('axios')
@@ -69,7 +70,10 @@ function init(options, extraOptions = {}) {
 
   if (extraOptions.verify && (
     !options || !options.privateKey || !(
-      options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
+      options.fullHost ||
+      (options.fullNode && options.solidityNode && options.eventServer) ||
+      (options.mainChainFullNode && options.mainChainEventNode) ||
+      options.deployOnSideChain
     )
   )) {
     if (!options) {
@@ -79,12 +83,52 @@ function init(options, extraOptions = {}) {
     }
   }
 
-  TronWrap.prototype = new _TronWeb(
-    options.fullNode || options.fullHost,
-    options.solidityNode || options.fullHost,
-    options.eventServer || options.fullHost,
-    options.privateKey
-  )
+  const deployOnSideChain = options.deployOnSideChain;
+  if (deployOnSideChain) {
+    if (
+      !(
+        options.mainChainFullNode &&
+        options.mainChainEventNode &&
+        options.sideChainFullNode &&
+        options.sideChainEventNode &&
+        options.mainChainGateway &&
+        options.sideChainGateway &&
+        options.sideChainId
+      )
+    ) {
+      throw new Error('It was not possible to instantiate SunWeb. Some required parameters are missing in your "tronbox.js".');
+    }
+
+    const mainchain = new _TronWeb(
+      options.mainChainFullNode,
+      options.mainChainFullNode,
+      options.mainChainEventNode,
+      options.privateKey
+    )
+    const sidechain = new _TronWeb(
+      options.sideChainFullNode,
+      options.sideChainFullNode,
+      options.sideChainEventNode,
+      options.privateKey
+    )
+    const sunweb = new _SunWeb(
+      mainchain,
+      sidechain,
+      options.mainChainGateway,
+      options.sideChainGateway,
+      options.sideChainId
+    )
+
+    TronWrap.prototype = sunweb.sidechain
+    TronWrap.prototype.sunWeb = sunweb
+  } else {
+    TronWrap.prototype = new _TronWeb(
+      options.fullNode || options.fullHost || options.mainChainFullNode,
+      options.solidityNode || options.fullHost || options.mainChainFullNode,
+      options.eventServer || options.fullHost || options.mainChainEventNode,
+      options.privateKey
+    )
+  }
 
   const tronWrap = TronWrap.prototype
   // tronWrap._compilerVersion = 3
