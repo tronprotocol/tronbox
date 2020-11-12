@@ -6,6 +6,7 @@ Simple development framework for tronweb
 
 ## Installation
 `npm install -g tronbox`
+
 ## OS requirement
 - NodeJS 8.0+
 - Windows, Linux, or Mac OS X
@@ -15,9 +16,12 @@ Initialize a Customer Tron-Box Project<br>
 `tronbox init`
 <br>
 
-Download a dApp, ex: metacoin-box<br>
+Download a dApp, e.g. metacoin-box
 `tronbox unbox metacoin`
-<br>
+
+All the downloadable dApps can be found at [Tronbox-boxes](https://github.com/Tronbox-boxes).
+
+
 
 Contract Compiler<br>
 `tronbox compile`
@@ -31,28 +35,22 @@ Optionally, you can select: <br>
 <br>
 
 ## Configuration
-To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. This is an example of `tronbox.js`:
+To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. An example of `tronbox.js` can be found [here](https://github.com/Tronbox-boxes/bare-box/blob/master/tronbox.js). 
+
+If you are connecting to **different** hosts for fullnode, solidity node, and event server, you may set `fullNode`, `solidityNode` and `eventServer` respectively:
+
 ```
 module.exports = {
   networks: {
     development: {
-// For trontools/quickstart docker image
-      privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
-      userFeePercentage: 30, // or consume_user_resource_percent
-      feeLimit: 100000000, // or fee_limit
-      originEnergyLimit: 1e8, // or origin_energy_limit
-      callValue: 0, // or call_value
+			...
       fullNode: "http://127.0.0.1:8090",
       solidityNode: "http://127.0.0.1:8091",
       eventServer: "http://127.0.0.1:8092",
       network_id: "*"
     },
     mainnet: {
-// Don't put your private key here, pass it using an env variable, like:
-// PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
-      privateKey: process.env.PK,
-      userFeePercentage: 30,
-      feeLimit: 100000000,
+			...
       fullNode: "https://api.trongrid.io",
       solidityNode: "https://api.trongrid.io",
       eventServer: "https://api.trongrid.io",
@@ -61,31 +59,26 @@ module.exports = {
   }
 };
 ```
-Starting from TronBox 2.1.9, if you are connecting to the same host for full and solidity nodes, and event server, you can set just `fullHost`:
+If you are connecting to the **same** host for fullnode, solidity node, and event server, you can just set `fullHost`:
 ```
 module.exports = {
   networks: {
     development: {
-// For trontools/quickstart docker image
-      privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
-      userFeePercentage: 30,
-      feeLimit: 100000000,
+			...
       fullHost: "http://127.0.0.1:9090",
       network_id: "*"
     },
     mainnet: {
-// Don't put your private key here, pass it using an env variable, like:
-// PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
-      privateKey: process.env.PK,
-      userFeePercentage: 30,
-      feeLimit: 100000000,
+			...
       fullHost: "https://api.trongrid.io",
       network_id: "*"
     }
   }
 };
 ```
-Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mononode on port 9090.
+Notice that the example above uses [Tron Quickstart](https://github.com/TRON-US/docker-tron-quickstart) >= 1.1.16, which exposes a mononode on port 9090.
+
+Check out [Tron Deployment](https://tronprotocol.github.io/documentation-en/developers/deployment/) if you would like to deploy a local Tron Fullnode with [java-tron](https://github.com/tronprotocol/java-tron).
 
 ## Contract Migration<br>
 `tronbox migrate`
@@ -238,9 +231,8 @@ Supported versions:
 0.5.4
 0.5.8
 0.5.9
+0.5.10
 ```
-
-## Latest version is 2.7.7
 
 ## Recent history (selected)
 
