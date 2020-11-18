@@ -5,24 +5,28 @@ Simple development framework for tronweb
 [TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
 
 ## Installation
-`npm install -g tronbox`
+```
+npm install -g tronbox
+```
 ## OS requirement
 - NodeJS 8.0+
 - Windows, Linux, or Mac OS X
 
 ## Features
-Initialize a Customer Tron-Box Project<br>
-`tronbox init`
-<br>
+Initialize a Customer Tron-Box Project
+```
+tronbox init
+```
 
-Download a dApp, ex: metacoin-box<br>
-`tronbox unbox metacoin`
-<br>
+Download a dApp, ex: metacoin-box
+```
+tronbox unbox metacoin
+```
+Contract Compiler
+```
+tronbox compile
+```
 
-Contract Compiler<br>
-`tronbox compile`
-
-<br>
 To compile for all contracts, select --compile-all.
 
 Optionally, you can select: <br>
@@ -32,11 +36,11 @@ Optionally, you can select: <br>
 
 ## Configuration
 To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. This is an example of `tronbox.js`:
-```
+```javascript
 module.exports = {
   networks: {
     development: {
-// For trontools/quickstart docker image
+      // For trontools/quickstart docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
       userFeePercentage: 30, // or consume_user_resource_percent
       feeLimit: 100000000, // or fee_limit
@@ -48,8 +52,8 @@ module.exports = {
       network_id: "*"
     },
     mainnet: {
-// Don't put your private key here, pass it using an env variable, like:
-// PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
+      // Don't put your private key here, pass it using an env variable, like:
+      // PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
       privateKey: process.env.PK,
       userFeePercentage: 30,
       feeLimit: 100000000,
@@ -62,11 +66,11 @@ module.exports = {
 };
 ```
 Starting from TronBox 2.1.9, if you are connecting to the same host for full and solidity nodes, and event server, you can set just `fullHost`:
-```
+```javascript
 module.exports = {
   networks: {
     development: {
-// For trontools/quickstart docker image
+      // For trontools/quickstart docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
       userFeePercentage: 30,
       feeLimit: 100000000,
@@ -74,8 +78,8 @@ module.exports = {
       network_id: "*"
     },
     mainnet: {
-// Don't put your private key here, pass it using an env variable, like:
-// PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
+      // Don't put your private key here, pass it using an env variable, like:
+      // PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
       privateKey: process.env.PK,
       userFeePercentage: 30,
       feeLimit: 100000000,
@@ -87,14 +91,17 @@ module.exports = {
 ```
 Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mononode on port 9090.
 
-## Contract Migration<br>
-`tronbox migrate`
-<br>
+## Contract Migration
 
-This command will invoke all migration scripts within the migrations directory. If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command will have no operational effect. Instead, you can use the option `--reset` to restart the migration script.<br>
+```
+tronbox migrate
+```
 
-`tronbox migrate --reset`
-<br>
+This command will invoke all migration scripts within the migrations directory. If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command will have no operational effect. Instead, you can use the option `--reset` to restart the migration script.
+
+```
+tronbox migrate --reset
+```
 
 ## Parameters by contract (introduced in v2.2.2)
 
@@ -103,7 +110,7 @@ It is very important to set the deploying parameters for any contract. In TronBo
 migrations/2_deploy_contracts.js
 ```
 and specifying the parameters you need like in the following example:
-```
+```javascript
 var ConvertLib = artifacts.require("./ConvertLib.sol");
 var MetaCoin = artifacts.require("./MetaCoin.sol");
 
@@ -119,9 +126,11 @@ module.exports = function(deployer) {
 ```
 
 ## Start Console<br>
-This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this. <br>
+This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this.
 
-`tronbox console`<br>
+```
+tronbox console
+```
 
 The console supports the `tronbox` command. For example, you can invoke `migrate --reset` in the console. The result is the same as invoking `tronbox migrate --reset` in the command.
 <br>
@@ -136,18 +145,22 @@ The console supports the `tronbox` command. For example, you can invoke `migrate
 
 ## Testing<br>
 
-To carry out the test, run the following command:<br>
+To carry out the test, run the following command:
 
-`tronbox test`<br>
+```
+tronbox test
+```
 
-You can also run the test for a specific file：<br>
+You can also run the test for a specific file：
 
-`tronbox test ./path/to/test/file.js`<br>
+```
+tronbox test ./path/to/test/file.js
+```
 
 Testing in TronBox is a bit different than in Truffle.
 Let's say we want to test the contract Metacoin (from the Metacoin Box that you can download with `tronbox unbox metacoin`):
 
-```
+```solidity
 contract MetaCoin {
 	mapping (address => uint) balances;
 
@@ -177,7 +190,7 @@ contract MetaCoin {
 ```
 
 Now, take a look at the first test in `test/metacoin.js`:
-```
+```javascript
 var MetaCoin = artifacts.require("./MetaCoin.sol");
 contract('MetaCoin', function(accounts) {
   it("should put 10000 MetaCoin in the first account", function() {
@@ -191,17 +204,17 @@ contract('MetaCoin', function(accounts) {
   // ...
 ```
 Starting from version 2.0.5, in TronBox artifacts () the following commands are equivalent:
-```
+```javascript
 instance.call('getBalance', accounts[0]);
 instance.getBalance(accounts[0]);
 instance.getBalance.call(accounts[0]);
 ```
 and you can pass the `address` and `amount` for the method in both the following ways:
-```
+```javascript
 instance.sendCoin(address, amount, {from: account[1]});
 ```
 and
-```
+```javascript
 instance.sendCoin([address, amount], {from: account[1]});
 ```
 
@@ -210,21 +223,21 @@ instance.sendCoin([address, amount], {from: account[1]});
 1. Fork this repo.
 
 2. Clone your forked repo recursively, to include submodules, for example:
-```
+```shell script
 git clone --recurse-submodules -j8 git@github.com:sullof/tronbox.git
 ```
 3. If you use nvm for Node, please install Node 8, and install lerna globally:
-```
+```shell script
 nvm install v8.16.0
 nvm use v8.16.0
 npm i -g lerna
 ```
 4. Bootstrap the project:
-```
+```shell script
 lerna bootstrap
 ```
 5. During the development, for better debugging, you can run the unbuilt version of TronBox, for example
-```
+```shell script
 ./tronbox.dev migrate --reset
 ```
 
