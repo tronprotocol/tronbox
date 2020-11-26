@@ -1,4 +1,4 @@
-# TronBox
+# TronBox v2.7.14
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
@@ -241,6 +241,10 @@ lerna bootstrap
 ./tronbox.dev migrate --reset
 ```
 
+## TronBox versions
+
+[CHANGELOG](./CHANGELOG.md)
+
 ## Solc versions
 
 TronBox does not supports all the Solidity compilers.
@@ -254,4 +258,7 @@ Supported versions:
 0.5.10
 0.5.12
 0.5.13
+0.5.14
 ```
+
+more details: https://troncore.github.io/tron-solc-bin/bin/
