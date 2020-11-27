@@ -6,10 +6,10 @@ const homedir = require('homedir')
 const {execSync} = require('child_process')
 
 let supportedVersions = [
-  '0.4.24', '0.4.25', '0.5.4', '0.5.8', '0.5.10'
+  '0.4.24', '0.4.25', '0.5.4', '0.5.8', '0.5.10', '0.5.12', '0.5.13', '0.5.14'
 ]
 
-const maxVersion = '0.5.10'
+const maxVersion = '0.5.14'
 
 function getWrapper(options = {}) {
 

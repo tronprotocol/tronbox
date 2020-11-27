@@ -1,8 +1,14 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.7.13",
+  "version": "2.7.14",
   "description": "TronBox - Simple development framework for Tron",
+  "scripts": {
+    "build": "scripts/build.sh",
+    "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
+    "prepare": "npm run build",
+    "lint": "find src -name '*.js' | xargs node_modules/.bin/eslint"
+  },
   "dependencies": {
     "@truffle/contract-sources": "^0.1.6",
     "@truffle/error": "0.0.7",
@@ -70,12 +76,6 @@
   },
   "bin": {
     "tronbox": "build/tronbox.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
-    "prepare": "npm run build",
-    "lint": "find src -name '*.js' | xargs node_modules/.bin/eslint",
-    "build": "scripts/build.sh"
   },
   "repository": {
     "type": "git",
