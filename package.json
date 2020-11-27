@@ -3,6 +3,7 @@
   "namespace": "tronprotocol",
   "version": "2.7.14",
   "description": "TronBox - Simple development framework for Tron",
+  "keywords": ["TronBox", "TRON", "Solidity", "Truffle", "Contract"],
   "scripts": {
     "build": "scripts/build.sh",
     "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
@@ -79,11 +80,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tron-us/tronbox.git"
+    "url": "https://github.com/tronprotocol/tronbox.git"
   },
-  "homepage": "https://github.com/tron-us/tronbox/",
+  "homepage": "https://github.com/tronprotocol/tronbox",
   "bugs": {
-    "url": "https://github.com/tron-us/tronbox/issues"
+    "url": "https://github.com/tronprotocol/tronbox/issues"
   },
   "originalAuthor": "consensys.net",
   "author": "tron.network",
@@ -101,6 +102,11 @@
       "name": "Francesco Sullo",
       "email": "francesco@sullo.co",
       "url": "https://github.com/sullof"
+    },
+    {
+      "name": "Kang JianCheng",
+      "email": "1063303665@qq.com",
+      "url": "https://github.com/kjc233"
     }
   ],
   "publishConfig": {
