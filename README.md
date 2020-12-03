@@ -93,7 +93,7 @@ Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mo
 
 #### Configure Solc
 
-You can configure the solc compiler as in the following file tronbox.js
+You can configure the solc compiler as the following example in tronbox.js
 ```javascript
 module.exports = {
   networks: {
@@ -115,8 +115,8 @@ module.exports = {
 }
 ```
 
-TronBox does not support all the Solidity compilers.
-Supported versions:
+Tron Solidity supported the following versions:
+
 ```
 0.4.24
 0.4.25
