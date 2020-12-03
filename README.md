@@ -91,6 +91,47 @@ module.exports = {
 ```
 Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mononode on port 9090.
 
+#### Configure Solc
+
+You can configure the solc compiler as the following example in tronbox.js
+```javascript
+module.exports = {
+  networks: {
+    // ...
+    compilers: {
+      solc: {
+        version: '0.5.14' // for compiler version
+      }
+    }
+  },
+
+  // solc compiler optimize
+  solc: {
+    optimizer: {
+      enabled: true, // enable solc optimize, default: false
+      runs: 200
+    }
+  }
+}
+```
+
+Tron Solidity supported the following versions:
+
+```
+0.4.24
+0.4.25
+0.5.4
+0.5.8
+0.5.9
+0.5.10
+0.5.12
+0.5.13
+0.5.14
+```
+
+more versions details: https://troncore.github.io/tron-solc-bin/bin/
+
+
 ## Contract Migration
 
 ```
@@ -241,24 +282,6 @@ lerna bootstrap
 ./tronbox.dev migrate --reset
 ```
 
-## TronBox versions
+## TronBox Changelog
 
-[CHANGELOG](./CHANGELOG.md)
-
-## Solc versions
-
-TronBox does not supports all the Solidity compilers.
-Supported versions:
-```
-0.4.24
-0.4.25
-0.5.4
-0.5.8
-0.5.9
-0.5.10
-0.5.12
-0.5.13
-0.5.14
-```
-
-more details: https://troncore.github.io/tron-solc-bin/bin/
+for more details: [CHANGELOG](./CHANGELOG.md)
