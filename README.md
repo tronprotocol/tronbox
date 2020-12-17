@@ -100,7 +100,7 @@ module.exports = {
     // ...
     compilers: {
       solc: {
-        version: '0.5.14' // for compiler version
+        version: '0.5.15' // for compiler version
       }
     }
   },
@@ -108,9 +108,10 @@ module.exports = {
   // solc compiler optimize
   solc: {
     optimizer: {
-      enabled: true, // enable solc optimize, default: false
+      enabled: false, // default: false, true: enable solc optimize
       runs: 200
-    }
+    },
+    evmVersion: 'istanbul'
   }
 }
 ```
@@ -127,6 +128,7 @@ Tron Solidity supported the following versions:
 0.5.12
 0.5.13
 0.5.14
+0.5.15
 ```
 
 more versions details: https://troncore.github.io/tron-solc-bin/bin/
