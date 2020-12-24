@@ -265,22 +265,22 @@ instance.sendCoin([address, amount], {from: account[1]});
 
 Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
 
-First, get the latest version of tronbox dist.tarball
+First, get the version of tronbox dist.tarball
 
 ```shell
 $ npm view tronbox@ dist.tarball
-https://registry.npmjs.org/tronbox/-/tronbox-2.7.15.tgz
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.16.tgz
 ```
 Second, get the tarball
 
 ```shell
-wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.15.tgz
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.16.tgz
 ```
 
 Finally, verify the tarball
 
 ```shell
-$ pkgsign verify tronbox-2.7.15.tgz --package-name tronbox
+$ pkgsign verify tronbox-2.7.16.tgz --package-name tronbox
 extracting unsigned tarball...
 building file list...
 verifying package...
