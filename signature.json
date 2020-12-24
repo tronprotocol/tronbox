@@ -362,7 +362,7 @@
           },
           {
             "path": "README.md",
-            "sha512": "f6b1451c04706bc68c4b1f457f29ca470c89519fddc7731f2a4b8281c539f0e0e7963ae7b391a61402335fb4492f8d7f87a25f87c3951377d769b29d03dc00b5"
+            "sha512": "736593ba2d7e84b6b30e78f1bcc6b8cea4906ddacac766fc812123553567c5cfed69488f776e11166197c21712b605621bd2c6c846205ea6bd2918465b5268e8"
           }
         ]
       }
@@ -371,7 +371,7 @@
       "entry": "identity/v1alpha2",
       "value": {
         "identity": {
-          "pgpPublicKeyUrl": "https://keybase.io/troncoredev/pgp_keys.asc"
+          "pgpPublicKeyUrl": "https://keybase.io/tronbox/pgp_keys.asc"
         }
       }
     },
@@ -396,7 +396,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "da2466aeb2896d657c6be4964c479c66adcf66c857c1ae0d2055b053516778b5718085fb0a381c0c372e33429140dc516025e82d12c4142356d2e3613477e7f4"
+        "sha512": "916ce547c0f97e475a682259302167faf1720533b6d639b6aff8b875e4d7513e11e827356f19f821dc46eec6b841bb607b2477dce7ef4cc3844b88ad666414f4"
       }
     },
     {
@@ -405,7 +405,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "2.7.15-beta.1",
+          "version": "2.7.15",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -526,5 +526,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.9\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJf5FRRACEJECzzsMhzPWEHFiEEVvThto5sbbkdJt6+LPOw\nyHM9YQeZ5g//UaQKQKQSsnJc6+m9QpHBkGMyy2YLy/7NOEbEomqhbSZ1PfPv\nATlC3i05s1qE4sL4S6IJ5b5wLBv89zTlnLOgx+Ob7wvIjsvT6mWXRfXRY2As\nlWjaQtlOU/QztsnLZaa3OngKTwxPB1APR24PgkT4th8FS7bVnlqvcP4LKMJ0\nO7RvYqdfqITIdEgf6UA9uKXm9EiIOmeau9qBb1PdpkRB5dixLxLrPvw/Z4nq\nCxgF1gi6zaPX81Q9ExOyvVpgFGN3u0UdjrN3baBimsu5HyDyyK9O7janzULM\n087GSOwmVC/Bs++iU0prWdByvR88sv6bY+L8TFUgNukcgW9JdX6ijC5FEUJ2\n7Z/5ynwx/LxcvPGERFvil8KRKHumak4KCR/jYB72SmTBoVICM6VtGBrj92cK\n570aSiRVIepILxfXGxgMKXtWdFWZguMjqAJYnoLR0A/NKUWQaZun5QOUqv0k\nqv+oKm8QtAMDY9avdWKZzWQaicCDXj5BwUqXcxNS8Tzum2f9y6KJ+iUjYErt\n2o8gSZWN+AYrPvlEP/XVPjvRgoN20ZxcJRURfdKLbTvDC8eMOFCCn7VOl4gm\n9uf0ImJMsCFg9ucqC9lrDTU+w7X/jyNdwfzgo354Biw+VGJyz+v8VacFvGFQ\nQ3xFKN/BKw0GRTv4878Hr5OadvkVr9BJjGQ=\n=wjT9\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.9\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJf5GNiACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hgDhAAgOUc1j7racLrlBdgqDlzGAj/B2cNnWm3yK6uTyN/GYdeskc/\n4W3KO3a69xJFrTcfq0/ibm3UIMXlXSATAcKP1W7LPtDxlsEfMSs4lgTWukIe\niEuElmrsOAAZrrf0S8XQUS8K+J5YgkEqZKFPz34Ca3sip8FFliga2CwXTILu\nmTkj4kYYRh1ft+98e/Yt77DumZYmEwjjHLRBxsOhh210NesrVSwdgcKMvfPq\n3xdvoOVUm8qFVpPvBbHABuJ19NIM6gjv+F0dOAv0FgSlLu5OA7qHa8yZdEH9\nISijkrOvWTaqHfcKwIUWqrcKEB2B/3qEkuE+1rISJMHLgI6VTtEjf6CAhSVo\nk+SlgaSA4dilqi/PM5klVS6MwYtCKcjT9Fgwa8U65V31emjVGNICw+RkT6Mb\nTFlmrcLT8BMeXvmA778fSf9LygYLBmaxS6sKjbqMaPuvVCd79wSZQfFQ3r0S\n46tn8YAeSODueGaYNuSokkDKjp4XyxAecWBA18Afv3Avi2+4tenOls+sQzNy\nql6tecHbvtEbxVZx4okgIG6K1eQfG4d12k9Cs1hrh1FIR9BBttC+kqoWuiSU\nV07BJXmm6itr/Y0+ysCBthNyEvwx5GaNbjLIhEwOZwW3gK4r8JFUQkOW0lDp\nkOTUPA3U1BK7Qdq8U5uBsez4SZeh42gilq0=\n=KO/E\n-----END PGP SIGNATURE-----\n"
 }

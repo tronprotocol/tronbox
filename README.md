@@ -265,7 +265,7 @@ instance.sendCoin([address, amount], {from: account[1]});
 
 You need to use the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) to verify.
 
-You can find the signature public key [here](https://keybase.io/troncoredev/pgp_keys.asc).
+You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
 ## How to contribute
 
