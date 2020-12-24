@@ -1,4 +1,4 @@
-__2.7.16__
+__2.7.17__
 * Add support for Solidity compiler 0.5.15 and add signature for tronbox
 
 __2.7.14__
