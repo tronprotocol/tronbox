@@ -261,6 +261,12 @@ and
 instance.sendCoin([address, amount], {from: account[1]});
 ```
 
+# Verifying the PGP signature
+
+You need to use the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) to verify.
+
+You can find the signature public key [here](https://keybase.io/troncoredev/pgp_keys.asc).
+
 ## How to contribute
 
 1. Fork this repo.
