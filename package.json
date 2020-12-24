@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.7.15",
+  "version": "2.7.15-beta.3",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": ["TronBox", "TRON", "Solidity", "Truffle", "Contract"],
   "scripts": {
