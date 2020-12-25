@@ -315,5 +315,3 @@ lerna bootstrap
 ## TronBox Changelog
 
 for more details: [CHANGELOG](./CHANGELOG.md)
-
-> Note: keep up to date with latest version
