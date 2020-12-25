@@ -269,18 +269,18 @@ First, get the version of tronbox dist.tarball
 
 ```shell
 $ npm view tronbox@ dist.tarball
-https://registry.npmjs.org/tronbox/-/tronbox-2.7.16.tgz
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
 ```
 Second, get the tarball
 
 ```shell
-wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.16.tgz
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
 ```
 
 Finally, verify the tarball
 
 ```shell
-$ pkgsign verify tronbox-2.7.16.tgz --package-name tronbox
+$ pkgsign verify tronbox-2.7.17.tgz --package-name tronbox
 extracting unsigned tarball...
 building file list...
 verifying package...
