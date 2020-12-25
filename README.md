@@ -1,4 +1,4 @@
-# TronBox v2.7.14
+# TronBox v2.7.17
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
@@ -100,7 +100,7 @@ module.exports = {
     // ...
     compilers: {
       solc: {
-        version: '0.5.14' // for compiler version
+        version: '0.5.15' // for compiler version
       }
     }
   },
@@ -108,9 +108,10 @@ module.exports = {
   // solc compiler optimize
   solc: {
     optimizer: {
-      enabled: true, // enable solc optimize, default: false
+      enabled: false, // default: false, true: enable solc optimize
       runs: 200
-    }
+    },
+    evmVersion: 'istanbul'
   }
 }
 ```
@@ -127,6 +128,7 @@ Tron Solidity supported the following versions:
 0.5.12
 0.5.13
 0.5.14
+0.5.15
 ```
 
 more versions details: https://troncore.github.io/tron-solc-bin/bin/
@@ -258,6 +260,34 @@ and
 ```javascript
 instance.sendCoin([address, amount], {from: account[1]});
 ```
+
+# Verifying the PGP signature
+
+Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
+
+First, get the version of tronbox dist.tarball
+
+```shell
+$ npm view tronbox dist.tarball
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
+```
+Second, get the tarball
+
+```shell
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
+```
+
+Finally, verify the tarball
+
+```shell
+$ pkgsign verify tronbox-2.7.17.tgz --package-name tronbox
+extracting unsigned tarball...
+building file list...
+verifying package...
+package is trusted
+```
+
+You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
 ## How to contribute
 
