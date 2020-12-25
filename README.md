@@ -268,7 +268,7 @@ Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkg
 First, get the version of tronbox dist.tarball
 
 ```shell
-$ npm view tronbox@ dist.tarball
+$ npm view tronbox dist.tarball
 https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
 ```
 Second, get the tarball
