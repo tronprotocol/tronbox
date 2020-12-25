@@ -1,4 +1,4 @@
-# TronBox v2.7.14
+# TronBox v2.7.17
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
@@ -260,6 +260,34 @@ and
 ```javascript
 instance.sendCoin([address, amount], {from: account[1]});
 ```
+
+# Verifying the PGP signature
+
+Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
+
+First, get the version of tronbox dist.tarball
+
+```shell
+$ npm view tronbox dist.tarball
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
+```
+Second, get the tarball
+
+```shell
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
+```
+
+Finally, verify the tarball
+
+```shell
+$ pkgsign verify tronbox-2.7.17.tgz --package-name tronbox
+extracting unsigned tarball...
+building file list...
+verifying package...
+package is trusted
+```
+
+You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
 ## How to contribute
 
