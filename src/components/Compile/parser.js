@@ -61,15 +61,18 @@ module.exports = {
     }
 
     const solc = getWrapper(options)
-    let output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function (file_path) {
-      // Resolve dependency manually.
-      let contents
-      if (fs.existsSync(file_path)) {
-        contents = fs.readFileSync(file_path, {encoding: 'UTF-8'})
-      } else {
-        contents = 'pragma solidity ^0.4.0;'
+    let output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), {
+      // New syntax (supported from 0.5.12, mandatory from 0.6.0)
+      import: function (file_path) {
+        // Resolve dependency manually.
+        let contents
+        if (fs.existsSync(file_path)) {
+          contents = fs.readFileSync(file_path, { encoding: 'UTF-8' })
+        } else {
+          contents = 'pragma solidity ^0.4.0;'
+        }
+        return { contents: contents }
       }
-      return {contents: contents}
     })
 
     output = JSON.parse(output)
@@ -134,11 +137,15 @@ module.exports = {
     }
 
     const solc = getWrapper(options)
-    let output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), function () {
-      // The existence of this function ensures we get a parsable error message.
-      // Without this, we'll get an error message we *can* detect, but the key will make it easier.
-      // Note: This is not a normal callback. See docs here: https://github.com/ethereum/solc-js#from-version-021
-      return {error: importErrorKey}
+    let output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), {
+      // New syntax (supported from 0.5.12, mandatory from 0.6.0)
+      // tronbox compiler --all
+      import: function () {
+        // The existence of this function ensures we get a parsable error message.
+        // Without this, we'll get an error message we *can* detect, but the key will make it easier.
+        // Note: This is not a normal callback. See docs here: https://github.com/ethereum/solc-js#from-version-021
+        return { error: importErrorKey }
+      }
     })
 
     output = JSON.parse(output)
