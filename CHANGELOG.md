@@ -1,3 +1,7 @@
+__2.7.18__
+* Add support for Solidity compiler 0.6.0
+* bump solc-js from 0.5.9 to 0.8.0
+
 __2.7.17__
 * Add support for Solidity compiler 0.5.15 and add signature for tronbox
 
