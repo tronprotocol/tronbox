@@ -19,7 +19,6 @@ __2.7.8__
 
 __2.7.7__
 * Fix Babel bug involving generators
->>>>>>> master
 
 __2.7.5__
 * More refactoring
