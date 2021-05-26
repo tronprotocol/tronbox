@@ -160,7 +160,7 @@ module.exports = {
       // This means we have a *different* parsing error which we should show to the user.
       // Note: solc can return multiple parsing errors at once.
       // We ignore the "pre-release compiler" warning message.
-      return solidity_error.formattedMessage.indexOf(importErrorKey) < 0
+      return solidity_error.formattedMessage.indexOf(importErrorKey) < 0 && solidity_error.severity !== 'warning'
     })
 
     // Should we try to throw more than one? (aside; we didn't before)
