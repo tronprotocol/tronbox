@@ -1,9 +1,15 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.7.19",
+  "version": "2.7.20",
   "description": "TronBox - Simple development framework for Tron",
-  "keywords": ["TronBox", "TRON", "Solidity", "Truffle", "Contract"],
+  "keywords": [
+    "TronBox",
+    "TRON",
+    "Solidity",
+    "Truffle",
+    "Contract"
+  ],
   "scripts": {
     "build": "scripts/build.sh",
     "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",

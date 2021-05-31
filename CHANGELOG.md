@@ -1,3 +1,6 @@
+__2.7.20__
+* Merge Dependabot pull requests
+
 __2.7.19__
 * Add support for Solidity compiler 0.5.16, 0.5.17, 0.6.2, 0.6.8 and 0.6.12
 
