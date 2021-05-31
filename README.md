@@ -1,8 +1,8 @@
-# TronBox v2.7.14
+# TronBox v2.7.19
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
-[TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
+[TronBox Documentation](https://troncore.github.io/tronbox-document)
 
 ## Installation
 ```
@@ -90,6 +90,55 @@ module.exports = {
 };
 ```
 Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mononode on port 9090.
+
+#### Configure Solc
+
+You can configure the solc compiler as the following example in tronbox.js
+```javascript
+module.exports = {
+  networks: {
+    // ...
+    compilers: {
+      solc: {
+        version: '0.6.0' // for compiler version
+      }
+    }
+  },
+
+  // solc compiler optimize
+  solc: {
+    optimizer: {
+      enabled: false, // default: false, true: enable solc optimize
+      runs: 200
+    },
+    evmVersion: 'istanbul'
+  }
+}
+```
+
+Tron Solidity supported the following versions:
+
+```
+0.4.24
+0.4.25
+0.5.4
+0.5.8
+0.5.9
+0.5.10
+0.5.12
+0.5.13
+0.5.14
+0.5.15
+0.5.16
+0.5.17
+0.6.0
+0.6.2
+0.6.8
+0.6.12
+```
+
+more versions details: https://troncore.github.io/tron-solc-bin/bin/
+
 
 ## Contract Migration
 
@@ -218,6 +267,34 @@ and
 instance.sendCoin([address, amount], {from: account[1]});
 ```
 
+# Verifying the PGP signature
+
+Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
+
+First, get the version of tronbox dist.tarball
+
+```shell
+$ npm view tronbox dist.tarball
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.19.tgz
+```
+Second, get the tarball
+
+```shell
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.19.tgz
+```
+
+Finally, verify the tarball
+
+```shell
+$ pkgsign verify tronbox-2.7.19.tgz --package-name tronbox
+extracting unsigned tarball...
+building file list...
+verifying package...
+package is trusted
+```
+
+You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
+
 ## How to contribute
 
 1. Fork this repo.
@@ -241,24 +318,6 @@ lerna bootstrap
 ./tronbox.dev migrate --reset
 ```
 
-## TronBox versions
+## TronBox Changelog
 
-[CHANGELOG](./CHANGELOG.md)
-
-## Solc versions
-
-TronBox does not supports all the Solidity compilers.
-Supported versions:
-```
-0.4.24
-0.4.25
-0.5.4
-0.5.8
-0.5.9
-0.5.10
-0.5.12
-0.5.13
-0.5.14
-```
-
-more details: https://troncore.github.io/tron-solc-bin/bin/
+for more details: [CHANGELOG](./CHANGELOG.md)
