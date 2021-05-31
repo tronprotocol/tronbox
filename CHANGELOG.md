@@ -1,3 +1,10 @@
+__2.7.19__
+* Add support for Solidity compiler 0.5.16, 0.5.17, 0.6.2, 0.6.8 and 0.6.12
+
+__2.7.18__
+* Add support for Solidity compiler 0.6.0
+* bump solc-js from 0.5.9 to 0.8.0
+
 __2.7.17__
 * Add support for Solidity compiler 0.5.15 and add signature for tronbox
 
@@ -15,7 +22,6 @@ __2.7.8__
 
 __2.7.7__
 * Fix Babel bug involving generators
->>>>>>> master
 
 __2.7.5__
 * More refactoring

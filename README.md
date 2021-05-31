@@ -1,8 +1,8 @@
-# TronBox v2.7.17
+# TronBox v2.7.19
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
-[TronBox Documentation](https://developers.tron.network/docs/tron-box-user-guide)
+[TronBox Documentation](https://troncore.github.io/tronbox-document)
 
 ## Installation
 ```
@@ -100,7 +100,7 @@ module.exports = {
     // ...
     compilers: {
       solc: {
-        version: '0.5.15' // for compiler version
+        version: '0.6.0' // for compiler version
       }
     }
   },
@@ -129,6 +129,12 @@ Tron Solidity supported the following versions:
 0.5.13
 0.5.14
 0.5.15
+0.5.16
+0.5.17
+0.6.0
+0.6.2
+0.6.8
+0.6.12
 ```
 
 more versions details: https://troncore.github.io/tron-solc-bin/bin/
@@ -269,18 +275,18 @@ First, get the version of tronbox dist.tarball
 
 ```shell
 $ npm view tronbox dist.tarball
-https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.19.tgz
 ```
 Second, get the tarball
 
 ```shell
-wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.17.tgz
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.19.tgz
 ```
 
 Finally, verify the tarball
 
 ```shell
-$ pkgsign verify tronbox-2.7.17.tgz --package-name tronbox
+$ pkgsign verify tronbox-2.7.19.tgz --package-name tronbox
 extracting unsigned tarball...
 building file list...
 verifying package...
