@@ -10,7 +10,7 @@ async function downloader(compilerVersion) {
 
   await fs.ensureDir(path.join(dir))
 
-  const res = await req.get(`https://troncore.github.io/tron-solc-bin/bin/soljson_v${compilerVersion}.js`)
+  const res = await req.get(`https://tronsuper.github.io/tron-solc-bin/bin/soljson_v${compilerVersion}.js`)
     .responseType('blob')
 
   if (res && res.body) {

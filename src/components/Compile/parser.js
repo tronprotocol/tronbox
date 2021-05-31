@@ -160,7 +160,7 @@ module.exports = {
       // This means we have a *different* parsing error which we should show to the user.
       // Note: solc can return multiple parsing errors at once.
       // We ignore the "pre-release compiler" warning message.
-      return solidity_error.formattedMessage.indexOf(importErrorKey) < 0
+      return solidity_error.formattedMessage.indexOf(importErrorKey) < 0 && solidity_error.severity !== 'warning'
     })
 
     // Should we try to throw more than one? (aside; we didn't before)
@@ -168,16 +168,34 @@ module.exports = {
       throw new CompileError(nonImportErrors[0].formattedMessage)
     }
 
-    // Now, all errors must be import errors.
-    // Filter out our forced import, then get the import paths of the rest.
-    const imports = errors.filter(function (solidity_error) {
-      return solidity_error.message.indexOf(failingImportFileName) < 0
-    }).map(function (solidity_error) {
-      const matches = solidity_error.formattedMessage.match(/import[^'"]+("|')([^'"]+)("|');/)
 
-      // Return the item between the quotes.
-      return matches[2]
-    })
+    // Filter out our forced import, then get the import paths of the rest.
+    const imports = errors
+      .map(({ formattedMessage, message }) => {
+        // Multiline import check which works for solcjs and solc
+        // solcjs: ^ (Relevant source part starts here and spans across multiple lines)
+        // solc: Spanning multiple lines.
+        if (formattedMessage.includes("multiple lines")) {
+          // Parse the import filename from the error message, this does not include the full path to the import
+          const matches = message.match(/Source[^'"]?.*?("|')([^'"]+)("|')/);
+          if (matches) {
+            // Extract the full path by matching against body with the import filename
+            const fullPathRegex = new RegExp(`("|')(.*${matches[2]})("|')`);
+            const importMatches = body.match(fullPathRegex);
+            if (importMatches) return importMatches[2];
+          }
+        } else {
+          const matches = formattedMessage.match(
+            /import[^'"]?.*("|')([^'"]+)("|')/
+          );
+
+          // Return the item between the quotes.
+          if (matches) return matches[2];
+        }
+      })
+      .filter(
+        (match) => match !== undefined && match !== failingImportFileName
+      );
 
     return imports
   }
