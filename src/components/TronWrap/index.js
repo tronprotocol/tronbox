@@ -247,7 +247,7 @@ function init(options, extraOptions = {}) {
       myContract.bytecode = contract.bytecode
       myContract.deployed = true
 
-      myContract.loadAbi(contract.abi.entrys)
+      myContract.loadAbi(contract.abi.entrys || [])
 
       dlog('Contract deployed')
       return Promise.resolve(myContract)
