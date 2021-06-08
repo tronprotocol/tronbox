@@ -190,7 +190,7 @@
           },
           {
             "path": "build/components/TronWrap/index.js",
-            "sha512": "05012781cc8ab01efb48fc233a33e9a17fd4613c0fadb797967dd47fea5c63af15337ace67ba045f5e39ee550f47c4a02af00540852d2ec191de8bfa499fee89"
+            "sha512": "2df357db6521a6d498062dc91bc3806f04f3b261ce295f2c8e2a423cbae8b914e9e94c04325f4ddf2b757db410430f3193d5bd0c4c9526859ee81e839b85c090"
           },
           {
             "path": "build/index.js",
@@ -310,7 +310,7 @@
           },
           {
             "path": "build/components/TronSolc.js",
-            "sha512": "92cc6b4eecde5bfee6d2fab396ba6f43dd9b197e52793eada31f9b43a39ef0158078f621b52ba41330944471045352ba54c26bb5438c53722e8cd61aba804070"
+            "sha512": "270c967f073bbd49d6c6a6feb862e7be2e4d16513d7f75ba6e83fe85417a92a63fa6a8b6e894ee25c50328dab60fc78fbf7b0bfe5eba947ccb86e86f03e6fb09"
           },
           {
             "path": "build/components/Box/lib/utils/unbox.js",
@@ -358,11 +358,11 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "6d28605470667b004c8e5b9a466f5c45f7515914980d1a7ae69478aed8fc4f654747e136e50366b8b11044e25d087e6cb6eba3919ee22c17b44c86b020656fe4"
+            "sha512": "fb59cff153570017bd6a3d63bb8e3bc2420405ead793f24c61178b277b106fc74bc640b8f00d9ed8793c9ac982c287a65f2150e0ffd73a4ee883a3a984a5ee8c"
           },
           {
             "path": "README.md",
-            "sha512": "1c7043adbb1b15d8f5d2301519b56af012b48649291b307a26b11c03936636714ada81a1c616690d673d184e5a8fc7c6410d18f91b9f525982df4d91e90b18af"
+            "sha512": "2d6e302c72a47e69ed781876253d1d1bcef6718abd47de8ce00a587b2ff2a4fc7e7a8800d48d8096efdffc01f3c4e1727a6b99fc60c7319ac652cdbea072b57c"
           }
         ]
       }
@@ -396,7 +396,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "a2d31e19b3a21f778e3b761f5780e518a32ed3568859b7ef46b6bf0a6a2fff686ec83372d4da1beab99e6ec9e2655833da44e6786bb4617fa713234e1eec3afd"
+        "sha512": "e314b2b3a7e6ebcb0e24ee8142b433c9b3f8f8a60fe2233ce848711dbdfeb07e9ca8572dcc8f92feb9d9f2f2caa1f24301c196bdc79a3d2b2ed984558cd1aef0"
       }
     },
     {
@@ -405,7 +405,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "2.7.20",
+          "version": "2.7.21",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -526,5 +526,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJgtN0EACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hyNRAAvHx/A3K+pbDyVLI3BMC1DBQirxy7fJ6REG8uDrdpIFpSNheW\nTQsEAgGi2X0wotE3hBfLWwxWm695GCfUcQiW25zxxwEeDqbTjJFgMAjR5S76\nUxj2kej8Ydjk5VWbn0F1xYhpSJY6+LJDBIR8hkh8rcp6s1smYAHQbNsvOmk6\nXKy3SDnjCVXI7bHoBMgmN7I38hWd2R9siDsZ+zASsEZk/x2i8Y+5/1SIJcMm\ns6B5MIPuPa64Ff5Hq4PJZiUHywbkKZExc/z+1kyd3g6l9jarYqOkJm/1ezD6\n2m33et+KBhCYh6wLqwXOLjVAZGHm5YWx7FMm1uRrfKuOne58Q1WGj1lR5bvT\ncpjlu3SQd/1w6uWOPs88avA8ZRuYGi6aE5yhFV2pZwjCvQ4ckcjoHN2Pg7vq\nJbTSCZzZQWBVzQJlFMWAD6X4VDNuKs8GICILgFX5LkIilf9F/sIuvmpKy942\nyIgWpOAbva9j5NoSdayB9ggxhPdE9a/RdtQV38DMw+i3wBO5tiW8Gydr58PR\nseiioLxCVTuWeuCkchPKXp6lBOQmUCq+dOx4Y0fnpRhgf0sMe9trbSpCX2qU\nkh0Bn5KZrmcvLkVy8ZkacP1kDE3ulR71Vq/MVy3L+3sNXXXHLdreH1TGWIEC\nU7CrB0gGQzmUw5/1hstXJHwtDzJZDsKolPQ=\n=Iunv\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJgvf3ZACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1gZnw/9E/rPXThQyzktyNJV+HFmY32RBcxUSlEjGAN115Nqu8YbSl3G\na99nMeQ/3vccoGN8PvFpE8iEYM4LLwf0fEXmqFc4Aep6SHf1b5JhDEY20RXZ\nRFcNf259tFwc4MHILuUblD8Y4s36rqY5Hi2asNWIc+6sbS72CRVv+m6dCxHa\nUYLLpHH95hp+w5nrp18SERP3Ya4wcr/t9cHIbkv96n5Ho/p32HQFZiWIixsZ\nqh47IPEX5Hee/8mNT0HGmLhOoliG5Au6qlBjVBvakVXBUmIr166UgfwJ5nYM\npxueg8T2U4qHRx9Cjhxj6NVZDZoJ2lWzOb21X7Rv1IttLx6Mk23SzLcpD+xO\nI2QAAtcpQIGes/tGw6FuDOtPdpg7iMQX2J5y0OGMpgOxctyVZOq1XSjPpKLL\nJI/LYE1HI7rTYxoRnSPiyqQ7EdR7+pJ99KwQQCo4IlsUPkoXvnWWklfXkgPN\nq+JKz8TtuSCj2CH2HBSIcdHSe+vHm0N9FfL97jNUc7zGq9a1igqgplKijFeH\ndhu5jmBCxEfUsd4ZokrSk4yLFFhNiCTTrp3SxwJR0IXvdizCBL4JDzATH5v4\nZhH7e2YO63EnslevGVpyBj7JMX80oPPr1IWxlN2y5+Hj2d0qPJgrx5dzyO4D\n2eXdvnu4Z60tiIgfvsYAgsi/kZddeDt66nY=\n=yb/A\n-----END PGP SIGNATURE-----\n"
 }

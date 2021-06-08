@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.7.20",
+  "version": "2.7.21",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
