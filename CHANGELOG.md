@@ -1,3 +1,6 @@
+__2.7.22__
+* Add support for Solidity compiler 0.7.6
+
 __2.7.21__
 * Add support for Solidity compiler 0.7.0
 

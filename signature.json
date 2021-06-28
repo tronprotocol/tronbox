@@ -162,7 +162,7 @@
           },
           {
             "path": "build/components/Compile/index.js",
-            "sha512": "9e498ad96a7f82b853a074cc564b5c8ef0271580feae51f50627f925fb1d17e30c23180b44968ab400e828b39d12e9b3cbb89fc574e03bb37fc44c84eac9e6fc"
+            "sha512": "72890f5ced8421dfe196839396438d5943f751417ed8cf1f6273ad60053c195ca66c14f4dfc305538cd48dc3acbea19d3496cb2e7e48be75f929553402db1811"
           },
           {
             "path": "build/components/Contract/index.js",
@@ -310,7 +310,7 @@
           },
           {
             "path": "build/components/TronSolc.js",
-            "sha512": "270c967f073bbd49d6c6a6feb862e7be2e4d16513d7f75ba6e83fe85417a92a63fa6a8b6e894ee25c50328dab60fc78fbf7b0bfe5eba947ccb86e86f03e6fb09"
+            "sha512": "cacfa1b8665a9b63e2d86a1138df7a0a64fe30313a2457f2655c6b0c43cb8aa676f94685d4dcf5da650dee5cd5cb268e46aec0e354eae19e9449fd1212efed1a"
           },
           {
             "path": "build/components/Box/lib/utils/unbox.js",
@@ -358,11 +358,11 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "fb59cff153570017bd6a3d63bb8e3bc2420405ead793f24c61178b277b106fc74bc640b8f00d9ed8793c9ac982c287a65f2150e0ffd73a4ee883a3a984a5ee8c"
+            "sha512": "159e7b2a46826ea643411447461f5dc2375f69953dfe6bd59fb2864d65451c7b99c1a2923715f51ce681e7ebf85ffc725ac723256f46dd6fc34bc3c98fe05878"
           },
           {
             "path": "README.md",
-            "sha512": "2d6e302c72a47e69ed781876253d1d1bcef6718abd47de8ce00a587b2ff2a4fc7e7a8800d48d8096efdffc01f3c4e1727a6b99fc60c7319ac652cdbea072b57c"
+            "sha512": "74ccd997e9392a5347952218ac0fa6bdbfad4ef18c949761986abe1c9ef15433c7bfb7211c102d3372d670c7083920d94e4bce5c8935418b4e2bb1f43ef489d0"
           }
         ]
       }
@@ -396,7 +396,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "e314b2b3a7e6ebcb0e24ee8142b433c9b3f8f8a60fe2233ce848711dbdfeb07e9ca8572dcc8f92feb9d9f2f2caa1f24301c196bdc79a3d2b2ed984558cd1aef0"
+        "sha512": "7ee8b60a764f5902fca818931a07767a858a630377f24982ab71255917769be94ea3581fa636d6a05c6ba2c5424f99fc56de5bf87f2007ec3c54c6eec6e13800"
       }
     },
     {
@@ -405,7 +405,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "2.7.21",
+          "version": "2.7.22",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -456,7 +456,7 @@
             "safe-eval": "^0.4.1",
             "semver": "^6.1.1",
             "serve-static": "^1.10.0",
-            "solc": "0.8.0",
+            "solc": "0.8.6",
             "source-map-support": "^0.5.3",
             "spawn-args": "^0.1.0",
             "superagent": "^5.1.0",
@@ -526,5 +526,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJgvf3ZACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1gZnw/9E/rPXThQyzktyNJV+HFmY32RBcxUSlEjGAN115Nqu8YbSl3G\na99nMeQ/3vccoGN8PvFpE8iEYM4LLwf0fEXmqFc4Aep6SHf1b5JhDEY20RXZ\nRFcNf259tFwc4MHILuUblD8Y4s36rqY5Hi2asNWIc+6sbS72CRVv+m6dCxHa\nUYLLpHH95hp+w5nrp18SERP3Ya4wcr/t9cHIbkv96n5Ho/p32HQFZiWIixsZ\nqh47IPEX5Hee/8mNT0HGmLhOoliG5Au6qlBjVBvakVXBUmIr166UgfwJ5nYM\npxueg8T2U4qHRx9Cjhxj6NVZDZoJ2lWzOb21X7Rv1IttLx6Mk23SzLcpD+xO\nI2QAAtcpQIGes/tGw6FuDOtPdpg7iMQX2J5y0OGMpgOxctyVZOq1XSjPpKLL\nJI/LYE1HI7rTYxoRnSPiyqQ7EdR7+pJ99KwQQCo4IlsUPkoXvnWWklfXkgPN\nq+JKz8TtuSCj2CH2HBSIcdHSe+vHm0N9FfL97jNUc7zGq9a1igqgplKijFeH\ndhu5jmBCxEfUsd4ZokrSk4yLFFhNiCTTrp3SxwJR0IXvdizCBL4JDzATH5v4\nZhH7e2YO63EnslevGVpyBj7JMX80oPPr1IWxlN2y5+Hj2d0qPJgrx5dzyO4D\n2eXdvnu4Z60tiIgfvsYAgsi/kZddeDt66nY=\n=yb/A\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJg2W5tACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1iGgA//a3EaBYhuonZKQpevZdr2esW59MB+IqbuWSe9uWRapOmJrEQ/\nXr4oHhvBqDf6qK4oCloM6i7eN+zEGJYEYXNGjOteMyw8pIqCE+Fymtf4oQjj\n8UKB1WLdI0DrMV/9vwoafSrcgeCTRegBzzxg7HJBhw8MvqxvePvF3+NAi8Wm\n6+WCgfv/5ZTxQfMDhXPQoYWeFJOuOCTrR0T4keNsqd8nPwy9QHfX/ssnbuF8\nMZe7KTLzTeQzJf3g5eVHpNi0/bEBvM8xCgalzOV7gyhvztzUJToPdVdHrVPg\nuqX89AWD7o9Gjfyh8MA24j6MhU5NAX83wXNqodlWc+sjxt6CYFKULFEO9rlh\nPSDnFzVTspfydjyjmV4ZeGoFo989vL1UMxTNxXnPF6ZCYk4Q6y3CmW+hkpcl\nDWNkv+9CAiR5bnVUvJXy5y0fwseGFZE8fOXzeB4SVJ41dVz0IjT35CIQ9d0D\nGSr+SmjMQbiYqUtS4YDfV/MveM/U6QAvKIhd5M0s6vqkXC6Q7MiPBCvvLorA\nEQc06i3Fx/iyBXLS/O08e+OSGeDow++ssn/CCaf4Ui/Xz2xtP/PBDgtjl7zA\nMer9p+HVvzjB6K1znA/plWIwQNSK3ZQHzemrgOKisKajTqYI3SsYFKYhWKUk\nBfi5VsKHp6HbVGzrfc83Z6+McV2SI24YAT8=\n=cUya\n-----END PGP SIGNATURE-----\n"
 }

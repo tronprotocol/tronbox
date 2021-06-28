@@ -177,8 +177,9 @@ const compile = function (sources, options, callback) {
       // Go through the link references and replace them with older-style
       // identifiers. We'll do this until we're ready to making a breaking
       // change to this code.
-      Object.keys(contract.evm.bytecode.linkReferences).forEach(function (file_name) {
-        const fileLinks = contract.evm.bytecode.linkReferences[file_name]
+      const bytecodeLinkRef = contract.evm.bytecode.linkReferences || {}
+      Object.keys(bytecodeLinkRef).forEach(function (file_name) {
+        const fileLinks = bytecodeLinkRef[file_name]
 
         Object.keys(fileLinks).forEach(function (library_name) {
           const linkReferences = fileLinks[library_name] || []
@@ -189,8 +190,9 @@ const compile = function (sources, options, callback) {
       })
 
       // Now for the deployed bytecode
-      Object.keys(contract.evm.deployedBytecode.linkReferences).forEach(function (file_name) {
-        const fileLinks = contract.evm.deployedBytecode.linkReferences[file_name]
+      const deployedBytecodeLinkRef = contract.evm.deployedBytecode.linkReferences || {}
+      Object.keys(deployedBytecodeLinkRef).forEach(function (file_name) {
+        const fileLinks = deployedBytecodeLinkRef[file_name]
 
         Object.keys(fileLinks).forEach(function (library_name) {
           const linkReferences = fileLinks[library_name] || []
