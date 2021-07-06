@@ -226,64 +226,48 @@ function replaceLinkReferences(bytecode, linkReferences, libraryName) {
 }
 
 function orderABI(contract) {
-  let contract_definition
-  const ordered_function_names = []
+  const { abi, contractName, ast } = contract;
 
-  for (let i = 0; i < contract.legacyAST.children.length; i++) {
-    const definition = contract.legacyAST.children[i]
-
-    // AST can have multiple contract definitions, make sure we have the
-    // one that matches our contract
-    if (definition.name !== 'ContractDefinition' ||
-      definition.attributes.name !== contract.contract_name) {
-      continue
-    }
-
-    contract_definition = definition
-    break
+  if (!abi) {
+    return []; //Yul doesn't return ABIs, but we require something
   }
 
-  if (!contract_definition) return contract.abi
-  if (!contract_definition.children) return contract.abi
+  if (!ast || !ast.nodes) {
+    return abi;
+  }
 
-  contract_definition.children.forEach(function (child) {
-    if (child.name === 'FunctionDefinition') {
-      ordered_function_names.push(child.attributes.name)
-    }
-  })
+  // AST can have multiple contract definitions, make sure we have the
+  // one that matches our contract
+  const contractDefinition = ast.nodes.find(
+    ({ nodeType, name }) =>
+      nodeType === "ContractDefinition" && name === contractName
+  );
+
+  if (!contractDefinition || !contractDefinition.nodes) {
+    return abi;
+  }
+
+  // Find all function definitions
+  const orderedFunctionNames = contractDefinition.nodes
+    .filter(({ nodeType }) => nodeType === "FunctionDefinition")
+    .map(({ name: functionName }) => functionName);
 
   // Put function names in a hash with their order, lowest first, for speed.
-  const functions_to_remove = ordered_function_names.reduce(function (obj, value, index) {
-    obj[value] = index
-    return obj
-  }, {})
+  const functionIndexes = orderedFunctionNames
+    .map((functionName, index) => ({ [functionName]: index }))
+    .reduce((a, b) => Object.assign({}, a, b), {});
 
-  // Filter out functions from the abi
-  let function_definitions = contract.abi.filter(function (item) {
-    return functions_to_remove[item.name] != null
-  })
+  // Construct new ABI with functions at the end in source order
+  return [
+    ...abi.filter(({ name }) => functionIndexes[name] === undefined),
 
-  // Sort removed function defintions
-  function_definitions = function_definitions.sort(function (item_a, item_b) {
-    const a = functions_to_remove[item_a.name]
-    const b = functions_to_remove[item_b.name]
-
-    if (a > b) return 1
-    if (a < b) return -1
-    return 0
-  })
-
-  // Create a new ABI, placing ordered functions at the end.
-  const newABI = []
-  contract.abi.forEach(function (item) {
-    if (functions_to_remove[item.name] != null) return
-    newABI.push(item)
-  })
-
-  // Now pop the ordered functions definitions on to the end of the abi..
-  Array.prototype.push.apply(newABI, function_definitions)
-
-  return newABI
+    // followed by the functions in the source order
+    ...abi
+      .filter(({ name }) => functionIndexes[name] !== undefined)
+      .sort(
+        ({ name: a }, { name: b }) => functionIndexes[a] - functionIndexes[b]
+      )
+  ];
 }
 
 
