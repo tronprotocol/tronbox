@@ -73,8 +73,8 @@ const compile = function (sources, options, callback) {
     language: 'Solidity',
     sources: {},
     settings: {
-      evmVersion: options.solc.evmVersion,
-      optimizer: options.solc.optimizer,
+      evmVersion: options.networks.compilers.solc.evmVersion,
+      optimizer: options.networks.compilers.solc.optimizer,
       outputSelection: {
         '*': {
           '': [
