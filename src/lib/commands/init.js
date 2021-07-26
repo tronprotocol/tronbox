@@ -26,7 +26,7 @@ const command = {
       process.exit(1)
     }
 
-    const url = 'https://github.com/tronbox-boxes/bare-box.git'
+    const url = 'https://github.com/tronsuper/bare-box.git'
     options._ = [url]
 
     UnboxCommand.run(options, done)
