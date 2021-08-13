@@ -141,6 +141,7 @@ Tron Solidity supported the following versions:
 0.7.6
 0.7.7
 0.8.0
+0.8.6
 ```
 
 more versions details: https://github.com/tronprotocol/solidity/releases
