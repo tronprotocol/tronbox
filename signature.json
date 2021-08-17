@@ -190,7 +190,7 @@
           },
           {
             "path": "build/components/TronWrap/index.js",
-            "sha512": "2df357db6521a6d498062dc91bc3806f04f3b261ce295f2c8e2a423cbae8b914e9e94c04325f4ddf2b757db410430f3193d5bd0c4c9526859ee81e839b85c090"
+            "sha512": "f404b834e697e58b9848cbe03035809907915a52328fe0e3283971ce9fddca7e5f289abefca673e59d1b2645f5e5d51613049f699c411ded9d9a5d708fe23444"
           },
           {
             "path": "build/index.js",
@@ -202,7 +202,7 @@
           },
           {
             "path": "build/lib/commands/init.js",
-            "sha512": "efa1d8949620a691508f77eb1a4f5838a9ee1c3be8d7efa1787ae5cf8d17521c3aaa400f0ded12765dbef45d282f56b73710b50857152e06c617fe7e63075ed2"
+            "sha512": "aac9f42d65b63f8ba03fbed6b2c6a736b6efed0219b071a74837c88b1d00fcaa59afb3a70b2857388bd106bb8151e0b5f4f7cfbf289e2fc82af6d75ce302f840"
           },
           {
             "path": "build/components/Deployer/src/actions/link.js",
@@ -294,7 +294,7 @@
           },
           {
             "path": "build/lib/testing/testresolver.js",
-            "sha512": "3b3c8a7f9833b9bb07e7dd5a21752f5239588f58744fe22c6efa29264e79a70d1131a8d64e5f9c40bac536f57a1be6d0f22d592c201389690a6079420cc7870b"
+            "sha512": "f66ba9dadae74e760c9be697a4dfeb246ff99d3972117e56ee527c778212362e662aca20cec3e9af0bb6bcd33928637f7776c019be1f3e9b0902dda21bb2e71a"
           },
           {
             "path": "build/lib/testing/testrunner.js",
@@ -310,7 +310,7 @@
           },
           {
             "path": "build/components/TronSolc.js",
-            "sha512": "b13dc297d349ad177d53341fab43b5d0b117b216897c2373898e33da5e35972269f725a4d1caabf536e95a92d4e68c274168ff44f2b340c22b61d476474a3789"
+            "sha512": "ab61a91c0474ef50b249ea76ed40db2a01774db3191a5f8186e12821f631a236250eb8d8b760e2783b3248114af409b757249b7159151b0398b91812e858906d"
           },
           {
             "path": "build/components/Box/lib/utils/unbox.js",
@@ -318,7 +318,7 @@
           },
           {
             "path": "build/lib/commands/unbox.js",
-            "sha512": "08d43bc6259e2b7d209271cbd67813ff09c91c81459c8387201ff69fac047f0ffb229d90ae823997575ae16fbf833155051d523c72e573e670df6ea648911e14"
+            "sha512": "d93c98912a9f5f22f160dbf7252414ad1b11541313ca033aaa23bf62ce94bdf43211d10305a8efb5bed062a6a7a9b9338f5ce39030922167b47188a3b5ba6eda"
           },
           {
             "path": "build/lib/commands/version.js",
@@ -358,11 +358,11 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "bdc23cb8de199bdac4a68cf4d0fb354a75c4cf1ff41bcd73bb4c554e0a669f23526b87533f7db8e930ce9195403cbeeff5461a5ab87af6fc1bc52c1f830395ec"
+            "sha512": "6929873aeb914350c608f6691ed94b6a3a7deccf5aa694266894a11a63e76d0ce8f59affc49066a7a140775c0d049c779bf12d39520e48250c1bc94ccc17d701"
           },
           {
             "path": "README.md",
-            "sha512": "1631c4d0fb85e8e67d8b15c1e5993c4e5a9592bd1c9b0474e4631321f6d73dea3da9feed12539caa48e62ffc991fab7ac053e26e2d0361be6b480f5512db246a"
+            "sha512": "75086ad696f61603802895b470f2a4b6cb57385f20e84b592d5ae303d7d4e3fc37f81a0f29c52df5e21b8a0b31bf1a836a236e1d9845aae2c80b00df01948f06"
           }
         ]
       }
@@ -396,7 +396,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "d9029bf6e97d9822413bc891ad90604fa476a757a4cb70d1053198176ca1900dfaf5ab011ebeb13ff292f16791de847ff3392dd2e0e3c858c39ccb15fea7a709"
+        "sha512": "3e0312cc83314a0796e21978f9aae70714aa7443a04761473350d29d59c2ef3b1ebc91990ed2554ee39b204cce2d725b30a8adc0f1a43dd8dd31e3d0113fd2a3"
       }
     },
     {
@@ -405,7 +405,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "2.7.23",
+          "version": "2.7.24",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -461,7 +461,7 @@
             "spawn-args": "^0.1.0",
             "superagent": "^5.1.0",
             "temp": "^0.8.3",
-            "tronweb": "^2.10.0",
+            "tronweb": "^4.0.0",
             "vcsurl": "^0.1.1",
             "web3-mock": "1.0.1",
             "yargs": "^8.0.2"
@@ -526,5 +526,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJg5CRIACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1jaARAAxA+cV76GC3bIey2MKMCbgqR5tunPbk+YO3Tn6OArzHBl5b59\nofS9aTCpx+jnxAqCSCuW3LP6CuimPQcYslRkrPQamqGKOsd1m5WGrMtFHQ36\nwmkNSUmEHje8NVqodCQ4dHSF9p7/e2R2HdsstQuETFUGs/VpzAsUvVmLptn8\nFy3JptLcp6b4VmVPV7HZv2FG4/acYeEs+q2sqmw2BoVF3Z7Nci464OMsdpMA\nEyjIl4mEoFHWBn2xii/fbjs8IPqFmY9DJiopG8Wb2/PBJTOnsqnXHmvgPlQY\nBxoLo+HEf203tnFHjD+0PFDASVDb74N6kk2NcDebZkQOdffUWcFEo/4eggY5\n6N+IzNSnxvitDiLBZ3lpxNs5d2gnLLEDhX1ya1tgmmAin5Dq8+5o1kmoUVDF\nWyQ9N2kX+JnBQO7zXygVN/NhrB+GwbOoCFlf2mB9DcVS4Y/VpxXn2+OOiUfs\nrCVyA0vQHKBtTloDOLOphFo36QkXDc494QjW3+rFaogSNdMCm7FXpQFuuilr\nP6PcnaIjS3uyMUeRN+IU8vztAGS+tzKKrL8a72PoYgWXe8O+VTvqlWLiiSwr\ntJrQRBSbjK08drHkwEVHhx3HuYvwlfP639XKwLO5++v1DoA8n5BYfjY9ehHW\nsx0Ph6L93+cg0ZN3zP/XcstNPZg5zJKBZpc=\n=y1/w\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJhGesRACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hs8w/+L6M/JZgMwVcwST7AHJRgXRGIjYftJuVgmul656/oqD3YWPNT\nGHNRdT+K5fZEQpGhKP3engHQEg2xqpJvZqGflfpwgIzNGVAwSfgsI9iXI7LX\ncophxdwHU/ZSTS0F1H3YVa5vXPrG6EJ2pQkakaK7yLMGC1/5foRmrlFeQGvt\n/87a3OyPVhItXJSbx49bw2jR7F6jO3+PYPrOy+HgUbo2x9g7ffPrS+02IdIl\nhKvcWRM9qrnid9gNgr7VOBmfpL4ql0tZIvhl/cMl7PNb7mXHU5CK1h4y+TdS\neIM7UVaA1yV1uCT3LiA5PRQgPTtjbtY0qmwnWe+2QnpxHRVsxyyGYST1Gc02\noVqehd99Hb1D7zGJ3pHzc5GR7qogRYZoXwl2kysNSUtCzVGX6PtDmuyX2kEW\nrYfAjlnqeyTNMmvSIkG0r6qaC4dg/OXD16TbLtY/9om5bOfnyRksKaPNZ/6A\n91fbjuTIiqGIphin2FF8u+rISKvWp4vPZ9NgKS92H1UrtgGQydLoja2dIJ/6\nV/RL/qLH6TjGb/zBI0y1cGuECrC4XY8uEbe+ImH2eP0vw12/3asJcyq+0/Q2\nFpFaoOMZW+TVlLnfcMBb71fzkFGDVmKtfIMD0cC29yH5K8KxnT+3bzVb8uoO\n4/Komz8RHcI3NX1vrvhBbBNaQeM3T0iJBT4=\n=AtiQ\n-----END PGP SIGNATURE-----\n"
 }

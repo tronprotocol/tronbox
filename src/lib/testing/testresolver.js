@@ -1,6 +1,7 @@
 function TestResolver(resolver, source, search_path) {
   this.resolver = resolver
   this.source = source
+  this.options = resolver.options
   this.search_path = search_path
 
   this.seen = []

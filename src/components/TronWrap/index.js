@@ -284,6 +284,10 @@ function init(options, extraOptions = {}) {
       privateKey = this._privateKeyByAccount[option.methodArgs.from]
     }
 
+    if (!option.methodArgs.feeLimit) {
+      option.methodArgs.feeLimit = this.networkConfig.feeLimit
+    }
+
     this._getNetworkInfo()
       .then(info => {
         if (info.compilerVersion === '1') {

@@ -5,7 +5,7 @@
  * - a string containing a repo under the `truffle-box` org
  */
 function normalizeURL(url) {
-  url = url || 'https://github.com/tronbox-boxes/bare-box'
+  url = url || 'https://github.com/tronsuper/bare-box'
 
   // full URL already
   if (url.indexOf('://') !== -1 || url.indexOf('git@') !== -1) {
@@ -20,7 +20,7 @@ function normalizeURL(url) {
     if (url.indexOf('-box') === -1) {
       url = url + '-box'
     }
-    return 'https://github.com/tronbox-boxes/' + url
+    return 'https://github.com/tronsuper/' + url
   }
 
   throw new Error('Box specified in invalid format')
