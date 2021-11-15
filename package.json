@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "2.7.24",
+  "version": "2.7.25",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -57,7 +57,7 @@
     "spawn-args": "^0.1.0",
     "superagent": "^5.1.0",
     "temp": "^0.8.3",
-    "tronweb": "^4.0.0",
+    "tronweb": "^4.0.1",
     "vcsurl": "^0.1.1",
     "web3-mock": "1.0.1",
     "yargs": "^8.0.2"
@@ -67,7 +67,6 @@
     "@babel/core": "^7.6.4",
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@babel/preset-env": "^7.6.3",
-    "electron": "^9.4.0",
     "eslint": "^6.6.0",
     "eslint-plugin-node": "^10.0.0",
     "glob": "^7.1.2",
