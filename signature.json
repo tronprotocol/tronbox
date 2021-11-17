@@ -358,11 +358,11 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "6929873aeb914350c608f6691ed94b6a3a7deccf5aa694266894a11a63e76d0ce8f59affc49066a7a140775c0d049c779bf12d39520e48250c1bc94ccc17d701"
+            "sha512": "b190c45da0ec1ef29b4c03910238dffdb6ed71497ed807017031b3cba0247dd26cc6cf7e1b100562f4bb0e031aee967b144167d8238ba3a0617ab2815cc48b13"
           },
           {
             "path": "README.md",
-            "sha512": "75086ad696f61603802895b470f2a4b6cb57385f20e84b592d5ae303d7d4e3fc37f81a0f29c52df5e21b8a0b31bf1a836a236e1d9845aae2c80b00df01948f06"
+            "sha512": "6e9fa341678fc4aaa11b71c676616ce56d3bc0364e03a9524e0f42dbaebc78f79974db44f726265f5ee50686d060464bc902b54bad56dae02d76ee8f339d9d27"
           }
         ]
       }
@@ -396,7 +396,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "3e0312cc83314a0796e21978f9aae70714aa7443a04761473350d29d59c2ef3b1ebc91990ed2554ee39b204cce2d725b30a8adc0f1a43dd8dd31e3d0113fd2a3"
+        "sha512": "cdf139b88771f264f96b6477dc784f4f799b1efc49e339a556887f88f791e91e997fc5871d1e749d1b0c9f0433412c687c9964f147c16b74933925745b36f851"
       }
     },
     {
@@ -405,7 +405,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "2.7.24",
+          "version": "2.7.25",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -461,7 +461,7 @@
             "spawn-args": "^0.1.0",
             "superagent": "^5.1.0",
             "temp": "^0.8.3",
-            "tronweb": "^4.0.0",
+            "tronweb": "^4.0.1",
             "vcsurl": "^0.1.1",
             "web3-mock": "1.0.1",
             "yargs": "^8.0.2"
@@ -471,7 +471,6 @@
             "@babel/core": "^7.6.4",
             "@babel/plugin-transform-runtime": "^7.7.6",
             "@babel/preset-env": "^7.6.3",
-            "electron": "^9.4.0",
             "eslint": "^6.6.0",
             "eslint-plugin-node": "^10.0.0",
             "glob": "^7.1.2",
@@ -526,5 +525,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJhGesRACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hs8w/+L6M/JZgMwVcwST7AHJRgXRGIjYftJuVgmul656/oqD3YWPNT\nGHNRdT+K5fZEQpGhKP3engHQEg2xqpJvZqGflfpwgIzNGVAwSfgsI9iXI7LX\ncophxdwHU/ZSTS0F1H3YVa5vXPrG6EJ2pQkakaK7yLMGC1/5foRmrlFeQGvt\n/87a3OyPVhItXJSbx49bw2jR7F6jO3+PYPrOy+HgUbo2x9g7ffPrS+02IdIl\nhKvcWRM9qrnid9gNgr7VOBmfpL4ql0tZIvhl/cMl7PNb7mXHU5CK1h4y+TdS\neIM7UVaA1yV1uCT3LiA5PRQgPTtjbtY0qmwnWe+2QnpxHRVsxyyGYST1Gc02\noVqehd99Hb1D7zGJ3pHzc5GR7qogRYZoXwl2kysNSUtCzVGX6PtDmuyX2kEW\nrYfAjlnqeyTNMmvSIkG0r6qaC4dg/OXD16TbLtY/9om5bOfnyRksKaPNZ/6A\n91fbjuTIiqGIphin2FF8u+rISKvWp4vPZ9NgKS92H1UrtgGQydLoja2dIJ/6\nV/RL/qLH6TjGb/zBI0y1cGuECrC4XY8uEbe+ImH2eP0vw12/3asJcyq+0/Q2\nFpFaoOMZW+TVlLnfcMBb71fzkFGDVmKtfIMD0cC29yH5K8KxnT+3bzVb8uoO\n4/Komz8RHcI3NX1vrvhBbBNaQeM3T0iJBT4=\n=AtiQ\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJhkhAzACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1jnbA//R2F+QYBhX1KbUXvaLoXJAcBfid50oSFmzMFRq7l4nTe8apmM\niUKv5kTcMXs52sFrDKBSEfHr/Gp2R44snw28H9BNi3MnZJvYvgbAUVu4YFfH\nef+4ILc59b82T2/UfsSKTq9DJWtDbSEqhgwGcUMAtb4IdM2l3pbYPamjJ2uj\nTAJyMDm3POG1SxVE7eAuKbb5DVNsa5pln+5W/0DUEE1dLGBRD7VJGjQm6r74\nPpwhzCi9SHowTVsxC7ovNMcU6w4MQ/Oyvb14r4IlxxQHMq6FO+de31e7aSo+\n/p7YdipUX6lrvkG3gnCsNk+u20MONuG6FHtENMK/gyxdEfswY7jRHmpqZ/+Y\njA51ZZME8FFb3d6doZImyD8j50HE7M2xIhTJRE7fYV85fMfHEi/OukJ//bt1\nUQ7y0oHZFE6r292n7Lmi4RA7j757V7ExtSpocnATBCrrTW2qnK6Oiy4begRP\n1q2ddUa3r1Uj5xlUv5BY98vligComj2t8EauwCpsht3JsIdepsjBDZN0m8WZ\nXVfmSh0vEXWwZi9ctC/artf9t3KwGN5AdmSJhktZT6Ev9YEFNjPaSgvAOu5x\nBG1LGb/GIUGECnlbOIa+6hmomcyMlAxlP2DKywTDJYZvFXzDPMLvLysn8D7I\ngDrgRWt/Jf2mV3iFXNByyI1nOnSZ2Cksrps=\n=R+Hi\n-----END PGP SIGNATURE-----\n"
 }

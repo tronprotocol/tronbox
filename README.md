@@ -1,8 +1,6 @@
-# TronBox v2.7.24
+# TronBox v2.7.25
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
-
-[TronBox Documentation](https://troncore.github.io/tronbox-document)
 
 ## Installation
 ```
@@ -282,18 +280,18 @@ First, get the version of tronbox dist.tarball
 
 ```shell
 $ npm view tronbox dist.tarball
-https://registry.npmjs.org/tronbox/-/tronbox-2.7.24.tgz
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
 ```
 Second, get the tarball
 
 ```shell
-wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.24.tgz
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
 ```
 
 Finally, verify the tarball
 
 ```shell
-$ pkgsign verify tronbox-2.7.24.tgz --package-name tronbox
+$ pkgsign verify tronbox-2.7.25.tgz --package-name tronbox
 extracting unsigned tarball...
 building file list...
 verifying package...
