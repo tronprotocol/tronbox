@@ -75,6 +75,14 @@ function init(options, extraOptions = {}) {
     if (!options) {
       throw new Error('It was not possible to instantiate TronWeb. The chosen network does not exist in your "tronbox.js".')
     } else {
+      if (!options.privateKey) {
+        throw new Error('It was not possible to instantiate TronWeb. Private key is missing in your "tronbox.js".')
+      }
+      if (!(
+        options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
+      )) {
+        throw new Error('It was not possible to instantiate TronWeb. Fullhost url is missing in your "tronbox.js".')
+      }
       throw new Error('It was not possible to instantiate TronWeb. Some required parameters are missing in your "tronbox.js".')
     }
   }
