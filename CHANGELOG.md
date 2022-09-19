@@ -1,4 +1,7 @@
 __2.7.25__
+* Add support for Solidity compiler 0.8.7, 0.8.11 and 0.8.15
+
+__2.7.25__
 * bump tronweb from 4.0.0 to 4.0.1
 
 __2.7.24__
