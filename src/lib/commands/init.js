@@ -20,7 +20,7 @@ const command = {
       config.logger.log(
         ' - For an empty project, use `tronbox init` with no arguments' +
         OS.EOL +
-        ' - Or, browse the tronbox Boxes at <http://tronboxframework.com/boxes>!'
+        ' - Or, browse the tronbox Boxes at <https://github.com/tronsuper>!'
       )
       // eslint-disable-next-line no-process-exit
       process.exit(1)

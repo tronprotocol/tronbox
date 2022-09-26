@@ -211,6 +211,8 @@ const Test = {
         })
       }
 
+      global.tronWrap = TronWrap()
+
       accept()
     })
   }
