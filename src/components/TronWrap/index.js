@@ -412,7 +412,7 @@ function init(options, extraOptions = {}) {
       case 'tre_setAccountStorageAt':
       case 'tre_setAccountCode':
       case 'tre_mine':
-      case 'tre_startMine':
+      case 'tre_blockTime':
         return _send()
       case 'tre_unlockedAccounts': {
         const result = await _send()

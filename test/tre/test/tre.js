@@ -28,11 +28,24 @@ contract('MetaCoin', function (accounts) {
     return account
   }
 
+  const getRuntimeCode = async address => {
+    const { runtimecode = '' } = await this.tronWeb.solidityNode.request(
+      'wallet/getcontractinfo',
+      {
+        value: tronWrap.address.toHex(address),
+      },
+      'post'
+    )
+
+    return `0x${runtimecode}`
+  }
+
   it('should successfully set account balance', async function () {
     const account = await generateAccount()
     const balance = 100
     const beforeBalance = await tronWrap.trx.getBalance(account)
     const success = await tronWrap.send('tre_setAccountBalance', [account, balance])
+    await wait(3)
     const afterBalance = await tronWrap.trx.getBalance(account)
     const afterBalanceByMeta = await meta.getTrxBalance(account)
     assert.isTrue(success, 'The tre_setAccountBalance return value is incorrect')
@@ -45,58 +58,75 @@ contract('MetaCoin', function (accounts) {
     const account = await generateAccount()
     const code = '0xbaddad42'
     const newCode =
-      '0x60806040526000805534801561001457600080fd5b506040516104813803806104818339810160408190526100339161005c565b600280546001600160a01b03191633908117909155600090815260016020526040902055610074565b60006020828403121561006d578081fd5b5051919050565b6103fe806100836000396000f3fe608060405234801561001057600080fd5b50600436106100cf5760003560e01c806386d516e81161008c57806396c610e11161006657806396c610e114610157578063a8b0574e1461016a578063ee82ac5e14610172578063f8b2cb4f14610185576100cf565b806386d516e814610127578063893d20e81461012f57806390b98a1114610137576100cf565b80630f28c97d146100d457806318160ddd146100f257806327e86d6e146100fa57806342cbb15c1461010257806372425d9d1461010a5780637a6ce2e114610112575b600080fd5b6100dc610198565b6040516100e9919061037a565b60405180910390f35b6100dc61019c565b6100dc6101a2565b6100dc6101b5565b6100dc6101b9565b61011a6101bd565b6040516100e99190610337565b6100dc6101c1565b61011a6101c5565b61014a6101453660046102f6565b6101d4565b6040516100e9919061036f565b6100dc6101653660046102d5565b61028a565b61011a610297565b6100dc61018036600461031f565b61029b565b6100dc6101933660046102d5565b61029f565b4290565b60005481565b60006101af60014361039b565b40905090565b4390565b4490565b3390565b4590565b6002546001600160a01b031690565b336000908152600160205260408120548211156101f357506000610284565b336000908152600160205260408120805484929061021290849061039b565b90915550506001600160a01b0383166000908152600160205260408120805484929061023f908490610383565b90915550506040517fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef906102789033908690869061034b565b60405180910390a15060015b92915050565b6001600160a01b03163190565b4190565b4090565b6001600160a01b0381166000908152600160205260409020545b919050565b80356001600160a01b03811681146102b957600080fd5b6000602082840312156102e6578081fd5b6102ef826102be565b9392505050565b60008060408385031215610308578081fd5b610311836102be565b946020939093013593505050565b600060208284031215610330578081fd5b5035919050565b6001600160a01b0391909116815260200190565b6001600160a01b039384168152919092166020820152604081019190915260600190565b901515815260200190565b90815260200190565b60008219821115610396576103966103b2565b500190565b6000828210156103ad576103ad6103b2565b500390565b634e487b7160e01b600052601160045260246000fdfea26469706673582212203dbda94421e1746fab55e02e8c06b5b544bef55e408d714eed82346c2ade431d64736f6c63430008000033'
+      '0x6080604052348015600f57600080fd5b506004361060285760003560e01c80632ddbd13a14602d575b600080fd5b60336047565b604051603e9190604d565b60405180910390f35b60005481565b9081526020019056fea2646970667358221220c51fe6383da9d6d3eb400e2da0740e3bbcb4e1834682da9388000d75ec81741564736f6c63430008000033'
     const slot = '0x0000000000000000000000000000000000000000000000000000000000000000'
     const value = '0x0000000000000000000000000000000000000000000000000000000000000001'
 
-    const beforeContract = await tronWrap.trx.getContract(account)
+    const beforeContract = await getRuntimeCode(account)
     await tronWrap.send('tre_setAccountCode', [account, code])
-    const afterContract = await tronWrap.trx.getContract(account)
+    const afterContract = await getRuntimeCode(account)
     const setCodeSuccess = await tronWrap.send('tre_setAccountCode', [account, newCode])
-    const newContract = await tronWrap.trx.getContract(account)
+    const newContract = await getRuntimeCode(account)
     assert.isTrue(setCodeSuccess, 'The tre_setAccountCode return value is incorrect')
-    assert.isTrue(!beforeContract.bytecode, 'Account already has code')
-    assert.equal(afterContract.bytecode, code, 'Code setting failed')
-    assert.equal(newContract.bytecode, newCode, 'Code replacement failed')
+    assert.equal(beforeContract, '0x', 'Account already has code')
+    assert.equal(afterContract, code, 'Code setting failed')
+    assert.equal(newContract, newCode, 'Code replacement failed')
 
-    const ins = await tronWrap.contract().at(account)
-    const beforeTotalSupply = await ins.totalSupply()
+    const abi = [
+      {
+        inputs: [],
+        name: 'total',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ]
+    const ins = await tronWrap.contract(abi, account)
+    const beforeTotal = await ins.total().call()
     const setStorageSuccess = await tronWrap.send('tre_setAccountStorageAt', [account, slot, value])
-    const afterTotalSupply = await ins.totalSupply()
+    const afterTotal = await ins.total().call()
     assert.isTrue(setStorageSuccess, 'The tre_setAccountStorageAt return value is incorrect')
-    assert.equal(beforeTotalSupply, 0, 'Total supply is not 0')
-    assert.equal(afterTotalSupply, 1, 'Total supply setting failed')
+    assert.equal(beforeTotal.toNumber(), 0, 'Total supply is not 0')
+    assert.equal(afterTotal.toNumber(), 1, 'Total supply setting failed')
   })
 
   it('should successfully set block time', async function () {
-    const success = await tronWrap.send('tre_startMine', [0])
+    const success = await tronWrap.send('tre_blockTime', [0])
     await wait(3)
     const beforeNumber = await getBlockNumber()
     await wait(10)
     const afterNumber = await getBlockNumber()
     const afterNumberByMeta = await meta.getBlockNumber()
-    assert.isTrue(success, 'The tre_startMine return value is incorrect')
+    assert.isTrue(success, 'The tre_blockTime return value is incorrect')
     assert.equal(beforeNumber, afterNumber, 'Pause mining failed')
     assert.equal(afterNumber, afterNumberByMeta, 'Block number returned by the contract is incorrect')
 
-    await tronWrap.send('tre_startMine', [3])
+    await tronWrap.send('tre_blockTime', [3])
     await wait(10)
     const curNumber = await getBlockNumber()
     assert.isTrue(curNumber - afterNumber > 0, 'Block time setting failed')
   })
 
   it('should successfully mine some blocks', async function () {
-    await tronWrap.send('tre_startMine', [0])
+    await tronWrap.send('tre_blockTime', [0])
     await wait(3)
     const beforeNumber = await getBlockNumber()
     const success = await tronWrap.send('tre_mine', [{ blocks: 3 }])
     await wait(10)
     const afterNumber = await getBlockNumber()
     assert.equal(success, '0x0', 'The tre_mine return value is incorrect')
-    assert.equal(afterNumber - beforeNumber, 10, 'Mine blocks failed')
+    assert.equal(afterNumber - beforeNumber, 3, 'Mine blocks failed')
   })
 
   it('should successfully unlock some accounts', async function () {
+    await tronWrap.send('tre_blockTime', [0])
+
     const unlockedAccounts = [await generateAccount(), await generateAccount()]
     await tronWrap.send('tre_setAccountBalance', [unlockedAccounts[0], `0x${Number(1000 * 1e6).toString(16)}`])
     await tronWrap.send('tre_unlockedAccounts', [[unlockedAccounts[0]]])
@@ -121,10 +151,12 @@ contract('MetaCoin', function (accounts) {
     await unlockedMeta.sendCoin(accounts[0], 10, {
       from: unlockedAccounts[0],
     })
+    await wait(3)
     assert.equal((await unlockedMeta.getBalance(unlockedAccounts[0])).toNumber(), 9990, "Amount wasn't correctly taken from the sender")
     assert.equal((await unlockedMeta.getBalance(accounts[0])).toNumber(), 10, "Amount wasn't correctly sent to the receiver")
 
     await unlockedMeta.sendCoin(unlockedAccounts[1], 10)
+    await wait(3)
     assert.equal((await unlockedMeta.getBalance(accounts[0])).toNumber(), 0, "Amount wasn't correctly taken from the sender")
     assert.equal((await unlockedMeta.getBalance(unlockedAccounts[1])).toNumber(), 10, "Amount wasn't correctly sent to the receiver")
 
