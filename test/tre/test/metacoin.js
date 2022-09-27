@@ -71,7 +71,8 @@ contract('MetaCoin', function (accounts) {
     await meta.sendCoin(accounts[1], 10, {
       from: accounts[0],
     })
-    assert.equal(await meta.getBalance.call(accounts[0]), account_one_starting_balance - 10, "Amount wasn't correctly taken from the sender")
-    assert.equal(await meta.getBalance.call(accounts[1]), account_two_starting_balance + 10, "Amount wasn't correctly sent to the receiver")
+    await wait(3)
+    assert.equal((await meta.getBalance.call(accounts[0])).toNumber(), account_one_starting_balance - 10, "Amount wasn't correctly taken from the sender")
+    assert.equal((await meta.getBalance.call(accounts[1])).toNumber(), account_two_starting_balance + 10, "Amount wasn't correctly sent to the receiver")
   })
 })
