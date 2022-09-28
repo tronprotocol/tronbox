@@ -1,4 +1,5 @@
 __3.0.0-beta__
+* bump tronweb from 4.0.1 to 4.3.0
 * Add support for Solidity compiler 0.8.7, 0.8.11 and 0.8.15
 * Add `tronWrap.send` function to test environment for supporting test network
 * Add `tre_setAccountBalance` RPC method. The method can set the given account's balance to the specified SUN value.
