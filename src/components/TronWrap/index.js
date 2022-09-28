@@ -430,9 +430,9 @@ function init(options, extraOptions = {}) {
         }
         return result
       }
+      default:
+        return _send()
     }
-
-    return logErrorAndExit(console, `unsupported method: ${method}`)
   }
 
   return new TronWrap
