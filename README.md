@@ -1,4 +1,4 @@
-# TronBox v2.7.25
+# TronBox v3.0.0-beta
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
@@ -142,7 +142,6 @@ Tron Solidity supported the following versions:
 0.8.6
 0.8.7
 0.8.11
-0.8.15
 ```
 
 more versions details: https://github.com/tronprotocol/solidity/releases

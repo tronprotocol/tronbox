@@ -30,10 +30,9 @@ let supportedVersions = [
   '0.8.6',
   '0.8.7',
   '0.8.11',
-  '0.8.15',
 ]
 
-const maxVersion = '0.8.15'
+const maxVersion = '0.8.11'
 
 function getWrapper(options = {}) {
 
