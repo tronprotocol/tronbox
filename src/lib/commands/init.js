@@ -5,7 +5,7 @@ const command = {
   run: function (options, done) {
     const fs = require('fs');
     const path = require('path');
-    if (fs.existsSync(path.resolve(__dirname, './truffle-config.js'))) {
+    if (fs.existsSync(path.resolve(process.cwd(), './truffle-config.js'))) {
       const ConvertCommand = require('./convert');
       return ConvertCommand.run(options, done);
     }
