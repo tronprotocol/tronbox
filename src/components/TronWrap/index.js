@@ -68,7 +68,7 @@ function init(options, extraOptions = {}) {
   }
 
   if (extraOptions.verify && (
-    !options || !options.privateKey || !(
+    !options || !(options.privateKey || options.mnemonic) || !(
       options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
     )
   )) {
@@ -79,11 +79,19 @@ function init(options, extraOptions = {}) {
     }
   }
 
+  // support mnemonic
+  const getPrivateKey = () => {
+    if (options.mnemonic) {
+      return _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey.slice(2)
+    }
+    return options.privateKey
+  }
+
   TronWrap.prototype = new _TronWeb(
     options.fullNode || options.fullHost,
     options.solidityNode || options.fullHost,
     options.eventServer || options.fullHost,
-    options.privateKey
+    getPrivateKey()
   )
 
   const tronWrap = TronWrap.prototype
