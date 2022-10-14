@@ -43,7 +43,24 @@ Migration.prototype.run = function (options, callback) {
 
   const finish = function (err) {
     if (err) return callback(err)
-    deployer.start().then(function () {
+    deployer.start().then(async function () {
+      if (options.save === false) return
+
+      const Migrations = resolver.require('./Migrations.sol')
+
+      if (Migrations && Migrations.isDeployed()) {
+        logger.log('Saving successful migration to network...')
+
+        await Migrations.deployed()
+        const result = Migrations.call('setCompleted', [self.number])
+
+        return Promise.resolve(result)
+
+        // return Migrations.deployed().then(function (migrations) {
+        //   return Migrations.call('setCompleted', [self.number]);
+        // });
+      }
+    }).then(function () {
       if (options.save === false) return
       logger.log('Saving artifacts...')
       return options.artifactor.saveAll(resolver.contracts())
