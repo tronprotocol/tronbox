@@ -2,6 +2,8 @@ const _TronWeb = require('tronweb')
 const chalk = require('chalk')
 const constants = require('./constants')
 const axios = require('axios')
+const AppTrx = require('@ledgerhq/hw-app-trx').default;
+const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
 let instance
 
@@ -61,6 +63,10 @@ function filterNetworkConfig(options) {
   }
 }
 
+function isLedger(options) {
+  return !options.mnemonic && options.path;
+}
+
 function init(options, extraOptions = {}) {
 
   if (instance) {
@@ -68,7 +74,7 @@ function init(options, extraOptions = {}) {
   }
 
   if (extraOptions.verify && (
-    !options || !(options.privateKey || options.mnemonic) || !(
+    !options || !(options.privateKey || options.mnemonic || options.path) || !(
       options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
     )
   )) {
@@ -122,10 +128,30 @@ function init(options, extraOptions = {}) {
     callback && callback(null, options.network_id)
   }
 
-  const defaultAddress = tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey)
-  tronWrap._accounts = [defaultAddress]
-  tronWrap._privateKeyByAccount = {}
-  tronWrap._privateKeyByAccount[defaultAddress] = tronWrap.defaultPrivateKey
+  
+  tronWrap._setDefaultAddress = async function() {
+
+    async function getDefaultAddress(options) {
+      if (isLedger(options)) {
+        const transport = await Transport.create();
+        const tronboxApp = new AppTrx(transport);
+        const defaultAddress = await tronboxApp.getAddress(options.path).then(o => o.address);
+        await transport.close();
+        return defaultAddress;
+      }
+      return tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey);
+    }
+
+    if (tronWrap._accounts.length) return;
+  
+    const defaultAddress = await getDefaultAddress(options);
+    tronWrap._accounts = [defaultAddress];
+    tronWrap._privateKeyByAccount = {
+      [defaultAddress]: tronWrap.defaultPrivateKey
+    };
+  }
+  tronWrap._accounts = [];
+  tronWrap._privateKeyByAccount = {};
 
   tronWrap._getAccounts = function (callback) {
 
@@ -207,17 +233,33 @@ function init(options, extraOptions = {}) {
     })
   }
 
-  tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey) {
+  tronWrap._new = async function (myContract, params, privateKey = tronWrap.defaultPrivateKey) {
 
     let signedTransaction
+    let transaction
     try {
-      const address = tronWrap.address.fromPrivateKey(privateKey)
-      const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
-      signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
+      // using ledger when path is specified while mnemonic is not
+      if (isLedger(options)) {
+        const transport = await Transport.create();
+        const tronboxApp = new AppTrx(transport);
+        const address = await tronboxApp.getAddress(options.path).then(o => o.address);
+        transaction = await tronWrap.transactionBuilder.createSmartContract(params, address);
+        signedTransaction = {
+          ...transaction,
+          signature: [await tronboxApp.signTransactionHash(options.path, transaction.txID)]
+        };
+        // should close transport or the next creation will fail
+        await transport.close();
+      } else {
+        const address = tronWrap.address.fromPrivateKey(privateKey)
+        transaction = await tronWrap.transactionBuilder.createSmartContract(params, address)
+        signedTransaction = await tronWrap.trx.sign(transaction, privateKey) 
+      }
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
+      
 
       if (!result || typeof result !== 'object') {
-        return Promise.reject(`Error while broadcasting the transaction to create the contract ${options.name}. Most likely, the creator has either insufficient bandwidth or energy.`)
+        return Promise.reject(`Error while broadcasting the transaction to create the contract ${params.name}. Most likely, the creator has either insufficient bandwidth or energy.`)
       }
 
       if (result.code) {
@@ -266,7 +308,7 @@ function init(options, extraOptions = {}) {
         const url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
 
         // eslint-disable-next-line no-ex-assign
-        e = 'Contract ' + chalk.bold(options.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url) +
+        e = 'Contract ' + chalk.bold(params.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url) +
           '\nIf the transaction above is empty, most likely, your address had no bandwidth/energy to deploy the contract.'
       }
 
@@ -318,7 +360,10 @@ function init(options, extraOptions = {}) {
     })
   }
 
-  return new TronWrap
+  const ins = new TronWrap;
+  // can do it in a async function
+  ins._setDefaultAddress();
+  return ins;
 }
 
 
