@@ -265,8 +265,8 @@ function init(options, extraOptions = {}) {
         // should close transport or the next creation will fail
         await transport.close();
       } else {
-        const address = options.from ? options.from : tronWrap.address.fromPrivateKey(privateKey)
-        const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
+        const address = params.from ? params.from : tronWrap.address.fromPrivateKey(privateKey)
+        transaction = await tronWrap.transactionBuilder.createSmartContract(params, address)
         if (tronWrap._treUnlockedAccounts[address]) {
           dlog('Unlocked account', { address })
           signedTransaction = transaction
@@ -318,7 +318,7 @@ function init(options, extraOptions = {}) {
       myContract.bytecode = contract.bytecode
       myContract.deployed = true
 
-      myContract.loadAbi(options.abi || [])
+      myContract.loadAbi(params.abi || [])
 
       dlog('Contract deployed')
       return Promise.resolve(myContract)
