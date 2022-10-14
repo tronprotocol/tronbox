@@ -366,7 +366,7 @@ function init(options, extraOptions = {}) {
           delete option.methodArgs.tokenId
         }
         const address = option.methodArgs.from
-        if (callSend === 'send' && tronWrap._treUnlockedAccounts[address]) {
+        if (callSend === 'send' && (tronWrap._treUnlockedAccounts[address] || isLedger(options))) {
           dlog('Unlocked account', { address })
 
           const { abi, functionSelector, defaultOptions } = myContract.methodInstances[option.methodName]
@@ -378,22 +378,30 @@ function init(options, extraOptions = {}) {
             delete option.methodArgs.tokenId
             delete option.methodArgs.tokenValue
           }
-          const options = {}
+          const params = {}
           Object.keys(defaultOptions).forEach(_ => {
-            options[_] = defaultOptions[_]
+            params[_] = defaultOptions[_]
           })
           Object.keys(option.methodArgs).forEach(_ => {
-            options[_] = option.methodArgs[_]
+            params[_] = option.methodArgs[_]
           })
-          options.rawParameter = rawParameter
+          params.rawParameter = rawParameter
 
           return new Promise((resolve, reject) => {
-            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, options, [], address).then(transaction => {
+            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, params, [], address).then(async transaction => {
               if (!transaction.result || !transaction.result.result) {
                 return reject('Unknown error: ' + JSON.stringify(transaction, null, 2))
               }
 
               transaction.transaction.signature = []
+              if (isLedger(options)) {
+                const transport = await Transport.create();
+                const tronboxApp = new AppTrx(transport);
+                transaction.transaction.signature = [
+                  await tronboxApp.signTransactionHash(options.path, transaction.transaction.txID)
+                ];
+                await transport.close();
+              }
               tronWrap.trx.sendRawTransaction(transaction.transaction).then(broadcast => {
                 if (broadcast.code) {
                   const err = {
