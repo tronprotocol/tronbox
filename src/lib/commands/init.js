@@ -3,6 +3,12 @@ const command = {
   description: 'Initialize new and empty tronBox project',
   builder: {},
   run: function (options, done) {
+    const fs = require('fs');
+    const path = require('path');
+    if (fs.existsSync(path.resolve(process.cwd(), './truffle-config.js'))) {
+      const ConvertCommand = require('./convert');
+      return ConvertCommand.run(options, done);
+    }
     process.env.CURRENT = 'init'
     const Config = require('../../components/Config')
     const OS = require('os')
