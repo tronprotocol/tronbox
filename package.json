@@ -17,6 +17,8 @@
     "lint": "find src -name '*.js' | xargs node_modules/.bin/eslint"
   },
   "dependencies": {
+    "@ledgerhq/hw-app-trx": "^6.27.6",
+    "@ledgerhq/hw-transport-node-hid": "^6.27.6",
     "@truffle/contract-sources": "^0.1.6",
     "@truffle/error": "0.0.7",
     "@truffle/expect": "0.0.11",
