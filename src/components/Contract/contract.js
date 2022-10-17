@@ -449,32 +449,23 @@ const contract = (function (module) {
     },
     deployed: function () {
       const self = this
-      return new Promise(function (accept, reject) {
-        // If we found the network but it's not deployed
-        if (!self.isDeployed()) {
-          throw new Error(self.contractName + ' has not been deployed to detected network')
+      if (!self.isDeployed()) {
+        throw new Error(self.contractName + ' has not been deployed to detected network')
+      }
+      const abi = self.abi || []
+      for (let i = 0; i < abi.length; i++) {
+        const item = abi[i]
+        // eslint-disable-next-line no-prototype-builtins
+        if (self.hasOwnProperty(item.name)) continue
+        if (/(function|event)/i.test(item.type) && item.name) {
+          const f = (...args) => {
+            return self.call.apply(null, [item.name].concat(args))
+          }
+          self[item.name] = f
+          self[item.name].call = f
         }
-        TronWrap().trx.getContract(self.address)
-          .then(() => {
-            const abi = self.abi || []
-            for (let i = 0; i < abi.length; i++) {
-              const item = abi[i]
-              // eslint-disable-next-line no-prototype-builtins
-              if (self.hasOwnProperty(item.name)) continue
-              if (/(function|event)/i.test(item.type) && item.name) {
-                const f = (...args) => {
-                  return self.call.apply(null, [item.name].concat(args))
-                }
-                self[item.name] = f
-                self[item.name].call = f
-              }
-            }
-            accept(self)
-          })
-          .catch(err => {
-            reject(err)
-          })
-      })
+      }
+      return self;
     },
 
     defaults: function (class_defaults) {
