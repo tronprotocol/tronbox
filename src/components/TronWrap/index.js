@@ -115,6 +115,8 @@ function init(options, extraOptions = {}) {
   tronWrap._treUnlockedAccounts = {}
   tronWrap._nextId = 1
 
+  tronWrap._isLedger = isLedger(options);
+
   tronWrap.networkConfig = filterNetworkConfig(options)
   if (extraOptions.log) {
     tronWrap._log = extraOptions.log
@@ -144,7 +146,7 @@ function init(options, extraOptions = {}) {
   tronWrap._setDefaultAddress = async function() {
 
     async function getDefaultAddress(options) {
-      if (isLedger(options)) {
+      if (tronWrap._isLedger) {
         const transport = await Transport.create();
         const tronboxApp = new AppTrx(transport);
         const defaultAddress = await tronboxApp.getAddress(options.path).then(o => o.address);
@@ -227,6 +229,11 @@ function init(options, extraOptions = {}) {
         ? options.userFeePercentage
         : this.networkConfig.userFeePercentage
 
+    const constructorAbi = option.abi.find((it) => it.type === 'constructor');
+    if (constructorAbi && option.parameters && option.parameters.length) {
+      option.rawParameter = this.utils.abi.encodeParamsV2ByABI(constructorAbi, option.parameters);
+    }
+
     this._new(myContract, {
       bytecode: option.data,
       feeLimit: option.feeLimit || this.networkConfig.feeLimit,
@@ -235,6 +242,7 @@ function init(options, extraOptions = {}) {
       originEnergyLimit,
       abi: option.abi,
       parameters: option.parameters,
+      rawParameter: option.rawParameter,
       name: option.contractName,
       from: option.from || ''
     }, option.privateKey)
@@ -253,7 +261,7 @@ function init(options, extraOptions = {}) {
     try {
       
       // using ledger when path is specified while mnemonic is not
-      if (isLedger(options)) {
+      if (tronWrap._isLedger) {
         const transport = await Transport.create();
         const tronboxApp = new AppTrx(transport);
         const address = await tronboxApp.getAddress(options.path).then(o => o.address);
@@ -366,7 +374,7 @@ function init(options, extraOptions = {}) {
           delete option.methodArgs.tokenId
         }
         const address = option.methodArgs.from
-        if (callSend === 'send' && (tronWrap._treUnlockedAccounts[address] || isLedger(options))) {
+        if (callSend === 'send' && (tronWrap._treUnlockedAccounts[address] || tronWrap._isLedger)) {
           dlog('Unlocked account', { address })
 
           const { abi, functionSelector, defaultOptions } = myContract.methodInstances[option.methodName]
@@ -394,7 +402,7 @@ function init(options, extraOptions = {}) {
               }
 
               transaction.transaction.signature = []
-              if (isLedger(options)) {
+              if (tronWrap._isLedger && !tronWrap._treUnlockedAccounts[address]) {
                 const transport = await Transport.create();
                 const tronboxApp = new AppTrx(transport);
                 transaction.transaction.signature = [

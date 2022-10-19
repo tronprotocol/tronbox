@@ -447,7 +447,7 @@ const contract = (function (module) {
         tronWrap.triggerContract(option, _callback)
       })
     },
-    deployed: function () {
+    deployed: async function () {
       const self = this
       if (!self.isDeployed()) {
         throw new Error(self.contractName + ' has not been deployed to detected network')
