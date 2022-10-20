@@ -21,14 +21,32 @@ const command = {
     }
 
     function downloadConfig() {
-      return new Promise((resolve, reject) => {
-        const request = require('request');
-        request.get('https://raw.githubusercontent.com/tronsuper/bare-box/master/tronbox.js')
-          .pipe(fs.createWriteStream(path.join(process.cwd(), './tronbox-config.js')))
-          .on('close', () => {
-            resolve();
-          });
-      });
+      function downloadFile(url, target) {
+        return new Promise((resolve, reject) => {
+          const request = require('request');
+          request.get(url)
+            .pipe(fs.createWriteStream(target))
+            .on('close', resolve)
+            .on('error', reject);
+        });
+      }
+      const configFilePromise = downloadFile(
+        'https://raw.githubusercontent.com/tronsuper/bare-box/master/tronbox.js',
+        path.join(process.cwd(), './tronbox-config.js')
+      );
+      const migrationFilePromise = downloadFile(
+        'https://raw.githubusercontent.com/Tronbox-boxes/metacoin-box/master/contracts/Migrations.sol',
+        path.join(process.cwd(), './contracts/Migrations.sol')
+      );
+      const migrationDeployFilePromise = downloadFile(
+        'https://raw.githubusercontent.com/Tronbox-boxes/metacoin-box/master/migrations/1_initial_migration.js',
+        path.join(process.cwd(), './migrations/1_initial_migration.js')
+      );
+      return Promise.all([
+        configFilePromise,
+        migrationFilePromise,
+        migrationDeployFilePromise
+      ]);
     }
 
     function convertTests() {
