@@ -1,4 +1,4 @@
-# TronBox v3.0.0-beta
+# TronBox v3.0.0
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
