@@ -3,7 +3,7 @@ const chalk = require('chalk')
 const MetaCoin = artifacts.require('./MetaCoin.sol')
 
 // The following tests require TronBox >= 2.1.x
-// and Tron Quickstart (https://github.com/tronprotocol/docker-tron-quickstart)
+// and TronBox Runtime Environment (https://hub.docker.com/r/tronbox/tre)
 
 contract('MetaCoin', function (accounts) {
   let meta
@@ -11,7 +11,7 @@ contract('MetaCoin', function (accounts) {
   before(async function () {
     meta = await MetaCoin.deployed()
     if (accounts.length < 3) {
-      // Set your own accounts if you are not using Tron Quickstart
+      // Set your own accounts if you are not using TronBox Runtime Environment
     }
   })
 
@@ -19,7 +19,7 @@ contract('MetaCoin', function (accounts) {
     if (accounts.length < 3) {
       console.info(
         chalk.blue(
-          '\nYOUR ATTENTION, PLEASE.]\nTo test MetaCoin you should use Tron Quickstart (https://github.com/tronprotocol/docker-tron-quickstart) as your private network.\nAlternatively, you must set your own accounts in the "before" statement in "test/metacoin.js".\n'
+          '\nYOUR ATTENTION, PLEASE.]\nTo test MetaCoin you should use TronBox Runtime Environment (https://hub.docker.com/r/tronbox/tre) as your private network.\nAlternatively, you must set your own accounts in the "before" statement in "test/metacoin.js".\n'
         )
       )
     }
@@ -36,7 +36,7 @@ contract('MetaCoin', function (accounts) {
   })
 
   it('should send coins from account 0 to 3 and verify that a Transfer event has been emitted', function (done) {
-    assert.isTrue(accounts[3] ? true : false, 'accounts[1] does not exist. Use Tron Quickstart!')
+    assert.isTrue(accounts[3] ? true : false, 'accounts[1] does not exist. Use TronBox Runtime Environment!')
 
     this.timeout(20000)
     MetaCoin.deployed().then(meta => {
@@ -61,7 +61,7 @@ contract('MetaCoin', function (accounts) {
   })
 
   it('should send coins from account 0 to 1', async function () {
-    assert.isTrue(accounts[1] ? true : false, 'accounts[1] does not exist. Use Tron Quickstart!')
+    assert.isTrue(accounts[1] ? true : false, 'accounts[1] does not exist. Use TronBox Runtime Environment!')
 
     this.timeout(10000)
     const meta = await MetaCoin.deployed()

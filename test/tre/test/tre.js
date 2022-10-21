@@ -1,8 +1,8 @@
 const wait = require('./helpers/wait')
 const MetaCoin = artifacts.require('./MetaCoin.sol')
 
-// The following tests require TronBox >= 2.1.x
-// and Tron Quickstart (https://github.com/tronprotocol/docker-tron-quickstart)
+// The following tests require TronBox >= 3.0.0
+// and TronBox Runtime Environment (https://hub.docker.com/r/tronbox/tre)
 
 contract('MetaCoin', function (accounts) {
   let meta

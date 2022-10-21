@@ -87,7 +87,7 @@ module.exports = {
   }
 };
 ```
-Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mononode on port 9090.
+Notice that the example above uses TronBox Runtime Environment >= 1.0.0, which exposes a mononode on port 9090.
 
 #### Configure Solc
 
