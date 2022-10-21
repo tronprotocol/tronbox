@@ -62,6 +62,10 @@ const command = {
         const translatedContent = gogocode(content)
           .replace('web3', 'tronWeb')
           .replace('tronWeb.eth', 'tronWeb.trx')
+          .replace('tronWeb.utils.sha3', 'tronWeb.sha3')
+          .replace('tronWeb.utils.toWei', 'tronWeb.toSun')
+          .replace('tronWeb.utils.fromWei', 'tronWeb.fromSun')
+          .replace('tronWeb.utils.isAddress', 'tronWeb.isAddress')
           .root()
           .generate();
         if (content === translatedContent) return;
