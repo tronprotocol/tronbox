@@ -38,7 +38,7 @@ To use TronBox, your dApp has to have a file `tronbox.js` in the source root. Th
 module.exports = {
   networks: {
     development: {
-      // For trontools/quickstart docker image
+      // For tronbox/tre docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
       userFeePercentage: 30, // or consume_user_resource_percent
       feeLimit: 100000000, // or fee_limit
@@ -68,7 +68,7 @@ Starting from TronBox 2.1.9, if you are connecting to the same host for full and
 module.exports = {
   networks: {
     development: {
-      // For trontools/quickstart docker image
+      // For tronbox/tre docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
       userFeePercentage: 30,
       feeLimit: 100000000,

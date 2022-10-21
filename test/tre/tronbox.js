@@ -8,7 +8,7 @@ module.exports = {
       /*
 Create a .env file (it must be gitignored) containing something like
 
-  export PRIVATE_KEY_MAINNET=4E7FECCB71207B867C495B51A9758B104B1D4422088A87F4978BE64636656243
+  export PRIVATE_KEY_MAINNET=4E7FEC...656243
 
 Then, run the migration with:
 
@@ -28,7 +28,7 @@ Then, run the migration with:
       network_id: '2'
     },
     development: {
-      // For trontools/quickstart docker image
+      // For tronbox/tre docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
       userFeePercentage: 0,
       feeLimit: 1e8,

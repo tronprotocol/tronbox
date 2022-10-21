@@ -1,7 +1,7 @@
 __3.0.0-beta__
 * bump tronweb from 4.0.1 to 4.3.0
 * Add support for Solidity compiler 0.8.7 and 0.8.11
-* Add `tronWrap.send` function to test environment for supporting test network
+* Add `tronWrap.send` function to test environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
 * Add `tre_setAccountBalance` RPC method. The method can set the given account's balance to the specified SUN value.
 * Add `tre_setAccountCode` RPC method. The method can set the given account's code to the specified value.
 * Add `tre_setAccountStorageAt` RPC method. The method can set the given account's storage slot to the specified data.
