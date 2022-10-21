@@ -1,4 +1,4 @@
-__3.0.0-beta__
+__3.0.0__
 * bump tronweb from 4.0.1 to 4.3.0
 * Add support for Solidity compiler 0.8.7 and 0.8.11
 * Add `tronWrap.send` function to test environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
