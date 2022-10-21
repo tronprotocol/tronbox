@@ -6,7 +6,8 @@ module.exports = {
     originEnergyLimit: 1e7,
     callValue: 0,
     tokenValue: undefined,
-    tokenId: undefined
+    tokenId: undefined,
+    from: undefined
   }
 
 }

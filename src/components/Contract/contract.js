@@ -455,8 +455,8 @@ const contract = (function (module) {
           throw new Error(self.contractName + ' has not been deployed to detected network')
         }
         TronWrap().trx.getContract(self.address)
-          .then(res => {
-            const abi = res.abi && res.abi.entrys ? res.abi.entrys : []
+          .then(() => {
+            const abi = self.abi || []
             for (let i = 0; i < abi.length; i++) {
               const item = abi[i]
               // eslint-disable-next-line no-prototype-builtins

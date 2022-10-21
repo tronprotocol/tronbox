@@ -33,6 +33,7 @@ const command = {
     try {
       TronWrap(config.networks[config.network], {
         verify: true,
+        tre: true,
         log: options.log
       })
     } catch (err) {

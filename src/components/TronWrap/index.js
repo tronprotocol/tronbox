@@ -75,6 +75,14 @@ function init(options, extraOptions = {}) {
     if (!options) {
       throw new Error('It was not possible to instantiate TronWeb. The chosen network does not exist in your "tronbox.js".')
     } else {
+      if (!options.privateKey) {
+        throw new Error('It was not possible to instantiate TronWeb. Private key is missing in your "tronbox.js".')
+      }
+      if (!(
+        options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
+      )) {
+        throw new Error('It was not possible to instantiate TronWeb. Fullhost url is missing in your "tronbox.js".')
+      }
       throw new Error('It was not possible to instantiate TronWeb. Some required parameters are missing in your "tronbox.js".')
     }
   }
@@ -88,6 +96,10 @@ function init(options, extraOptions = {}) {
 
   const tronWrap = TronWrap.prototype
   // tronWrap._compilerVersion = 3
+
+  tronWrap._tre = extraOptions.tre
+  tronWrap._treUnlockedAccounts = {}
+  tronWrap._nextId = 1
 
   tronWrap.networkConfig = filterNetworkConfig(options)
   if (extraOptions.log) {
@@ -189,7 +201,8 @@ function init(options, extraOptions = {}) {
       originEnergyLimit,
       abi: option.abi,
       parameters: option.parameters,
-      name: option.contractName
+      name: option.contractName,
+      from: option.from || ''
     }, option.privateKey)
       .then(() => {
         callback(null, myContract)
@@ -203,9 +216,15 @@ function init(options, extraOptions = {}) {
 
     let signedTransaction
     try {
-      const address = tronWrap.address.fromPrivateKey(privateKey)
+      const address = options.from ? options.from : tronWrap.address.fromPrivateKey(privateKey)
       const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
-      signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
+      if (tronWrap._treUnlockedAccounts[address]) {
+        dlog('Unlocked account', { address })
+        signedTransaction = transaction
+        transaction.signature = []
+      } else {
+        signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
+      }
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
 
       if (!result || typeof result !== 'object') {
@@ -225,6 +244,7 @@ function init(options, extraOptions = {}) {
       for (let i = 0; i < 10; i++) {
         try {
           dlog('Requesting contract')
+          delete tronWrap.trx.cache.contracts[signedTransaction.contract_address]
           contract = await tronWrap.trx.getContract(signedTransaction.contract_address)
           dlog('Contract requested')
           if (contract.contract_address) {
@@ -247,7 +267,7 @@ function init(options, extraOptions = {}) {
       myContract.bytecode = contract.bytecode
       myContract.deployed = true
 
-      myContract.loadAbi(contract.abi.entrys || [])
+      myContract.loadAbi(options.abi || [])
 
       dlog('Contract deployed')
       return Promise.resolve(myContract)
@@ -294,6 +314,60 @@ function init(options, extraOptions = {}) {
           delete option.methodArgs.tokenValue
           delete option.methodArgs.tokenId
         }
+        const address = option.methodArgs.from
+        if (callSend === 'send' && tronWrap._treUnlockedAccounts[address]) {
+          dlog('Unlocked account', { address })
+
+          const { abi, functionSelector, defaultOptions } = myContract.methodInstances[option.methodName]
+          const rawParameter = this.utils.abi.encodeParamsV2ByABI(abi, option.args)
+          const { stateMutability } = abi
+
+          if (!['payable'].includes(stateMutability.toLowerCase())) {
+            delete option.methodArgs.callValue
+            delete option.methodArgs.tokenId
+            delete option.methodArgs.tokenValue
+          }
+          const options = {}
+          Object.keys(defaultOptions).forEach(_ => {
+            options[_] = defaultOptions[_]
+          })
+          Object.keys(option.methodArgs).forEach(_ => {
+            options[_] = option.methodArgs[_]
+          })
+          options.rawParameter = rawParameter
+
+          return new Promise((resolve, reject) => {
+            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, options, [], address).then(transaction => {
+              if (!transaction.result || !transaction.result.result) {
+                return reject('Unknown error: ' + JSON.stringify(transaction, null, 2))
+              }
+
+              transaction.transaction.signature = []
+              tronWrap.trx.sendRawTransaction(transaction.transaction).then(broadcast => {
+                if (broadcast.code) {
+                  const err = {
+                    error: broadcast.code,
+                    message: broadcast.code
+                  }
+                  if (broadcast.message) {
+                    err.message = tronWrap.toUtf8(broadcast.message)
+                    err.error = tronWrap.toUtf8(broadcast.message)
+                  }
+                  return reject(err)
+                }
+
+                return resolve(transaction.transaction.txID)
+              }).catch(err => {
+                return reject(err)
+              })
+            })
+          })
+        }
+
+        if (callSend === 'send' && !tronWrap._treUnlockedAccounts[address] && !privateKey) {
+          return callback('sender account not recognized')
+        }
+
         return myContract[option.methodName](...option.args)[callSend](option.methodArgs || {}, privateKey)
       })
       .then(function (res) {
@@ -308,6 +382,57 @@ function init(options, extraOptions = {}) {
         logErrorAndExit(console, reason)
       }
     })
+  }
+
+  tronWrap.request = async function (request = {}) {
+    return tronWrap.send(request.method, request.params || [])
+  }
+
+  tronWrap.send = async function (method = '', params = []) {
+    const _send = async () => {
+      try {
+        const { data } = await axios.post(this.networkConfig.fullNode + '/tre', {
+          method,
+          params,
+          id: this._nextId++,
+          jsonrpc: '2.0'
+        })
+        const { result, error } = data
+        if (result) return result
+
+        if (error) throw error.message ? error.message : error
+      } catch (error) {
+        const err = error.message ? error.message : error
+        throw new Error(err)
+      }
+    }
+
+    switch (method) {
+      case 'tre_setAccountBalance':
+      case 'tre_setAccountStorageAt':
+      case 'tre_setAccountCode':
+      case 'tre_mine':
+      case 'tre_blockTime':
+        return _send()
+      case 'tre_unlockedAccounts': {
+        const result = await _send()
+        if (result) {
+          const accounts = params[0] || []
+          for (let i = 0; i < accounts.length; i++) {
+            const address = accounts[i]
+            if (tronWrap._tre) {
+              const hexAddr = tronWrap.address.toHex(address)
+              const base58Addr = tronWrap.address.fromHex(address)
+              tronWrap._treUnlockedAccounts[hexAddr] = true
+              tronWrap._treUnlockedAccounts[base58Addr] = true
+            }
+          }
+        }
+        return result
+      }
+      default:
+        return _send()
+    }
   }
 
   return new TronWrap
