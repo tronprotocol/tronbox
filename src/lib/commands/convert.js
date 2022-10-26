@@ -56,16 +56,32 @@ const command = {
       if (!stats.isDirectory()) return;
 
       const gogocode = require('gogocode');
-      console.log(gogocode)
       function translateTestFile(file) {
         const content = fs.readFileSync(file).toString();
         const translatedContent = gogocode(content)
+          .replace('$_$.new()', '$_$.deployed()')
           .replace('web3', 'tronWeb')
           .replace('tronWeb.eth', 'tronWeb.trx')
+          .replace('tronWeb.eth.getBalance', 'tronWeb.trx.getBalance')
+          .replace('tronWeb.eth.getBlock', 'tronWeb.trx.getBlock')
+          .replace('tronWeb.eth.getBlockTransactionCount', 'tronWeb.trx.getBlockTransactionCount')
+          .replace('tronWeb.eth.getTransaction', 'tronWeb.trx.getTransaction')
+          .replace('tronWeb.eth.getTransactionFromBlock', 'tronWeb.trx.getTransactionFromBlock')
+          .replace('tronWeb.eth.getTransactionReceipt', 'tronWeb.trx.getTransactionInfo')
+          .replace('tronWeb.eth.sendTransaction', 'tronWeb.trx.sendTransaction')
+          .replace('tronWeb.eth.sign', 'tronWeb.trx.sign')
           .replace('tronWeb.utils.sha3', 'tronWeb.sha3')
           .replace('tronWeb.utils.toWei', 'tronWeb.toSun')
           .replace('tronWeb.utils.fromWei', 'tronWeb.fromSun')
           .replace('tronWeb.utils.isAddress', 'tronWeb.isAddress')
+          .replace('tronWeb.utils.toHex', 'tronWeb.toHex')
+          .replace('tronWeb.utils.toBN', 'tronWeb.toBigNumber')
+          .replace('tronWeb.utils.hexToNumber', 'tronWeb.toDecimal')
+          .replace('tronWeb.utils.numberToHex', 'tronWeb.toHex')
+          .replace('tronWeb.utils.hexToUtf8', 'tronWeb.toUtf8')
+          .replace('tronWeb.utils.hexToAscii', 'tronWeb.toAscii')
+          .replace('tronWeb.utils.utf8ToHex', 'tronWeb.fromUtf8')
+          .replace('tronWeb.utils.asciiToHex', 'tronWeb.fromAscii')
           .root()
           .generate();
         if (content === translatedContent) return;
