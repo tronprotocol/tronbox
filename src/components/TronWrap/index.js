@@ -2,8 +2,6 @@ const _TronWeb = require('tronweb')
 const chalk = require('chalk')
 const constants = require('./constants')
 const axios = require('axios')
-const AppTrx = require('@ledgerhq/hw-app-trx').default;
-const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
 let instance
 
@@ -63,10 +61,6 @@ function filterNetworkConfig(options) {
   }
 }
 
-function isLedger(options) {
-  return !options.mnemonic && options.path;
-}
-
 function init(options, extraOptions = {}) {
 
   if (instance) {
@@ -74,7 +68,7 @@ function init(options, extraOptions = {}) {
   }
 
   if (extraOptions.verify && (
-    !options || !(options.privateKey || options.mnemonic || options.path) || !(
+    !options || !(options.privateKey || options.mnemonic) || !(
       options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
     )
   )) {
@@ -115,8 +109,6 @@ function init(options, extraOptions = {}) {
   tronWrap._treUnlockedAccounts = {}
   tronWrap._nextId = 1
 
-  tronWrap._isLedger = isLedger(options);
-
   tronWrap.networkConfig = filterNetworkConfig(options)
   if (extraOptions.log) {
     tronWrap._log = extraOptions.log
@@ -143,29 +135,10 @@ function init(options, extraOptions = {}) {
   }
 
   
-  tronWrap._setDefaultAddress = async function() {
-
-    async function getDefaultAddress(options) {
-      if (tronWrap._isLedger) {
-        const transport = await Transport.create();
-        const tronboxApp = new AppTrx(transport);
-        const defaultAddress = await tronboxApp.getAddress(options.path).then(o => o.address);
-        await transport.close();
-        return defaultAddress;
-      }
-      return tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey);
-    }
-
-    if (tronWrap._accounts.length) return;
-  
-    const defaultAddress = await getDefaultAddress(options);
-    tronWrap._accounts = [defaultAddress];
-    tronWrap._privateKeyByAccount = {
-      [defaultAddress]: tronWrap.defaultPrivateKey
-    };
-  }
-  tronWrap._accounts = [];
-  tronWrap._privateKeyByAccount = {};
+  const defaultAddress = tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey)
+  tronWrap._accounts = [defaultAddress]
+  tronWrap._privateKeyByAccount = {}
+  tronWrap._privateKeyByAccount[defaultAddress] = tronWrap.defaultPrivateKey
 
   tronWrap._getAccounts = function (callback) {
 
@@ -257,31 +230,15 @@ function init(options, extraOptions = {}) {
   tronWrap._new = async function (myContract, params, privateKey = tronWrap.defaultPrivateKey) {
 
     let signedTransaction
-    let transaction
     try {
-      
-      // using ledger when path is specified while mnemonic is not
-      if (tronWrap._isLedger) {
-        const transport = await Transport.create();
-        const tronboxApp = new AppTrx(transport);
-        const address = await tronboxApp.getAddress(options.path).then(o => o.address);
-        transaction = await tronWrap.transactionBuilder.createSmartContract(params, address);
-        signedTransaction = {
-          ...transaction,
-          signature: [await tronboxApp.signTransactionHash(options.path, transaction.txID)]
-        };
-        // should close transport or the next creation will fail
-        await transport.close();
+      const address = params.from ? params.from : tronWrap.address.fromPrivateKey(privateKey)
+      const transaction = await tronWrap.transactionBuilder.createSmartContract(params, address)
+      if (tronWrap._treUnlockedAccounts[address]) {
+        dlog('Unlocked account', { address })
+        signedTransaction = transaction
+        transaction.signature = []
       } else {
-        const address = params.from ? params.from : tronWrap.address.fromPrivateKey(privateKey)
-        transaction = await tronWrap.transactionBuilder.createSmartContract(params, address)
-        if (tronWrap._treUnlockedAccounts[address]) {
-          dlog('Unlocked account', { address })
-          signedTransaction = transaction
-          transaction.signature = []
-        } else {
-          signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
-        }
+        signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
       }
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
       
@@ -374,7 +331,7 @@ function init(options, extraOptions = {}) {
           delete option.methodArgs.tokenId
         }
         const address = option.methodArgs.from
-        if (callSend === 'send' && (tronWrap._treUnlockedAccounts[address] || tronWrap._isLedger)) {
+        if (callSend === 'send' && tronWrap._treUnlockedAccounts[address]) {
           dlog('Unlocked account', { address })
 
           const { abi, functionSelector, defaultOptions } = myContract.methodInstances[option.methodName]
@@ -402,14 +359,6 @@ function init(options, extraOptions = {}) {
               }
 
               transaction.transaction.signature = []
-              if (tronWrap._isLedger && !tronWrap._treUnlockedAccounts[address]) {
-                const transport = await Transport.create();
-                const tronboxApp = new AppTrx(transport);
-                transaction.transaction.signature = [
-                  await tronboxApp.signTransactionHash(options.path, transaction.transaction.txID)
-                ];
-                await transport.close();
-              }
               tronWrap.trx.sendRawTransaction(transaction.transaction).then(broadcast => {
                 if (broadcast.code) {
                   const err = {
@@ -502,10 +451,7 @@ function init(options, extraOptions = {}) {
     }
   }
 
-  const ins = new TronWrap;
-  // can do it in a async function
-  ins._setDefaultAddress();
-  return ins;
+  return new TronWrap;
 }
 
 
