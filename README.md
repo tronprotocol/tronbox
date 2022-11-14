@@ -310,15 +310,14 @@ You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys
 ```shell script
 git clone --recurse-submodules -j8 git@github.com:sullof/tronbox.git
 ```
-3. If you use nvm for Node, please install Node 8, and install lerna globally:
+3. If you use nvm for Node, please install Node >=8:
 ```shell script
 nvm install v8.16.0
 nvm use v8.16.0
-npm i -g lerna
 ```
-4. Bootstrap the project:
+4. Install the project's dependencies:
 ```shell script
-lerna bootstrap
+npm install
 ```
 5. During the development, for better debugging, you can run the unbuilt version of TronBox, for example
 ```shell script
