@@ -85,6 +85,7 @@ const compile = function (sources, options, callback) {
             'abi',
             'evm.bytecode.object',
             'evm.bytecode.sourceMap',
+            'evm.bytecode.linkReferences',
             'evm.deployedBytecode.object',
             'evm.deployedBytecode.sourceMap'
           ]

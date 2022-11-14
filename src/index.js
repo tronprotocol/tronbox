@@ -28,7 +28,7 @@ if (commands[0] === '--download-compiler' && commands[1]) {
           .usage('Tronbox v' + (version.bundle || version.core) + ' - a development framework for tronweb'
             + OS.EOL + OS.EOL
             + 'Usage: tronbox <command> [options]')
-          .epilog('See more at https://developers.tron.network/docs/tron-box-user-guide')
+          .epilog('See more at https://developers.tron.network/docs/tronbox')
           .showHelp()
       } else {
         if (err instanceof TruffleError) {

@@ -1,3 +1,53 @@
+__3.0.0__
+* bump tronweb from 4.0.1 to 4.3.0
+* Add support for Solidity compiler 0.8.7 and 0.8.11
+* Add `tronWrap.send` function to test environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
+* Add `tre_setAccountBalance` RPC method. The method can set the given account's balance to the specified SUN value.
+* Add `tre_setAccountCode` RPC method. The method can set the given account's code to the specified value.
+* Add `tre_setAccountStorageAt` RPC method. The method can set the given account's storage slot to the specified data.
+* Add `tre_blockTime` RPC method. The method can set the blockTime in seconds for automatic mining. A blockTime of 0 enables "instamine mode", where new executable transactions will be mined instantly.
+* Add `tre_mine` RPC method. The method can mine exactly `blocks` number of blocks.
+* Add `tre_unlockedAccounts` RPC method. The method can set up any arbitrary account to impersonate during development.
+
+`tre_setAccountBalance`:
+```js
+const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
+const balance = "0x3e8";
+const result = await tronWrap.send("tre_setAccountBalance", [address, balance]);
+console.log(result);
+```
+`tre_setAccountCode`:
+```js
+const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
+const data = "0xbaddad42";
+const result = await tronWrap.send("tre_setAccountCode", [address, data]);
+console.log(result);
+```
+`tre_setAccountStorageAt`:
+```js
+const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
+const slot = "0x0000000000000000000000000000000000000000000000000000000000000005";
+const data = "0xbaddad42";
+const result = await tronWrap.send("tre_setAccountStorageAt", [address, slot, data]);
+console.log(result);
+```
+`tre_blockTime`:
+```js
+const result = await tronWrap.send("tre_blockTime", [3]);
+console.log(result);
+```
+`tre_mine`:
+```js
+const result = await tronWrap.send("tre_mine", [{ blocks: 5}]);
+console.log(result);
+```
+`tre_unlockedAccounts`:
+```js
+const result = await tronWrap.send("tre_unlockedAccounts", [["TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL"]]);
+console.log(result);
+```
+
+
 __2.7.25__
 * bump tronweb from 4.0.0 to 4.0.1
 

@@ -1,4 +1,4 @@
-# TronBox v2.7.25
+# TronBox v3.0.0
 Simple development framework for tronweb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
@@ -38,7 +38,7 @@ To use TronBox, your dApp has to have a file `tronbox.js` in the source root. Th
 module.exports = {
   networks: {
     development: {
-      // For trontools/quickstart docker image
+      // For tronbox/tre docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
       userFeePercentage: 30, // or consume_user_resource_percent
       feeLimit: 100000000, // or fee_limit
@@ -68,7 +68,7 @@ Starting from TronBox 2.1.9, if you are connecting to the same host for full and
 module.exports = {
   networks: {
     development: {
-      // For trontools/quickstart docker image
+      // For tronbox/tre docker image
       privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
       userFeePercentage: 30,
       feeLimit: 100000000,
@@ -87,7 +87,7 @@ module.exports = {
   }
 };
 ```
-Notice that the example above uses Tron Quickstart >= 1.1.16, which exposes a mononode on port 9090.
+Notice that the example above uses TronBox Runtime Environment >= 1.0.0, which exposes a mononode on port 9090.
 
 #### Configure Solc
 
@@ -140,6 +140,8 @@ Tron Solidity supported the following versions:
 0.7.7
 0.8.0
 0.8.6
+0.8.7
+0.8.11
 ```
 
 more versions details: https://github.com/tronprotocol/solidity/releases
