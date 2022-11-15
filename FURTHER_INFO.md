@@ -22,21 +22,22 @@ Windows, Linux, or Mac OS X
 
 ## Verifying the PGP signature
 
-Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
+Follow these steps to verify the PGP signature:
+1. Install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation).
 
-First, get the version of tronbox dist.tarball
+2. Get the version of tronbox dist.tarball
 
 ```shell
 $ npm view tronbox dist.tarball
 https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
 ```
-Second, get the tarball
+3. Get the tarball
 
 ```shell
 wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
 ```
 
-Finally, verify the tarball
+4. Verify the tarball
 
 ```shell
 $ pkgsign verify tronbox-2.7.25.tgz --package-name tronbox
@@ -45,13 +46,13 @@ building file list...
 verifying package...
 package is trusted
 ```
-You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
+Find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
 
 ## Configuration
 To use TronBox for your dApp, a file named `tronbox.js` should exist in the source root. This file tells TronBox how to connect to nodes and event server and passes parameters (such as the default private key). 
 
-This is an example of `tronbox.js`:
+Here is an example of `tronbox.js`:
 ```javascript
 module.exports = {
   networks: {
@@ -81,7 +82,7 @@ module.exports = {
   }
 };
 ```
-Starting from TronBox 2.1.9, if you are connecting to the same host for full and solidity nodes, and event server, you can set just `fullHost`:
+Starting from TronBox 2.1.9, if you are connecting to the same host for full and solidity nodes, and event server, you can simply set `fullHost`:
 ```javascript
 module.exports = {
   networks: {
@@ -109,7 +110,7 @@ Notice that the example above uses TronBox Runtime Environment >= 1.0.0, which e
 
 ### Configure Solc
 
-You can configure the solc compiler as the following example in tronbox.js
+Refer to this example for how to configure the solc compiler in tronbox.js:
 ```javascript
 module.exports = {
   networks: {
@@ -171,7 +172,7 @@ more versions details: https://github.com/tronprotocol/solidity/releases
 tronbox migrate
 ```
 
-This command will invoke all migration scripts within the migrations directory. If your previous migration was successful, `tronbox migrate` will invoke a newly created migration. If there is no new migration script, this command will have no operational effect. Instead, you can use the option `--reset` to restart the migration script.
+This command will invoke all migration scripts within the migrations directory. If your previous migration was successful, `tronbox migrate` will invoke a newly-created migration. If there is no new migration script, this command will have no operational effect. Instead, you can use the option `--reset` to restart the migration script.
 
 ```
 tronbox migrate --reset
@@ -179,7 +180,7 @@ tronbox migrate --reset
 
 ### Parameters by contract (introduced in v2.2.2)
 
-It is very important to set the deploying parameters for any contract. In TronBox 2.2.2+ you can do it modifying the file
+It is very important to set deploying parameters for all contracts. In TronBox 2.2.2+, you can do so by modifying the file:
 ```
 migrations/2_deploy_contracts.js
 ```
@@ -202,7 +203,7 @@ module.exports = function(deployer) {
 ## TronBox Console
 
 ### Start Console<br>
-This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this.
+This will use the default network to start a console. It will automatically connect to a TVM client. You can change networks using the `--network` option.
 
 ```
 tronbox console
