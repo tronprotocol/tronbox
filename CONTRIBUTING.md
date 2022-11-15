@@ -19,7 +19,7 @@ nvm use v8.16.0
 ```shell script
 npm install
 ```
-5. During the development, for better debugging, run the unbuilt version of TronBox. 
+5. For better debugging during development, run the unbuilt version of TronBox. 
 For example:
 ```shell script
 ./tronbox.dev migrate --reset
