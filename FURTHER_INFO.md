@@ -10,12 +10,11 @@
 - Testing
 
 ---
----
 
 ### OS requirement
 
-- NodeJS 8.0+
-- Windows, Linux, or Mac OS X
+> NodeJS 8.0+
+> Windows, Linux, or Mac OS X
 
 ### Verifying the PGP signature
 
