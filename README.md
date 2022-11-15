@@ -1,6 +1,6 @@
 # TronBox v3.0.0
 Simple development framework for TronWeb<br>
-**TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle)**
+**TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).**
 
 ## Installation
 ```
