@@ -35,9 +35,8 @@ $ tronbox compile
 To compile for all contracts, select ```--compile-all```.
 
 
-For further Operations 
-- [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration): to configure xxx
-- [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration): to do xxx
+Configure your dApp to use TronBox [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration).
+- [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
 - [TronBox Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tronbox-console)
 - [Testing](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#testing)
 
