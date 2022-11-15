@@ -1,28 +1,25 @@
 # TronBox v3.0.0
-Simple development framework for tronweb
+Simple development framework for TronWeb
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle) [code](https://github.com/trufflesuite/truffle)**
 
 ## Installation
 ```
-npm install -g tronbox
+$ npm install -g tronbox
 ```
-## OS requirement
-- NodeJS 8.0+
-- Windows, Linux, or Mac OS X
 
 ## Quick Usage
-Initialize a Customer Tron-Box Project
+To create a default Customer Tron-Box Project：
 ```
-tronbox init
+$ tronbox init
 ```
 
 Download a dApp, ex: metacoin-box
 ```
-tronbox unbox metacoin
+$ tronbox unbox metacoin
 ```
 Contract Compiler
 ```
-tronbox compile
+$ tronbox compile
 ```
 
 To compile for all contracts, select --compile-all.
