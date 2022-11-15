@@ -7,8 +7,7 @@ Simple development framework for TronWeb
 $ npm install -g tronbox
 ```
 
-
-* If you want to verify your xx, [link]
+_* If you want to verify your xx, [link]_
 
 ## Quick Usage
 To create a default Customer Tron-Box Project：
@@ -26,12 +25,7 @@ $ tronbox compile
 ```
 
 To compile for all contracts, select --compile-all.
-
-Optionally, you can select: <br>
---compile-all: Force compile all contracts. <br>
---network save results to a specific host network<br>
-<br>
-
+For other xxx [link]
 
 
 For further Operations 
@@ -39,7 +33,6 @@ For further Operations
 - Contract Migration: to do xxx
 - TronBox Console
 - Testing
-
 
 
 ## How to contribute
