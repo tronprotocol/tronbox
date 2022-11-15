@@ -17,6 +17,10 @@
 > Windows, Linux, or Mac OS X
 
 
+
+
+
+
 ### Verifying the PGP signature
 
 Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
