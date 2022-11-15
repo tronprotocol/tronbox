@@ -6,7 +6,7 @@ Simple development framework for TronWeb<br>
 ```
 $ npm install -g tronbox
 ```
-[OS Requirements](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#os-requirement)
+For OS requirements, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#os-requirement).
 
 _Note: To verify Verifying the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._
 
