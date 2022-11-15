@@ -16,10 +16,7 @@
 > NodeJS 8.0+<br>
 > Windows, Linux, or Mac OS X
 
-
-
-
-
+<br>
 
 ### Verifying the PGP signature
 
