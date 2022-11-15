@@ -1,8 +1,8 @@
-Table of Contents
+## Table of Contents
 - Configuration
   - Configure Solc
 - Contract Migration
-- Parameters by contract (introduced in v2.2.2)
+  - Parameters by contract (introduced in v2.2.2)
 - Start Console
   - Extra Features in TronBox console
 - Testing
