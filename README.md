@@ -24,7 +24,7 @@ Contract Compiler
 $ tronbox compile
 ```
 
-To compile for all contracts, select --compile-all.
+To compile for all contracts, select ```--compile-all```.
 
 
 For further Operations 
