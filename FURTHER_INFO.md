@@ -3,11 +3,12 @@
 - Verifying the PGP signature
 - [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
   - Configure Solc
-- Contract Migration
+- [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
   - Parameters by contract (introduced in v2.2.2)
-- Start Console
+- [TronBox Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tronbox-console)
+  - Start Console
   - Extra Features in TronBox console
-- Testing
+- [Testing](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#testing)
 
 ---
 
