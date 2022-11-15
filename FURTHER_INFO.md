@@ -3,6 +3,7 @@
 - [Verifying the PGP signature](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)
 - [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
   - [Configure Solc](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configure-solc)
+- [Tron Solidity versions supported by TronBox]
 - [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
   - [Parameters by contract (introduced in v2.2.2)](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#parameters-by-contract-introduced-in-v222)
 - [TronBox Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tronbox-console)
@@ -128,7 +129,7 @@ module.exports = {
 }
 ```
 
-## Versions of Tron Solidity supported by TronBox
+## Tron Solidity Versions supported by TronBox
 
 ```
 0.4.24
