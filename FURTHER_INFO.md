@@ -10,7 +10,7 @@
   - [Start Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#start-console)
   - [Extra Features in TronBox console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#start-console)
 - [Testing](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#testing)
-- [How to contribute](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#how-to-contribute)
+
 
 ---
 
@@ -290,27 +290,4 @@ instance.sendCoin(address, amount, {from: account[1]});
 and
 ```javascript
 instance.sendCoin([address, amount], {from: account[1]});
-```
-
-
-### How to contribute
-
-1. Fork this repository.
-
-2. Clone your forked repo recursively, to include submodules, for example:
-```shell script
-git clone --recurse-submodules -j8 git@github.com:sullof/tronbox.git
-```
-3. If you use nvm for Node, please install Node >=8:
-```shell script
-nvm install v8.16.0
-nvm use v8.16.0
-```
-4. Install the project's dependencies:
-```shell script
-npm install
-```
-5. During the development, for better debugging, you can run the unbuilt version of TronBox, for example
-```shell script
-./tronbox.dev migrate --reset
 ```
