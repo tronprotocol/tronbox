@@ -6,10 +6,7 @@ Simple development framework for TronWeb
 ```
 $ npm install -g tronbox
 ```
-### OS requirement
 
-- NodeJS 8.0+
-- Windows, Linux, or Mac OS X
 
 * If you want to verify your xx, [link]
 
