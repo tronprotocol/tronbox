@@ -46,7 +46,7 @@ building file list...
 verifying package...
 package is trusted
 ```
-Find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
+You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
 
 ## Configuration
