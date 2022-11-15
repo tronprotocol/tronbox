@@ -1,4 +1,6 @@
 ## Table of Contents
+- OS Requirement
+- Verifying the PGP signature
 - [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
   - Configure Solc
 - Contract Migration
@@ -6,9 +8,39 @@
 - Start Console
   - Extra Features in TronBox console
 - Testing
-- Verifying the PGP signature
 
 
+### OS requirement
+
+- NodeJS 8.0+
+- Windows, Linux, or Mac OS X
+
+### Verifying the PGP signature
+
+Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
+
+First, get the version of tronbox dist.tarball
+
+```shell
+$ npm view tronbox dist.tarball
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
+```
+Second, get the tarball
+
+```shell
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
+```
+
+Finally, verify the tarball
+
+```shell
+$ pkgsign verify tronbox-2.7.25.tgz --package-name tronbox
+extracting unsigned tarball...
+building file list...
+verifying package...
+package is trusted
+```
+You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
 ### Configuration
 To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. This is an example of `tronbox.js`:
@@ -252,30 +284,5 @@ and
 instance.sendCoin([address, amount], {from: account[1]});
 ```
 
-### Verifying the PGP signature
 
-Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
-
-First, get the version of tronbox dist.tarball
-
-```shell
-$ npm view tronbox dist.tarball
-https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
-```
-Second, get the tarball
-
-```shell
-wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
-```
-
-Finally, verify the tarball
-
-```shell
-$ pkgsign verify tronbox-2.7.25.tgz --package-name tronbox
-extracting unsigned tarball...
-building file list...
-verifying package...
-package is trusted
-```
-You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
