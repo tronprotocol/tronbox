@@ -6,10 +6,11 @@ Table of Contents
 - Start Console
   - Extra Features in TronBox console
 - Testing
+- Verifying the PGP signature
 
 
 
-## Configuration
+### Configuration
 To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. This is an example of `tronbox.js`:
 ```javascript
 module.exports = {
@@ -91,7 +92,7 @@ module.exports = {
 }
 ```
 
-Tron Solidity supported the following versions:
+### Tron Solidity supported the following versions:
 
 ```
 0.4.24
@@ -124,7 +125,7 @@ Tron Solidity supported the following versions:
 more versions details: https://github.com/tronprotocol/solidity/releases
 
 
-## Contract Migration
+### Contract Migration
 
 ```
 tronbox migrate
@@ -136,7 +137,7 @@ This command will invoke all migration scripts within the migrations directory. 
 tronbox migrate --reset
 ```
 
-## Parameters by contract (introduced in v2.2.2)
+#### Parameters by contract (introduced in v2.2.2)
 
 It is very important to set the deploying parameters for any contract. In TronBox 2.2.2+ you can do it modifying the file
 ```
@@ -158,7 +159,7 @@ module.exports = function(deployer) {
 };
 ```
 
-## Start Console<br>
+### Start Console<br>
 This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this.
 
 ```
@@ -168,7 +169,7 @@ tronbox console
 The console supports the `tronbox` command. For example, you can invoke `migrate --reset` in the console. The result is the same as invoking `tronbox migrate --reset` in the command.
 <br>
 
-## Extra Features in TronBox console:<br>
+#### Extra Features in TronBox console:<br>
 
 1. All the compiled contracts can be used, just like in development & test, front-end code, or during script migration. <br>
 
@@ -176,7 +177,7 @@ The console supports the `tronbox` command. For example, you can invoke `migrate
 
 3. Every returned command's promise will automatically be logged. There is no need to use `then()`, which simplifies the command.<br>
 
-## Testing<br>
+### Testing<br>
 
 To carry out the test, run the following command:
 
@@ -249,4 +250,30 @@ instance.sendCoin(address, amount, {from: account[1]});
 and
 ```javascript
 instance.sendCoin([address, amount], {from: account[1]});
+```
+
+### Verifying the PGP signature
+
+Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
+
+First, get the version of tronbox dist.tarball
+
+```shell
+$ npm view tronbox dist.tarball
+https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
+```
+Second, get the tarball
+
+```shell
+wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
+```
+
+Finally, verify the tarball
+
+```shell
+$ pkgsign verify tronbox-2.7.25.tgz --package-name tronbox
+extracting unsigned tarball...
+building file list...
+verifying package...
+package is trusted
 ```
