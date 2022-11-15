@@ -34,7 +34,8 @@ $ tronbox compile
 
 To compile for all contracts, select ```--compile-all```.
 
-See advanced development information on these topics:
+## Development
+See advanced information for development on these topics:
 - [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
 - [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
 - [TronBox Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tronbox-console)
@@ -43,7 +44,7 @@ See advanced development information on these topics:
 
 ## How to contribute
 
-1. Fork this repo.
+1. Fork this repository.
 
 2. Clone your forked repo recursively, to include submodules, for example:
 ```shell script
