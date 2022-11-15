@@ -45,8 +45,6 @@ For further Operations
 
 
 
-You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
-
 ## How to contribute
 
 1. Fork this repo.
