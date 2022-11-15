@@ -49,7 +49,9 @@ You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys
 
 
 ## Configuration
-To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. This is an example of `tronbox.js`:
+To use TronBox for your dApp, a file named `tronbox.js` should exist in the source root. This file tells TronBox how to connect to nodes and event server and passes parameters (such as the default private key). 
+
+This is an example of `tronbox.js`:
 ```javascript
 module.exports = {
   networks: {
