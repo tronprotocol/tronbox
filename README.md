@@ -42,30 +42,6 @@ For advanced information for development, see:
 - [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
 - [TronBox Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tronbox-console)
 - [Testing](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#testing)
+- Contribute
 
 
-## How to contribute
-
-1. Fork this repository.
-
-2. Clone your forked repo recursively, to include submodules, for example:
-```shell script
-git clone --recurse-submodules -j8 git@github.com:sullof/tronbox.git
-```
-3. If you use nvm for Node, please install Node >=8:
-```shell script
-nvm install v8.16.0
-nvm use v8.16.0
-```
-4. Install the project's dependencies:
-```shell script
-npm install
-```
-5. During the development, for better debugging, you can run the unbuilt version of TronBox, for example
-```shell script
-./tronbox.dev migrate --reset
-```
-
-## TronBox Changelog
-
-for more details: [CHANGELOG](./CHANGELOG.md)
