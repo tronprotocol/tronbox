@@ -1,5 +1,13 @@
 # TronBox v3.0.0
-Simple development framework for TronWeb<br>
+TronBox is a smart contract development, testing, and deployment tool for blockchains using the TRON Virtual Machine (TVM). 
+TronBox allows you to:
+- Use built-in functions for smart contract compilation, linking, deployment and binary management
+- Execute external scripts in the TronBox environment
+- Communicate directly with contracts using interactive console tools
+- Efficiently develop automated contract testing
+- Make contract deployment and migration scriptable & extensible
+- Deploy contracts to any number of public & private TRE networks with powerful network management capabilities
+<br>
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).**
 
 ## Installation
