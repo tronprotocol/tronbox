@@ -1,4 +1,4 @@
-## Table of Contents
+# Table of Contents
 - OS Requirement
 - Verifying the PGP signature
 - [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
@@ -11,12 +11,12 @@
 
 ---
 
-### OS requirement
+## OS requirement
 
 > NodeJS 5.0+<br>
 > Windows, Linux, or Mac OS X
 
-### Verifying the PGP signature
+## Verifying the PGP signature
 
 Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
 
@@ -44,7 +44,7 @@ package is trusted
 You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
 
-### Configuration
+## Configuration
 To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. This is an example of `tronbox.js`:
 ```javascript
 module.exports = {
@@ -101,7 +101,7 @@ module.exports = {
 ```
 Notice that the example above uses TronBox Runtime Environment >= 1.0.0, which exposes a mononode on port 9090.
 
-#### Configure Solc
+### Configure Solc
 
 You can configure the solc compiler as the following example in tronbox.js
 ```javascript
@@ -126,7 +126,7 @@ module.exports = {
 }
 ```
 
-### Tron Solidity supported the following versions:
+## Tron Solidity supported the following versions:
 
 ```
 0.4.24
@@ -159,7 +159,7 @@ module.exports = {
 more versions details: https://github.com/tronprotocol/solidity/releases
 
 
-### Contract Migration
+## Contract Migration
 
 ```
 tronbox migrate
@@ -171,7 +171,7 @@ This command will invoke all migration scripts within the migrations directory. 
 tronbox migrate --reset
 ```
 
-#### Parameters by contract (introduced in v2.2.2)
+### Parameters by contract (introduced in v2.2.2)
 
 It is very important to set the deploying parameters for any contract. In TronBox 2.2.2+ you can do it modifying the file
 ```
@@ -193,7 +193,7 @@ module.exports = function(deployer) {
 };
 ```
 
-### Start Console<br>
+## Start Console<br>
 This will use the default network to start a console. It will automatically connect to a TVM client. You can use `--network` to change this.
 
 ```
@@ -203,7 +203,7 @@ tronbox console
 The console supports the `tronbox` command. For example, you can invoke `migrate --reset` in the console. The result is the same as invoking `tronbox migrate --reset` in the command.
 <br>
 
-#### Extra Features in TronBox console:<br>
+### Extra Features in TronBox console:<br>
 
 1. All the compiled contracts can be used, just like in development & test, front-end code, or during script migration. <br>
 
@@ -211,7 +211,7 @@ The console supports the `tronbox` command. For example, you can invoke `migrate
 
 3. Every returned command's promise will automatically be logged. There is no need to use `then()`, which simplifies the command.<br>
 
-### Testing<br>
+## Testing<br>
 
 To carry out the test, run the following command:
 
