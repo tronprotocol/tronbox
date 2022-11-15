@@ -1,3 +1,13 @@
+Table of Contents
+- Configuration
+  - Configure Solc
+- Contract Migration
+- Parameters by contract (introduced in v2.2.2)
+- Start Console
+  - Extra Features in TronBox console
+- Testing
+
+
 
 ## Configuration
 To use TronBox, your dApp has to have a file `tronbox.js` in the source root. This special files, tells TronBox how to connect to nodes and event server, and passes some special parameters, like the default private key. This is an example of `tronbox.js`:
