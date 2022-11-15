@@ -31,31 +31,6 @@ Optionally, you can select: <br>
 
 
 
-# Verifying the PGP signature
-
-Prepare, you need to install the npm [pkgsign](https://www.npmjs.com/package/pkgsign#installation) for verifying.
-
-First, get the version of tronbox dist.tarball
-
-```shell
-$ npm view tronbox dist.tarball
-https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
-```
-Second, get the tarball
-
-```shell
-wget https://registry.npmjs.org/tronbox/-/tronbox-2.7.25.tgz
-```
-
-Finally, verify the tarball
-
-```shell
-$ pkgsign verify tronbox-2.7.25.tgz --package-name tronbox
-extracting unsigned tarball...
-building file list...
-verifying package...
-package is trusted
-```
 
 You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys.asc).
 
