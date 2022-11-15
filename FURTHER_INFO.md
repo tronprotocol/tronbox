@@ -12,9 +12,10 @@
 ---
 
 ## OS requirement
-
-> NodeJS 5.0+<br>
-> Windows, Linux, or Mac OS X
+```
+NodeJS 5.0+<br>
+Windows, Linux, or Mac OS X
+```
 
 ## Verifying the PGP signature
 
