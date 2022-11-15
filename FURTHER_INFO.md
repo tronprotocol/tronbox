@@ -1,6 +1,6 @@
 # Table of Contents
 - [OS Requirement](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#os-requirement)
-- Verifying the PGP signature
+- [Verifying the PGP signature](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)
 - [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
   - Configure Solc
 - [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
