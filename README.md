@@ -6,6 +6,12 @@ Simple development framework for TronWeb
 ```
 $ npm install -g tronbox
 ```
+### OS requirement
+
+- NodeJS 8.0+
+- Windows, Linux, or Mac OS X
+
+* If you want to verify your xx, [link]
 
 ## Quick Usage
 To create a default Customer Tron-Box Project：
@@ -29,6 +35,13 @@ Optionally, you can select: <br>
 --network save results to a specific host network<br>
 <br>
 
+
+
+For further Operations 
+- [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration): to configure xxx
+- Contract Migration: to do xxx
+- TronBox Console
+- Testing
 
 
 
