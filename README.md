@@ -18,23 +18,23 @@ $ npm install -g tronbox
 _Note: For OS requirements, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#os-requirement). To verify the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._
 
 ## Quick Usage
-To create a default Customer Tron-Box Project：
+To create a default Tron-Box Project：
 ```
 $ tronbox init
 ```
 
-Download a dApp, ex: metacoin-box
+To download a dApp (for example, metacoin-box):
 ```
 $ tronbox unbox metacoin
 ```
-Contract Compiler
+To compile a contract:
 ```
 $ tronbox compile
 ```
 
 To compile all contracts, use the ```--compile-all``` option.
  
-Specifies a network using the ```--network``` option. Network name must exist in the configuration.
+Specify a network using the ```--network``` option. Network name must exist in the configuration.
 
 ## Development
 For advanced information for development, see:
