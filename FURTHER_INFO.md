@@ -128,7 +128,7 @@ module.exports = {
 }
 ```
 
-## Tron Solidity supported the following versions:
+## Versions of Tron Solidity supported by TronBox
 
 ```
 0.4.24
