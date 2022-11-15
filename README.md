@@ -7,7 +7,7 @@ TronBox allows you to:
 - Efficiently develop automated contract testing
 - Make contract deployment and migration scriptable & extensible
 - Deploy contracts to any number of public & private TRE networks with powerful network management capabilities
-<br>
+
 **TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).**
 
 ## Installation
