@@ -42,6 +42,6 @@ For advanced information for development, see:
 - [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
 - [TronBox Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tronbox-console)
 - [Testing](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#testing)
-- [Contributing]()
+- [Contributing](https://github.com/jz2120100058/tronbox/blob/master/CONTRIBUTING.md)
 
 
