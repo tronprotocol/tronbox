@@ -32,7 +32,9 @@ Contract Compiler
 $ tronbox compile
 ```
 
-To compile for all contracts, select ```--compile-all```.
+To compile all contracts, use the ```--compile-all``` option.
+ 
+Specifies a network using the ```--network``` option. Network name must exist in the configuration.
 
 ## Development
 For advanced information for development, see:
