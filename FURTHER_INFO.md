@@ -163,7 +163,7 @@ module.exports = {
 0.8.11
 ```
 
-more versions details: https://github.com/tronprotocol/solidity/releases
+For more versions details: https://github.com/tronprotocol/solidity/releases
 
 
 ## Contract Migration
