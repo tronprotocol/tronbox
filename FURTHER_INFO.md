@@ -1,5 +1,5 @@
 ## Table of Contents
-- Configuration
+- [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
   - Configure Solc
 - Contract Migration
   - Parameters by contract (introduced in v2.2.2)
