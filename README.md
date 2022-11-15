@@ -8,7 +8,7 @@ TronBox allows you to:
 - Make contract deployment and migration scriptable & extensible
 - Deploy contracts to any number of public & private TRE networks with powerful network management capabilities
 
-**TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).**
+TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).
 
 ## Installation
 ```
