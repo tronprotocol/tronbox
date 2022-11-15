@@ -13,7 +13,7 @@
 
 ### OS requirement
 
-> NodeJS 8.0+
+> NodeJS 8.0+<br>
 > Windows, Linux, or Mac OS X
 
 ### Verifying the PGP signature
