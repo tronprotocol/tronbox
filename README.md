@@ -10,16 +10,14 @@ TronBox allows you to:
 
 TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).
 
-## Requirement
-
-## Installation
+## Quick Usage
+Installation
 ```
 $ npm install -g tronbox
 ```
+详细安装请参考安装说明。
+_Note: To verify the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._
 
-_Note: For OS requirements, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#os-requirement). To verify the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._
-
-## Quick Usage
 To create a default Tron-Box Project：
 ```
 $ tronbox init
@@ -37,6 +35,13 @@ $ tronbox compile
 To compile all contracts, use the ```--compile-all``` option.
  
 Specify a network using the ```--network``` option. Network name must exist in the configuration.
+
+To deploy a contract
+```
+$ tronbox migrate
+```
+
+To test a contract
 
 ## Development
 For advanced information for development, see:
