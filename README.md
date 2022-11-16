@@ -41,7 +41,11 @@ To deploy a contract
 $ tronbox migrate
 ```
 
-To test a contract
+To carry out the test, run the following command:
+```
+$ tronbox test
+```
+
 
 ## Development
 For advanced information for development, see:
