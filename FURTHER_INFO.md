@@ -16,7 +16,7 @@
 
 ## OS requirement
 ```
-NodeJS 5.0+<br>
+NodeJS 8.0+
 Windows, Linux, or Mac OS X
 ```
 
@@ -57,52 +57,27 @@ Here is an example of `tronbox.js`:
 module.exports = {
   networks: {
     development: {
-      // For tronbox/tre docker image
-      privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
-      userFeePercentage: 30, // or consume_user_resource_percent
-      feeLimit: 100000000, // or fee_limit
-      originEnergyLimit: 1e8, // or origin_energy_limit
-      callValue: 0, // or call_value
-      fullNode: "http://127.0.0.1:8090",
-      solidityNode: "http://127.0.0.1:8091",
-      eventServer: "http://127.0.0.1:8092",
-      network_id: "*"
-    },
-    mainnet: {
-      // Don't put your private key here, pass it using an env variable, like:
-      // PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
-      privateKey: process.env.PK,
-      userFeePercentage: 30,
-      feeLimit: 100000000,
-      fullNode: "https://api.trongrid.io",
-      solidityNode: "https://api.trongrid.io",
-      eventServer: "https://api.trongrid.io",
-      network_id: "*"
+      privateKey: 'your private key',
+      userFeePercentage: 100, // The percentage of resource consumption ratio.
+      feeLimit: 100000000, // The TRX consumption limit for the deployment and trigger, unit is SUN
+      fullNode: 'https://api.nileex.io',
+      solidityNode: 'https://api.nileex.io',
+      eventServer: 'https://event.nileex.io',
+      network_id: '*'
+    }，
+    compilers: {
+      solc: {
+        version: '0.8.0'
+      }
     }
-  }
-};
-```
-Starting from TronBox 2.1.9, if you are connecting to the same host for full and solidity nodes, and event server, you can simply set `fullHost`:
-```javascript
-module.exports = {
-  networks: {
-    development: {
-      // For tronbox/tre docker image
-      privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0',
-      userFeePercentage: 30,
-      feeLimit: 100000000,
-      fullHost: "http://127.0.0.1:9090",
-      network_id: "*"
+  },
+   // solc compiler optimize
+  solc: {
+    optimizer: {
+      enabled: true,
+      runs: 200
     },
-    mainnet: {
-      // Don't put your private key here, pass it using an env variable, like:
-      // PK=da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0 tronbox migrate --network mainnet
-      privateKey: process.env.PK,
-      userFeePercentage: 30,
-      feeLimit: 100000000,
-      fullHost: "https://api.trongrid.io",
-      network_id: "*"
-    }
+    evmVersion: 'istanbul'
   }
 };
 ```
@@ -114,23 +89,21 @@ Refer to this example for how to configure the solc compiler in tronbox.js:
 ```javascript
 module.exports = {
   networks: {
-    // ...
     compilers: {
       solc: {
-        version: '0.6.0' // for compiler version
+        version: '0.8.6'
       }
     }
   },
-
-  // solc compiler optimize
   solc: {
     optimizer: {
-      enabled: false, // default: false, true: enable solc optimize
+      enabled: true,
       runs: 200
     },
     evmVersion: 'istanbul'
   }
-}
+};
+
 ```
 
 ## Tron Solidity Versions supported by TronBox
@@ -178,27 +151,6 @@ This command will invoke all migration scripts within the migrations directory. 
 tronbox migrate --reset
 ```
 
-### Parameters by contract (introduced in v2.2.2)
-
-It is very important to set deploying parameters for all contracts. In TronBox 2.2.2+, you can do so by modifying the file:
-```
-migrations/2_deploy_contracts.js
-```
-and specifying the parameters you need like in the following example:
-```javascript
-var ConvertLib = artifacts.require("./ConvertLib.sol");
-var MetaCoin = artifacts.require("./MetaCoin.sol");
-
-module.exports = function(deployer) {
-  deployer.deploy(ConvertLib);
-  deployer.link(ConvertLib, MetaCoin);
-  deployer.deploy(MetaCoin, 10000, {
-    fee_limit: 1.1e8,
-    userFeePercentage: 31,
-    originEnergyLimit: 1.1e8
-  });
-};
-```
 
 ## TronBox Console
 
