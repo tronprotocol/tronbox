@@ -1,4 +1,4 @@
-# TronBox v3.0.0
+# TronBox
 TronBox is a smart contract development, testing, and deployment tool for blockchains using the TRON Virtual Machine (TVM). 
 TronBox allows you to:
 - Use built-in functions for smart contract compilation, linking, deployment and binary management
