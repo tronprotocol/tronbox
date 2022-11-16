@@ -46,6 +46,9 @@ To carry out the test, run the following command:
 $ tronbox test
 ```
 
+合约交互
+我们可以使用 TronBox 的控制台：tronbox console，和合约进行交互。
+tronbox console
 
 ## Development
 For advanced information for development, see:
