@@ -219,16 +219,15 @@ contract MetaCoin {
 
 Now, take a look at the first test in `test/metacoin.js`:
 ```javascript
-var MetaCoin = artifacts.require("./MetaCoin.sol");
-contract('MetaCoin', function(accounts) {
-  it("should put 10000 MetaCoin in the first account", function() {
+const MetaCoin = artifacts.require('MetaCoin');
 
-    return MetaCoin.deployed().then(function(instance) {
-      return instance.call('getBalance',[accounts[0]]);
-    }).then(function(balance) {
-      assert.equal(balance.toNumber(), 10000, "10000 wasn't in the first account");
-    });
-  });
+contract('MetaCoin', accounts => {
+  it('should put 10000 MetaCoin in the first account', () =>
+    MetaCoin.deployed()
+      .then(instance => instance.getBalance.call(accounts[0]))
+      .then(balance => {
+        assert.equal(balance.valueOf(), 10000, "10000 wasn't in the first account");
+      }));
   // ...
 ```
 Starting from version 2.0.5, in TronBox artifacts () the following commands are equivalent:
