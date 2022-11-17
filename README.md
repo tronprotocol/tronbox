@@ -19,7 +19,8 @@ $ npm install -g tronbox
 _Note: To verify the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._
 
 ### Create a default Tron-Box Project
-To create a default set of contracts and tests, run:
+* You can create a bare project without smart contracts, run:
+* To create a default set of contracts and tests, run:
 ```
 $ tronbox init
 ```
@@ -29,6 +30,8 @@ Once this operation is completed, you'll now have a project structure with the f
 `migrations/`: Directory for scriptable deployment files<br>
 `test/`: Directory for test files for testing your application and contracts<br>
 `tronbox.js`: TronBox configuration file<br>
+
+For those getting started, you can use TronBox Boxes, which offers example applications and project templates. For details, see [Create](url).
 
 ### Compile
 If you want to only compile, run:
@@ -61,7 +64,7 @@ $ tronbox console
 For details, see [Interact](url).
 
 ## Development
-The quickusage showed you the basics of the TronBox project lifecycle, but there is much more to learn. For advanced information for development, Please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples.
+To dive deeper into advanced topics of the TronBox project lifecycle, please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples.
 
 To contribute, see [CONTRIUTING.MD](https://github.com/jz2120100058/tronbox/blob/master/CONTRIBUTING.md).
 
