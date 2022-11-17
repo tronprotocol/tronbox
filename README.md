@@ -43,19 +43,16 @@ To deploy our smart contracts, we're going to need to connect to a blockchain. W
 ```
 $ tronbox migrate
 ```
-
 ### Test
 To run all tests, you can simply run tronbox test. For details, see Test.
 ```
 $ tronbox test
 ```
-
 ### Interact with the contract<br>
 To interact with the contract, you can use the tronBox console. For details, see Interact.
 ```
 $ tronbox console
 ```
-
 ## Development
 The quickusage showed you the basics of the TronBox project lifecycle, but there is much more to learn. For advanced information for development, Please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples.
 
