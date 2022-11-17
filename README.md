@@ -32,7 +32,7 @@ Once this operation is completed, you'll now have a project structure with the f
 `tronbox.js`: TronBox configuration file<br>
 
 For those getting started, you can use TronBox Boxes, which offers example applications and project templates. For details, see [Create](url).
-
+<br>
 ### Compile
 If you want to only compile, run:
 ```
@@ -40,7 +40,7 @@ $ tronbox compile
 ```
 To compile all contracts, use the ```--compile-all``` option.<br>
 Specify a network using the ```--network``` option. Network name must exist in the configuration. For details, see [Complie](url).
-
+<br>
 ### Migrate
 To deploy our smart contracts, you need to connect to a blockchain. Use the **TronBox Runtime Environment** to create and interact with the blockchain. For details, see [Migrate](url). Then migrate the contract to the blockchain by running:
 ```
