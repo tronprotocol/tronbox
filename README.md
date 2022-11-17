@@ -38,10 +38,8 @@ If you want to only compile, run:
 ```
 $ tronbox compile
 ```
-For details, see [Complie](url).
-
 To compile all contracts, use the ```--compile-all``` option.<br>
-Specify a network using the ```--network``` option. Network name must exist in the configuration.
+Specify a network using the ```--network``` option. Network name must exist in the configuration. For details, see [Complie](url).
 
 ### Migrate
 To deploy our smart contracts, you need to connect to a blockchain. Use the **TronBox Runtime Environment** to create and interact with the blockchain. For details, see [Migrate](url). Then migrate the contract to the blockchain by running:
@@ -66,7 +64,7 @@ You will see the following prompt:
 $ tronbox(development)>
 ``` 
 The name in the parentheses of the prompt `tronbox(development)>` is the network that is currently connected to. For details, see [Interact](url).<br>
-
+<br>
 ## Development
 To dive deeper into advanced topics of the TronBox project lifecycle, please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples.
 
