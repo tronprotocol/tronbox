@@ -11,23 +11,23 @@ TronBox allows you to:
 TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).
 
 ## Quick Usage
-Installation
+* Installation
 ```
 $ npm install -g tronbox
 ```
 详细安装请参考安装说明。
 _Note: To verify the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._
 
-To create a default Tron-Box Project：
+* Create a default Tron-Box Project：
 ```
 $ tronbox init
 ```
 
-To download a dApp (for example, metacoin-box):
+* Download a dApp (for example, metacoin-box):
 ```
 $ tronbox unbox metacoin
 ```
-To compile a contract:
+* Compile a contract:
 ```
 $ tronbox compile
 ```
@@ -36,12 +36,12 @@ To compile all contracts, use the ```--compile-all``` option.
  
 Specify a network using the ```--network``` option. Network name must exist in the configuration.
 
-To deploy a contract
+* Deploy a contract
 ```
 $ tronbox migrate
 ```
 
-To carry out the test, run the following command:
+* Carry out the test, run the following command:
 ```
 $ tronbox test
 ```
