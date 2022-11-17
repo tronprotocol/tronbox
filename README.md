@@ -12,7 +12,7 @@ TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).
 
 ## Quick Usage
 ### Install<br>
-Before you can use TronBox, install it using the npm command. For details, see Installation.
+Before you can use TronBox, install it using the npm command. For details, see [Installation](url).
 ```
 $ npm install -g tronbox
 ```
@@ -30,7 +30,7 @@ test/: Directory for test files for testing your application and contracts<br>
 tronbox.js: TronBox configuration file<br>
 
 ### Compile
-If you want to only compile, you can simply run tronbox compile. For details, see Complie.
+If you want to only compile, you can simply run tronbox compile. For details, see [Complie](url).
 ```
 $ tronbox compile
 ```
@@ -44,12 +44,12 @@ To deploy our smart contracts, we're going to need to connect to a blockchain. W
 $ tronbox migrate
 ```
 ### Test
-To run all tests, you can simply run tronbox test. For details, see Test.
+To run all tests, you can simply run tronbox test. For details, see [Test](url).
 ```
 $ tronbox test
 ```
 ### Interact with the contract<br>
-To interact with the contract, you can use the tronBox console. For details, see Interact.
+To interact with the contract, you can use the tronBox console. For details, see [Interact](url).
 ```
 $ tronbox console
 ```
