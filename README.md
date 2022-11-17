@@ -40,7 +40,7 @@ To compile all contracts, use the ```--compile-all``` option.
 Specify a network using the ```--network``` option. Network name must exist in the configuration.
 
 ### Migrate
-To deploy our smart contracts, we're going to need to connect to a blockchain. We can use the TronBox Runtime Environment to launch and interact with the blockchain.
+To deploy our smart contracts, we're going to need to connect to a blockchain. We can use the TronBox Runtime Environment to launch and interact with the blockchain, then migrate the contract to the blockchain 
 ```
 $ tronbox migrate
 ```
