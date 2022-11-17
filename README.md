@@ -26,12 +26,12 @@ $ tronbox init
 Once this operation is completed, you'll now have a project structure with the following items:
 
 `contracts/`: Directory for Solidity contracts<br>
-migrations/: Directory for scriptable deployment files<br>
-test/: Directory for test files for testing your application and contracts<br>
-tronbox.js: TronBox configuration file<br>
+`migrations/`: Directory for scriptable deployment files<br>
+`test/`: Directory for test files for testing your application and contracts<br>
+`tronbox.js`: TronBox configuration file<br>
 
 ### Compile
-If you want to only compile, you can simply run:
+If you want to only compile, run:
 ```
 $ tronbox compile
 ```
@@ -41,20 +41,25 @@ To compile all contracts, use the ```--compile-all``` option.<br>
 Specify a network using the ```--network``` option. Network name must exist in the configuration.
 
 ### Migrate
-To deploy our smart contracts, we're going to need to connect to a blockchain. We can use the TronBox Runtime Environment to launch and interact with the blockchain, then migrate the contract to the blockchain. For details, see Migrate.
+To deploy our smart contracts, you need to connect to a blockchain. Use the **TronBox Runtime Environment** to create and interact with the blockchain. For details, see [Migrate](url). Then migrate the contract to the blockchain by running:
 ```
 $ tronbox migrate
 ```
+
 ### Test
-To run all tests, you can simply run tronbox test. For details, see [Test](url).
+To run all tests, run:
 ```
 $ tronbox test
 ```
+For details, see [Test](url).
+
 ### Interact with the contract<br>
-To interact with the contract, you can use the tronBox console. For details, see [Interact](url).
+To interact with the contract, run:
 ```
 $ tronbox console
 ```
+For details, see [Interact](url).
+
 ## Development
 The quickusage showed you the basics of the TronBox project lifecycle, but there is much more to learn. For advanced information for development, Please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples.
 
