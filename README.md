@@ -36,7 +36,6 @@ $ tronbox compile
 ```
 
 To compile all contracts, use the ```--compile-all``` option.
- 
 Specify a network using the ```--network``` option. Network name must exist in the configuration.
 
 ### Migrate
