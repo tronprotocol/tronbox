@@ -58,14 +58,18 @@ Alternatively, you can specify a path to a specific file you want to run, e.g.,
 ```
 tronbox test ./path/to/test/file.js
 ```
-For details, see [Test](url).
+For details, see [Test](url).<br>
 
 ### Interact with the contract<br>
 To interact with the contract, run:
 ```
 $ tronbox console
 ```
-For details, see [Interact](url).
+You will see the following prompt:
+```
+tronbox(development)>
+``` 
+The name in the parentheses of the prompt `tronbox(development)>` is the network that is currently connected to. For details, see [Interact](url).<br>
 
 ## Development
 To dive deeper into advanced topics of the TronBox project lifecycle, please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples.
