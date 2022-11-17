@@ -12,7 +12,7 @@ TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).
 
 ## Quick Usage
 ### Installation<br>
-Before you can use TronBox, install it using the npm command. 详细安装请参考安装说明。
+Before you can use TronBox, install it using the npm command.For details, see installation instructions.
 ```
 $ npm install -g tronbox
 ```
