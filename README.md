@@ -10,7 +10,7 @@ TronBox allows you to:
 
 TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).
 
-## Quick Usage
+## Quick Start
 ### Install<br>
 Before you can use TronBox, install it using the npm command. For details, see [Installation](url).
 ```
