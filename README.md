@@ -11,23 +11,26 @@ TronBox allows you to:
 TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).
 
 ## Quick Usage
-* Installation
+### Installation<br>
+Before you can use TronBox, install it using the npm command. 详细安装请参考安装说明。
 ```
 $ npm install -g tronbox
 ```
-详细安装请参考安装说明。
 _Note: To verify the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._
 
-* Create a default Tron-Box Project：
+### Create a default Tron-Box Project：
 ```
 $ tronbox init
 ```
+Once this operation is completed, you'll now have a project structure with the following items:
 
-* Download a dApp (for example, metacoin-box):
-```
-$ tronbox unbox metacoin
-```
-* Compile a contract:
+contracts/: Directory for Solidity contracts<br>
+migrations/: Directory for scriptable deployment files<br>
+test/: Directory for test files for testing your application and contracts<br>
+tronbox.js: TronBox configuration file<br>
+
+### Compile:
+If you want to only compile, you can simply run tronbox compile.
 ```
 $ tronbox compile
 ```
@@ -36,22 +39,26 @@ To compile all contracts, use the ```--compile-all``` option.
  
 Specify a network using the ```--network``` option. Network name must exist in the configuration.
 
-* Deploy a contract
+### Migrate
+To deploy our smart contracts, we're going to need to connect to a blockchain. We can use the TronBox Runtime Environment to launch and interact with the blockchain.
 ```
 $ tronbox migrate
 ```
 
-* Carry out the test, run the following command:
+### Test
+To run all tests, you can simply run tronbox test.
 ```
 $ tronbox test
 ```
 
-合约交互
-我们可以使用 TronBox 的控制台：tronbox console，和合约进行交互。
-tronbox console
+### Interact with the contract<br>
+To interact with the contract, you can use the tronBox console.
+```
+$ tronbox console
+```
 
 ## Development
-For advanced information for development, see:
+The quickusage showed you the basics of the TronBox project lifecycle, but there is much more to learn. For advanced information for development, see:
 - [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
 - [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
 - [TronBox Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tronbox-console)
