@@ -58,11 +58,8 @@ $ tronbox console
 ```
 
 ## Development
-The quickusage showed you the basics of the TronBox project lifecycle, but there is much more to learn. For advanced information for development, Please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples:
-- [Configuration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#configuration)
-- [Contract Migration](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#contract-migration)
-- [TronBox Console](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tronbox-console)
-- [Testing](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#testing)
+The quickusage showed you the basics of the TronBox project lifecycle, but there is much more to learn. For advanced information for development, Please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples.
+
 - [Contributing](https://github.com/jz2120100058/tronbox/blob/master/CONTRIBUTING.md)
 
 
