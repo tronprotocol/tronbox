@@ -29,7 +29,7 @@ migrations/: Directory for scriptable deployment files<br>
 test/: Directory for test files for testing your application and contracts<br>
 tronbox.js: TronBox configuration file<br>
 
-### Compile:
+### Compile
 If you want to only compile, you can simply run tronbox compile.
 ```
 $ tronbox compile
