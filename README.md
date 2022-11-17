@@ -54,11 +54,8 @@ To run all tests, run:
 ```
 $ tronbox test
 ```
-Alternatively, you can specify a path to a specific file you want to run, e.g.,
-```
-tronbox test ./path/to/test/file.js
-```
-For details, see [Test](url).<br>
+Alternatively, you can specify a path to a specific file you want to run:`tronbox test ./path/to/test/file.js`. For details, see [Test](url).
+<br>
 
 ### Interact with the contract<br>
 To interact with the contract, run:
@@ -67,7 +64,7 @@ $ tronbox console
 ```
 You will see the following prompt:
 ```
-tronbox(development)>
+$ tronbox(development)>
 ``` 
 The name in the parentheses of the prompt `tronbox(development)>` is the network that is currently connected to. For details, see [Interact](url).<br>
 
