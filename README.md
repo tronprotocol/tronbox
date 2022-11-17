@@ -35,7 +35,7 @@ If you want to only compile, you can simply run tronbox compile. For details, se
 $ tronbox compile
 ```
 
-To compile all contracts, use the ```--compile-all``` option.
+To compile all contracts, use the ```--compile-all``` option.<br>
 Specify a network using the ```--network``` option. Network name must exist in the configuration.
 
 ### Migrate
