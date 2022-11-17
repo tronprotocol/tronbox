@@ -19,21 +19,23 @@ $ npm install -g tronbox
 _Note: To verify the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._
 
 ### Create a default Tron-Box Project
+To create a default set of contracts and tests, run:
 ```
 $ tronbox init
 ```
 Once this operation is completed, you'll now have a project structure with the following items:
 
-contracts/: Directory for Solidity contracts<br>
+`contracts/`: Directory for Solidity contracts<br>
 migrations/: Directory for scriptable deployment files<br>
 test/: Directory for test files for testing your application and contracts<br>
 tronbox.js: TronBox configuration file<br>
 
 ### Compile
-If you want to only compile, you can simply run tronbox compile. For details, see [Complie](url).
+If you want to only compile, you can simply run:
 ```
 $ tronbox compile
 ```
+For details, see [Complie](url).
 
 To compile all contracts, use the ```--compile-all``` option.<br>
 Specify a network using the ```--network``` option. Network name must exist in the configuration.
