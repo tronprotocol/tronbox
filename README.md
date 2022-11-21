@@ -16,7 +16,7 @@ Before you can use TronBox, install it using the npm command. For details, see [
 ```
 $ npm install -g tronbox
 ```
-_Note: To verify the PGP signature, see [here](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._<br>
+_Note: To verify the PGP signature, see [here](https://github.com/tronprotocol/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)._<br>
 <br>
 ### Create a default Tron-Box Project
 You can create a bare project without smart contracts, run:
@@ -69,6 +69,6 @@ The name in the parentheses of the prompt `tronbox(development)>` is the network
 ## Development
 To dive deeper into advanced topics of the TronBox project lifecycle, please see the [Official TronBox Documentation](https://developers.tron.network/reference/what-is-tronbox) for guides, tips, and examples.
 
-To contribute, see [CONTRIUTING.MD](https://github.com/jz2120100058/tronbox/blob/master/CONTRIBUTING.md).
+To contribute, see [CONTRIUTING.MD](https://github.com/tronprotocol/tronbox/blob/master/CONTRIBUTING.md).
 
 
