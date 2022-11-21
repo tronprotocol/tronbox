@@ -12,7 +12,7 @@ TronBox is a fork of [Truffle](https://www.trufflesuite.com/truffle).
 
 ## Quick Start
 ### Install<br>
-Before you can use TronBox, install it using the npm command. For details, see [Installation](https://developers.tron.network/reference/install).
+Before you can use TronBox, install it using the npm command. For details, see [Install TronBox](https://developers.tron.network/reference/install).
 ```
 $ npm install -g tronbox
 ```
@@ -30,7 +30,7 @@ Once this operation is completed, you'll now have a project structure with the f
 `test/`: Directory for test files for testing your application and contracts<br>
 `tronbox.js`: TronBox configuration file<br>
 
-For those getting started, you can use TronBox Boxes, which offers example applications and project templates. For details, see [Create](https://developers.tron.network/reference/create-a-tronbox-project).<br>
+For those getting started, you can use TronBox Boxes, which offers example applications and project templates. For details, see [Create a TronBox Project](https://developers.tron.network/reference/create-a-tronbox-project).<br>
 <br>
 ### Compile
 If you want to only compile, run:
@@ -38,10 +38,10 @@ If you want to only compile, run:
 $ tronbox compile
 ```
 To compile all contracts, use the ```--compile-all``` option.<br>
-Specify a network using the ```--network``` option. Network name must exist in the configuration. For details, see [Complie](https://developers.tron.network/reference/compile-a-contract).<br>
+Specify a network using the ```--network``` option. Network name must exist in the configuration. For details, see [Compile a Project](https://developers.tron.network/reference/compile-a-contract).<br>
 <br>
 ### Migrate
-To deploy our smart contracts, you need to connect to a blockchain. Use the **TronBox Runtime Environment** to create and interact with the blockchain. For details, see [Migrate](https://developers.tron.network/reference/contract-deploymentmigrations). Then migrate the contract to the blockchain by running:
+To deploy our smart contracts, you need to connect to a blockchain. Use the **TronBox Runtime Environment** to create and interact with the blockchain. For details, see [Contract Deployment(Migrations)](https://developers.tron.network/reference/contract-deploymentmigrations). Then migrate the contract to the blockchain by running:
 ```
 $ tronbox migrate
 ```
@@ -51,7 +51,7 @@ To run all tests, run:
 ```
 $ tronbox test
 ```
-Alternatively, you can specify a path to a specific file you want to run:`tronbox test ./path/to/test/file.js`. For details, see [Test](https://developers.tron.network/reference/test-your-contracts).  
+Alternatively, you can specify a path to a specific file you want to run:`tronbox test ./path/to/test/file.js`. For details, see [Test Your Contracts](https://developers.tron.network/reference/test-your-contracts).  
 <br>
 ### Interact with the contract<br>
 To interact with the contract, run:
@@ -62,7 +62,7 @@ You will see the following prompt:
 ```
 $ tronbox(development)>
 ``` 
-The name in the parentheses of the prompt `tronbox(development)>` is the network that is currently connected to. For details, see [Interact](https://developers.tron.network/reference/interact-with-a-contract).<br>
+The name in the parentheses of the prompt `tronbox(development)>` is the network that is currently connected to. For details, see [Interact with a Contract](https://developers.tron.network/reference/interact-with-a-contract).<br>
 <br>
 ## Development
 To dive deeper into advanced topics of the TronBox project lifecycle, please see the [Official TronBox Documentation](https://developers.tron.network/reference/what-is-tronbox) for guides, tips, and examples.
