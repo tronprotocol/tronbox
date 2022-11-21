@@ -1,3 +1,6 @@
+__3.0.1__
+* Bug fixed and internal improvements
+
 __3.0.0__
 * bump tronweb from 4.0.1 to 4.3.0
 * Add support for Solidity compiler 0.8.7 and 0.8.11
@@ -46,7 +49,6 @@ console.log(result);
 const result = await tronWrap.send("tre_unlockedAccounts", [["TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL"]]);
 console.log(result);
 ```
-
 
 __2.7.25__
 * bump tronweb from 4.0.0 to 4.0.1
@@ -137,4 +139,4 @@ __2.2.1__
 -----
 
 For more historic data, check the original repo at
-[https://github.com/tronprotocol/tron-box](https://github.com/tronprotocol/tron-box)
+[https://github.com/tronprotocol/tronbox](https://github.com/tronprotocol/tronbox)
