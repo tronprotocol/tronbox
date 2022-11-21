@@ -44,7 +44,7 @@
     "homedir": "^0.6.0",
     "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
-    "mocha": "5.2.0",
+    "mocha": "10.1.0",
     "node-dir": "0.1.17",
     "node-emoji": "^1.8.1",
     "original-require": "1.0.1",
