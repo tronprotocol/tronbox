@@ -42,6 +42,7 @@ Specify a network using the ```--network``` option. Network name must exist in t
 <br>
 ### Migrate
 To deploy our smart contracts, you need to connect to a blockchain. Use the **TronBox Runtime Environment** to create and interact with the blockchain. For details, see [Contract Deployment (Migrations)](https://developers.tron.network/reference/contract-deploymentmigrations).<br> 
+
 To run your migrations, run the following:
 ```
 $ tronbox migrate
