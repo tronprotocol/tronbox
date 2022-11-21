@@ -1,6 +1,6 @@
 # Table of Contents
-- [Verifying the PGP signature](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)
-- [Tron Solidity versions supported by TronBox](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md#tron-solidity-versions-supported-by-tronbox)
+- [Verifying the PGP signature](https://github.com/tronprotocol/tronbox/blob/master/FURTHER_INFO.md#verifying-the-pgp-signature)
+- [Tron Solidity versions supported by TronBox](https://github.com/tronprotocol/tronbox/blob/master/FURTHER_INFO.md#tron-solidity-versions-supported-by-tronbox)
 
 ---
 
