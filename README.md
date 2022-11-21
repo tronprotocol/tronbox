@@ -65,7 +65,7 @@ $ tronbox(development)>
 The name in the parentheses of the prompt `tronbox(development)>` is the network that is currently connected to. For details, see [Interact](https://developers.tron.network/reference/interact-with-a-contract).<br>
 <br>
 ## Development
-To dive deeper into advanced topics of the TronBox project lifecycle, please see the [Official TronBox Documentation](https://github.com/jz2120100058/tronbox/blob/master/FURTHER_INFO.md) for guides, tips, and examples.
+To dive deeper into advanced topics of the TronBox project lifecycle, please see the [Official TronBox Documentation](https://developers.tron.network/reference/what-is-tronbox) for guides, tips, and examples.
 
 To contribute, see [CONTRIUTING.MD](https://github.com/jz2120100058/tronbox/blob/master/CONTRIBUTING.md).
 
