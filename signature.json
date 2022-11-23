@@ -94,11 +94,11 @@
           },
           {
             "path": "build/components/Contract/contract.js",
-            "sha512": "0b40e7569d4cc457d8f35cf30984860c16718c996844d80f427574c04f918b9cd8f3a1d8d3b62f9830079e610c4597e162cdc62d26ad92c6793107180e725a58"
+            "sha512": "b313d5d50bd158129f6b713918605afe88e5146d55343446449bdfbf2f5172a65ab35db482f8e73c02d4dbdc91f838ed55cddf95d375d639a5b29800c60b2634"
           },
           {
             "path": "build/lib/copy.js",
-            "sha512": "42b132d352842450a8a6deff04e2e003a1b40b52c01b22cb5e6be5f0d3001d204702e4b236bdf2cb79e74006353925c00b9240d11f61d1740f178da62cf83380"
+            "sha512": "226ee55e9b14fd64b1b6b5aec34ec905090220153850aa16c193e0bffccaf629cb90368a85b77c88cd8a6755c8164fb4df364a75bfef1d0426065297da361755"
           },
           {
             "path": "build/components/DebugUtils.js",
@@ -178,7 +178,7 @@
           },
           {
             "path": "build/components/Migrate/index.js",
-            "sha512": "144e3fc8adb9e839dea8d764476b08c7fe58d7d0cbc4dc947918e11f1a1e7958ebab6a0161db339e88c4c44f5008f5f4810eab5754cf6d633f3d684938a39f95"
+            "sha512": "1148d1c8cf14f39599beea27851b90af52d09f98c0b88046349a4168e0c1ff1d17dbbaf76775f312f815f4e6cdb3a1f8d12c1dcc6f3be04a1db3866d5f6e22d1"
           },
           {
             "path": "build/components/Provider/index.js",
@@ -190,7 +190,7 @@
           },
           {
             "path": "build/components/TronWrap/index.js",
-            "sha512": "0285d891fb7766faef9a335c0264a36f9e41a7c536654c8391707de2d9217e8ca9b4ee7eb370173b39eaaf606f2d4dba8a5ee3da83c01c4f42870376ac569209"
+            "sha512": "8eda6c01c02fc7089954b9e1726bafba5be1a02ff4384477db5e9e98329d7a61cbd7de7d6d75a61fea222bfbea9afb0d9364949e6a1685be00f95a6f6efe0034"
           },
           {
             "path": "build/index.js",
@@ -310,7 +310,7 @@
           },
           {
             "path": "build/components/TronSolc.js",
-            "sha512": "99455f281d1a6e124d0ab51ddb104e2bccce81bca16e1241ccd2da9cfd1c0571ec62969526f275c4441480b35fbb31433b0e3155be9cba3cf8af9ccfec3984df"
+            "sha512": "2f917c667d1fe9b4794faf2b30604a7b7ec18677dcf71ab4e9ef57d169715b4f32c97074c2b362710e62fc3f1e2e2688a17a0389d905b28c9b1231b9995ba7c0"
           },
           {
             "path": "build/components/Box/lib/utils/unbox.js",
@@ -357,8 +357,12 @@
             "sha512": "376b0c147d402ad360589773fd20005c5ebf430ebbe06ba30578c97731215615ead756efaa4b77964547a7b796acf775eaf4a122956b0ca72b77779683ad6255"
           },
           {
+            "path": ".vscode/settings.json",
+            "sha512": "4f68beebe2f4ba92db6111e60b763ae51c35e1ca747b37eaeb63a85e9b0060a47fb9b72ad100348d7351413782645a90ccb1fbbf0a39145b951c917cae137228"
+          },
+          {
             "path": "CHANGELOG.md",
-            "sha512": "a8af4f0df5d914833511ed822284fa2885896d7750f75c4e6c39c7bbb9905b319b95b6909226df7f35957260e9d82671e7617528ca162edd532040e5c5c39631"
+            "sha512": "8001080722bd1bc98cf80f710aa292e6dc8340ac478a39b2a31328fdacafc88a8b548c78c1f1f48bc3d06b81b82aa8358b34ea68acfae3d7258f991bb416e919"
           },
           {
             "path": "CONTRIBUTING.md",
@@ -404,7 +408,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "bb0ca8190a890e47cf5e684de6a321198ec9691174426e234561cf3c6325c7b03ef9b499a88629518dc3bc083d8633fa4d6ad905835c4a42d7145e7cf5e59cf1"
+        "sha512": "c8e11616433bb518832cb33fd8326f7f76915d183f19b94deaff565186f0954b3c5e0a2f3b0e001e9d634763afc2128e0ca5b0fb9255444a3ee2741770e963ed"
       }
     },
     {
@@ -413,7 +417,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "3.0.1",
+          "version": "3.1.0",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -439,7 +443,7 @@
             "bignumber.js": "^7.2.1",
             "chai": "4.1.2",
             "chalk": "^2.4.1",
-            "chokidar": "^1.4.2",
+            "chokidar": "^3.5.3",
             "colors": "^1.1.2",
             "cpr": "^0.4.3",
             "debug": "^3.1.0",
@@ -472,7 +476,7 @@
             "tronweb": "^4.3.0",
             "vcsurl": "^0.1.1",
             "web3-mock": "1.0.1",
-            "yargs": "^8.0.2"
+            "yargs": "^15.4.1"
           },
           "devDependencies": {
             "@babel/cli": "^7.6.4",
@@ -533,5 +537,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJjezMbACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1iRcw/+JXQ8i/JjgjCF9nOfyjUTgh6y8k/dj4tOjAuoWqlnK6PtmrY+\nEPz//rNAWJL+qVj0qkGEJ33vYN+jiDqgY8cReTV7zlwSMouVd1sWEj2WciAn\nEH244rrL7u7jxyEDW6N4wr5EC/6YJ9FEuoGqNAAYmLYXHWA2nW0/4nposfLu\nIPNSezQWcqfCVkyk7+59NXMyWbRt75Rb3+iTIGTZ4cYQTrLny0SsKib41ILR\n79uVnRqixAm7KaJBpEO7xyirS3fN8nRtcQjAhCpxD6MCDNUcsZMyGkY6yPVA\novTr78OUru0Q+8NG7q/vNJxMo4mpeahCN/lOHiyKL06mQAKH8WtplSO/bjHo\nAeafunc4Tovn+txkeQ6rV6l1hT5bfoF9aJl5OrCFdtfQfTd7pHD3MH70wn1H\nLJGXqLEhRg/Mwj6ID7NnnoirRxCWlJhDXkdit3K7NHd/41FzPB1h3vvuaSaf\nbBT9DGzVAOpUNVBGjazRZ+2WR6ABaOO9dwZuSZGOimPf/01kuWWfwv0mqwJo\n7jrHC/fWZkm5yeER7JPwfA6/meDoFwZWHrHZhPc0RDT7k5o9aftcN52lNWnl\nyAEKGPnDKGEWW8UIxc27MWP5qZKndOVLrZxUnjDGjTc6UjiAHvYDdQDKG8OB\nztyA4uKkyBgO6pZPtvSXL3tZeBKVtQKn0Sc=\n=DC4P\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJjffHhACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1iO3A//bIoQW/51XHcaf0qsfXOHSF5tmxUUuDVBDuXCp/IcNqIAHkd/\n8w1dNv4po6mVoq3/D9ejLd/Q5o4/8ArwbHqxLhacBxBrJ6mQCkFPIm9A02Wr\nyfoZaJhN1knZYaM62uv68ywAOQsAMSnTAe/xjRhqilo16bMvF6W69QFi1vQu\nqtzi+xM6vLABf8CmDOhAxee92lAccBOyqKnObbaCX+N0FAEOZPBi3JmJ8kyE\nYie28diQ0TWwn1nKaivE+kGQ68VloNZrfLDw8/e3S7/xazUYOV6CRdv7Y/3e\nkTzbQeoqV81BDRz49z+6Z1QaNqMi1nfrbGz5jop9BxGfDbu83o7syOADzbgC\nmy4Xg5lHUEqoHRbKBKw5HAYHhG3IuUHgNL6QeKr4i08Xr1KH7f43EOVl4uye\nz/VSIBjFmfly+y8C6dNh5tk016idEgj5Zx8PQhcCaAjEyrpg0+G0EDqS8yoR\nbmjJMt+QZXJam2/OdZC4fcZ3+Sp0uxEQ87a54KV9CRmP85sKDjf45vEG4GJP\nA5ELxa9/rWn64RLR1b6mynNOLxdo7ZtCUd5W3XtGFdCqP0mziyj2DZMofI+M\nLdpUGXJZHnt70J4s2VNjEw7gVfjuf/6ke9idxL7BPTH32iCuHukMA/VLZM23\nnTQX55jhYqgIVN6ocPOtVkaShqdNGpM7JGU=\n=mrt8\n-----END PGP SIGNATURE-----\n"
 }

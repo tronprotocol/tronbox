@@ -1,8 +1,12 @@
+__3.1.0__
+* Bump chokidar from 1.7.0 to 3.5.3
+* Bump yargs from 8.0.2 to 15.4.1
+
 __3.0.1__
 * Bug fixed and internal improvements
 
 __3.0.0__
-* bump tronweb from 4.0.1 to 4.3.0
+* Bump tronweb from 4.0.1 to 4.3.0
 * Add support for Solidity compiler 0.8.7 and 0.8.11
 * Add `tronWrap.send` function to test environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
 * Add `tre_setAccountBalance` RPC method. The method can set the given account's balance to the specified SUN value.
@@ -51,7 +55,7 @@ console.log(result);
 ```
 
 __2.7.25__
-* bump tronweb from 4.0.0 to 4.0.1
+* Bump tronweb from 4.0.0 to 4.0.1
 
 __2.7.24__
 * Add support for Solidity compiler 0.5.18, 0.6.13, 0.7.7 and 0.8.6
@@ -73,7 +77,7 @@ __2.7.19__
 
 __2.7.18__
 * Add support for Solidity compiler 0.6.0
-* bump solc-js from 0.5.9 to 0.8.0
+* Bump solc-js from 0.5.9 to 0.8.0
 
 __2.7.17__
 * Add support for Solidity compiler 0.5.15 and add signature for tronbox
