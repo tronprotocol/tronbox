@@ -68,7 +68,7 @@ function init(options, extraOptions = {}) {
   }
 
   if (extraOptions.verify && (
-    !options || !options.privateKey || !(
+    !options || !(options.privateKey || options.mnemonic) || !(
       options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
     )
   )) {
@@ -87,11 +87,19 @@ function init(options, extraOptions = {}) {
     }
   }
 
+  // support mnemonic
+  const getPrivateKey = () => {
+    if (options.mnemonic) {
+      return _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey.replace(/^0x/, '')
+    }
+    return options.privateKey
+  }
+
   TronWrap.prototype = new _TronWeb(
     options.fullNode || options.fullHost,
     options.solidityNode || options.fullHost,
     options.eventServer || options.fullHost,
-    options.privateKey
+    getPrivateKey()
   )
 
   const tronWrap = TronWrap.prototype
@@ -193,6 +201,11 @@ function init(options, extraOptions = {}) {
         ? options.userFeePercentage
         : this.networkConfig.userFeePercentage
 
+    const constructorAbi = option.abi.find((it) => it.type === 'constructor');
+    if (constructorAbi && option.parameters && option.parameters.length) {
+      option.rawParameter = this.utils.abi.encodeParamsV2ByABI(constructorAbi, option.parameters);
+    }
+
     this._new(myContract, {
       bytecode: option.data,
       feeLimit: option.feeLimit || this.networkConfig.feeLimit,
@@ -201,6 +214,7 @@ function init(options, extraOptions = {}) {
       originEnergyLimit,
       abi: option.abi,
       parameters: option.parameters,
+      rawParameter: option.rawParameter,
       name: option.contractName,
       from: option.from || ''
     }, option.privateKey)
@@ -212,12 +226,12 @@ function init(options, extraOptions = {}) {
     })
   }
 
-  tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey) {
+  tronWrap._new = async function (myContract, params, privateKey = tronWrap.defaultPrivateKey) {
 
     let signedTransaction
     try {
-      const address = options.from ? options.from : tronWrap.address.fromPrivateKey(privateKey)
-      const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
+      const address = params.from ? params.from : tronWrap.address.fromPrivateKey(privateKey)
+      const transaction = await tronWrap.transactionBuilder.createSmartContract(params, address)
       if (tronWrap._treUnlockedAccounts[address]) {
         dlog('Unlocked account', { address })
         signedTransaction = transaction
@@ -228,7 +242,7 @@ function init(options, extraOptions = {}) {
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
 
       if (!result || typeof result !== 'object') {
-        return Promise.reject(`Error while broadcasting the transaction to create the contract ${options.name}. Most likely, the creator has either insufficient bandwidth or energy.`)
+        return Promise.reject(`Error while broadcasting the transaction to create the contract ${params.name}. Most likely, the creator has either insufficient bandwidth or energy.`)
       }
 
       if (result.code) {
@@ -267,7 +281,7 @@ function init(options, extraOptions = {}) {
       myContract.bytecode = contract.bytecode
       myContract.deployed = true
 
-      myContract.loadAbi(options.abi || [])
+      myContract.loadAbi(params.abi || [])
 
       dlog('Contract deployed')
       return Promise.resolve(myContract)
@@ -278,7 +292,7 @@ function init(options, extraOptions = {}) {
         const url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
 
         // eslint-disable-next-line no-ex-assign
-        e = 'Contract ' + chalk.bold(options.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url) +
+        e = 'Contract ' + chalk.bold(params.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url) +
           '\nIf the transaction above is empty, most likely, your address had no bandwidth/energy to deploy the contract.'
       }
 
@@ -327,17 +341,17 @@ function init(options, extraOptions = {}) {
             delete option.methodArgs.tokenId
             delete option.methodArgs.tokenValue
           }
-          const options = {}
+          const params = {}
           Object.keys(defaultOptions).forEach(_ => {
-            options[_] = defaultOptions[_]
+            params[_] = defaultOptions[_]
           })
           Object.keys(option.methodArgs).forEach(_ => {
-            options[_] = option.methodArgs[_]
+            params[_] = option.methodArgs[_]
           })
-          options.rawParameter = rawParameter
+          params.rawParameter = rawParameter
 
           return new Promise((resolve, reject) => {
-            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, options, [], address).then(transaction => {
+            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, params, [], address).then(async transaction => {
               if (!transaction.result || !transaction.result.result) {
                 return reject('Unknown error: ' + JSON.stringify(transaction, null, 2))
               }
