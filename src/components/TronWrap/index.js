@@ -351,7 +351,7 @@ function init(options, extraOptions = {}) {
           options.rawParameter = rawParameter
 
           return new Promise((resolve, reject) => {
-            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, options, [], address).then(async transaction => {
+            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, options, [], address).then(transaction => {
               if (!transaction.result || !transaction.result.result) {
                 return reject('Unknown error: ' + JSON.stringify(transaction, null, 2))
               }
