@@ -1,6 +1,6 @@
 const command = {
-  command: "init",
-  description: "Initialize new and empty tronBox project",
+  command: "convert",
+  description: "Convert a truffle project to tronbox project",
   builder: {},
   run: function (options, done) {
     const fs = require("fs");
