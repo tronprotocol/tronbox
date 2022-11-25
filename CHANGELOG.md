@@ -2,10 +2,8 @@ __3.1.0__
 * Bump chokidar from 1.7.0 to 3.5.3
 * Bump yargs from 8.0.2 to 15.4.1
 * Add support for ABIEncoderV2
-* Add support for customizing contract name
-* Add support for mnemonic
-* Add support for converting truffle projects to tronbox projects
-* Bump built in TronWeb
+* Add support for using mnemonic in network config
+* Add support for converting a truffle project to tronbox project when `init`
 
 __3.0.1__
 * Bug fixed and internal improvements
