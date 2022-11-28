@@ -1,6 +1,6 @@
 const command = {
-  command: "init",
-  description: "Initialize new and empty tronBox project",
+  command: "convert",
+  description: "Convert a truffle project to tronbox project",
   builder: {},
   run: function (options, done) {
     const fs = require("fs");
@@ -55,13 +55,12 @@ const command = {
       const stats = fs.statSync(testDirPath);
       if (!stats.isDirectory()) return;
 
-      const gogocode = require('gogocode');
       function translateTestFile(file) {
         const content = fs.readFileSync(file).toString();
         const translatedContent = `
 const ganache = require('ganache');
 const Web3 = require('web3');
-const [web3, provider] = require('tronbox/Convert')(new Web3(Web3.givenProvider), ganache.provider());
+const [web3, provider] = require('tronbox-convert')(new Web3(Web3.givenProvider), ganache.provider());
 ${content}
         `;
         fs.writeFileSync(file, translatedContent);

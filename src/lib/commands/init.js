@@ -9,6 +9,7 @@ const command = {
       const ConvertCommand = require('./convert');
       return ConvertCommand.run(options, done);
     }
+
     process.env.CURRENT = 'init'
     const Config = require('../../components/Config')
     const OS = require('os')

@@ -90,7 +90,7 @@ function init(options, extraOptions = {}) {
   // support mnemonic
   const getPrivateKey = () => {
     if (options.mnemonic) {
-      return _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey.slice(2)
+      return _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey.replace(/^0x/, '')
     }
     return options.privateKey
   }
@@ -134,7 +134,6 @@ function init(options, extraOptions = {}) {
     callback && callback(null, options.network_id)
   }
 
-  
   const defaultAddress = tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey)
   tronWrap._accounts = [defaultAddress]
   tronWrap._privateKeyByAccount = {}
@@ -227,12 +226,12 @@ function init(options, extraOptions = {}) {
     })
   }
 
-  tronWrap._new = async function (myContract, params, privateKey = tronWrap.defaultPrivateKey) {
+  tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey) {
 
     let signedTransaction
     try {
-      const address = params.from ? params.from : tronWrap.address.fromPrivateKey(privateKey)
-      const transaction = await tronWrap.transactionBuilder.createSmartContract(params, address)
+      const address = options.from ? options.from : tronWrap.address.fromPrivateKey(privateKey)
+      const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
       if (tronWrap._treUnlockedAccounts[address]) {
         dlog('Unlocked account', { address })
         signedTransaction = transaction
@@ -241,10 +240,9 @@ function init(options, extraOptions = {}) {
         signedTransaction = await tronWrap.trx.sign(transaction, privateKey)
       }
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction)
-      
 
       if (!result || typeof result !== 'object') {
-        return Promise.reject(`Error while broadcasting the transaction to create the contract ${params.name}. Most likely, the creator has either insufficient bandwidth or energy.`)
+        return Promise.reject(`Error while broadcasting the transaction to create the contract ${options.name}. Most likely, the creator has either insufficient bandwidth or energy.`)
       }
 
       if (result.code) {
@@ -283,7 +281,7 @@ function init(options, extraOptions = {}) {
       myContract.bytecode = contract.bytecode
       myContract.deployed = true
 
-      myContract.loadAbi(params.abi || [])
+      myContract.loadAbi(options.abi || [])
 
       dlog('Contract deployed')
       return Promise.resolve(myContract)
@@ -294,7 +292,7 @@ function init(options, extraOptions = {}) {
         const url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID
 
         // eslint-disable-next-line no-ex-assign
-        e = 'Contract ' + chalk.bold(params.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url) +
+        e = 'Contract ' + chalk.bold(options.name) + ' has not been deployed on the network.\nFor more details, check the transaction at:\n' + chalk.blue(url) +
           '\nIf the transaction above is empty, most likely, your address had no bandwidth/energy to deploy the contract.'
       }
 
@@ -343,17 +341,17 @@ function init(options, extraOptions = {}) {
             delete option.methodArgs.tokenId
             delete option.methodArgs.tokenValue
           }
-          const params = {}
+          const options = {}
           Object.keys(defaultOptions).forEach(_ => {
-            params[_] = defaultOptions[_]
+            options[_] = defaultOptions[_]
           })
           Object.keys(option.methodArgs).forEach(_ => {
-            params[_] = option.methodArgs[_]
+            options[_] = option.methodArgs[_]
           })
-          params.rawParameter = rawParameter
+          options.rawParameter = rawParameter
 
           return new Promise((resolve, reject) => {
-            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, params, [], address).then(async transaction => {
+            tronWrap.transactionBuilder.triggerSmartContract(option.address, functionSelector, options, [], address).then(transaction => {
               if (!transaction.result || !transaction.result.result) {
                 return reject('Unknown error: ' + JSON.stringify(transaction, null, 2))
               }
@@ -451,7 +449,7 @@ function init(options, extraOptions = {}) {
     }
   }
 
-  return new TronWrap;
+  return new TronWrap
 }
 
 
