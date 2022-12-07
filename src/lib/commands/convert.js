@@ -60,7 +60,7 @@ const command = {
         const translatedContent = `
 const ganache = require('ganache');
 const Web3 = require('web3');
-const [web3, provider] = require('tronbox-convert')(new Web3(Web3.givenProvider), ganache.provider());
+const [web3, provider] = require('tronbox-web3')(new Web3(Web3.givenProvider), ganache.provider());
 ${content}
         `;
         fs.writeFileSync(file, translatedContent);
