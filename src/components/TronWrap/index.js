@@ -230,7 +230,7 @@ function init(options, extraOptions = {}) {
 
     let signedTransaction
     try {
-      const address = options.from ? options.from : tronWrap.address.fromPrivateKey(privateKey)
+      const address = tronWrap.address.fromPrivateKey(privateKey)
       const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address)
       if (tronWrap._treUnlockedAccounts[address]) {
         dlog('Unlocked account', { address })
