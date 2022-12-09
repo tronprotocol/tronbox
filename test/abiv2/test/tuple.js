@@ -3,7 +3,6 @@ var chalk = require('chalk')
 var Tuple = artifacts.require("./Tuple.sol");
 
 // The following tests require TronBox >= 2.1.x
-// and Tron Quickstart (https://github.com/tronprotocol/docker-tron-quickstart)
 
 contract('Tuple', function (accounts) {
 
