@@ -2,6 +2,7 @@ __3.0.2__
 * Add support for ABIEncoderV2
 * Add support for using mnemonic in network config
 * Add support for converting a truffle project to tronbox project when `init`
+* Bump tronweb from 4.3.0 to 4.4.0
 
 __3.0.1__
 * Bug fixed and internal improvements
