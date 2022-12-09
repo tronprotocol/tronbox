@@ -147,8 +147,8 @@ function Config(truffle_directory, working_directory, network) {
               if (_privateKey_cached === null) {
                 const { mnemonic, path } = network_config;
                 _privateKey_cached = TronWeb.fromMnemonic(mnemonic, path).privateKey.slice(2);
+                network_config.privateKey = _privateKey_cached;
               }
-              return _privateKey_cached;
             }
             return network_config.privateKey
           } catch (e) {
