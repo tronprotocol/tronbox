@@ -357,8 +357,8 @@
             "sha512": "376b0c147d402ad360589773fd20005c5ebf430ebbe06ba30578c97731215615ead756efaa4b77964547a7b796acf775eaf4a122956b0ca72b77779683ad6255"
           },
           {
-            "path": ".vscode/settings.json",
-            "sha512": "4f68beebe2f4ba92db6111e60b763ae51c35e1ca747b37eaeb63a85e9b0060a47fb9b72ad100348d7351413782645a90ccb1fbbf0a39145b951c917cae137228"
+            "path": "CHANGELOG.md",
+            "sha512": "a8af4f0df5d914833511ed822284fa2885896d7750f75c4e6c39c7bbb9905b319b95b6909226df7f35957260e9d82671e7617528ca162edd532040e5c5c39631"
           },
           {
             "path": "CHANGELOG.md",
