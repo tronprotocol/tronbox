@@ -68,7 +68,7 @@ function init(options, extraOptions = {}) {
   }
 
   if (extraOptions.verify && (
-    !options || !options.privateKey || !(
+    !options || !(options.privateKey || options.mnemonic) || !(
       options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)
     )
   )) {
@@ -87,11 +87,19 @@ function init(options, extraOptions = {}) {
     }
   }
 
+  // support mnemonic
+  const getPrivateKey = () => {
+    if (options.mnemonic) {
+      return _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey.replace(/^0x/, '')
+    }
+    return options.privateKey
+  }
+
   TronWrap.prototype = new _TronWeb(
     options.fullNode || options.fullHost,
     options.solidityNode || options.fullHost,
     options.eventServer || options.fullHost,
-    options.privateKey
+    getPrivateKey()
   )
 
   const tronWrap = TronWrap.prototype
@@ -193,6 +201,11 @@ function init(options, extraOptions = {}) {
         ? options.userFeePercentage
         : this.networkConfig.userFeePercentage
 
+    const constructorAbi = option.abi.find((it) => it.type === 'constructor');
+    if (constructorAbi && option.parameters && option.parameters.length) {
+      option.rawParameter = this.utils.abi.encodeParamsV2ByABI(constructorAbi, option.parameters);
+    }
+
     this._new(myContract, {
       bytecode: option.data,
       feeLimit: option.feeLimit || this.networkConfig.feeLimit,
@@ -201,6 +214,7 @@ function init(options, extraOptions = {}) {
       originEnergyLimit,
       abi: option.abi,
       parameters: option.parameters,
+      rawParameter: option.rawParameter,
       name: option.contractName,
       from: option.from || ''
     }, option.privateKey)
