@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://tronbox.io/" title="TronBox Website">
-    <img alt="TronBox" src="https://raw.githubusercontent.com/tronprotocol/tronbox/logo/assets/TronBox-logo.png" width="160"/>
+    <img alt="TronBox" src="https://raw.githubusercontent.com/tronprotocol/tronbox/master/assets/TronBox-logo.png" width="160"/>
   </a>
 </p>
 
