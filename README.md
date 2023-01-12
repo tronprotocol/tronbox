@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://tronbox.io/" title="TronBox Website">
+    <img alt="TronBox" src="https://raw.githubusercontent.com/tronprotocol/tronbox/master/assets/TronBox-logo.png" width="160"/>
+  </a>
+</p>
+
 # TronBox
 TronBox is a tool for developing, testing, and deploying smart contracts. It is designed for blockchains using the TRON Virtual Machine (TVM).
 
@@ -41,7 +47,7 @@ To compile all contracts, use the ```--compile-all``` option.<br>
 Specify a network using the ```--network``` option. Network name must exist in the configuration. For details, see [Compile a Project](https://developers.tron.network/reference/compile-a-contract).<br>
 <br>
 ### Migrate
-To deploy our smart contracts, you need to connect to a blockchain. Use the **TronBox Runtime Environment** to create and interact with the blockchain. For details, see [Contract Deployment (Migrations)](https://developers.tron.network/reference/contract-deploymentmigrations).<br> 
+To deploy our smart contracts, you need to connect to a blockchain. Use the **TronBox Runtime Environment** to create and interact with the blockchain. For details, see [Contract Deployment (Migrations)](https://developers.tron.network/reference/contract-deploymentmigrations).<br>
 
 To run your migrations, run the following:
 ```
@@ -53,7 +59,7 @@ To run all tests, run:
 ```
 $ tronbox test
 ```
-Alternatively, you can specify a path to a specific file you want to run: `tronbox test ./path/to/test/file.js`. For details, see [Test Your Contracts](https://developers.tron.network/reference/test-your-contracts).  
+Alternatively, you can specify a path to a specific file you want to run: `tronbox test ./path/to/test/file.js`. For details, see [Test Your Contracts](https://developers.tron.network/reference/test-your-contracts).
 <br>
 ### Interact with the contract<br>
 To interact with the contract, run:
@@ -63,7 +69,7 @@ $ tronbox console
 You will see the following prompt:
 ```
 $ tronbox(development)>
-``` 
+```
 The name in the parentheses of the prompt `tronbox(development)>` is the network that is currently connected to. For details, see [Interact with a Contract](https://developers.tron.network/reference/interact-with-a-contract).<br>
 <br>
 ## Development
