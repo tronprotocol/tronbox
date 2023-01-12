@@ -1,10 +1,10 @@
 <p align="center">
   <a href="https://tronbox.io/" title="TronBox Website">
-    <img alt="TronBox" src="https://raw.githubusercontent.com/tronprotocol/tronbox/master/assets/TronBox-logo.png" width="160"/>
+    <img alt="TronBox" src="https://raw.githubusercontent.com/tronprotocol/tronbox/logo/assets/TronBox-logo.png" width="160"/>
   </a>
 </p>
 
-#TronBox
+# TronBox
 
 TronBox is a tool for developing, testing, and deploying smart contracts. It is designed for blockchains using the TRON Virtual Machine (TVM).
 
