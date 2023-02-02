@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -27,7 +27,7 @@
     "bignumber.js": "^7.2.1",
     "chai": "4.1.2",
     "chalk": "^2.4.1",
-    "chokidar": "^1.4.2",
+    "chokidar": "^3.5.3",
     "colors": "^1.1.2",
     "cpr": "^0.4.3",
     "debug": "^3.1.0",
@@ -57,10 +57,10 @@
     "spawn-args": "^0.1.0",
     "superagent": "^5.1.0",
     "temp": "^0.8.3",
-    "tronweb": "^4.4.0",
+    "tronweb": "^5.1.0",
     "vcsurl": "^0.1.1",
     "web3-mock": "1.0.1",
-    "yargs": "^8.0.2"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
@@ -87,7 +87,7 @@
     "type": "git",
     "url": "https://github.com/tronprotocol/tronbox.git"
   },
-  "homepage": "https://github.com/tronprotocol/tronbox",
+  "homepage": "https://tronbox.io",
   "bugs": {
     "url": "https://github.com/tronprotocol/tronbox/issues"
   },
