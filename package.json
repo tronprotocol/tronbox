@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -52,7 +52,7 @@
     "safe-eval": "^0.4.1",
     "semver": "^6.1.1",
     "serve-static": "^1.10.0",
-    "solc": "0.8.6",
+    "solc": "^0.8.17",
     "source-map-support": "^0.5.3",
     "spawn-args": "^0.1.0",
     "superagent": "^5.1.0",
