@@ -1,4 +1,4 @@
-__3.1.0__
+__3.1.1__
 * Add support for Solidity compiler 0.8.17
 
 __3.1.0__
