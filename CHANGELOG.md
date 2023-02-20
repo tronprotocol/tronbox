@@ -1,3 +1,6 @@
+__3.1.1__
+* Add support for Solidity compiler 0.8.17
+
 __3.1.0__
 * Bump chokidar from 1.7.0 to 3.5.3
 * Bump yargs from 8.0.2 to 15.4.1
