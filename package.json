@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "scripts/build.sh",
-    "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
+    "test": "cd test && sh runTest.sh",
     "prepare": "npm run build",
     "lint": "find src -name '*.js' | xargs node_modules/.bin/eslint"
   },
