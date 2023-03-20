@@ -20,13 +20,13 @@ contract('Tuple', function (accounts) {
     tuple = await Tuple.deployed()
   })
 
-  it("should have 3 `person`s with `tan` which is the first to verify that the argument passed to constructor works", async function () {
-    assert.deepEqual(turnBN2N(await tuple.getPerson()), [['tan', 30], ['zhang', 20], ['zhaoliu', 30]]);
+  it("should have 3 `person`s with `Tom` which is the first to verify that the argument passed to constructor works", async function () {
+    assert.deepEqual(turnBN2N(await tuple.getPerson()), [['Tom', 30], ['Lily', 20], ['Oscar', 30]]);
   });
 
-  it("should get `tan 30` to verify getPersonById is working", async function () {
+  it("should get `Tom 30` to verify getPersonById is working", async function () {
     const person = await tuple.getPersonById(0);
-    assert.deepEqual(turnBN2N(person), ['tan', 30]);
+    assert.deepEqual(turnBN2N(person), ['Tom', 30]);
   });
 
   it("should return the same person", async function () {
