@@ -161,6 +161,8 @@ function init(options, extraOptions = {}) {
         .then(({data}) => {
           data = Array.isArray(data) ? data : data.privateKeys
           if (data.length > 0 && data[0].length === 64) {
+            self.setPrivateKey(data[0])
+            tronWrap.setPrivateKey(data[0])
             self._accounts = []
             self._privateKeyByAccount = {}
             for (const account of data) {
@@ -281,7 +283,8 @@ function init(options, extraOptions = {}) {
       myContract.bytecode = contract.bytecode
       myContract.deployed = true
 
-      myContract.loadAbi(options.abi || [])
+      myContract.loadAbi(JSON.parse(JSON.stringify(options.abi || [])))
+      myContract.transactionHash = transaction.txID
 
       dlog('Contract deployed')
       return Promise.resolve(myContract)

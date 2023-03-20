@@ -1,10 +1,20 @@
 const TronWrap = require('../../../TronWrap')
 const {dlog} = require('../../../TronWrap')
+const Contract = require('../../../Contract')
+const provision = require('../../../Provisioner')
 
 
 module.exports = function (contract, args, deployer) {
   return function () {
     let should_deploy = true
+    const trufflePlugin = deployer.trufflePlugin || false
+
+    if (!contract.initTronWeb) {
+      const abstraction = Contract(contract._json)
+      // abstraction.defaults(this.class_defaults)
+      provision(abstraction, deployer.options)
+      contract = abstraction
+    }
 
     // Evaluate any arguments if they're promises (we need to do this in all cases to maintain consistency)
     return Promise.all(args).then(function (new_args) {
@@ -36,8 +46,11 @@ module.exports = function (contract, args, deployer) {
         deployer.logger.log("Didn't deploy " + contract.contract_name + '; using ' + instance.address)
       }
 
+      instance.address = trufflePlugin ? instance.address.replace(/^41/, '0x') : instance.address
+
       // Ensure the address and tx-hash are set on the contract.
       contract.address = instance.address
+      contract.transactionHash = instance.transactionHash
 
       dlog('Instance name:', instance && instance.constructor ? instance.constructor.contractName : null)
       return instance

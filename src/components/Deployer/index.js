@@ -29,6 +29,7 @@ function Deployer(options) {
   this.network_id = options.network_id
   this.provider = options.provider
   this.basePath = options.basePath || process.cwd()
+  this.options = options
 }
 
 // Note: In all code below we overwrite this.chain every time .then() is used

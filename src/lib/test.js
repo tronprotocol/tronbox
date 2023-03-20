@@ -94,7 +94,7 @@ const Test = {
       return self.performInitialDeploy(config, test_resolver)
     }).then(function () {
       console.info('Preparing Javascript tests (if any)...')
-      return self.setJSTestGlobals(accounts, test_resolver, runner)
+      return self.setJSTestGlobals(accounts, test_resolver, runner, config)
     }).then(function () {
       // Finally, run mocha.
       process.on('unhandledRejection', function (reason) {
@@ -164,7 +164,7 @@ const Test = {
     })
   },
 
-  setJSTestGlobals: function (accounts, test_resolver, runner) {
+  setJSTestGlobals: function (accounts, test_resolver, runner, config) {
     return new Promise(function (accept) {
       global.assert = chai.assert
       global.expect = chai.expect
@@ -173,6 +173,8 @@ const Test = {
           return test_resolver.require(import_path)
         }
       }
+
+      global.config = config
 
       const template = function (tests) {
         this.timeout(runner.TEST_TIMEOUT)

@@ -30,6 +30,7 @@ Migration.prototype.run = function (options, callback) {
   }
 
   const deployer = new Deployer({
+    options,
     logger: {
       log: function (msg) {
         logger.log('  ' + msg)
@@ -41,9 +42,13 @@ Migration.prototype.run = function (options, callback) {
     basePath: path.dirname(this.file)
   })
 
-  const finish = function (err) {
+  const finish = function (err, migrateFn) {
     if (err) return callback(err)
     deployer.start().then(async function () {
+    if (migrateFn && migrateFn.then !== undefined) {
+        await migrateFn
+      }
+
       if (options.save === false) return
 
       const Migrations = resolver.require('./Migrations.sol')
@@ -76,13 +81,13 @@ Migration.prototype.run = function (options, callback) {
     context: context,
     resolver: resolver,
     args: [deployer],
-  })
+  }, options)
 
   if (!fn || !fn.length || fn.length === 0) {
     return callback(new Error('Migration ' + self.file + ' invalid or does not take any parameters'))
   }
-  fn(deployer, options.network, options.networks[options.network].from)
-  finish()
+  const migrateFn = fn(deployer, options.network, options.networks[options.network].from)
+  finish(null, migrateFn)
 }
 
 const Migrate = {

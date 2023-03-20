@@ -13,6 +13,8 @@ Artifactor.prototype.save = function (object) {
   return new Promise(function (accept, reject) {
     object = Schema.normalize(object)
 
+    Object.values(object.networks).forEach(_ => _.address = _.address.toLowerCase().replace(/^0x/, '41'))
+
     if (!object.contractName) {
       return reject(new Error('You must specify a contract name.'))
     }

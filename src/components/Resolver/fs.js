@@ -7,12 +7,31 @@ function FS(working_directory, contracts_build_directory) {
   this.contracts_build_directory = contracts_build_directory
 }
 
+FS.prototype.requireJson = function (import_path) {
+  const workingDirectory = this.working_directory
+
+  if (!import_path.startsWith('./')) {
+    import_path = `./node_modules/${import_path}`
+  }
+
+  try {
+    const result = fs.readFileSync(path.join(workingDirectory, import_path), 'utf8')
+    return JSON.parse(result)
+  } catch (e) {
+    return null
+  }
+}
+
 FS.prototype.require = function (import_path, search_path) {
   search_path = search_path || this.contracts_build_directory
 
   // For Windows: Allow import paths to be either path separator ('\' or '/')
   // by converting all '/' to the default (path.sep);
   import_path = import_path.replace(/\//g, path.sep)
+
+  if (path.extname(import_path) === '.json') {
+    return this.requireJson(import_path)
+  }
 
   const contract_name = this.getContractName(import_path, search_path)
 

@@ -1,4 +1,6 @@
 const ethJSABI = require('ethjs-abi')
+const Web3 = require('web3')
+const Web3Contract = require('web3-eth-contract');
 const TronWrap = require('../TronWrap')
 const {constants} = require('../TronWrap')
 const BigNumber = require('bignumber.js')
@@ -270,6 +272,7 @@ const contract = (function (module) {
     this.abi = constructor.abi
     if (typeof contract === 'string') {
       this.address = contract
+      this.contract = new Web3Contract(this.abi, '')
     } else {
       this.allEvents = contract.allEvents
       this.contract = contract
@@ -386,15 +389,25 @@ const contract = (function (module) {
             reject(err)
             return
           }
-          accept(new self(res.address))
+          self.at(res.address).then(newContract => {
+            newContract.transactionHash = res.transactionHash
+            accept(newContract)
+          })
         }
       })
     },
 
-    at: function () {
-
-      throw new Error('The construct contractArtifacts.at(address) is not currently supported by TronBox. It will be in the future. Stay in touch.')
-
+    at: function (address) {
+      const newContract = this.clone(JSON.parse(JSON.stringify(this._json)))
+      if (this.provider) {
+        newContract.setProvider(this.provider)
+      }
+      if (this.network_id) {
+        newContract.setNetwork(this.network_id)
+      }
+      newContract.defaults(this.class_defaults)
+      newContract.address = address
+      return newContract.deployed()
     },
     call: function (methodName, ...args) {
 
@@ -454,6 +467,7 @@ const contract = (function (module) {
         if (!self.isDeployed()) {
           throw new Error(self.contractName + ' has not been deployed to detected network')
         }
+        self.address = self.address.toLowerCase().replace(/^0x/, '41')
         TronWrap().trx.getContract(self.address)
           .then(() => {
             const abi = self.abi || []
@@ -864,7 +878,6 @@ const contract = (function (module) {
     schemaVersion: function () {
       return this._json.schemaVersion
     },
-    // deprecated
     updated_at: function () {
       return this.updatedAt
     },
@@ -874,6 +887,10 @@ const contract = (function (module) {
       } catch (e) {
         return this._json.updatedAt
       }
+    },
+    // Compatible with Web3
+    web3: function () {
+      return new Web3()
     }
   }
 

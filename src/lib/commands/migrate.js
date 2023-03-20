@@ -19,6 +19,10 @@ const command = {
     f: {
       describe: 'Specify a migration number to run from',
       type: 'number'
+    },
+    to: {
+      describe: 'Specify a migration number to run to',
+      type: 'number'
     }
   },
   run: function (options, done) {

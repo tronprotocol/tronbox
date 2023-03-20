@@ -1,3 +1,4 @@
+const axios = require('axios')
 const {TronWeb} = require('../TronWrap')
 const wrapper = require('./wrapper')
 
@@ -8,6 +9,7 @@ module.exports = {
 
   create: function (options) {
     let provider
+    const fullHost = options.fullHost || options.fullNode
 
     if (options.provider && typeof options.provider === 'function') {
       provider = options.provider()
@@ -17,57 +19,23 @@ module.exports = {
 
       const HttpProvider = TronWeb.providers.HttpProvider
 
-      HttpProvider.prototype.send = function (payload) {
-        const request = this.prepareRequest(false)
-
-        try {
-          request.send(JSON.stringify(payload))
-        } catch (error) {
-          throw new Error(`Invalid Connection (${this.host})`)
-        }
-
-        let result = request.responseText
-
-        try {
-          result = JSON.parse(result)
-        } catch (e) {
-          throw new Error(`Invalid Response (${request.responseText})`)
-        }
-
-        return result
+      HttpProvider.prototype.send = async function (payload) {
+        const { data } = await axios.post(`${fullHost}/jsonrpc`, payload)
+        return data
       }
 
       HttpProvider.prototype.sendAsync = function (payload, callback) {
-        const request = this.prepareRequest(true)
-
-        request.onreadystatechange = function () {
-          if (request.readyState === 4 && request.timeout !== 1) {
-            let result = request.responseText
-            let error = null
-
-            try {
-              result = JSON.parse(result)
-            } catch (e) {
-              error = new Error(`Invalid Response (${request.responseText})`)
-            }
-
-            callback(error, result)
-          }
-        }
-
-        request.ontimeout = function () {
-          throw new Error(`Connection Timeout (${this.timeout})`)
-        }
-
-        try {
-          request.send(JSON.stringify(payload))
-        } catch (error) {
-          callback(new Error(`Invalid Connection (${this.host})`))
-        }
-        return request
+        return axios
+          .post(`${fullHost}/jsonrpc`, payload)
+          .then(({ data }) => {
+            callback(null, data)
+          })
+          .catch((error) => {
+            callback(error)
+          })
       }
 
-      provider = new HttpProvider(options.fullHost)
+      provider = new HttpProvider(fullHost)
     }
     return this.wrap(provider, options)
   },
