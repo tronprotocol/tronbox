@@ -1,7 +1,5 @@
 #!/bin/sh
 
-npm i
-
 cd transparent && rm -rf build && rm -rf .openzeppelin && npm i
 ../../../tronbox.dev migrate
 cd ..
