@@ -10,5 +10,4 @@ module.exports = {
   serve: require('./serve'),
   unbox: require('./unbox'),
   version: require('./version')
-}
-
+};

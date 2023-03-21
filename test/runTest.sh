@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Need to test the mnemonic manually
-
 echo 'Test abiv2'
 cd abiv2
 ../../tronbox.dev test

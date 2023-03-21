@@ -1,20 +1,20 @@
-const CompileError = require('./compileerror')
-const {getWrapper} = require('../TronSolc')
-const fs = require('fs')
-const path = require('path')
+const CompileError = require('./compileerror');
+const { getWrapper } = require('../TronSolc');
+const fs = require('fs');
+const path = require('path');
 
 // Clean up after solc.
-const listeners = process.listeners('uncaughtException')
-const solc_listener = listeners[listeners.length - 1]
+const listeners = process.listeners('uncaughtException');
+const solc_listener = listeners[listeners.length - 1];
 
 if (solc_listener) {
-  process.removeListener('uncaughtException', solc_listener)
+  process.removeListener('uncaughtException', solc_listener);
 }
 
 // Warning issued by a pre-release compiler version, ignored by this component.
-const preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning
+const preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning;
 
-const installedContractsDir = 'installed_contracts'
+const installedContractsDir = 'installed_contracts';
 
 module.exports = {
   parse: function (body, fileName, options) {
@@ -25,21 +25,21 @@ module.exports = {
     const build_remappings = function () {
       // Maps import paths to paths from EthPM installed contracts, so we can correctly solve imports
       // e.g. "my_pkg/=installed_contracts/my_pkg/contracts/"
-      const remappings = []
+      const remappings = [];
 
       if (fs.existsSync('ethpm.json')) {
-        const ethpm = JSON.parse(fs.readFileSync('ethpm.json'))
+        const ethpm = JSON.parse(fs.readFileSync('ethpm.json'));
         for (const pkg in ethpm.dependencies) {
-          remappings.push(pkg + '/=' + path.join(installedContractsDir, pkg, 'contracts', '/'))
+          remappings.push(pkg + '/=' + path.join(installedContractsDir, pkg, 'contracts', '/'));
         }
       }
 
-      return remappings
-    }
+      return remappings;
+    };
 
-    fileName = fileName || 'ParsedContract.sol'
+    fileName = fileName || 'ParsedContract.sol';
 
-    const remappings = build_remappings()
+    const remappings = build_remappings();
 
     const solcStandardInput = {
       language: 'Solidity',
@@ -52,57 +52,58 @@ module.exports = {
         remappings: remappings,
         outputSelection: {
           '*': {
-            '': [
-              'ast'
-            ]
+            '': ['ast']
           }
         }
       }
-    }
+    };
 
-    const solc = getWrapper(options)
+    const solc = getWrapper(options);
     let output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), {
       // New syntax (supported from 0.5.12, mandatory from 0.6.0)
       import: function (file_path) {
         // Resolve dependency manually.
-        let contents
+        let contents;
         if (fs.existsSync(file_path)) {
-          contents = fs.readFileSync(file_path, { encoding: 'UTF-8' })
+          contents = fs.readFileSync(file_path, { encoding: 'UTF-8' });
         } else {
-          contents = 'pragma solidity ^0.4.0;'
+          contents = 'pragma solidity ^0.4.0;';
         }
-        return { contents: contents }
+        return { contents: contents };
       }
-    })
+    });
 
-    output = JSON.parse(output)
+    output = JSON.parse(output);
 
     // Filter out the "pre-release compiler" warning, if present.
-    let errors = output.errors ? output.errors.filter(function (solidity_error) {
-      return solidity_error.message.indexOf(preReleaseCompilerWarning) < 0
-    }) : []
+    let errors = output.errors
+      ? output.errors.filter(function (solidity_error) {
+          return solidity_error.message.indexOf(preReleaseCompilerWarning) < 0;
+        })
+      : [];
 
     // Filter out warnings.
     // var warnings = output.errors ? output.errors.filter(function (solidity_error) {
     //   return solidity_error.severity == 'warning'
     // }) : []
-    errors = output.errors ? output.errors.filter(function (solidity_error) {
-      return solidity_error.severity !== 'warning'
-    }) : []
+    errors = output.errors
+      ? output.errors.filter(function (solidity_error) {
+          return solidity_error.severity !== 'warning';
+        })
+      : [];
 
     if (errors.length > 0) {
-      throw new CompileError(errors[0].formattedMessage)
+      throw new CompileError(errors[0].formattedMessage);
     }
 
     return {
       contracts: Object.keys(output.contracts[fileName]),
       ast: output.sources[fileName].ast
-    }
+    };
   },
 
   // This needs to be fast! It is fast (as of this writing). Keep it fast!
   parseImports: function (body, options) {
-
     // WARNING: Kind of a hack (an expedient one).
 
     // So we don't have to maintain a separate parser, we'll get all the imports
@@ -113,12 +114,12 @@ module.exports = {
     // the imports speedily without doing extra work.
 
     // Helper to detect import errors with an easy regex.
-    const importErrorKey = 'TRUFFLE_IMPORT'
+    const importErrorKey = 'TRUFFLE_IMPORT';
 
     // Inject failing import.
-    const failingImportFileName = '__Truffle__NotFound.sol'
+    const failingImportFileName = '__Truffle__NotFound.sol';
 
-    body = body + "\n\nimport '" + failingImportFileName + "';\n"
+    body = body + "\n\nimport '" + failingImportFileName + "';\n";
 
     const solcStandardInput = {
       language: 'Solidity',
@@ -134,9 +135,9 @@ module.exports = {
           }
         }
       }
-    }
+    };
 
-    const solc = getWrapper(options)
+    const solc = getWrapper(options);
     let output = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput), {
       // New syntax (supported from 0.5.12, mandatory from 0.6.0)
       // tronbox compiler --all
@@ -144,30 +145,29 @@ module.exports = {
         // The existence of this function ensures we get a parsable error message.
         // Without this, we'll get an error message we *can* detect, but the key will make it easier.
         // Note: This is not a normal callback. See docs here: https://github.com/ethereum/solc-js#from-version-021
-        return { error: importErrorKey }
+        return { error: importErrorKey };
       }
-    })
+    });
 
-    output = JSON.parse(output)
+    output = JSON.parse(output);
 
     // Filter out the "pre-release compiler" warning, if present.
     const errors = output.errors.filter(function (solidity_error) {
-      return solidity_error.message.indexOf(preReleaseCompilerWarning) < 0
-    })
+      return solidity_error.message.indexOf(preReleaseCompilerWarning) < 0;
+    });
 
     const nonImportErrors = errors.filter(function (solidity_error) {
       // If the import error key is not found, we must not have an import error.
       // This means we have a *different* parsing error which we should show to the user.
       // Note: solc can return multiple parsing errors at once.
       // We ignore the "pre-release compiler" warning message.
-      return solidity_error.formattedMessage.indexOf(importErrorKey) < 0 && solidity_error.severity !== 'warning'
-    })
+      return solidity_error.formattedMessage.indexOf(importErrorKey) < 0 && solidity_error.severity !== 'warning';
+    });
 
     // Should we try to throw more than one? (aside; we didn't before)
     if (nonImportErrors.length > 0) {
-      throw new CompileError(nonImportErrors[0].formattedMessage)
+      throw new CompileError(nonImportErrors[0].formattedMessage);
     }
-
 
     // Filter out our forced import, then get the import paths of the rest.
     const imports = errors
@@ -175,7 +175,7 @@ module.exports = {
         // Multiline import check which works for solcjs and solc
         // solcjs: ^ (Relevant source part starts here and spans across multiple lines)
         // solc: Spanning multiple lines.
-        if (formattedMessage.includes("multiple lines")) {
+        if (formattedMessage.includes('multiple lines')) {
           // Parse the import filename from the error message, this does not include the full path to the import
           const matches = message.match(/Source[^'"]?.*?("|')([^'"]+)("|')/);
           if (matches) {
@@ -185,18 +185,14 @@ module.exports = {
             if (importMatches) return importMatches[2];
           }
         } else {
-          const matches = formattedMessage.match(
-            /import[^'"]?.*("|')([^'"]+)("|')/
-          );
+          const matches = formattedMessage.match(/import[^'"]?.*("|')([^'"]+)("|')/);
 
           // Return the item between the quotes.
           if (matches) return matches[2];
         }
       })
-      .filter(
-        (match) => match !== undefined && match !== failingImportFileName
-      );
+      .filter(match => match !== undefined && match !== failingImportFileName);
 
-    return imports
+    return imports;
   }
-}
+};

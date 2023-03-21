@@ -26,67 +26,67 @@ const command = {
     }
   },
   run: function (options, done) {
-    process.env.CURRENT = 'migrate'
-    const OS = require('os')
-    const Config = require('../../components/Config')
-    const Contracts = require('../../components/WorkflowCompile')
-    const Migrate = require('../../components/Migrate')
-    const Environment = require('../environment')
-    const TronWrap = require('../../components/TronWrap')
-    const {dlog} = require('../../components/TronWrap')
-    const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
+    process.env.CURRENT = 'migrate';
+    const OS = require('os');
+    const Config = require('../../components/Config');
+    const Contracts = require('../../components/WorkflowCompile');
+    const Migrate = require('../../components/Migrate');
+    const Environment = require('../environment');
+    const TronWrap = require('../../components/TronWrap');
+    const { dlog } = require('../../components/TronWrap');
+    const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit;
 
-    const config = Config.detect(options)
+    const config = Config.detect(options);
 
     // if "development" exists, default to using that
     if (!config.network && config.networks.development) {
-      config.network = 'development'
+      config.network = 'development';
     }
     // init TronWeb
     try {
       TronWrap(config.networks[config.network], {
         verify: true,
         log: options.log
-      })
+      });
     } catch (err) {
-      logErrorAndExit(console, err.message)
+      logErrorAndExit(console, err.message);
     }
 
     function runMigrations(callback) {
       if (options.f) {
-        Migrate.runFrom(options.f, config, done)
+        Migrate.runFrom(options.f, config, done);
       } else {
         Migrate.needsMigrating(config, function (err, needsMigrating) {
-          if (err) return callback(err)
+          if (err) return callback(err);
 
           if (needsMigrating) {
-            dlog('Starting migration')
-            Migrate.run(config, done)
+            dlog('Starting migration');
+            Migrate.run(config, done);
           } else {
-            config.logger.log('Network up to date.')
-            callback()
+            config.logger.log('Network up to date.');
+            callback();
           }
-        })
+        });
       }
     }
 
     Contracts.compile(config, function (err) {
-      if (err) return done(err)
+      if (err) return done(err);
       Environment.detect(config, function (err) {
-        if (err) return done(err)
-        const dryRun = options.dryRun === true
+        if (err) return done(err);
+        const dryRun = options.dryRun === true;
 
-        let networkMessage = "Using network '" + config.network + "'"
+        let networkMessage = "Using network '" + config.network + "'";
 
         if (dryRun) {
-          networkMessage += ' (dry run)'
+          networkMessage += ' (dry run)';
         }
 
-        config.logger.log(networkMessage + '.' + OS.EOL)
-        runMigrations(done)
-      })
-    })
+        config.logger.log(networkMessage + '.' + OS.EOL);
+        runMigrations(done);
+      });
+    });
   }
-}
+};
 
-module.exports = command
+module.exports = command;
