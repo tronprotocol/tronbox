@@ -2,17 +2,17 @@ __3.2.0__
 * Add support `deployProxy`, `deployBeacon` and `deployBeaconProxy` of `@openzeppelin/truffle-upgrades` in migrations
 
 ```javascript
-const { deployProxy } = require('@openzeppelin/truffle-upgrades')
-const Box = artifacts.require('TransparentBox')
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
+const Box = artifacts.require('TransparentBox');
 
 module.exports = async function (deployer) {
   try {
     // Setup tronbox deployer
-    deployer.trufflePlugin = true
-    const instance = await deployProxy(Box, [42], { deployer })
-    console.log('Deployed', instance.address)
+    deployer.trufflePlugin = true;
+    const instance = await deployProxy(Box, [42], { deployer });
+    console.info('Deployed', instance.address);
   } catch (error) {
-    console.log('Transparent: deploy box error', error)
+    console.error('Transparent: deploy box error', error);
   }
 }
 
