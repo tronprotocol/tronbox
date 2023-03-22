@@ -426,7 +426,7 @@ const contract = (function (module) {
         newContract.setNetwork(this.network_id);
       }
       newContract.defaults(this.class_defaults);
-      newContract.address = address;
+      newContract.address = TronWrap().address.toHex(address);
       return newContract.deployed();
     },
     call: function (methodName, ...args) {
