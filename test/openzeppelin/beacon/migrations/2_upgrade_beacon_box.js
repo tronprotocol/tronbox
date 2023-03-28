@@ -36,6 +36,6 @@ module.exports = async function (deployer) {
     const afterValueV2 = await box.valueV2();
     console.info('ValueV2 after', afterValueV2.toNumber());
   } catch (error) {
-    console.error('UUPS: upgrade box error', error);
+    console.error('Beacon: upgrade box error', error);
   }
 };
