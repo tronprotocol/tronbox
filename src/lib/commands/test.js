@@ -3,31 +3,29 @@ const command = {
   description: 'Run JavaScript and Solidity tests',
   builder: {},
   run: function (options, done) {
-    const OS = require('os')
-    const dir = require('node-dir')
-    const temp = require('temp')
-    const Config = require('../../components/Config')
-    const Artifactor = require('../../components/Artifactor')
-    const Test = require('../test')
-    const fs = require('fs')
-    const copy = require('../copy')
-    const Environment = require('../environment')
-    const TronWrap = require('../../components/TronWrap')
-    const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit
+    const OS = require('os');
+    const dir = require('node-dir');
+    const temp = require('temp');
+    const Config = require('../../components/Config');
+    const Artifactor = require('../../components/Artifactor');
+    const Test = require('../test');
+    const fs = require('fs');
+    const copy = require('../copy');
+    const Environment = require('../environment');
+    const TronWrap = require('../../components/TronWrap');
+    const logErrorAndExit = require('../../components/TronWrap').logErrorAndExit;
 
-    const config = Config.detect(options)
+    const config = Config.detect(options);
 
     // if "development" exists, default to using that for testing
     if (!config.network) {
-      if (config.networks.development)
-        config.network = 'development'
-      else if (config.networks.test)
-        config.network = 'test'
+      if (config.networks.development) config.network = 'development';
+      else if (config.networks.test) config.network = 'test';
     }
 
     if (!config.network) {
-      console.error('\nERROR: Neither development nor test network has been set in tronbox.js\n')
-      return
+      console.error('\nERROR: Neither development nor test network has been set in tronbox.js\n');
+      return;
     }
 
     try {
@@ -35,86 +33,88 @@ const command = {
         verify: true,
         tre: true,
         log: options.log
-      })
+      });
     } catch (err) {
-      logErrorAndExit(console, err.message)
+      logErrorAndExit(console, err.message);
     }
-    process.env.CURRENT = 'test'
+    process.env.CURRENT = 'test';
 
-    let ipcDisconnect
+    let ipcDisconnect;
 
-    let files = []
+    let files = [];
 
     if (options.file) {
-      files = [options.file]
+      files = [options.file];
     } else if (options._.length > 0) {
-      Array.prototype.push.apply(files, options._)
+      Array.prototype.push.apply(files, options._);
     }
 
     function getFiles(callback) {
-      if (files.length !==0) {
-        return callback(null, files)
+      if (files.length !== 0) {
+        return callback(null, files);
       }
 
-      dir.files(config.test_directory, callback)
+      dir.files(config.test_directory, callback);
     }
 
     getFiles(function (err, files) {
-      if (err) return done(err)
+      if (err) return done(err);
 
       files = files.filter(function (file) {
-        return file.match(config.test_file_extension_regexp) != null
-      })
+        return file.match(config.test_file_extension_regexp) != null;
+      });
 
       temp.mkdir('test-', function (err, temporaryDirectory) {
-        if (err) return done(err)
+        if (err) return done(err);
 
         function cleanup() {
-          const args = arguments
+          const args = arguments;
           // Ensure directory cleanup.
           temp.cleanup(function () {
             // Ignore cleanup errors.
-            done.apply(null, args)
+            done.apply(null, args);
             if (ipcDisconnect) {
-              ipcDisconnect()
+              ipcDisconnect();
             }
-          })
+          });
         }
 
         function run() {
           // Set a new artifactor; don't rely on the one created by Environments.
           // TODO: Make the test artifactor configurable.
-          config.artifactor = new Artifactor(temporaryDirectory)
+          config.artifactor = new Artifactor(temporaryDirectory);
 
-          Test.run(config.with({
-            test_files: files,
-            contracts_build_directory: temporaryDirectory
-          }), cleanup)
+          Test.run(
+            config.with({
+              test_files: files,
+              contracts_build_directory: temporaryDirectory
+            }),
+            cleanup
+          );
         }
 
         const environmentCallback = function (err) {
-          if (err) return done(err)
+          if (err) return done(err);
           // Copy all the built files over to a temporary directory, because we
           // don't want to save any tests artifacts. Only do this if the build directory
           // exists.
           fs.stat(config.contracts_build_directory, function (err) {
-            if (err) return run()
+            if (err) return run();
 
             copy(config.contracts_build_directory, temporaryDirectory, function (err) {
-              if (err) return done(err)
+              if (err) return done(err);
 
-              config.logger.log("Using network '" + config.network + "'." + OS.EOL)
+              config.logger.log("Using network '" + config.network + "'." + OS.EOL);
 
-              run()
-            })
-          })
-        }
+              run();
+            });
+          });
+        };
 
         if (config.networks[config.network]) {
-          Environment.detect(config, environmentCallback)
+          Environment.detect(config, environmentCallback);
         } else {
-
-          throw new Error('No development/test environment set in tronbox.js')
+          throw new Error('No development/test environment set in tronbox.js');
 
           // var ipcOptions = {
           //   network: "test"
@@ -133,9 +133,9 @@ const command = {
           //   Environment.develop(config, testrpcOptions, environmentCallback);
           // });
         }
-      })
-    })
+      });
+    });
   }
-}
+};
 
-module.exports = command
+module.exports = command;

@@ -1,3 +1,22 @@
+__3.2.0__
+* Add support `deployProxy`, `deployBeacon` and `deployBeaconProxy` of `@openzeppelin/truffle-upgrades` in migrations
+
+```javascript
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
+const Box = artifacts.require('TransparentBox');
+
+module.exports = async function (deployer) {
+  try {
+    // Setup tronbox deployer
+    deployer.trufflePlugin = true;
+    const instance = await deployProxy(Box, [42], { deployer });
+    console.info('Deployed', instance.address);
+  } catch (error) {
+    console.error('Transparent: deploy box error', error);
+  }
+}
+
+```
 __3.1.2__
 * Add support for Solidity compiler 0.8.18
 
@@ -30,21 +49,21 @@ __3.0.0__
 * Add `tre_unlockedAccounts` RPC method. The method can set up any arbitrary account to impersonate during development.
 
 `tre_setAccountBalance`:
-```js
+```javascript
 const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
 const balance = "0x3e8";
 const result = await tronWrap.send("tre_setAccountBalance", [address, balance]);
 console.log(result);
 ```
 `tre_setAccountCode`:
-```js
+```javascript
 const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
 const data = "0xbaddad42";
 const result = await tronWrap.send("tre_setAccountCode", [address, data]);
 console.log(result);
 ```
 `tre_setAccountStorageAt`:
-```js
+```javascript
 const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
 const slot = "0x0000000000000000000000000000000000000000000000000000000000000005";
 const data = "0xbaddad42";
@@ -52,17 +71,17 @@ const result = await tronWrap.send("tre_setAccountStorageAt", [address, slot, da
 console.log(result);
 ```
 `tre_blockTime`:
-```js
+```javascript
 const result = await tronWrap.send("tre_blockTime", [3]);
 console.log(result);
 ```
 `tre_mine`:
-```js
+```javascript
 const result = await tronWrap.send("tre_mine", [{ blocks: 5}]);
 console.log(result);
 ```
 `tre_unlockedAccounts`:
-```js
+```javascript
 const result = await tronWrap.send("tre_unlockedAccounts", [["TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL"]]);
 console.log(result);
 ```

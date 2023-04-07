@@ -1,22 +1,22 @@
 const command = {
-  command: "convert",
-  description: "Convert a truffle project to tronbox project",
+  command: 'convert',
+  description: 'Convert a truffle project to tronbox project',
   builder: {},
   run: function (options, done) {
-    const fs = require("fs");
-    const path = require("path");
+    const fs = require('fs');
+    const path = require('path');
     const Config = require('../../components/Config');
     const config = Config.default().with({
       logger: console
     });
-    if (!fs.existsSync(path.join(process.cwd(), "./truffle-config.js"))) {
-      config.logger.log('It\'s not a truffle project. Will start `tronbox init`');
+    if (!fs.existsSync(path.join(process.cwd(), './truffle-config.js'))) {
+      config.logger.log("It's not a truffle project. Will start `tronbox init`");
       const InitCommand = require('./init');
       return InitCommand.run(options, done);
     }
 
     if (fs.existsSync(path.resolve(process.cwd(), './tronbox-config.js'))) {
-      config.logger.log('It\'s already a tronbox project.');
+      config.logger.log("It's already a tronbox project.");
       return;
     }
 
@@ -24,10 +24,7 @@ const command = {
       function downloadFile(url, target) {
         return new Promise((resolve, reject) => {
           const request = require('request');
-          request.get(url)
-            .pipe(fs.createWriteStream(target))
-            .on('close', resolve)
-            .on('error', reject);
+          request.get(url).pipe(fs.createWriteStream(target)).on('close', resolve).on('error', reject);
         });
       }
       const configFilePromise = downloadFile(
@@ -42,11 +39,7 @@ const command = {
         'https://raw.githubusercontent.com/Tronbox-boxes/metacoin-box/master/migrations/1_initial_migration.js',
         path.join(process.cwd(), './migrations/1_initial_migration.js')
       );
-      return Promise.all([
-        configFilePromise,
-        migrationFilePromise,
-        migrationDeployFilePromise
-      ]);
+      return Promise.all([configFilePromise, migrationFilePromise, migrationDeployFilePromise]);
     }
 
     function convertTests() {
@@ -69,7 +62,7 @@ ${content}
 
       function walkTestDir(dir) {
         const files = fs.readdirSync(dir);
-        files.forEach((file) => {
+        files.forEach(file => {
           const currentFile = path.join(dir, file);
           const stats = fs.statSync(currentFile);
           if (stats.isDirectory()) return walkTestDir(currentFile);
@@ -82,15 +75,13 @@ ${content}
       walkTestDir(testDirPath);
     }
 
-    downloadConfig()
-      .then(() => {
-        config.logger.log('OK. Convertion is done. Enjoy tronbox!');
-        config.logger.log();
-        done();
-      });
+    downloadConfig().then(() => {
+      config.logger.log('OK. Convertion is done. Enjoy tronbox!');
+      config.logger.log();
+      done();
+    });
     convertTests();
-    
-  },
+  }
 };
 
 module.exports = command;

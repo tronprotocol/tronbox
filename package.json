@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -12,9 +12,10 @@
   ],
   "scripts": {
     "build": "scripts/build.sh",
-    "test": "echo \"Error: tests will be fixed soon in a new release\" && exit 1",
+    "test": "npm run build && cd test && sh runTest.sh",
     "prepare": "npm run build",
-    "lint": "find src -name '*.js' | xargs node_modules/.bin/eslint"
+    "lint": "find src -name '*.js' | xargs node_modules/.bin/eslint",
+    "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\""
   },
   "dependencies": {
     "@truffle/contract-sources": "^0.1.6",
@@ -59,6 +60,8 @@
     "temp": "^0.8.3",
     "tronweb": "^5.1.0",
     "vcsurl": "^0.1.1",
+    "web3": "1.2.1",
+    "web3-eth-contract": "1.2.1",
     "web3-mock": "1.0.1",
     "yargs": "^15.4.1"
   },
@@ -75,6 +78,7 @@
     "meta-pkgs": "^0.2.0",
     "moment": "^2.24.0",
     "prepend-file": "^1.3.1",
+    "prettier": "^2.8.5",
     "shebang-loader": "0.0.1",
     "stream-buffers": "^3.0.1",
     "tmp": "0.0.33",

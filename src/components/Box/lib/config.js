@@ -1,9 +1,9 @@
-const fs = require('fs-extra')
+const fs = require('fs-extra');
 
 function setDefaults(config) {
-  config = config || {}
+  config = config || {};
 
-  const hooks = config.hooks || {}
+  const hooks = config.hooks || {};
 
   return {
     ignore: config.ignore || [],
@@ -15,19 +15,20 @@ function setDefaults(config) {
     hooks: {
       'post-unpack': hooks['post-unpack'] || ''
     }
-  }
+  };
 }
 
 function read(path) {
-  return fs.readFile(path)
+  return fs
+    .readFile(path)
     .catch(function () {
-      return '{}'
+      return '{}';
     })
     .then(JSON.parse)
-    .then(setDefaults)
+    .then(setDefaults);
 }
 
 module.exports = {
   read: read,
   setDefaults: setDefaults
-}
+};

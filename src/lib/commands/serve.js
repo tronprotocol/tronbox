@@ -8,16 +8,16 @@ const command = {
     }
   },
   run: function (options, done) {
-    process.env.CURRENT = 'serve'
-    const Serve = require('../serve')
-    const Config = require('../../components/Config')
-    const watch = require('./watch')
+    process.env.CURRENT = 'serve';
+    const Serve = require('../serve');
+    const Config = require('../../components/Config');
+    const watch = require('./watch');
 
-    const config = Config.detect(options)
+    const config = Config.detect(options);
     Serve.start(config, function () {
-      watch.run(options, done)
-    })
+      watch.run(options, done);
+    });
   }
-}
+};
 
-module.exports = command
+module.exports = command;
