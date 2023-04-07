@@ -1,4 +1,4 @@
-const port = process.env.HOST_PORT || 9090
+const port = process.env.HOST_PORT || 9090;
 
 module.exports = {
   networks: {
@@ -42,4 +42,4 @@ Then, run the migration with:
     }
   },
   useZeroFourCompiler: true
-}
+};

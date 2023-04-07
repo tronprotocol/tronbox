@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.7.0;
 
-import "./ConvertLib.sol";
+import './ConvertLib.sol';
 
 // This is just a simple example of a coin-like contract.
 // It is not standards compatible and cannot be expected to talk to other
@@ -19,7 +19,10 @@ contract MetaCoin {
     balances[msg.sender] = initialBalance;
   }
 
-  function sendCoin(address receiver, uint amount) public returns (bool sufficient) {
+  function sendCoin(
+    address receiver,
+    uint amount
+  ) public returns (bool sufficient) {
     if (balances[msg.sender] < amount) return false;
     balances[msg.sender] -= amount;
     balances[receiver] += amount;
@@ -27,8 +30,7 @@ contract MetaCoin {
     return true;
   }
 
-  function getBalanceInEth(address addr) public view returns (uint){
-
+  function getBalanceInEth(address addr) public view returns (uint) {
     return ConvertLib.convert(getBalance(addr), 2);
   }
 

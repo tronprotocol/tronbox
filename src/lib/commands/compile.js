@@ -8,13 +8,13 @@ const command = {
     }
   },
   run: function (options, done) {
-    process.env.CURRENT = 'compile'
-    const Config = require('../../components/Config')
-    const Contracts = require('../../components/WorkflowCompile')
+    process.env.CURRENT = 'compile';
+    const Config = require('../../components/Config');
+    const Contracts = require('../../components/WorkflowCompile');
 
-    const config = Config.detect(options)
-    Contracts.compile(config, done)
+    const config = Config.detect(options);
+    Contracts.compile(config, done);
   }
-}
+};
 
-module.exports = command
+module.exports = command;

@@ -1,4 +1,4 @@
-const port = process.env.HOST_PORT || 9090
+const port = process.env.HOST_PORT || 9090;
 
 module.exports = {
   networks: {
@@ -21,7 +21,7 @@ Then, run the migration with:
       network_id: '1'
     },
     nile: {
-      privateKey: process.env.PRIVATE_KEY_NILE,
+      mnemonic: process.env.MNEMONIC_NILE,
       userFeePercentage: 100,
       feeLimit: 1e10,
       fullHost: 'https://api.nileex.io',
@@ -48,4 +48,4 @@ Then, run the migration with:
       }
     }
   }
-}
+};

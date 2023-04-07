@@ -1,10 +1,10 @@
-const TruffleError = require('@truffle/error')
-const inherits = require('util').inherits
+const TruffleError = require('@truffle/error');
+const inherits = require('util').inherits;
 
-inherits(TaskError, TruffleError)
+inherits(TaskError, TruffleError);
 
 function TaskError(message) {
-  TaskError.super_.call(this, message)
+  TaskError.super_.call(this, message);
 }
 
-module.exports = TaskError
+module.exports = TaskError;

@@ -6,10 +6,6 @@
   },
   "globals": {},
   "rules": {
-    "semi": [
-      2,
-      "never"
-    ],
     "quotes": [
       2,
       "single",
@@ -110,5 +106,21 @@
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["./test/**/*.js"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "tronWeb": "readonly",
+        "tronWrap": "readonly",
+        "assert": "readonly",
+        "expect": "readonly",
+        "artifacts": "readonly",
+        "contract": "readonly"
+      }
+    }
   ]
 }
