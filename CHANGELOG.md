@@ -1,5 +1,8 @@
+__3.3.0__
+* Add support for contract flattening
+
 __3.2.0__
-* Add support `deployProxy`, `deployBeacon` and `deployBeaconProxy` of `@openzeppelin/truffle-upgrades` in migrations
+* Add support for `deployProxy`, `deployBeacon` and `deployBeaconProxy` of `@openzeppelin/truffle-upgrades` in migrations
 
 ```javascript
 const { deployProxy } = require('@openzeppelin/truffle-upgrades');
@@ -15,8 +18,8 @@ module.exports = async function (deployer) {
     console.error('Transparent: deploy box error', error);
   }
 }
-
 ```
+
 __3.1.2__
 * Add support for Solidity compiler 0.8.18
 
