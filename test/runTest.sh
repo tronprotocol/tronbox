@@ -33,4 +33,7 @@ cd ..
 
 rm -rf build
 
-
+echo 'Test Console.log'
+cd consolelogs
+sh runTest.sh
+cd ..
