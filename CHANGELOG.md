@@ -1,5 +1,5 @@
 __3.4.0__
-* Add support `console.log` in Solidity smart contracts
+* Add support for `console.log` in Solidity smart contracts
 
 ```solidity
 // SPDX-License-Identifier: MIT
