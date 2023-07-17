@@ -2,11 +2,13 @@
 
 echo 'Test abiv2'
 cd abiv2
+rm -rf build
 ../../tronbox.dev test
 cd ..
 
 echo 'Test tre'
 cd tre
+rm -rf build
 ../../tronbox.dev test
 cd ..
 
