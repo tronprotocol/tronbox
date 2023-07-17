@@ -378,7 +378,7 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "4964f7c90ad43accb912bbfd014d6f01d21b058d4b713e626a6db3218e354c739d9c6a826ea30838fde2ffeaf9a0e1b5ee7899554c28f73b9399d89a545666bf"
+            "sha512": "e633818962762bf908439ff18b3242e97ec8f055e8c044f290f511550b4ddd12b6194e62e56129499cbf628f8ba8f16327e7befaef47589098677b0cb61f758a"
           },
           {
             "path": "CONTRIBUTING.md",
@@ -572,5 +572,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJktL4zACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1iWeQ/+NLM6UcFCCTLfVRa/j3u8ytks9NmuVGFevgWS/quCyLlDsMly\ngR25dwfyFAeO18NWTjuYcbCFnhyW64ZrYvqILjuHgYi4mJ3+4cX+cI3/WDVE\n3jrCArcOxcn5CsYUK8KsjFbyrb1UUKl/IWTyyEt1lHmcC9c/Eq/wycBzrki6\ngM0w6sNMmhVfy43Lx08kr6vigqDcFBhQIhnhvyNakRnM8zqNd7WUbJZRQVSc\n3aQHbkNBx8kK3sEF5eSgpBon2B/RlFhHy17ZmvJaIYdizcI9BPrWmGZE2La5\n8cx1sPxTMp9P1uTxGFyqZNA2W+BuPRxO7Kktpug0L/Ot4WOAm2ByUcIeWzHE\nJa2+5dlJ9dsO4dAAgq7o+IaVTlFh+F/VAAvqo0U/CB5UIzbC/mMUibJmnz0E\njin42Ia/IZ6/X0Ec1YNgdxj/cFIabDbYkmvVHcVOOKDt3OygDFfQ4gZSm8ms\nNjYxFbpBdAmwg5s5XVLAlEPij7W2By1jTqKuy73YTbX71FZGQuBZp04kzam+\nB54MC47bbo4v2FZSI7vbwYgdJyHkelQep2ozsUFcq6su5c9N+AzgfFOArbQJ\nbANEk3SZvCS4kZ9B0zjswSQWijZGZxBJ3iGJvSw0hMLsr5L2GVqlq4qYw2GV\nOeb4f8jRkFAlsGoxGdrep35ETbMUgGAIvjo=\n=fLfY\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.10\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJktPFTACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1gUwg/9HAYDH30hBuADjyqaP81aazpCf+paa8fVk4FQG9mdUPjV04V4\nWcP2g3IdiHaVcO1iQbc3uervz1JaHfn0ueMq5L+NXPJKHQbesRlTQVNak4YX\ntCt19eVhfK7OWGfSpmvYgy8TqsD3eQSJIkugmnNui6/wlJu4XVfWF8Yc+GOj\nCJ0UOY2R8StaLFMcAeb35eBO8Sk6NKmYG2I1ilfJd+NEmaBJ4+fWg8jntjTP\n0rVDVnLzetKWo2jJU5zI/leX+4vuFnMff5hdqIs+rvk4Gkqnb631rr/rwGXC\n57MYMAtm1MFQzQW087gfKmGF81anbSp+4RFPMagpFKa6EG9CjL8AGVyifiyH\nC1PsfUybrlCpsu/kzc/hobFiif7BKMGUza9wRSORdIGAgWBEvtKEAhtcMwkl\nu9vcdgIftxhDrenrw17QoqqfbcRovfAWLNb6EdRXuQIscAIxhd8PJ+MlUObl\naxDJ+F4aVoGImagZj9av4ISV7v30wVE+5B7xbAeGm3DUgh56YoIyLa7/0Bkh\nYke9ZLf3uPd84D6t/lLvcj/Y6E1UH7x9XFDrFMivu2LG0JVOr9kcwiGhWh9b\nHdqhuZvzUmZ8hdkG0zjuJlXnZOH8d0xU2uFZazKBUBD+2LcrFZH2BNnVSeW7\nZCLjzTIxlA0XvKjjTIhqr9J7aMWvLCK6tVM=\n=47u3\n-----END PGP SIGNATURE-----\n"
 }
