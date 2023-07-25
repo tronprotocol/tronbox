@@ -1,3 +1,19 @@
+__3.4.0__
+* Add support for `console.log` in Solidity smart contracts
+
+```solidity
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.0;
+import "tronbox/console.sol";
+
+contract SampleContract {
+    constructor() {
+        console.log("SampleContrac::constructor");
+    }
+}
+```
+
 __3.3.0__
 * Add support for contract flattening
 
