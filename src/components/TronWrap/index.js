@@ -2,6 +2,7 @@ const _TronWeb = require('tronweb');
 const chalk = require('chalk');
 const constants = require('./constants');
 const axios = require('axios');
+const ConsoleLogger = require('../ConsoleLogger');
 
 let instance;
 
@@ -465,6 +466,33 @@ function init(options, extraOptions = {}) {
       default:
         return _send();
     }
+  };
+
+  tronWrap.fullNode._request = tronWrap.fullNode.request;
+  tronWrap.solidityNode._request = tronWrap.solidityNode.request;
+  tronWrap._getConsoleLog = function (url, transaction) {
+    const urls = [
+      'wallet/triggerconstantcontract',
+      'walletsolidity/triggerconstantcontract',
+      'wallet/broadcasttransaction'
+    ];
+    if (urls.includes(url)) {
+      ConsoleLogger.getLogMessages(transaction);
+    }
+  };
+
+  tronWrap.fullNode.request = function (url, payload = {}, method = 'get') {
+    return tronWrap.fullNode._request(url, payload, method).then(data => {
+      tronWrap._getConsoleLog(url, data);
+      return data;
+    });
+  };
+
+  tronWrap.solidityNode.request = function (url, payload = {}, method = 'get') {
+    return tronWrap.fullNode._request(url, payload, method).then(data => {
+      tronWrap._getConsoleLog(url, data);
+      return data;
+    });
   };
 
   return new TronWrap();

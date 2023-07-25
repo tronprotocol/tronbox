@@ -15,6 +15,12 @@ function unique(array) {
 async function resolve(importPath) {
   const resolver = Resolver();
   try {
+    if (importPath === 'tronbox/console.sol') {
+      const filePath = path.resolve(__dirname, '../../../console.sol');
+      const fileContents = fs.readFileSync(filePath).toString();
+      return { fileContents, filePath };
+    }
+
     const filePath = await resolver.resolve(importPath);
     const fileContents = fs.readFileSync(filePath).toString();
     return { fileContents, filePath };

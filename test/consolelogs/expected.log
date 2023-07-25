@@ -1,0 +1,819 @@
+Using network 'development'.
+
+=== AddressAddress start ===
+log(address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(address,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,address,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(address,address,address,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh T9yD14Nj9j7xAB4dbGeiX9h8upEsnq68Fc
+log(address,address,address,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh true
+log(address,address,address,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh string1
+log(address,address,address,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh 1
+log(address,address,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true
+log(address,address,bool,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(address,address,bool,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true false
+log(address,address,bool,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true string1
+log(address,address,bool,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true 1
+log(address,address,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1
+log(address,address,string,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(address,address,string,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1 true
+log(address,address,string,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1 string2
+log(address,address,string,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1 1
+log(address,address,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1
+log(address,address,uint256,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(address,address,uint256,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1 true
+log(address,address,uint256,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1 string1
+log(address,address,uint256,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1 2
+=== AddressAddress end ===
+=== AddressBool start ===
+log(address,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(address,bool,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,bool,address,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(address,bool,address,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 false
+log(address,bool,address,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1
+log(address,bool,address,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1
+log(address,bool,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true false
+log(address,bool,bool,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true false T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,bool,bool,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true false true
+log(address,bool,bool,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true false string1
+log(address,bool,bool,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true false 1
+log(address,bool,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true string1
+log(address,bool,string,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,bool,string,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true string1 false
+log(address,bool,string,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true string1 string2
+log(address,bool,string,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true string1 1
+log(address,bool,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true 1
+log(address,bool,uint256,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,bool,uint256,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true 1 false
+log(address,bool,uint256,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true 1 string1
+log(address,bool,uint256,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true 1 2
+=== AddressBool end ===
+=== AddressString start ===
+log(address,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(address,string,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,string,address,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(address,string,address,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true
+log(address,string,address,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string2
+log(address,string,address,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1
+log(address,string,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 true
+log(address,string,bool,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,string,bool,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 true false
+log(address,string,bool,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 true string2
+log(address,string,bool,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 true 1
+log(address,string,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 string2
+log(address,string,string,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,string,string,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 string2 true
+log(address,string,string,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 string2 string3
+log(address,string,string,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 string2 1
+log(address,string,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 1
+log(address,string,uint256,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,string,uint256,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 1 true
+log(address,string,uint256,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 1 string2
+log(address,string,uint256,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 1 2
+=== AddressString end ===
+=== AddressUint start ===
+log(address,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1
+log(address,uint256,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,uint256,address,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(address,uint256,address,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true
+log(address,uint256,address,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1
+log(address,uint256,address,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 2
+log(address,uint256,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 true
+log(address,uint256,bool,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,uint256,bool,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 true false
+log(address,uint256,bool,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 true string1
+log(address,uint256,bool,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 true 2
+log(address,uint256,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 string1
+log(address,uint256,string,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,uint256,string,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 string1 true
+log(address,uint256,string,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 string1 string2
+log(address,uint256,string,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 string1 2
+log(address,uint256,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 2
+log(address,uint256,uint256,address)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(address,uint256,uint256,bool)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 2 true
+log(address,uint256,uint256,string)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 2 string1
+log(address,uint256,uint256,uint256)
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 2 3
+=== AddressUint end ===
+=== BoolAddress start ===
+log(bool,address)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,address,address)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(bool,address,address,address)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(bool,address,address,bool)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 false
+log(bool,address,address,string)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1
+log(bool,address,address,uint256)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1
+log(bool,address,bool)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY false
+log(bool,address,bool,address)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY false T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(bool,address,bool,bool)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY false true
+log(bool,address,bool,string)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY false string1
+log(bool,address,bool,uint256)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY false 1
+log(bool,address,string)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(bool,address,string,address)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(bool,address,string,bool)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 false
+log(bool,address,string,string)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 string2
+log(bool,address,string,uint256)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 1
+log(bool,address,uint256)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1
+log(bool,address,uint256,address)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(bool,address,uint256,bool)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 false
+log(bool,address,uint256,string)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 string1
+log(bool,address,uint256,uint256)
+true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 2
+=== BoolAddress end ===
+=== BoolBool start ===
+log(bool)
+true
+log(bool,bool)
+true false
+log(bool,bool,address)
+true false T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,bool,address,address)
+true false T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(bool,bool,address,bool)
+true false T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(bool,bool,address,string)
+true false T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(bool,bool,address,uint256)
+true false T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1
+log(bool,bool,bool)
+true false true
+log(bool,bool,bool,address)
+true false true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,bool,bool,bool)
+true false true true
+log(bool,bool,bool,string)
+true false true string1
+log(bool,bool,bool,uint256)
+true false true 1
+log(bool,bool,string)
+true false string1
+log(bool,bool,string,address)
+true false string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,bool,string,bool)
+true false string1 true
+log(bool,bool,string,string)
+true false string1 string2
+log(bool,bool,string,uint256)
+true false string1 1
+log(bool,bool,uint256)
+true false 1
+log(bool,bool,uint256,address)
+true false 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,bool,uint256,bool)
+true false 1 true
+log(bool,bool,uint256,string)
+true false 1 string1
+log(bool,bool,uint256,uint256)
+true false 1 2
+=== BoolBool end ===
+=== BoolString start ===
+log(bool,string)
+true string1
+log(bool,string,address)
+true string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,string,address,address)
+true string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(bool,string,address,bool)
+true string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(bool,string,address,string)
+true string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(bool,string,address,uint256)
+true string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1
+log(bool,string,bool)
+true string1 true
+log(bool,string,bool,address)
+true string1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,string,bool,bool)
+true string1 true false
+log(bool,string,bool,string)
+true string1 true string1
+log(bool,string,bool,uint256)
+true string1 true 1
+log(bool,string,string)
+true string1 string2
+log(bool,string,string,address)
+true string1 string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,string,string,bool)
+true string1 string2 true
+log(bool,string,string,string)
+true string1 string2 string3
+log(bool,string,string,uint256)
+true string1 string2 1
+log(bool,string,uint256)
+true string1 1
+log(bool,string,uint256,address)
+true string1 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,string,uint256,bool)
+true string1 1 true
+log(bool,string,uint256,string)
+true string1 1 string1
+log(bool,string,uint256,uint256)
+true string1 1 2
+=== BoolString end ===
+=== BoolUint start ===
+log(bool,uint256)
+true 1
+log(bool,uint256,address)
+true 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,uint256,address,address)
+true 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(bool,uint256,address,bool)
+true 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(bool,uint256,address,string)
+true 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(bool,uint256,address,uint256)
+true 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1
+log(bool,uint256,bool)
+true 1 true
+log(bool,uint256,bool,address)
+true 1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,uint256,bool,bool)
+true 1 true true
+log(bool,uint256,bool,string)
+true 1 true string1
+log(bool,uint256,bool,uint256)
+true 1 true 2
+log(bool,uint256,string)
+true 1 string1
+log(bool,uint256,string,address)
+true 1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,uint256,string,bool)
+true 1 string1 false
+log(bool,uint256,string,string)
+true 1 string1 string2
+log(bool,uint256,string,uint256)
+true 1 string1 2
+log(bool,uint256,uint256)
+true 1 2
+log(bool,uint256,uint256,address)
+true 1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(bool,uint256,uint256,bool)
+true 1 2 false
+log(bool,uint256,uint256,string)
+true 1 2 string1
+log(bool,uint256,uint256,uint256)
+true 1 2 3
+=== BoolUint end ===
+=== StringAddress start ===
+log(string,address)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,address,address)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(string,address,address,address)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(string,address,address,bool)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true
+log(string,address,address,string)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string2
+log(string,address,address,uint256)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 1
+log(string,address,bool)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(string,address,bool,address)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(string,address,bool,bool)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true false
+log(string,address,bool,string)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true string2
+log(string,address,bool,uint256)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true 1
+log(string,address,string)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true string2
+log(string,address,string,address)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(string,address,string,bool)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string2 true
+log(string,address,string,string)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string2 string3
+log(string,address,string,uint256)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string2 1
+log(string,address,uint256)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1
+log(string,address,uint256,address)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(string,address,uint256,bool)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 true
+log(string,address,uint256,string)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 string1
+log(string,address,uint256,uint256)
+string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1 2
+=== StringAddress end ===
+=== StringBool start ===
+log(string,bool)
+string1 true
+log(string,bool,address)
+string1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,bool,address,address)
+string1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(string,bool,address,bool)
+string1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(string,bool,address,string)
+string1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(string,bool,address,uint256)
+string1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1
+log(string,bool,bool)
+string1 true false
+log(string,bool,bool,address)
+string1 true false T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,bool,bool,bool)
+string1 true false true
+log(string,bool,bool,string)
+string1 true false string2
+log(string,bool,bool,uint256)
+string1 true false 1
+log(string,bool,string)
+string1 true string2
+log(string,bool,string,address)
+string1 true string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,bool,string,bool)
+string1 true string2 true
+log(string,bool,string,string)
+string1 true string2 string1
+log(string,bool,string,uint256)
+string1 true string2 1
+log(string,bool,uint256)
+string1 true 1
+log(string,bool,uint256,address)
+string1 true 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,bool,uint256,bool)
+string1 true 1 true
+log(string,bool,uint256,string)
+string1 true 1 string1
+log(string,bool,uint256,uint256)
+string1 true 1 2
+=== StringBool end ===
+=== StringString start ===
+log(string)
+string1
+log(string,string)
+string1 string2
+log(string,string,address)
+string1 string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,string,address,address)
+string1 string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(string,string,address,bool)
+string1 string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(string,string,address,string)
+string1 string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string3
+log(string,string,address,uint256)
+string1 string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 1
+log(string,string,bool)
+string1 string2 true
+log(string,string,bool,address)
+string1 string2 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,string,bool,bool)
+string1 string2 true false
+log(string,string,bool,string)
+string1 string2 true string3
+log(string,string,bool,uint256)
+string1 string2 true 1
+log(string,string,string)
+string1 string2 string3
+log(string,string,string,address)
+string1 string2 string3 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,string,string,bool)
+string1 string2 string3 true
+log(string,string,string,string)
+string1 string2 string3 string4
+log(string,string,string,uint256)
+string1 string2 string3 1
+log(string,string,uint256)
+string1 string2 1
+log(string,string,uint256,address)
+string1 string2 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,string,uint256,bool)
+string1 string2 1 true
+log(string,string,uint256,string)
+string1 string2 1 string3
+log(string,string,uint256,uint256)
+string1 string2 1 2
+=== StringString end ===
+=== StringUint start ===
+log(string,uint256)
+string1 1
+log(string,uint256,address)
+string1 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,uint256,address,address)
+string1 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(string,uint256,address,bool)
+string1 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(string,uint256,address,string)
+string1 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string2
+log(string,uint256,address,uint256)
+string1 1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 2
+log(string,uint256,bool)
+string1 1 true
+log(string,uint256,bool,address)
+string1 1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,uint256,bool,bool)
+string1 1 true false
+log(string,uint256,bool,string)
+string1 1 true string1
+log(string,uint256,bool,uint256)
+string1 1 true 2
+log(string,uint256,string)
+string1 1 string1
+log(string,uint256,string,address)
+string1 1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,uint256,string,bool)
+string1 1 string1 true
+log(string,uint256,string,string)
+string1 1 string1 string2
+log(string,uint256,string,uint256)
+string1 1 string1 2
+log(string,uint256,uint256)
+string1 1 2
+log(string,uint256,uint256,address)
+string1 1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(string,uint256,uint256,bool)
+string1 1 2 true
+log(string,uint256,uint256,string)
+string1 1 2 string2
+log(string,uint256,uint256,uint256)
+string1 1 2 3
+=== StringUint end ===
+=== UintAddress start ===
+log(uint256,address)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,address,address)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(uint256,address,address,address)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 T9yD14Nj9j7xAB4dbGeiX9h8upEsmGxTAh
+log(uint256,address,address,bool)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 true
+log(uint256,address,address,string)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 string1
+log(uint256,address,address,uint256)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1 2
+log(uint256,address,bool)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(uint256,address,bool,address)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(uint256,address,bool,bool)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true false
+log(uint256,address,bool,string)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true string1
+log(uint256,address,bool,uint256)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true 2
+log(uint256,address,string)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(uint256,address,string,address)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,address,string,bool)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 true
+log(uint256,address,string,string)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 string2
+log(uint256,address,string,uint256)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1 2
+log(uint256,address,uint256)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 2
+log(uint256,address,uint256,address)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(uint256,address,uint256,bool)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 2 true
+log(uint256,address,uint256,string)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 2 string1
+log(uint256,address,uint256,uint256)
+1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 2 3
+=== UintAddress end ===
+=== UintBool start ===
+log(uint256,bool)
+1 true
+log(uint256,bool,address)
+1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,bool,address,address)
+1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(uint256,bool,address,bool)
+1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY false
+log(uint256,bool,address,string)
+1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(uint256,bool,address,uint256)
+1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 2
+log(uint256,bool,bool)
+1 true false
+log(uint256,bool,bool,address)
+1 true false T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,bool,bool,bool)
+1 true false true
+log(uint256,bool,bool,string)
+1 true false string1
+log(uint256,bool,bool,uint256)
+1 true false 2
+log(uint256,bool,string)
+1 true string1
+log(uint256,bool,string,address)
+1 true string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,bool,string,bool)
+1 true string1 false
+log(uint256,bool,string,string)
+1 true string1 string2
+log(uint256,bool,string,uint256)
+1 true string1 2
+log(uint256,bool,uint256)
+1 true 2
+log(uint256,bool,uint256,address)
+1 true 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,bool,uint256,bool)
+1 true 2 false
+log(uint256,bool,uint256,string)
+1 true 2 string1
+log(uint256,bool,uint256,uint256)
+1 true 2 3
+=== UintBool end ===
+=== UintString start ===
+log(uint256,string)
+1 string1
+log(uint256,string,address)
+1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,string,address,address)
+1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(uint256,string,address,bool)
+1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(uint256,string,address,string)
+1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(uint256,string,address,uint256)
+1 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 2
+log(uint256,string,bool)
+1 string1 true
+log(uint256,string,bool,address)
+1 string1 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,string,bool,bool)
+1 string1 true false
+log(uint256,string,bool,string)
+1 string1 true string2
+log(uint256,string,bool,uint256)
+1 string1 true 2
+log(uint256,string,string)
+1 string1 string2
+log(uint256,string,string,address)
+1 string1 string2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,string,string,bool)
+1 string1 string2 true
+log(uint256,string,string,string)
+1 string1 string2 string3
+log(uint256,string,string,uint256)
+1 string1 string2 2
+log(uint256,string,uint256)
+1 string1 2
+log(uint256,string,uint256,address)
+1 string1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,string,uint256,bool)
+1 string1 2 true
+log(uint256,string,uint256,string)
+1 string1 2 string2
+log(uint256,string,uint256,uint256)
+1 string1 2 3
+=== UintString end ===
+=== UintUint start ===
+log(uint256)
+1
+log(uint256,uint256)
+1 2
+log(uint256,uint256,address)
+1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,uint256,address,address)
+1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY T9yD14Nj9j7xAB4dbGeiX9h8upEsdeZTu1
+log(uint256,uint256,address,bool)
+1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY true
+log(uint256,uint256,address,string)
+1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY string1
+log(uint256,uint256,address,uint256)
+1 2 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY 3
+log(uint256,uint256,bool)
+1 2 true
+log(uint256,uint256,bool,address)
+1 2 true T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,uint256,bool,bool)
+1 2 true false
+log(uint256,uint256,bool,string)
+1 2 true string1
+log(uint256,uint256,bool,uint256)
+1 2 true 3
+log(uint256,uint256,string)
+1 2 string1
+log(uint256,uint256,string,address)
+1 2 string1 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,uint256,string,bool)
+1 2 string1 true
+log(uint256,uint256,string,string)
+1 2 string1 string2
+log(uint256,uint256,string,uint256)
+1 2 string1 3
+log(uint256,uint256,uint256)
+1 2 3
+log(uint256,uint256,uint256,address)
+1 2 3 T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+log(uint256,uint256,uint256,bool)
+1 2 3 true
+log(uint256,uint256,uint256,string)
+1 2 3 string1
+log(uint256,uint256,uint256,uint256)
+1 2 3 4
+=== UintUint end ===
+=== Single start ===
+log()
+
+T9yD14Nj9j7xAB4dbGeiX9h8upEsUFLPgY
+logBool(bool)
+true
+logBytes(bytes)
+0x00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001
+logBytes1(bytes1)
+0x01
+logBytes2(bytes2)
+0x0002
+logBytes3(bytes3)
+0x000003
+logBytes4(bytes4)
+0x00000004
+logBytes5(bytes5)
+0x0000000005
+logBytes6(bytes6)
+0x000000000006
+logBytes7(bytes7)
+0x00000000000007
+logBytes8(bytes8)
+0x0000000000000008
+logBytes9(bytes9)
+0x000000000000000009
+logBytes10(bytes10)
+0x00000000000000000010
+logBytes11(bytes11)
+0x0000000000000000000011
+logBytes12(bytes12)
+0x000000000000000000000012
+logBytes13(bytes13)
+0x00000000000000000000000013
+logBytes14(bytes14)
+0x0000000000000000000000000014
+logBytes15(bytes15)
+0x000000000000000000000000000015
+logBytes16(bytes16)
+0x00000000000000000000000000000016
+logBytes17(bytes17)
+0x0000000000000000000000000000000017
+logBytes18(bytes18)
+0x000000000000000000000000000000000018
+logBytes19(bytes19)
+0x00000000000000000000000000000000000019
+logBytes20(bytes20)
+0x0000000000000000000000000000000000000020
+logBytes21(bytes21)
+0x000000000000000000000000000000000000000021
+logBytes22(bytes22)
+0x00000000000000000000000000000000000000000022
+logBytes23(bytes23)
+0x0000000000000000000000000000000000000000000023
+logBytes24(bytes24)
+0x000000000000000000000000000000000000000000000024
+logBytes25(bytes25)
+0x00000000000000000000000000000000000000000000000025
+logBytes26(bytes26)
+0x0000000000000000000000000000000000000000000000000026
+logBytes27(bytes27)
+0x000000000000000000000000000000000000000000000000000027
+logBytes28(bytes28)
+0x00000000000000000000000000000000000000000000000000000028
+logBytes29(bytes29)
+0x0000000000000000000000000000000000000000000000000000000029
+logBytes30(bytes30)
+0x000000000000000000000000000000000000000000000000000000000030
+logBytes31(bytes31)
+0x00000000000000000000000000000000000000000000000000000000000031
+logBytes32(bytes32)
+0x0000000000000000000000000000000000000000000000000000000000000032
+logInt(int256)
+1
+logString(string)
+string1
+logUint(uint256)
+1
+=== Single end ===
+=== MostSignificantBitSet start ===
+115792089237316195423570985008687907853269984665640564039457584007913129639935
+57896044618658097711785492504343953926634992332820282019728792003956564819968
+-1
+-57896044618658097711785492504343953926634992332820282019728792003956564819968
+=== MostSignificantBitSet end ===
+=== Creation start ===
+Deploy
+=== Creation end ===
+=== CreationReverting start ===
+Deploy Revert
+=== CreationReverting end ===
+=== CreationMultiple start ===
+Before Deploy
+Deploy
+After Deploy
+=== CreationMultiple end ===
+=== f1 start ===
+Before Trigger
+Trigger
+After Trigger
+=== f1 end ===
+=== f2 start ===
+Before Trigger
+Trigger Revert
+=== f2 end ===

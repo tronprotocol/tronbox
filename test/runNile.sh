@@ -2,6 +2,7 @@
 
 echo 'Test abiv2'
 cd abiv2
+rm -rf build
 ../../tronbox.dev migrate --network nile
 cd ..
 

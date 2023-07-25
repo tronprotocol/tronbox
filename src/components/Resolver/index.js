@@ -14,6 +14,7 @@ function Resolver(options) {
   this.sources = [
     new EPMSource(options.working_directory, options.contracts_build_directory),
     new NPMSource(options.working_directory),
+    new NPMSource(__dirname),
     new FSSource(options.working_directory, options.contracts_build_directory)
   ];
 }
