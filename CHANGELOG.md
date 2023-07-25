@@ -4,7 +4,7 @@ __3.4.0__
 ```solidity
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.0;
 import "tronbox/console.sol";
 
 contract SampleContract {
