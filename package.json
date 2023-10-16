@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -18,6 +18,7 @@
     "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\""
   },
   "dependencies": {
+    "@noble/secp256k1": "1.7.1",
     "@resolver-engine/imports-fs": "^0.3.3",
     "@solidity-parser/parser": "^0.16.0",
     "@truffle/contract-sources": "^0.1.6",
@@ -60,7 +61,7 @@
     "spawn-args": "^0.1.0",
     "superagent": "^5.1.0",
     "temp": "^0.8.3",
-    "tronweb": "^5.1.0",
+    "tronweb": "^5.3.0",
     "tsort": "^0.0.1",
     "vcsurl": "^0.1.1",
     "web3": "1.2.1",

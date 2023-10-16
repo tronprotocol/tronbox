@@ -1,3 +1,7 @@
+__3.4.1__
+* Add support for Solidity compiler 0.8.21
+* Bump tronweb from 5.1.0 to 5.3.0
+
 __3.4.0__
 * Add support for `console.log` in Solidity smart contracts
 
