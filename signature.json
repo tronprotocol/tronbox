@@ -386,7 +386,7 @@
           },
           {
             "path": "FURTHER_INFO.md",
-            "sha512": "021f7b24ae56506195a31ee1145535436dc00c71fd6803bef2f81de292d7fc6407fc6c857f5fc6cb8bdad10c26206cfe9d1ee1c525c02ef769c18b6d5524477d"
+            "sha512": "beb7a17d524e5c696e654041cc5697146ce29b9b528f5dda60f9200aba96f8cfe4a6e3624b715a7fe4e276e65377f04cb12757404992f9bf092b62ceecac4b27"
           },
           {
             "path": "README.md",
@@ -433,7 +433,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "196a2d968ba9371a2d62273bdc45af63a3f7e7963a39692f8541fd26c31bc88ff46ea5acb9bc6943b7af8bb1857d2e2b9eba6ff2717ef5d07116c0e4e7b2b4f3"
+        "sha512": "5947d955612daa9953871a66a3e6ff8cfea48169a786cb5c4daa238fb9dc1641810def8b3a3b844eeeaf2a6fb94bf9320ad795de6df7bb75ffff7f26b09e9a7b"
       }
     },
     {
@@ -497,7 +497,7 @@
             "safe-eval": "^0.4.1",
             "semver": "^6.1.1",
             "serve-static": "^1.10.0",
-            "solc": "^0.8.18",
+            "solc": "^0.8.21",
             "source-map-support": "^0.5.3",
             "spawn-args": "^0.1.0",
             "superagent": "^5.1.0",
@@ -573,5 +573,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJlLNWQACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1iSkg/9FtAY38e01KEDFymuc44eSPutpRP5Z6A/RhN0xmCiDoby2z3G\ngDnoQ8Ifhmm5xe9ODyK9o3UuEt+q4qmI8HSlQxp7BA8jWoKZBrF0bVtk2m+w\nUkVfLu9sK38qG0ebRa9YwsfI7rqtXmK/EgyaNJfiEWvfK8PMwq23J+aSUvhN\noEl6yGsmrLTMET4ZVj7ONO+Py2lxJS9a0z5CZDmTfpQmoaDYw0Z56LHkXzTJ\nN/pep4kBul7Ay+MQZkxINtb1fr2sVdUEBKucYtU2KPHKoREjEZ7bsobGbPWV\nykR4RTNyoT9JkkCUYGqfGiApV6bbCXgz8mCRwZq/6BEDvDsWS0NKnm6tpJ5u\nLjjsIEqHM/jFhr6P3KwP7VPKst3hhX71QwtoJ/p2d0QX1vWpdJp5IIaiDndn\nzKUnUdRjssgPJQZ1xwjqjkjGgtwTJuG9KtDfDLld6y3anL1XLM3dKRPcgPQA\nfc/8iNDr+m53SQ6sXCcY2S+URE1N4Etcd/f78oD7JdeNJUzwUwOewQwXZvlh\na2pMeuM3XEB91pE3KKJ+llm/+j5VHfqVV6baGsQ8NFChvBfAKHH1Q43+Q5r0\nuQhIhhW3A7EEfjJ94z55C0N+MSyFt6n+DNr1SPk0GAGcxx5k+t7N0N1PcW1i\nT0EmngLES29/7vVTLlCX1Mqf0Gbfrnz/0d0=\n=3ayz\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJlLN5vACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1ikSw//Tc11iDD3Ay9VwSzQZ5qtD8F8UbgLqPnXOFlG4CQHIZssg88T\n0elP+u6QbIImFDA5GBbawPrjHYCG/qtegIyka+KCbq2yMiRQYMLpv7d/JvFA\nMp5VjyIwI3XFQbkgYYJ/5EpmDHEYrxToqlObi6O4ShufwAGgxJ6l2cS4hypF\njE3H3j00diLUUdb6CARElmLInnTt8MHTl76+gtPBhPrCs5fNSk+WIgJyin6z\nFRCygk0UCrAUygIYtH3ks38IOTemVAjcq2ntrks8YicxR5enLAkpKQxkV+bj\ndGvW/ge1LRG1PxGDjXeYITgwNA2kDp/rLZM3QMwskobcnCec6WZGrDNHxJvI\n7mgAEM54UxkxTtnDLtHp5g0MD1+/HxF2VZB260wDMtuNiljXsuSVvFd+YiW3\n/OgXFRwMWIbDwExKfC94JfPTcGaJkEu/x6ubR6NXywgYSOudwG4E6rMLD210\nZT1ZdMRVYTva1iBGyR80Sb3FPBvOcy48dYc5sT5YHBHTfpbDaSY9NfrOHGos\nCXOA6vU3kOc9Zg7qrLOxhV9xbaeN6W3wZPSyDytiDeW9SDbcVY1hJUC5COdM\n1bROAwTedD9cN5Vgg7E73si/CD+BCAl9thsmVYn9P1ofu65UEgKQqrN5xYHB\nMHqZCgFbvVmBCiZ0TZHH5vrZrVyNkWNFs3s=\n=RyGB\n-----END PGP SIGNATURE-----\n"
 }
