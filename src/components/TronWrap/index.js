@@ -446,6 +446,8 @@ function init(options, extraOptions = {}) {
       case 'tre_setAccountCode':
       case 'tre_mine':
       case 'tre_blockTime':
+      case 'debug_traceTransaction':
+      case 'debug_storageRangeAt':
         return _send();
       case 'tre_unlockedAccounts': {
         const result = await _send();
