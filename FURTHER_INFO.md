@@ -61,7 +61,7 @@ You can find the signature public key [here](https://keybase.io/tronbox/pgp_keys
 0.8.7
 0.8.11
 0.8.18
-0.8.21
+0.8.20
 ```
 
 For more versions details: https://github.com/tronprotocol/solidity/releases

@@ -1,3 +1,18 @@
+__3.4.2_
+* Add support for Solidity compiler 0.8.20
+* Add `debug_traceTransaction` && `debug_storageRangeAt` function to debug environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
+`debug_traceTransaction`:
+```javascript
+const txid = "f6b72dda65682b858c1c1980710aad7955fbf6db91c66840da0f852fc3cc694b";
+const result = await tronWrap.send("debug_traceTransaction", [txid]);
+console.log(result);
+```
+`debug_storageRangeAt`:
+```javascript
+const result = await tronWrap.send("debug_storageRangeAt", [0, 0,contractAddress,'0x01', 1]);
+console.log(result);
+```
+
 __3.4.1__
 * Add support for Solidity compiler 0.8.21
 * Bump tronweb from 5.1.0 to 5.3.0

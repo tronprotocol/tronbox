@@ -1,5 +1,7 @@
 const wait = require('./helpers/wait');
+const shallowEqual = require('./helpers/shallowEqual');
 const MetaCoin = artifacts.require('./MetaCoin.sol');
+const SimpleTraceTransactionData = require('./helpers/simpleTraceTransactionData.json');
 
 // The following tests require TronBox >= 3.0.0
 // and TronBox Runtime Environment (https://hub.docker.com/r/tronbox/tre)
@@ -124,6 +126,21 @@ contract('MetaCoin', function (accounts) {
     assert.equal(afterNumber - beforeNumber, 3, 'Mine blocks failed');
   });
 
+  it('should successfully trace transaction', async function () {
+    const result = await tronWrap.send('debug_traceTransaction', [`0x${meta.transactionHash}`]);
+    shallowEqual(result, SimpleTraceTransactionData, 'The debug_traceTransaction return');
+  });
+
+  it('should successfully debug storageRangeAt', async function () {
+    const result = await tronWrap.send('debug_storageRangeAt', [0, 0, meta.address, '0x01', 1]);
+    assert(result.storage, 'The debug_storageRangeAt return missing storage field');
+    assert(typeof result.storage === 'object', 'The debug_storageRangeAt return storage is not an object');
+    assert(result.hasOwnProperty('nextKey'), 'The debug_storageRangeAt return missing nextKey field');
+    assert(Object.keys(result.storage).length > 0, 'The debug_storageRangeAt return storage is empty');
+    const key = Object.keys(result.storage)[0];
+    assert.equal(typeof result.storage[key].value, 'string', 'The debug_storageRangeAt return value should be string');
+  });
+
   it('should successfully unlock some accounts', async function () {
     await tronWrap.send('tre_blockTime', [0]);
 
@@ -136,7 +153,7 @@ contract('MetaCoin', function (accounts) {
     });
     MetaCoin.address = address;
     const unlockedMeta = await MetaCoin.deployed();
-
+    await wait(3);
     const owner = await unlockedMeta.getOwner();
     assert.equal(owner, tronWrap.address.toHex(unlockedAccounts[0]), 'The owner is incorrect');
 
