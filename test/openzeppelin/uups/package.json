@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@openzeppelin/contracts-upgradeable": "^4.8.2",
+    "@openzeppelin/contracts-upgradeable": "^4.9.3",
     "@openzeppelin/truffle-upgrades": "^1.17.1"
   }
 }
