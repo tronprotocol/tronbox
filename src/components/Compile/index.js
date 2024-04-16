@@ -332,6 +332,8 @@ compile.with_dependencies = function (options, callback) {
       if (err) return callback(err);
 
       if (!options.quiet) {
+        options.logger.log('Compiling your contracts ...');
+        options.logger.log('============================');
         Object.keys(result)
           .sort()
           .forEach(function (import_path) {

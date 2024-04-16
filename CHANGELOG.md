@@ -1,4 +1,9 @@
-__3.4.2_
+__3.4.3__
+* Improve `tronbox compile` output
+* Upgrading some dependency packages
+* Removing some unnecessary dependency packages
+
+__3.4.2__
 * Add support for Solidity compiler 0.8.20
 * Add `debug_traceTransaction` && `debug_storageRangeAt` function to debug environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
 `debug_traceTransaction`:

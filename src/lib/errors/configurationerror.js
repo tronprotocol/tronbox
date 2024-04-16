@@ -1,10 +1,9 @@
 const TruffleError = require('@truffle/error');
-const inherits = require('util').inherits;
 
-inherits(ConfigurationError, TruffleError);
-
-function ConfigurationError(message) {
-  ConfigurationError.super_.call(this, message);
+class ConfigurationError extends TruffleError {
+  constructor(message) {
+    super(message);
+  }
 }
 
 module.exports = ConfigurationError;
