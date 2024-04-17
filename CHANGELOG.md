@@ -1,7 +1,7 @@
 __3.4.3__
 * Improve `tronbox compile` output
-* Upgrading some dependency packages
-* Removing some unnecessary dependency packages
+* Upgrade some dependency packages
+* Remove some unnecessary dependency packages
 
 __3.4.2__
 * Add support for Solidity compiler 0.8.20
