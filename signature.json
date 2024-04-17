@@ -54,7 +54,7 @@
           },
           {
             "path": "build/lib/errors/builderror.js",
-            "sha512": "e312ec51a85965d1a3bc280a2d12bf4661f268008baed594059df18cd5f9b96cc2f87ae05ea6965c2223875c86eae1890a7271786838c4dc597ece54e48c34f5"
+            "sha512": "68dffbe091311176fac9d05d6bec393b273e02066a86ccdea32f1561d45fd02bc5a78821484783f8f8dd5d6561e0f6e4c380acdd44501fb95f695e0a1bcf6f07"
           },
           {
             "path": "build/lib/command.js",
@@ -66,7 +66,7 @@
           },
           {
             "path": "build/components/Compile/compileerror.js",
-            "sha512": "529df1a797a21ad0177a29d14652d45e0dfa4879912081b9eec2b91a5728c5c7ebf0480f814767b4c780fced74bf768439233d435def704d705d4d1c17363e30"
+            "sha512": "75555bda0ccd7fcbffab8bc66846e92c61d4e1fee25b850bd057561d136b3af97acf452e6f542ad7a5e1f1a8ca5723e6bf1c584a0439506fd6de72a785b15fdd"
           },
           {
             "path": "build/components/Box/lib/config.js",
@@ -78,7 +78,7 @@
           },
           {
             "path": "build/lib/errors/configurationerror.js",
-            "sha512": "7f643716a04b4269ffba7c3309ca30f0ba9fc6c4b7192500ccb5e45aebb0035de33008bdf5bd4c73d7fa95a0d63ef2bd514109fdeef8054b0d6252b751f6fcd3"
+            "sha512": "c93fa74a9ec5b0e31ad51391a423a3e48e99d687851c601f0893413bc6c9d080dfa579bd13460869c4eb52ed3b5d2fb2c624ce4ebf6fdc66793799d54cfc9cf3"
           },
           {
             "path": "build/lib/commands/console.js",
@@ -126,7 +126,7 @@
           },
           {
             "path": "build/lib/errors/deployerror.js",
-            "sha512": "7ac229531645a32d22f6ac28eb63040ce761658184eada55c512a59ab6d56d1de5f781a801008cad403ef8f27ae64c7d6fd304d25f7ba64919ae947a5503695c"
+            "sha512": "41bd609d526a3eb16e21e30154167c9ea6b827201b5b679e42a4a0bf648240d166203d686ea524a4ffd337ea9785d8e49a5a703a7be94f21bca0240d891b2be1"
           },
           {
             "path": "build/components/Deployer/src/actions/deploymany.js",
@@ -146,7 +146,7 @@
           },
           {
             "path": "build/components/Provider/error.js",
-            "sha512": "a54be239c8ae6cc0ee2ce3e23b16c7b742bb7e3550d2002ca435f07748797657833c95bafc517b46ce8939c09381ea9e492646e08c628dd46144ff6314af0fa6"
+            "sha512": "ea01f1d98ebc5fd627dcb2578d9f56b724d73a87cd1e4fa22c2d62ec711b3d7add337e612acfb619568ff050972bd27e9028d4fdf70955ff523c0e478783ee75"
           },
           {
             "path": "build/exec.js",
@@ -162,7 +162,7 @@
           },
           {
             "path": "build/components/Box/index.js",
-            "sha512": "a7e8118430c19b6cccfba17a8a593c68a6ea6c04591773f7247d2529c172b59cab43052e6e9cc15a9f2bcd0e25245a8906481dc5e13714481e5eddcddf0044ab"
+            "sha512": "cb21ea7e295f33e7ccd6a3a0aeb997ca85a29cad0a2a6d940c999b9f2619c13c1cf908ae781bc140ba0330081a884bed7c7d7cbc406d80e650267468dad38d3e"
           },
           {
             "path": "build/components/Box/lib/utils/index.js",
@@ -170,7 +170,7 @@
           },
           {
             "path": "build/components/Compile/index.js",
-            "sha512": "983f7246a5e7c78ee09d2ed90962f71ae2c52756bee9dc259bba08a5c52a7f26c8385fd33fb9f725f8b0d5b940f777a589763dbe5123dc966f20a6ac96ae5e19"
+            "sha512": "4a4908118382171a8698b1a122c544cf81653c6a53b7171e4af50bd0133876a19fa0063243e5e8ffa16954055e7d6e029e0b8e20ef9a49112c12c805f5b3bbd5"
           },
           {
             "path": "build/components/ConsoleLogger/index.js",
@@ -206,7 +206,7 @@
           },
           {
             "path": "build/components/TronWrap/index.js",
-            "sha512": "1938a8cd5323054e4a487d1965d0b6b052392be7a72e169a4c816ce69f666f8e41cf6b2c3d6b6565ae7f6445dfa00eac6194a4456fcfafd77a6a16e9c16cb2ae"
+            "sha512": "c94fa114ddab7c1911aff29d8e09d120e3aecfb546334bcd6f501a12e883ca9c42fe8ab14d71dcff91e005a6399c6206f6a6991002fe642cceb96b9ae9922c8f"
           },
           {
             "path": "build/index.js",
@@ -294,11 +294,11 @@
           },
           {
             "path": "build/components/Contract/statuserror.js",
-            "sha512": "b901ea276f6c7224343cbccc69b754c0224983439721b3734c07f60a4e558346cc00c4fa3aba94e774346761a1bda525e9d277f62827a97be35f2a80d0ecb7c8"
+            "sha512": "998addbf5bd07c31718a239ba93ab2d217daf7f2874387f11e35e22aa79d8044303f83b52035c896c81a6cdf0d52c73c4c3ccb699b733a017843b4f09834d5e3"
           },
           {
             "path": "build/lib/errors/taskerror.js",
-            "sha512": "e22825b411d3d9a19b37b391fa6e45c7e9926bcaab40ceb3379de77780966d5aa2de67810e6ad001a11cf32594fe9e833b6c35e8b5cbc6b73f7e2cbabf96652b"
+            "sha512": "acb8af966caac8e8934e54e01438ef954c981fd055f3e1319d7168c25893b90abff963075f465721c2e533dc1a08b807756b750a8e4ffd750227bbbc89482597"
           },
           {
             "path": "build/lib/commands/test.js",
@@ -306,7 +306,7 @@
           },
           {
             "path": "build/lib/test.js",
-            "sha512": "d38b628281cad551d154b5226566cbf00003b0929fa1192748ed85d269c7da256752b4ab214baaf89e7d31824ca76f7f4c38d29f98d8267ec6bf55131f240787"
+            "sha512": "2910a83510d965f8637e603c181fea0b2262ce545e49a1b9ffc9dcbf3ba6f773e8f16400ac6fb68766ea665d8136d3c9c4986d286e35c651c98b6998cb48c331"
           },
           {
             "path": "build/lib/testing/testresolver.js",
@@ -326,7 +326,7 @@
           },
           {
             "path": "build/components/TronSolc.js",
-            "sha512": "aac2fe7c51d3de126abc1dd08638d1fd71befda6f175735adbb8e5a053e553d81c6fd385c45aaca4441cd4b23fad3a5583e05db184ce7883460433c8428e3f4a"
+            "sha512": "b2e2e393ca8774b03676b2e6ec2aa1484b8ee688512694af2f686075018bc58379be946950c815a1a0c587633807b7c20aa33a423079b39005fac621e829c23e"
           },
           {
             "path": "build/components/Box/lib/utils/unbox.js",
@@ -354,7 +354,7 @@
           },
           {
             "path": "build/components/WorkflowCompile.js",
-            "sha512": "c7e56ff9b80523422c78c48a39d9f89d4cef0067565858c03301163553eaf5ae4b295befe6e310f06882cf1762b5deeca676a15fe924b67bcc3ca4f5d3a6bf94"
+            "sha512": "403d95d881541cee014c171d6d5622fdc2a28e5734d6d38393464532cca798da11b27b632058919e85b0bcfa21dae9928b96176966689e7bceb6ed173a237861"
           },
           {
             "path": "build/components/Provider/wrapper.js",
@@ -378,7 +378,7 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "d1ee6a787a757fdb02c1770923fe437ebf5aba31d0d5bf1c8f384bababd4f147f6ee7d307b1c3700cd0a67e1cba5723c571c5eb4765c3a844203495397c61a64"
+            "sha512": "b52729201a7b5feed9d890966e17d4c4abdebde754cdb541ef1d1e6ae4a17ef7d6f9cbb7ce2446a480db4ac37c404dd3ff9eb9ba3f77c38a2a6f4527158539cb"
           },
           {
             "path": "CONTRIBUTING.md",
@@ -386,7 +386,7 @@
           },
           {
             "path": "FURTHER_INFO.md",
-            "sha512": "beb7a17d524e5c696e654041cc5697146ce29b9b528f5dda60f9200aba96f8cfe4a6e3624b715a7fe4e276e65377f04cb12757404992f9bf092b62ceecac4b27"
+            "sha512": "aa81052e66469ef617f49d62ae9de64a91de5ec05f73b9b7af77a1203aaf70f15947f4f36875d7d190471178d32ae4f46f016c6635e578e676fe53fb3a4542c9"
           },
           {
             "path": "README.md",
@@ -433,7 +433,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "5947d955612daa9953871a66a3e6ff8cfea48169a786cb5c4daa238fb9dc1641810def8b3a3b844eeeaf2a6fb94bf9320ad795de6df7bb75ffff7f26b09e9a7b"
+        "sha512": "14d013fa4735c4bb6d5bfcb0b75065bb7cd699778d3ef6c0fc1b8cc7bc0ff1cee7d45c16aa18c0c9699010a2489560f424e19682bcfbe6f3d47e4608de270be0"
       }
     },
     {
@@ -442,7 +442,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "3.4.1",
+          "version": "3.4.3",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -462,10 +462,9 @@
             "@noble/secp256k1": "1.7.1",
             "@resolver-engine/imports-fs": "^0.3.3",
             "@solidity-parser/parser": "^0.16.0",
-            "@truffle/contract-sources": "^0.1.6",
-            "@truffle/error": "0.0.7",
-            "@truffle/expect": "0.0.11",
-            "@truffle/solidity-utils": "^1.2.5",
+            "@truffle/contract-sources": "^0.1.12",
+            "@truffle/error": "0.2.2",
+            "@truffle/expect": "0.1.7",
             "ajv": "^6.10.2",
             "async": "2.6.4",
             "axios": "^0.21.1",
@@ -479,8 +478,6 @@
             "del": "^2.2.0",
             "diff": ">=3.5.0",
             "ethjs-abi": "0.1.8",
-            "ethpm": "0.0.16",
-            "ethpm-registry": "0.1.0-next.3",
             "finalhandler": "^1.1.2",
             "find-up": "^4.1.0",
             "fs-extra": "^8.1.0",
@@ -489,13 +486,11 @@
             "homedir": "^0.6.0",
             "lodash": "^4.17.15",
             "mkdirp": "^0.5.1",
-            "mocha": "5.2.0",
+            "mocha": "10.2.0",
             "node-dir": "0.1.17",
-            "node-emoji": "^1.8.1",
             "original-require": "1.0.1",
             "request": "^2.88.0",
-            "safe-eval": "^0.4.1",
-            "semver": "^6.1.1",
+            "semver": "^7.5.4",
             "serve-static": "^1.10.0",
             "solc": "^0.8.21",
             "source-map-support": "^0.5.3",
@@ -505,27 +500,23 @@
             "tronweb": "^5.3.0",
             "tsort": "^0.0.1",
             "vcsurl": "^0.1.1",
-            "web3": "1.2.1",
-            "web3-eth-contract": "1.2.1",
-            "web3-mock": "1.0.1",
+            "web3": "1.10.4",
+            "web3-eth-contract": "1.10.4",
             "yargs": "^15.4.1"
           },
           "devDependencies": {
-            "@babel/cli": "^7.6.4",
-            "@babel/core": "^7.6.4",
-            "@babel/plugin-transform-runtime": "^7.7.6",
+            "@babel/cli": "^7.23.4",
+            "@babel/core": "^7.23.3",
+            "@babel/plugin-transform-runtime": "^7.23.4",
             "@babel/preset-env": "^7.6.3",
             "eslint": "^6.6.0",
             "eslint-plugin-node": "^10.0.0",
             "glob": "^7.1.2",
             "js-scrypt": "^0.2.0",
-            "meta-npm": "^0.0.22",
+            "meta-npm": "^1.2.7",
             "meta-pkgs": "^0.2.0",
-            "moment": "^2.24.0",
             "prepend-file": "^1.3.1",
             "prettier": "^2.8.5",
-            "shebang-loader": "0.0.1",
-            "stream-buffers": "^3.0.1",
             "tmp": "0.0.33",
             "truffle-blockchain-utils": "^0.0.5"
           },
@@ -573,5 +564,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJlLN5vACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1ikSw//Tc11iDD3Ay9VwSzQZ5qtD8F8UbgLqPnXOFlG4CQHIZssg88T\n0elP+u6QbIImFDA5GBbawPrjHYCG/qtegIyka+KCbq2yMiRQYMLpv7d/JvFA\nMp5VjyIwI3XFQbkgYYJ/5EpmDHEYrxToqlObi6O4ShufwAGgxJ6l2cS4hypF\njE3H3j00diLUUdb6CARElmLInnTt8MHTl76+gtPBhPrCs5fNSk+WIgJyin6z\nFRCygk0UCrAUygIYtH3ks38IOTemVAjcq2ntrks8YicxR5enLAkpKQxkV+bj\ndGvW/ge1LRG1PxGDjXeYITgwNA2kDp/rLZM3QMwskobcnCec6WZGrDNHxJvI\n7mgAEM54UxkxTtnDLtHp5g0MD1+/HxF2VZB260wDMtuNiljXsuSVvFd+YiW3\n/OgXFRwMWIbDwExKfC94JfPTcGaJkEu/x6ubR6NXywgYSOudwG4E6rMLD210\nZT1ZdMRVYTva1iBGyR80Sb3FPBvOcy48dYc5sT5YHBHTfpbDaSY9NfrOHGos\nCXOA6vU3kOc9Zg7qrLOxhV9xbaeN6W3wZPSyDytiDeW9SDbcVY1hJUC5COdM\n1bROAwTedD9cN5Vgg7E73si/CD+BCAl9thsmVYn9P1ofu65UEgKQqrN5xYHB\nMHqZCgFbvVmBCiZ0TZHH5vrZrVyNkWNFs3s=\n=RyGB\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJmH3iCACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hZwg/+K31kzV+oe+io2mMVJhKiWOTIy3Bsj4bZLzA+i/C944aJXcxA\nbWRSS3H1rbD3YxlplTubA/eNBxxvjWytL3PgeK3jWkvewgjvDHQnzzeujmxa\nuVlG7K5E9Zd2x7wwMI6PvZIsKzsEBzYG7WM9RNweqVNT5ytS0y8eZQge57cq\nGL0Phh8fxlT1C5s5VnCZlCFLXUqkochsJZSchaL98n1O0MjizqYMzxgG0oNJ\nEvHBMJFY5aamusEb+BRC1UHMhDQACDwhW9xOWJmve+yPwXMkbSIIy4fgELCn\nny0WNCxlDeZMRU7nQyABUjYQJB40n/djkKtFBv/BA0wcPcuOzUWsYcB7NpIS\nXdf1H9dVAysGUemuoasZiA1gR2e4y+lnliWDkLLFJ/o0GqRH0RywcmZ7w3iJ\nYTmOwMtBAMcUeZEmiMygXI9XD9oc1dx03E/dnpqjLgIxNi4ra4cGuYT7tEAp\nddPuwXArdU8Jl0uPSI004qH6sBfzlFFWGmrUaMMLZxxH7LVW7hetRbmG3BSg\nUaNunawXnx6jZMcZFIjScH4kgFrRm8fWjUxMK/OTacXrX71Q8Rfhg7vNzUN2\nV7YSjBDkiICS8HIcNmWiPIY8ch+giR1PSzDXqi5hwqFJ15C9ugTsQomYO+/j\nIjqNnzFXmt40ts9VWuwmCo0wc1oRZCFJDJM=\n=5ul0\n-----END PGP SIGNATURE-----\n"
 }

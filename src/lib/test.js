@@ -117,6 +117,10 @@ const Test = {
     // Allow people to specify config.mocha in their config.
     const mochaConfig = config.mocha || {};
 
+    mochaConfig.reporterOptions = {
+      maxDiffSize: 0
+    };
+
     // If the command line overrides color usage, use that.
     if (config.colors != null) {
       mochaConfig.useColors = config.colors;
