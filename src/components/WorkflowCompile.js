@@ -38,6 +38,7 @@ const Contracts = {
   // strict: Boolean. Return compiler warnings as errors. Defaults to false.
   compile: function (options, callback) {
     const self = this;
+    const logger = options.logger || console;
 
     expect.options(options, ['contracts_build_directory']);
 
@@ -58,8 +59,10 @@ const Contracts = {
       if (err) return callback(err);
 
       if (contracts != null && Object.keys(contracts).length > 0) {
-        self.write_contracts(contracts, config, function (err, abstractions) {
+        self.write_contracts(contracts, config, async function (err, abstractions) {
           callback(err, abstractions, paths);
+          logger.log(`> Compiled successfully using:`);
+          logger.log(`  - solc: ${options.networks.compilers?.solc?.version}`);
         });
       } else {
         callback(null, [], paths);
