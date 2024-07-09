@@ -62,7 +62,10 @@ const Contracts = {
         self.write_contracts(contracts, config, async function (err, abstractions) {
           callback(err, abstractions, paths);
           logger.log(`> Compiled successfully using:`);
-          logger.log(`  - solc: ${options.networks.compilers?.solc?.version}`);
+          let solcVersion = options.networks?.compilers
+            ? options.networks?.compilers?.solc?.version
+            : options.compilers?.solc?.version;
+          logger.log(`  - solc: ${solcVersion}`);
         });
       } else {
         callback(null, [], paths);

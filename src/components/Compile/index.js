@@ -69,8 +69,8 @@ const compile = function (sources, options, callback) {
     language: 'Solidity',
     sources: {},
     settings: {
-      evmVersion: options.solc.evmVersion,
-      optimizer: options.solc.optimizer,
+      evmVersion: options.solc?.evmVersion || options.compilers?.solc?.settings?.evmVersion,
+      optimizer: options.solc?.optimizer || options.compilers?.solc?.settings?.optimizer,
       outputSelection: {
         '*': {
           '': ['legacyAST', 'ast'],

@@ -72,6 +72,14 @@ $ tronbox(development)>
 ```
 The name in the parentheses of the prompt `tronbox(development)>` is the network that is currently connected to. For details, see [Interact with a Contract](https://developers.tron.network/reference/interact-with-a-contract).<br>
 <br>
+# Integrity Check
+
+- The package files will be signed using a GPG key pair, and the correctness of the signature will be verified using the following public key:
+  ```
+  pub: 82C1 BB84 1BFA FD01 9CA6  1ACB E98F C329 87F3 BF76
+  uid: dev@tronbox.io
+  ```
+
 ## Development
 To dive deeper into advanced topics of the TronBox project lifecycle, please see the [Official TronBox Documentation](https://developers.tron.network/reference/what-is-tronbox) for guides, tips, and examples.
 
