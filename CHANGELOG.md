@@ -1,3 +1,8 @@
+__3.4.4__
+* Dropping support for Node.js v16
+As part of this release, we are dropping support for Node.js v16. This version of Node.js reached its end-of-life in September of last year.
+* Optimize the configuration file structure
+
 __3.4.3__
 * Improve `tronbox compile` output
 * Upgrade some dependency packages
