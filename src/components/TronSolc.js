@@ -74,9 +74,15 @@ function getWrapper(options = {}) {
     } else if (options.networks.useZeroFiveCompiler) {
       compilerVersion = '0.5.4';
     }
-
+    let version = maxVersion;
     try {
-      const version = options.networks.compilers.solc.version;
+      if (options.networks.compilers) {
+        version = options.networks.compilers.solc.version;
+      }
+      if (options.compilers) {
+        version = options.compilers.solc.version;
+      }
+
       if (supportedVersions.includes(version)) {
         compilerVersion = version;
       } else {
