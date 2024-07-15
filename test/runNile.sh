@@ -29,4 +29,8 @@ cd ..
 
 rm -rf build
 
-
+echo 'Test evm'
+cd evm
+rm -rf build
+../../tronbox.dev migrate --network bttc --evm
+cd ..
