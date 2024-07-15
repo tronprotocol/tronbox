@@ -41,12 +41,7 @@ function Config(truffle_directory, working_directory, network) {
       registry: '0x8011df4830b4f696cd81393997e5371b93338878',
       install_provider_uri: 'https://ropsten.infura.io/truffle'
     },
-    solc: {
-      optimizer: {
-        enabled: false,
-        runs: 200
-      }
-    },
+    solc: {},
     logger: {
       log: function () {}
     }
