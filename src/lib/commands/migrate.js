@@ -45,6 +45,7 @@ const command = {
     // init TronWeb
     try {
       TronWrap(config.networks[config.network], {
+        evm: options.evm,
         verify: true,
         log: options.log
       });

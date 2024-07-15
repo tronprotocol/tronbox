@@ -30,6 +30,7 @@ const command = {
 
     try {
       TronWrap(config.networks[config.network], {
+        evm: options.evm,
         verify: true,
         tre: true,
         log: options.log

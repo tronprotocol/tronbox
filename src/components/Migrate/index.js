@@ -28,6 +28,9 @@ Migration.prototype.run = function (options, callback) {
   const context = {
     tronWrap: tronWrap
   };
+  if (tronWrap._web3) {
+    context.web3 = tronWrap._web3;
+  }
 
   const deployer = new Deployer({
     options,
@@ -71,7 +74,7 @@ Migration.prototype.run = function (options, callback) {
       .then(function () {
         if (options.save === false) return;
         logger.log('Saving artifacts...');
-        return options.artifactor.saveAll(resolver.contracts());
+        return options.artifactor.saveAll(resolver.contracts(), { evm: options.evm });
       })
       .then(function () {
         // Use process.nextTicK() to prevent errors thrown in the callback from triggering the below catch()

@@ -7,13 +7,17 @@ function Artifactor(destination) {
   this.destination = destination;
 }
 
-Artifactor.prototype.save = function (object) {
+Artifactor.prototype.save = function (object, options) {
   const self = this;
 
   return new Promise(function (accept, reject) {
     object = Schema.normalize(object);
 
     Object.values(object.networks).forEach(_ => (_.address = _.address.toLowerCase().replace(/^0x/, '41')));
+
+    if (options.evm) {
+      Object.values(object.networks).forEach(_ => (_.address = _.address.toLowerCase().replace(/^41/, '0x')));
+    }
 
     if (!object.contractName) {
       return reject(new Error('You must specify a contract name.'));
@@ -66,7 +70,7 @@ Artifactor.prototype.save = function (object) {
   });
 };
 
-Artifactor.prototype.saveAll = function (objects) {
+Artifactor.prototype.saveAll = function (objects, options) {
   const self = this;
 
   if (Array.isArray(objects)) {
@@ -91,7 +95,7 @@ Artifactor.prototype.saveAll = function (objects) {
     Object.keys(objects).forEach(function (contractName) {
       const object = objects[contractName];
       object.contractName = contractName;
-      promises.push(self.save(object));
+      promises.push(self.save(object, options));
     });
 
     return Promise.all(promises);

@@ -9,6 +9,7 @@ const originalrequire = require('original-require');
 
 const DEFAULT_CONFIG_FILENAME = 'tronbox.js';
 const BACKUP_CONFIG_FILENAME = 'tronbox-config.js'; // For Windows + Command Prompt
+const EVM_CONFIG_FILENAME = 'tronbox-evm-config.js'; // For EVM
 
 function Config(truffle_directory, working_directory, network) {
   const self = this;
@@ -377,6 +378,10 @@ Config.detect = function (options, filename) {
   let search;
 
   !filename ? (search = [DEFAULT_CONFIG_FILENAME, BACKUP_CONFIG_FILENAME]) : (search = filename);
+
+  if (options.evm) {
+    !filename ? (search = [EVM_CONFIG_FILENAME]) : (search = filename);
+  }
 
   const file = findUp.sync(search, {
     cwd: options.working_directory || options.workingDirectory

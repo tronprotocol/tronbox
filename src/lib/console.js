@@ -43,6 +43,7 @@ function Console(tasks, options) {
 
   try {
     this.tronWrap = TronWrap(options.networks[options.network], {
+      evm: options.evm,
       verify: true,
       log: options.log
     });
@@ -79,7 +80,8 @@ Console.prototype.start = function (callback) {
     self.repl.start({
       prompt: 'tronbox(' + self.options.network + ')> ',
       context: {
-        tronWrap: self.tronWrap
+        tronWrap: self.tronWrap,
+        web3: self.tronWrap._web3 ? self.tronWrap._web3 : undefined
       },
       interpreter: self.interpret.bind(self),
       done: callback
