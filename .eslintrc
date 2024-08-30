@@ -116,6 +116,7 @@
       "globals": {
         "tronWeb": "readonly",
         "tronWrap": "readonly",
+        "web3": "readonly",
         "assert": "readonly",
         "expect": "readonly",
         "artifacts": "readonly",

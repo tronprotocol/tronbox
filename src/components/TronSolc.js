@@ -66,7 +66,7 @@ function getWrapper(options = {}) {
     );
 
   let compilerVersion = '0.5.4';
-  const solcDir = path.join(homedir(), '.tronbox', 'solc');
+  const solcDir = path.join(homedir(), '.tronbox', options.evm ? 'evm-solc' : 'solc');
 
   if (options.networks) {
     if (options.networks.useZeroFourCompiler) {
@@ -83,7 +83,7 @@ function getWrapper(options = {}) {
         version = options.compilers.solc.version;
       }
 
-      if (supportedVersions.includes(version)) {
+      if (supportedVersions.includes(version) || options.evm) {
         compilerVersion = version;
       } else {
         console.error(`Error:
@@ -104,7 +104,7 @@ ${supportedVersions.join(' - ')}
     if (process.env.TRONBOX_NAME) {
       name = process.env.TRONBOX_NAME;
     }
-    const output = execSync(`${name} --download-compiler ${compilerVersion}`).toString();
+    const output = execSync(`${name} --download-compiler ${compilerVersion} ${options.evm ? '--evm' : ''}`).toString();
     if (output.indexOf('Permission required') !== -1) {
       console.error(`
 Error: Permissions required.
@@ -112,8 +112,14 @@ Error: Permissions required.
 Most likely, you installed Node as root.
 Please, download the compiler manually, running:
 
-tronbox --download-compiler ${compilerVersion}
+tronbox --download-compiler ${compilerVersion} ${options.evm ? '--evm' : ''}
 `);
+      // eslint-disable-next-line no-process-exit
+      process.exit();
+    }
+
+    if (output.indexOf('Error:') !== -1) {
+      console.error(output);
       // eslint-disable-next-line no-process-exit
       process.exit();
     }

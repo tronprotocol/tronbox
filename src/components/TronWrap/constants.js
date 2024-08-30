@@ -6,6 +6,16 @@ module.exports = {
     callValue: 0,
     tokenValue: undefined,
     tokenId: undefined,
-    from: undefined
+    from: undefined,
+
+    // evm
+    gasPrice: undefined,
+    gas: undefined,
+    gasLimit: undefined,
+    maxPriorityFeePerGas: undefined,
+    maxFeePerGas: undefined,
+    nonce: undefined,
+    type: undefined,
+    value: 0
   }
 };

@@ -1,8 +1,10 @@
+const Web3 = require('web3');
 const _TronWeb = require('tronweb');
 const chalk = require('chalk');
 const constants = require('./constants');
 const axios = require('axios');
 const ConsoleLogger = require('../ConsoleLogger');
+const reformat = require('./reformat');
 
 let instance;
 
@@ -58,7 +60,12 @@ function filterNetworkConfig(options) {
     callValue: options.callValue || options.call_value || constants.deployParameters.callValue,
     tokenValue: options.tokenValue || options.token_value || options.call_token_value,
     tokenId: options.tokenId || options.token_id,
-    userFeePercentage
+    userFeePercentage,
+
+    gas: options.gas || options.gasLimit,
+    gasPrice: options.gasPrice,
+    maxPriorityFeePerGas: options.maxPriorityFeePerGas,
+    maxFeePerGas: options.maxFeePerGas
   };
 }
 
@@ -73,19 +80,20 @@ function init(options, extraOptions = {}) {
       !(options.privateKey || options.mnemonic) ||
       !(options.fullHost || (options.fullNode && options.solidityNode && options.eventServer)))
   ) {
+    const configFile = extraOptions.evm ? 'tronbox-evm-config.js' : 'tronbox.js';
     if (!options) {
       throw new Error(
-        'It was not possible to instantiate TronWeb. The chosen network does not exist in your "tronbox.js".'
+        `It was not possible to instantiate TronWeb. The chosen network does not exist in your "${configFile}".`
       );
     } else {
       if (!options.privateKey) {
-        throw new Error('It was not possible to instantiate TronWeb. Private key is missing in your "tronbox.js".');
+        throw new Error(`It was not possible to instantiate TronWeb. Private key is missing in your "${configFile}".`);
       }
       if (!(options.fullHost || (options.fullNode && options.solidityNode && options.eventServer))) {
-        throw new Error('It was not possible to instantiate TronWeb. Fullhost url is missing in your "tronbox.js".');
+        throw new Error(`It was not possible to instantiate TronWeb. Fullhost url is missing in your "${configFile}".`);
       }
       throw new Error(
-        'It was not possible to instantiate TronWeb. Some required parameters are missing in your "tronbox.js".'
+        `It was not possible to instantiate TronWeb. Some required parameters are missing in your "${configFile}".`
       );
     }
   }
@@ -116,6 +124,12 @@ function init(options, extraOptions = {}) {
   if (extraOptions.log) {
     tronWrap._log = extraOptions.log;
   }
+  if (extraOptions.evm) {
+    const web3 = new Web3(options.fullNode || options.fullHost);
+    const account = web3.eth.accounts.wallet.add(getPrivateKey());
+    tronWrap._web3 = web3;
+    tronWrap._web3_accounts = [account.address];
+  }
 
   tronWrap._getNetworkInfo = async function () {
     const info = {
@@ -140,6 +154,8 @@ function init(options, extraOptions = {}) {
   tronWrap._privateKeyByAccount[defaultAddress] = tronWrap.defaultPrivateKey;
 
   tronWrap._getAccounts = function (callback) {
+    if (extraOptions.evm) return tronWrap._evmGetAccounts(callback);
+
     const self = this;
 
     return new Promise(accept => {
@@ -191,6 +207,8 @@ function init(options, extraOptions = {}) {
   };
 
   tronWrap._deployContract = function (option, callback) {
+    if (extraOptions.evm) return tronWrap._evmDeployContract(option, callback);
+
     const myContract = this.contract();
     const originEnergyLimit = option.originEnergyLimit || this.networkConfig.originEnergyLimit;
     if (originEnergyLimit < 0 || originEnergyLimit > constants.deployParameters.originEnergyLimit) {
@@ -293,7 +311,7 @@ function init(options, extraOptions = {}) {
       myContract.loadAbi(JSON.parse(JSON.stringify(options.abi || [])));
       myContract.transactionHash = transaction.txID;
 
-      dlog('Contract deployed');
+      dlog('Contract deployed:', options.name);
       return Promise.resolve(myContract);
     } catch (ex) {
       let e;
@@ -314,6 +332,8 @@ function init(options, extraOptions = {}) {
   };
 
   tronWrap.triggerContract = function (option, callback) {
+    if (extraOptions.evm) return tronWrap._evmTriggerContract(option, callback);
+
     const myContract = this.contract(option.abi, option.address);
     let callSend = 'send'; // constructor and fallback
     option.abi.forEach(function (val) {
@@ -495,6 +515,158 @@ function init(options, extraOptions = {}) {
       tronWrap._getConsoleLog(url, data);
       return data;
     });
+  };
+
+  tronWrap._evmGetAccounts = async function (callback) {
+    const accounts = [...tronWrap._web3_accounts];
+    tronWrap._privateKeyByAccount[accounts[0]] = tronWrap._web3.eth.accounts.wallet[accounts[0]].privateKey;
+    if (callback) {
+      return callback(null, accounts);
+    }
+    return accounts;
+  };
+
+  tronWrap._evmDeployContract = async function (option, callback) {
+    const web3 = tronWrap._web3;
+    const contract = new web3.eth.Contract(option.abi);
+    const deployFunc = contract.deploy({ data: option.data, arguments: option.parameters });
+    const opt = {
+      from: option.from || tronWrap._web3_accounts[0],
+      gas: option.gas || option.gasLimit || this.networkConfig.gas,
+      gasPrice: option.gasPrice || this.networkConfig.gasPrice,
+      maxPriorityFeePerGas: option.maxPriorityFeePerGas || this.networkConfig.maxPriorityFeePerGas,
+      maxFeePerGas: option.maxFeePerGas || this.networkConfig.maxFeePerGas,
+      value: option.value || option.callValue || option.call_value,
+      nonce: option.nonce,
+      type: option.type
+    };
+
+    if (opt.maxPriorityFeePerGas || opt.maxFeePerGas) {
+      delete opt.gasPrice;
+    }
+
+    try {
+      if (!opt.gas) {
+        dlog('Estimate the gas used for deploying');
+        opt.gas = await deployFunc.estimateGas(opt);
+      }
+      let transactionHash = null;
+      dlog('Deploying contract:', option.contractName);
+      const newContract = await deployFunc.send(opt, (err, hash) => {
+        transactionHash = hash;
+      });
+      const { address } = newContract.options;
+      dlog('Contract broadcasted', {
+        address,
+        transactionHash
+      });
+
+      try {
+        const receipt = await tronWrap._evmWaitForTransaction(transactionHash);
+        if (!receipt || !receipt.status) {
+          return callback(new Error('Contract deployment failed'));
+        }
+      } catch (err) {
+        return callback(err);
+      }
+
+      dlog('Contract deployed:', option.contractName);
+      callback(null, {
+        address,
+        transactionHash
+      });
+    } catch (error) {
+      callback(error);
+    }
+  };
+
+  tronWrap._evmTriggerContract = async function (option, callback) {
+    const web3 = tronWrap._web3;
+    const contract = new web3.eth.Contract(option.abi, option.address);
+    const methodFunc = contract.methods[option.methodName](...option.args);
+    const { methodArgs } = option;
+    const opt = {
+      from: methodArgs.from || tronWrap._web3_accounts[0],
+      gas: methodArgs.gas || methodArgs.gasLimit || this.networkConfig.gas,
+      gasPrice: methodArgs.gasPrice || this.networkConfig.gasPrice,
+      maxPriorityFeePerGas: methodArgs.maxPriorityFeePerGas || this.networkConfig.maxPriorityFeePerGas,
+      maxFeePerGas: methodArgs.maxFeePerGas || this.networkConfig.maxFeePerGas,
+      value: methodArgs.value || methodArgs.callValue || methodArgs.call_value,
+      nonce: methodArgs.nonce,
+      type: methodArgs.type
+    };
+
+    if (opt.maxPriorityFeePerGas || opt.maxFeePerGas) {
+      delete opt.gasPrice;
+    }
+
+    let callSend = 'send';
+    let abiOutputs = [];
+    option.abi.forEach(function (val) {
+      if (val.name === option.methodName) {
+        callSend = /payable/.test(val.stateMutability) ? 'send' : 'call';
+        abiOutputs = val.outputs;
+      }
+    });
+
+    try {
+      if (callSend === 'call') {
+        const callRes = await methodFunc.call(opt);
+        const result = reformat(callRes, abiOutputs);
+        return callback(null, result);
+      }
+
+      if (!opt.gas) {
+        dlog('Estimate the gas used for sending transaction');
+        opt.gas = await methodFunc.estimateGas(opt);
+      }
+      dlog('Sending transaction');
+      const tx = await methodFunc.send(opt);
+      const { transactionHash } = tx;
+      dlog('Transaction sent');
+      try {
+        const receipt = await tronWrap._evmWaitForTransaction(transactionHash);
+        if (!receipt || !receipt.status) {
+          return callback(new Error(`Transaction: ${transactionHash} exited with an error (status 0).`));
+        }
+      } catch (err) {
+        return callback(err);
+      }
+      callback(null, transactionHash);
+    } catch (error) {
+      callback(error);
+    }
+  };
+
+  tronWrap._evmWaitForTransaction = async function (txHash) {
+    const web3 = tronWrap._web3;
+    const curBlockNumber = await web3.eth.getBlockNumber();
+    const transactionBlockTimeout = 50;
+    const getReceipt = async () => {
+      let timeout = false;
+      try {
+        const blockNumber = await web3.eth.getBlockNumber();
+        if (blockNumber - curBlockNumber > transactionBlockTimeout) {
+          timeout = true;
+        } else {
+          dlog('Requesting transaction', txHash);
+          const receipt = await web3.eth.getTransactionReceipt(txHash);
+          if (receipt) return receipt;
+        }
+      } catch (error) {}
+
+      if (timeout) {
+        throw new Error(
+          `Transaction was not mined within ${transactionBlockTimeout} blocks, please make sure your transaction was properly sent. Be aware that it might still be mined!`
+        );
+      }
+
+      await sleep(1000);
+      return await getReceipt();
+    };
+
+    dlog('Waiting for transaction');
+    return await getReceipt();
   };
 
   return new TronWrap();
