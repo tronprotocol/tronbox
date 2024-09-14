@@ -39,3 +39,9 @@ echo 'Test Console.log'
 cd consolelogs
 sh runTest.sh
 cd ..
+
+echo 'Test evm'
+cd evm
+rm -rf build
+../../tronbox.dev test --evm
+cd ..

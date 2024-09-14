@@ -426,9 +426,10 @@ const contract = (function (module) {
         newContract.setNetwork(this.network_id);
       }
       newContract.defaults(this.class_defaults);
-      newContract.address = TronWrap().address.toHex(address);
+      newContract.address = tronWrap.address.toHex(address);
       return newContract.deployed();
     },
+
     call: function (methodName, ...args) {
       const self = this;
       let methodArgs = {};
@@ -481,6 +482,7 @@ const contract = (function (module) {
         tronWrap.triggerContract(option, _callback);
       });
     },
+
     deployed: function () {
       const self = this;
       return new Promise(function (accept, reject) {
@@ -488,10 +490,27 @@ const contract = (function (module) {
         if (!self.isDeployed()) {
           throw new Error(self.contractName + ' has not been deployed to detected network');
         }
-        self.address = self.address.toLowerCase().replace(/^0x/, '41');
-        TronWrap()
-          .trx.getContract(self.address)
-          .then(() => {
+
+        let getContract;
+        if (tronWrap._web3) {
+          self.address = self.address.toLowerCase().replace(/^41/, '0x');
+          getContract = tronWrap._web3.eth.getCode(self.address);
+        } else {
+          self.address = self.address.toLowerCase().replace(/^0x/, '41');
+          getContract = tronWrap.trx.getContract(self.address);
+        }
+        getContract
+          .then(res => {
+            const noCodeMsg = `${self.contractName} has not been deployed to detected network; no code at address ${self.address}`;
+            if (tronWrap._web3) {
+              if (res === '0x') {
+                throw new Error(noCodeMsg);
+              }
+            } else {
+              if (!res.contract_address) {
+                throw new Error(noCodeMsg);
+              }
+            }
             const abi = self.abi || [];
             for (let i = 0; i < abi.length; i++) {
               const item = abi[i];
@@ -546,6 +565,7 @@ const contract = (function (module) {
 
       return !!this.network.address;
     },
+
     setNetwork: function (network_id) {
       if (!network_id) return;
       this.network_id = network_id + '';

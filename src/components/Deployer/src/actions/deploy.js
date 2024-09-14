@@ -42,13 +42,17 @@ module.exports = function (contract, args, deployer) {
       .then(function (instance) {
         const tronWrap = TronWrap();
         if (should_deploy === true) {
-          deployer.logger.log(
-            contract.contract_name +
-              ':\n    (base58) ' +
-              tronWrap.address.fromHex(instance.address) +
-              '\n    (hex) ' +
-              instance.address
-          );
+          if (tronWrap._web3) {
+            deployer.logger.log(contract.contract_name + ':\n    (hex) ' + instance.address);
+          } else {
+            deployer.logger.log(
+              contract.contract_name +
+                ':\n    (base58) ' +
+                tronWrap.address.fromHex(instance.address) +
+                '\n    (hex) ' +
+                instance.address
+            );
+          }
         } else {
           deployer.logger.log("Didn't deploy " + contract.contract_name + '; using ' + instance.address);
         }

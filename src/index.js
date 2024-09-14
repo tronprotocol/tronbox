@@ -16,7 +16,7 @@ const options = {
 const commands = process.argv.slice(2);
 
 if (commands[0] === '--download-compiler' && commands[1]) {
-  downloader(commands[1]);
+  downloader(commands[1], commands[2]);
 } else {
   command.run(process.argv.slice(2), options, function (err) {
     if (err) {

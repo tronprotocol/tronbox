@@ -1,3 +1,6 @@
+__4.0.0__
+* Support deploying smart contracts to the EVM chain
+
 __3.4.4__
 * Dropping support for Node.js v16
 As part of this release, we are dropping support for Node.js v16. This version of Node.js reached its end-of-life in September of last year.

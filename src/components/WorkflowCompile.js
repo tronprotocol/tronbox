@@ -18,6 +18,7 @@ async function getCompilerVersion(options) {
   let tronWrap;
   try {
     tronWrap = TronWrap(config.networks[config.network], {
+      evm: options.evm,
       verify: true,
       log: options.log
     });
@@ -65,7 +66,7 @@ const Contracts = {
           let solcVersion = options.networks?.compilers
             ? options.networks?.compilers?.solc?.version
             : options.compilers?.solc?.version;
-          logger.log(`  - solc: ${solcVersion}`);
+          logger.log(`  - solc${options.evm ? '(EVM)' : ''}: ${solcVersion}`);
         });
       } else {
         callback(null, [], paths);

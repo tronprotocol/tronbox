@@ -231,6 +231,9 @@ const Test = {
       };
 
       global.tronWrap = TronWrap();
+      if (global.tronWrap._web3) {
+        global.web3 = global.tronWrap._web3;
+      }
 
       accept();
     });
