@@ -1,3 +1,8 @@
+**4.0.1**
+
+- Support for IR-based codegen
+- Bump axios version to v1.7.7
+
 **4.0.0**
 
 - Support deploying smart contracts to the EVM chain
