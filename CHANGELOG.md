@@ -1,37 +1,46 @@
-__4.0.0__
-* Support deploying smart contracts to the EVM chain
+**4.0.0**
 
-__3.4.4__
-* Dropping support for Node.js v16
-As part of this release, we are dropping support for Node.js v16. This version of Node.js reached its end-of-life in September of last year.
-* Optimize the configuration file structure
+- Support deploying smart contracts to the EVM chain
 
-__3.4.3__
-* Improve `tronbox compile` output
-* Upgrade some dependency packages
-* Remove some unnecessary dependency packages
+**3.4.4**
 
-__3.4.2__
-* Add support for Solidity compiler 0.8.20
-* Add `debug_traceTransaction` && `debug_storageRangeAt` function to debug environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
-`debug_traceTransaction`:
+- Dropping support for Node.js v16
+  As part of this release, we are dropping support for Node.js v16. This version of Node.js reached its end-of-life in September of last year.
+- Optimize the configuration file structure
+
+**3.4.3**
+
+- Improve `tronbox compile` output
+- Upgrade some dependency packages
+- Remove some unnecessary dependency packages
+
+**3.4.2**
+
+- Add support for Solidity compiler 0.8.20
+- Add `debug_traceTransaction` && `debug_storageRangeAt` function to debug environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
+  `debug_traceTransaction`:
+
 ```javascript
-const txid = "f6b72dda65682b858c1c1980710aad7955fbf6db91c66840da0f852fc3cc694b";
-const result = await tronWrap.send("debug_traceTransaction", [txid]);
+const txid = 'f6b72dda65682b858c1c1980710aad7955fbf6db91c66840da0f852fc3cc694b';
+const result = await tronWrap.send('debug_traceTransaction', [txid]);
 console.log(result);
 ```
+
 `debug_storageRangeAt`:
+
 ```javascript
-const result = await tronWrap.send("debug_storageRangeAt", [0, 0,contractAddress,'0x01', 1]);
+const result = await tronWrap.send('debug_storageRangeAt', [0, 0, contractAddress, '0x01', 1]);
 console.log(result);
 ```
 
-__3.4.1__
-* Add support for Solidity compiler 0.8.21
-* Bump tronweb from 5.1.0 to 5.3.0
+**3.4.1**
 
-__3.4.0__
-* Add support for `console.log` in Solidity smart contracts
+- Add support for Solidity compiler 0.8.21
+- Bump tronweb from 5.1.0 to 5.3.0
+
+**3.4.0**
+
+- Add support for `console.log` in Solidity smart contracts
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -46,11 +55,13 @@ contract SampleContract {
 }
 ```
 
-__3.3.0__
-* Add support for contract flattening
+**3.3.0**
 
-__3.2.0__
-* Add support for `deployProxy`, `deployBeacon` and `deployBeaconProxy` of `@openzeppelin/truffle-upgrades` in migrations
+- Add support for contract flattening
+
+**3.2.0**
+
+- Add support for `deployProxy`, `deployBeacon` and `deployBeaconProxy` of `@openzeppelin/truffle-upgrades` in migrations
 
 ```javascript
 const { deployProxy } = require('@openzeppelin/truffle-upgrades');
@@ -65,165 +76,207 @@ module.exports = async function (deployer) {
   } catch (error) {
     console.error('Transparent: deploy box error', error);
   }
-}
+};
 ```
 
-__3.1.2__
-* Add support for Solidity compiler 0.8.18
+**3.1.2**
 
-__3.1.1__
-* Add support for Solidity compiler 0.8.17
+- Add support for Solidity compiler 0.8.18
 
-__3.1.0__
-* Bump chokidar from 1.7.0 to 3.5.3
-* Bump yargs from 8.0.2 to 15.4.1
-* Bump tronweb from 4.4.0 to 5.1.0
+**3.1.1**
 
-__3.0.2__
-* Add support for ABIEncoderV2
-* Add support for using mnemonic in network config
-* Add support for converting a truffle project to tronbox project when `init`
-* Bump tronweb from 4.3.0 to 4.4.0
+- Add support for Solidity compiler 0.8.17
 
-__3.0.1__
-* Bug fixed and internal improvements
+**3.1.0**
 
-__3.0.0__
-* Bump tronweb from 4.0.1 to 4.3.0
-* Add support for Solidity compiler 0.8.7 and 0.8.11
-* Add `tronWrap.send` function to test environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
-* Add `tre_setAccountBalance` RPC method. The method can set the given account's balance to the specified SUN value.
-* Add `tre_setAccountCode` RPC method. The method can set the given account's code to the specified value.
-* Add `tre_setAccountStorageAt` RPC method. The method can set the given account's storage slot to the specified data.
-* Add `tre_blockTime` RPC method. The method can set the blockTime in seconds for automatic mining. A blockTime of 0 enables "instamine mode", where new executable transactions will be mined instantly.
-* Add `tre_mine` RPC method. The method can mine exactly `blocks` number of blocks.
-* Add `tre_unlockedAccounts` RPC method. The method can set up any arbitrary account to impersonate during development.
+- Bump chokidar from 1.7.0 to 3.5.3
+- Bump yargs from 8.0.2 to 15.4.1
+- Bump tronweb from 4.4.0 to 5.1.0
+
+**3.0.2**
+
+- Add support for ABIEncoderV2
+- Add support for using mnemonic in network config
+- Add support for converting a truffle project to tronbox project when `init`
+- Bump tronweb from 4.3.0 to 4.4.0
+
+**3.0.1**
+
+- Bug fixed and internal improvements
+
+**3.0.0**
+
+- Bump tronweb from 4.0.1 to 4.3.0
+- Add support for Solidity compiler 0.8.7 and 0.8.11
+- Add `tronWrap.send` function to test environment for supporting [tronbox/tre](https://hub.docker.com/r/tronbox/tre) docker image.
+- Add `tre_setAccountBalance` RPC method. The method can set the given account's balance to the specified SUN value.
+- Add `tre_setAccountCode` RPC method. The method can set the given account's code to the specified value.
+- Add `tre_setAccountStorageAt` RPC method. The method can set the given account's storage slot to the specified data.
+- Add `tre_blockTime` RPC method. The method can set the blockTime in seconds for automatic mining. A blockTime of 0 enables "instamine mode", where new executable transactions will be mined instantly.
+- Add `tre_mine` RPC method. The method can mine exactly `blocks` number of blocks.
+- Add `tre_unlockedAccounts` RPC method. The method can set up any arbitrary account to impersonate during development.
 
 `tre_setAccountBalance`:
+
 ```javascript
-const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
-const balance = "0x3e8";
-const result = await tronWrap.send("tre_setAccountBalance", [address, balance]);
+const address = 'TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL';
+const balance = '0x3e8';
+const result = await tronWrap.send('tre_setAccountBalance', [address, balance]);
 console.log(result);
 ```
+
 `tre_setAccountCode`:
+
 ```javascript
-const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
-const data = "0xbaddad42";
-const result = await tronWrap.send("tre_setAccountCode", [address, data]);
+const address = 'TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL';
+const data = '0xbaddad42';
+const result = await tronWrap.send('tre_setAccountCode', [address, data]);
 console.log(result);
 ```
+
 `tre_setAccountStorageAt`:
+
 ```javascript
-const address = "TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL";
-const slot = "0x0000000000000000000000000000000000000000000000000000000000000005";
-const data = "0xbaddad42";
-const result = await tronWrap.send("tre_setAccountStorageAt", [address, slot, data]);
+const address = 'TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL';
+const slot = '0x0000000000000000000000000000000000000000000000000000000000000005';
+const data = '0xbaddad42';
+const result = await tronWrap.send('tre_setAccountStorageAt', [address, slot, data]);
 console.log(result);
 ```
+
 `tre_blockTime`:
+
 ```javascript
-const result = await tronWrap.send("tre_blockTime", [3]);
+const result = await tronWrap.send('tre_blockTime', [3]);
 console.log(result);
 ```
+
 `tre_mine`:
+
 ```javascript
-const result = await tronWrap.send("tre_mine", [{ blocks: 5}]);
+const result = await tronWrap.send('tre_mine', [{ blocks: 5 }]);
 console.log(result);
 ```
+
 `tre_unlockedAccounts`:
+
 ```javascript
-const result = await tronWrap.send("tre_unlockedAccounts", [["TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL"]]);
+const result = await tronWrap.send('tre_unlockedAccounts', [['TNPeeaaFB7K9cmo4uQpcU32zGK8G1NYqeL']]);
 console.log(result);
 ```
 
-__2.7.25__
-* Bump tronweb from 4.0.0 to 4.0.1
+**2.7.25**
 
-__2.7.24__
-* Add support for Solidity compiler 0.5.18, 0.6.13, 0.7.7 and 0.8.6
+- Bump tronweb from 4.0.0 to 4.0.1
 
-__2.7.23__
-* Add support for Solidity compiler 0.8.0
+**2.7.24**
 
-__2.7.22__
-* Add support for Solidity compiler 0.7.6
+- Add support for Solidity compiler 0.5.18, 0.6.13, 0.7.7 and 0.8.6
 
-__2.7.21__
-* Add support for Solidity compiler 0.7.0
+**2.7.23**
 
-__2.7.20__
-* Merge Dependabot pull requests
+- Add support for Solidity compiler 0.8.0
 
-__2.7.19__
-* Add support for Solidity compiler 0.5.16, 0.5.17, 0.6.2, 0.6.8 and 0.6.12
+**2.7.22**
 
-__2.7.18__
-* Add support for Solidity compiler 0.6.0
-* Bump solc-js from 0.5.9 to 0.8.0
+- Add support for Solidity compiler 0.7.6
 
-__2.7.17__
-* Add support for Solidity compiler 0.5.15 and add signature for tronbox
+**2.7.21**
 
-__2.7.14__
-* Add support for Solidity compiler 0.5.12 and 0.5.13 and 0.5.14
+- Add support for Solidity compiler 0.7.0
 
-__2.7.11__
-* Add support for Solidity compiler 0.5.10
+**2.7.20**
 
-__2.7.10__
-* Fix for no module '.' found issue
+- Merge Dependabot pull requests
 
-__2.7.8__
-* Update to Tronweb 2.1.0, which allows to deploy contract requiring arrays of addresses
+**2.7.19**
 
-__2.7.7__
-* Fix Babel bug involving generators
+- Add support for Solidity compiler 0.5.16, 0.5.17, 0.6.2, 0.6.8 and 0.6.12
 
-__2.7.5__
-* More refactoring
-* Show alert if compilers cannot be downloaded
+**2.7.18**
 
-__2.7.4__
-* Partial refactoring
-* Add support for Solidity compiler 0.5.9
+- Add support for Solidity compiler 0.6.0
+- Bump solc-js from 0.5.9 to 0.8.0
 
-__2.5.2__
-* Fix bug in compiler wrapper calls
+**2.7.17**
 
-__2.5.0__
-* Add support for JavaTron 3.6 and Solidity compiler for `^0.5.4`
-* Fix vulnerability with (unused) `web3` and `diff` packages
+- Add support for Solidity compiler 0.5.15 and add signature for tronbox
 
-__2.3.16__
-* Updates TronWeb to version 2.3.2
+**2.7.14**
 
-__2.3.16__
-* Updates TronWeb to version 2.3.2
+- Add support for Solidity compiler 0.5.12 and 0.5.13 and 0.5.14
 
-__2.3.15__
-* Updates TronWeb to latest version which fixes issues with watch
+**2.7.11**
 
-__2.3.1__
-* Adds temporary logo.
-* Fix contract name during deployment
+- Add support for Solidity compiler 0.5.10
 
-__2.3.0__
-* When a smart contract deploy fails, the error shows the url to get info about the failed transaction.
+**2.7.10**
 
-__2.2.3__
-* Resolve appended process after migrating.
-* Add better error messaging.
-* Fix issue with invalid origin_energy_limit.
+- Fix for no module '.' found issue
 
-__2.2.2__
-* Add parameter configuration by smart contract.
+**2.7.8**
 
-__2.2.1__
-* Add compatibility with JavaTron 3.2.
+- Update to Tronweb 2.1.0, which allows to deploy contract requiring arrays of addresses
 
+**2.7.7**
 
------
+- Fix Babel bug involving generators
+
+**2.7.5**
+
+- More refactoring
+- Show alert if compilers cannot be downloaded
+
+**2.7.4**
+
+- Partial refactoring
+- Add support for Solidity compiler 0.5.9
+
+**2.5.2**
+
+- Fix bug in compiler wrapper calls
+
+**2.5.0**
+
+- Add support for JavaTron 3.6 and Solidity compiler for `^0.5.4`
+- Fix vulnerability with (unused) `web3` and `diff` packages
+
+**2.3.16**
+
+- Updates TronWeb to version 2.3.2
+
+**2.3.16**
+
+- Updates TronWeb to version 2.3.2
+
+**2.3.15**
+
+- Updates TronWeb to latest version which fixes issues with watch
+
+**2.3.1**
+
+- Adds temporary logo.
+- Fix contract name during deployment
+
+**2.3.0**
+
+- When a smart contract deploy fails, the error shows the url to get info about the failed transaction.
+
+**2.2.3**
+
+- Resolve appended process after migrating.
+- Add better error messaging.
+- Fix issue with invalid origin_energy_limit.
+
+**2.2.2**
+
+- Add parameter configuration by smart contract.
+
+**2.2.1**
+
+- Add compatibility with JavaTron 3.2.
+
+---
 
 For more historic data, check the original repo at
 [https://github.com/tronprotocol/tronbox](https://github.com/tronprotocol/tronbox)
