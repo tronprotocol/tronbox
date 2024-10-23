@@ -1,5 +1,5 @@
 const TransparentUpgradeableProxy = artifacts.require(
-  '@openzeppelin/upgrades-core/artifacts/@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol/TransparentUpgradeableProxy.json'
+  '@openzeppelin/upgrades-core/artifacts/@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol/ITransparentUpgradeableProxy.json'
 );
 const Box = artifacts.require('UUPSBox');
 const BoxV2 = artifacts.require('UUPSBoxV2');
