@@ -65,12 +65,13 @@ const compile = function (sources, options, callback) {
     originalPathMappings[replacement] = source;
   });
 
+  const settings = Object.keys(options.solc).length ? options.solc : options.compilers?.solc?.settings || {};
+
   const solcStandardInput = {
     language: 'Solidity',
     sources: {},
     settings: {
-      evmVersion: options.solc?.evmVersion || options.compilers?.solc?.settings?.evmVersion,
-      optimizer: options.solc?.optimizer || options.compilers?.solc?.settings?.optimizer,
+      ...settings,
       outputSelection: {
         '*': {
           '': ['legacyAST', 'ast'],
