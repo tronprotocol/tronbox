@@ -18,7 +18,7 @@
           },
           {
             "path": ".eslintrc",
-            "sha512": "6b1a8f7be4986cb8f0023f049b10825d33f1ae4e334af07fcd4e71c53d605f65b650b014a66150aee3463e7bb909656b5b7874cba7ad40b685df5406119603a2"
+            "sha512": "ecf2a0696c339131b8e7608d37c6ce9ac7bafa429b403f8adc7ef729a5f522dbe272b18529ae58fb2926c26712ebb4f334a3ad5941e6f2277b349866a923ce59"
           },
           {
             "path": ".gitmodules",
@@ -94,7 +94,7 @@
           },
           {
             "path": "build/components/Contract/contract.js",
-            "sha512": "2e4fe409ba4b6bf6b308159871fc4c8e547ef3166e351ced1467227529a7ed045860b0c274a7b42f8afbcdc1756ce393a11ce4d74c5ab99aac008b9010aabd1d"
+            "sha512": "7dc814d45810b3e019b2ff94e3a989b23176f7bbf557bd8461f7fc8e91d3446fcc8e105b8019dc039e2f2e32ad5121cae0e5b7ad930c3a28192c196a47b1195a"
           },
           {
             "path": "build/lib/commands/convert.js",
@@ -102,7 +102,7 @@
           },
           {
             "path": "build/lib/copy.js",
-            "sha512": "7c63b0aadf9ac37170f20f5fa26d7d95878dd087b7b4eea8f4bf73c1441a6327347a063843627c2b2399f39276e18b3bd8a1566f5ff5d15985105d8a59c3ec13"
+            "sha512": "69c085d95035784c8186cd032322a1bae6b5ae435a810112167177aecf59de0049900247ef93f77df12d3bd0e9585ded067073cbcd209173d2cec98c8b62f46d"
           },
           {
             "path": "build/components/DebugUtils.js",
@@ -170,7 +170,7 @@
           },
           {
             "path": "build/components/Compile/index.js",
-            "sha512": "c5f31a15db27f7371f7521c9091235279bf55cc15f944d11c60676b849d9329424611d37736b3833f34c2404c6075ce4293aaafc052372ea556236aaf5aa8fc7"
+            "sha512": "af935f04064159d8164899a50a691cb8ebf5ee389545d5332e02ccf0bc5f0b35ef624f14b690a282a0449d113f8cfc5c9391786898b4442c40816a1312384143"
           },
           {
             "path": "build/components/ConsoleLogger/index.js",
@@ -190,7 +190,7 @@
           },
           {
             "path": "build/components/Flatten/index.js",
-            "sha512": "d6e8928ef0a93f814d139c5fceffd605dccf556c7e13637aed72b9060d5ce45ceaa537ba3e1648c3043b82323331118cd02a4f7050845f41280a8a35ba105c3e"
+            "sha512": "754b2429ba4ca6e531ef8bb3939de7ebe1edc040c0402719c38b31d2ed5cde14906cfe48993be6d58521bb1e3d36ead4d23bfc4a65be0abe5b53b247274aa0ad"
           },
           {
             "path": "build/components/Migrate/index.js",
@@ -206,7 +206,7 @@
           },
           {
             "path": "build/components/TronWrap/index.js",
-            "sha512": "340a76f1103c70f7f498ada61fae7ebb59a338a48ed57ef74760d2e410ede4237dcff656e24a855a3c2e2ca2b64dd541c96d548891780cf930aa0f0bdb9e1b06"
+            "sha512": "10ac990ce3ab79dcbf89331cca92e3a05f27b01758ec3033e5fa7c76c3b91c8f7a636b5e90af5745716c0fa2abf96fd6837358670a3a05e14fc781a405eb932e"
           },
           {
             "path": "build/index.js",
@@ -270,7 +270,7 @@
           },
           {
             "path": "build/components/TronWrap/reformat.js",
-            "sha512": "aa33eb643a80d2fa1763b30449ad2f0f15936de177d45750bb0bd19430204fbe567f6cd7d6a43c807feabbff330aacec09c356558c8879b41b3f0db7b1dfe758"
+            "sha512": "4c7108d7d7a6b7faff0339a72cb7289f2ce33bcededb2908ab9c7cc8ba6ecfabbf4427078c34967ba4f44f5bf0dd9bb34eeec8f03a3c8516caeb2a98b6c8fa18"
           },
           {
             "path": "build/lib/repl.js",
@@ -330,7 +330,7 @@
           },
           {
             "path": "build/components/TronSolc.js",
-            "sha512": "8b1864487275cb4d05c01bde98e3b1d0544044099450852ae901d54d8064f3856e232f9f9c5b166dececb4cd5f9b808d1e090171d15e010e10037bb68c4acc24"
+            "sha512": "627be3e0921b8fd78177288aa6d2a207ca3de888e1d55b39c2fcb1bcaf73fe23f94957467fa07b8489f98c83a4660a34b906867883a39e06d889feea7d460af6"
           },
           {
             "path": "build/components/Box/lib/utils/unbox.js",
@@ -350,11 +350,11 @@
           },
           {
             "path": "build/lib/testing/waitForTransactionReceipt.js",
-            "sha512": "bab0e9dc9f8c768cee85c13f467900e1e5e20b23e602e8982bd7d5b58da2fc5a4d0aee3d3c95cbc197c637205b1054a29b6eb01eb2fe2472f3bbd5d4f2dbb7c3"
+            "sha512": "c56db93b460fa6a0ba9d103ac51c0eb52cf384f6fda7cf21fdbd34297d2833b0844ea3bb9109645d9f76f8745d6171292eaa4e570261ed91a2f48d043ccccc72"
           },
           {
             "path": "build/lib/commands/watch.js",
-            "sha512": "8f8c40bc20abc7312ca3c3d65c6832fe59a65a7881c24669b31ede4f02ef7a7588882fb41a18fc068405f46b2d945c05e608fcd327a048af66f1c78bfbb29aa5"
+            "sha512": "cee85fb153a64cc433d4da3c50aecf82dd953309cf295647310bb40e666b461775babbae2762eceb585fe090d5617cb7b801c5a9f330c14f16198ee2f39a4948"
           },
           {
             "path": "build/components/WorkflowCompile.js",
@@ -382,19 +382,19 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "902188032dbf5637726a55ff3dd799d537a350015d60137fcdc81124acea0c8247c98eb240abe8072a799848ca0507ca82632740e5d35b3f63b082644bfd1680"
+            "sha512": "8157d1d5e533afd080b8dd8566681332f2152e3838bea2bbc67a9bfc3bc51a321a7da284c56b0ea0e355bfa25aac493bab75e8b9dc89348c94e8b3a303687464"
           },
           {
             "path": "CONTRIBUTING.md",
-            "sha512": "cc64230c3e65c480d78b278b29fb337e103513b267f0c5d53345e412b3c7ab99db62c0563a7d1f769de57400eac8fe28378817a4e1cccfb9ae3347dd6df1de8e"
+            "sha512": "4f9c10cdb3ab6100e1c582ec22f377330a6dfa81e14d77edde74dadb9bf293c007ec915c7b55be4f5504eab908a437f1d8f94f3b3b7696b2fa0346a1aea79361"
           },
           {
             "path": "FURTHER_INFO.md",
-            "sha512": "aa81052e66469ef617f49d62ae9de64a91de5ec05f73b9b7af77a1203aaf70f15947f4f36875d7d190471178d32ae4f46f016c6635e578e676fe53fb3a4542c9"
+            "sha512": "689a56df3b65e0b99f8647a91e43d455945be5394aeca11fd6bef7c91b2e1e37938988ad9a1c4543f4628cb12348d6c054a1fd4699c471eac4ceb654a2fa9be9"
           },
           {
             "path": "README.md",
-            "sha512": "2faf3cad45558b341dfd0cfdc56342e9d00d701de18b4b9b05a222297feff8509ab38be33d719f676c180db871280acc6a6f87452357208effa9a54a3722e124"
+            "sha512": "78e1dbb9a99bbc946ac305e92e301f33d4abbb3686645c1dc5464780124e4915d8bd581d3854edeb9de5526f7ef001a5cd9fbab7f43d692ab2b4b7adecbf74d7"
           },
           {
             "path": "assets/TronBox-logo.png",
@@ -437,7 +437,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "4e599e9d6c6ba9bbe23defeadee09c51d3141366ed2fd27a3f7344802dcd1d5e51d8896b2e0035982bd8bcdc23f527920df08af9bb5bdc575f18bfd3e55de62d"
+        "sha512": "041a041cce0ac1800c720480f2543c2bad7e6f320dc756183f6cb3983f59a3620417f867fbe56182a3827a3b1ab8fd6c23da2626d68f52ccbf5d5535a6a2e090"
       }
     },
     {
@@ -446,7 +446,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "4.0.0",
+          "version": "4.0.1",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -471,7 +471,7 @@
             "@truffle/expect": "0.1.7",
             "ajv": "^6.10.2",
             "async": "2.6.4",
-            "axios": "^0.21.1",
+            "axios": "^1.7.7",
             "bignumber.js": "^7.2.1",
             "chai": "4.1.2",
             "chalk": "^2.4.1",
@@ -506,6 +506,7 @@
             "vcsurl": "^0.1.1",
             "web3": "1.10.4",
             "web3-eth-contract": "1.10.4",
+            "web3-utils": "1.10.4",
             "yargs": "^15.4.1"
           },
           "devDependencies": {
@@ -567,5 +568,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJmlNi3ACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hs3Q/+K7GyYPlZyYUotPSWNOrgIY6ACDM9sIGfU9ujNeT434lu2L+2\nwsqrrv2DKw83QUU3hDuLMeNJutnALxmiKmo5xlVgrEzO+KEq8Slyh9MNySlj\n22/iSZPWiQmBTga7FY5ZYXkNZ5yybZkkJSR9XCU1LZ4d8GVJqmwXWMOjD8kV\niIh42iSRGVOh3TEPg6M0fRq8AwsohH1/YL9hUyqIgPtIyix3EIQCPqYpu8g6\nJ2k2OBXQnmbk2xj6rD6R+LnuAFUG7A0ICW4g4ZX4nS3dME78nhWbUM0Zsy87\n2e6BITDl45PeQ9Hj8olaaoDPIN7j6J8lVZptxZl+egpKMLdPu7KY3tQ+a2jx\niBE8EUaxXc1FbV++oA6O63Mhk0iBIXaPDJltLKqE8PtmROegnyJoB4AGthSo\ng4cQC22cx3ljLy2YKtRVedsWZEtb+cCH4MFXUxFOXT9fdJHtoZ88+FQVaObG\nCAWXRMaYejKqgbTgmESiD+g9CpkDkxqieLaxrzbJB6B/q35sw3EIJUisqnzf\ncW7VWGSiiQ5t4p4dPJ/DvqqrYKZi4Y1I45McTDC+vNtEconEYfQgf0dOD+IK\nRa1VmQyVxoFOK7EZ/IJkKkAynHIzsERnt5KNr8EoInJAnb2au0Z+JCpWna6p\ni6GFLdPieU/hXwqn0QeBYXWCxQ2+WICBnWg=\n=NYa1\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJnG5LnACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1iYRhAA012u68ZDGl8SUw9B5NQ/jtE5vFGYHGjx9Ua7Gk4zjpU3asgk\nLdVyAZpf+yqmPrWaZcWPikuYgyljSYLOJ0jT2jNBGHqhEuTgWx791BL4t1YY\nBBuTHfNdZs2HJICCyf0ScoSjpUXIGwvHKeBu/bcTVZokakXnJHJH1YqibXSA\n3sLzKLblfQFKCq/DgHBYkblSgCueFKgOg63pOLm9Oj/kI3+CCdCkCId53hKY\n4vw15RqsTpgTmQk4bHUGxbhr1O/PwKN+u7xzR8nzmVamk00P0lJJSHXo7YK2\n3s7wGGbOZahJDj3vRa8VXwmv1lH2UUNaQeZ7vmKnALAwp0nXV2nYitAAeLpf\nBMzJid8N9xdaFuN5xp67KEVKeVOvHn9907WhPssGVq2MuyBljQQVlzdje0D6\no5PTqpG/TJX0isy8ybFl/wO93r9Sqqcxe/RBTqJtAuyHzbnNSYI8BX7L25wW\nwI88wUAxKSBdUiDgzufH4mnfhdw35RXElZT+YGoGlmXOYknPyaAchfR7hGBq\n3Ze3+lAIb4b5mMbtYmUcUIG3as0sCgGhjGaAfRBytS/C8EuK8+DXLTLFG20e\nSwzsd7dTgBn3QUoYLiS2pV8//MVxrSl471LB4M0sqqA80aWDFTGgQ5Xo6mAA\nyRoh0j42M07hKwIktR6NsbfOafX5M2T0dKQ=\n=w4Jg\n-----END PGP SIGNATURE-----\n"
 }
