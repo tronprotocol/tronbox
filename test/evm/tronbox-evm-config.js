@@ -11,7 +11,6 @@ Create a .env file (it must be gitignored) containing something like
 Then, run the migration with:
 
   source .env && tronbox migrate --network bttc --evm
-
       */
       fullHost: 'https://rpc.bt.io',
       gas: 8500000, // Gas sent with each transaction
@@ -22,19 +21,18 @@ Then, run the migration with:
       privateKey: process.env.PRIVATE_KEY_DEV,
       fullHost: 'http://127.0.0.1:8545',
       network_id: '9'
-    },
-    compilers: {
-      solc: {
-        version: '0.8.6'
-      }
     }
   },
-  // solc compiler optimize
-  solc: {
-    //   optimizer: {
-    //     enabled: true,
-    //     runs: 200
-    //   },
-    //   evmVersion: 'istanbul'
+  compilers: {
+    solc: {
+      version: '0.8.6',
+      settings: {
+        // optimizer: {
+        //   enabled: true,
+        //   runs: 200
+        // },
+        // evmVersion: 'istanbul'
+      }
+    }
   }
 };
