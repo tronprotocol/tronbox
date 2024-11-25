@@ -1,8 +1,12 @@
+**4.0.2**
+
+- Support for Solidity compiler 0.8.22
+
 **4.0.1**
 
 - Support for IR-based codegen
-- Bump axios version to v1.7.7
 - Support for Solidity compiler 0.8.21
+- Bump axios version to v1.7.7
 
 **4.0.0**
 
