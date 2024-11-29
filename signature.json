@@ -330,7 +330,7 @@
           },
           {
             "path": "build/components/TronSolc.js",
-            "sha512": "627be3e0921b8fd78177288aa6d2a207ca3de888e1d55b39c2fcb1bcaf73fe23f94957467fa07b8489f98c83a4660a34b906867883a39e06d889feea7d460af6"
+            "sha512": "6499dfbc763746768f7b646f834038ff19294075d78f99ec536f85476b639db58eff17a82afdb11f37dcf01e7054d3c3b5b3bf3454f6af8a51f5865d682ffe5d"
           },
           {
             "path": "build/components/Box/lib/utils/unbox.js",
@@ -382,7 +382,7 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "8157d1d5e533afd080b8dd8566681332f2152e3838bea2bbc67a9bfc3bc51a321a7da284c56b0ea0e355bfa25aac493bab75e8b9dc89348c94e8b3a303687464"
+            "sha512": "f43df7b05a9db830f4919a6dc1e295103a522219212a6fff3307fcbf08859cfef0bde44fa756236cdb7492e9cd354ea69fafd884abe2c2cc457abc19eaef7b12"
           },
           {
             "path": "CONTRIBUTING.md",
@@ -390,7 +390,7 @@
           },
           {
             "path": "FURTHER_INFO.md",
-            "sha512": "689a56df3b65e0b99f8647a91e43d455945be5394aeca11fd6bef7c91b2e1e37938988ad9a1c4543f4628cb12348d6c054a1fd4699c471eac4ceb654a2fa9be9"
+            "sha512": "0f2c0cc6d71687d07838375befc3aee022ae9243a4a905e88de09e01de409bf585b285d54b6a659bb98f5328716c34d69b6398ec61bf5ed06f1fc804beb252f2"
           },
           {
             "path": "README.md",
@@ -437,7 +437,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "041a041cce0ac1800c720480f2543c2bad7e6f320dc756183f6cb3983f59a3620417f867fbe56182a3827a3b1ab8fd6c23da2626d68f52ccbf5d5535a6a2e090"
+        "sha512": "97c488f55aca495f6fea7187cb1b7533419d0b962ad135019c5d243a71206291629dbcc5bc8bcb1465d59a43f26f29da68581186d5873bf49480ce35b92ea9fd"
       }
     },
     {
@@ -446,7 +446,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "4.0.1",
+          "version": "4.0.2",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -568,5 +568,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJnG5LnACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1iYRhAA012u68ZDGl8SUw9B5NQ/jtE5vFGYHGjx9Ua7Gk4zjpU3asgk\nLdVyAZpf+yqmPrWaZcWPikuYgyljSYLOJ0jT2jNBGHqhEuTgWx791BL4t1YY\nBBuTHfNdZs2HJICCyf0ScoSjpUXIGwvHKeBu/bcTVZokakXnJHJH1YqibXSA\n3sLzKLblfQFKCq/DgHBYkblSgCueFKgOg63pOLm9Oj/kI3+CCdCkCId53hKY\n4vw15RqsTpgTmQk4bHUGxbhr1O/PwKN+u7xzR8nzmVamk00P0lJJSHXo7YK2\n3s7wGGbOZahJDj3vRa8VXwmv1lH2UUNaQeZ7vmKnALAwp0nXV2nYitAAeLpf\nBMzJid8N9xdaFuN5xp67KEVKeVOvHn9907WhPssGVq2MuyBljQQVlzdje0D6\no5PTqpG/TJX0isy8ybFl/wO93r9Sqqcxe/RBTqJtAuyHzbnNSYI8BX7L25wW\nwI88wUAxKSBdUiDgzufH4mnfhdw35RXElZT+YGoGlmXOYknPyaAchfR7hGBq\n3Ze3+lAIb4b5mMbtYmUcUIG3as0sCgGhjGaAfRBytS/C8EuK8+DXLTLFG20e\nSwzsd7dTgBn3QUoYLiS2pV8//MVxrSl471LB4M0sqqA80aWDFTGgQ5Xo6mAA\nyRoh0j42M07hKwIktR6NsbfOafX5M2T0dKQ=\n=w4Jg\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJnRC7WACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hOrA//clQGeQRGslqsgzAdfM+jtkwzOjWnGQj50+YDQn3EuB9ZBBI5\n5VNykGAXK6phfwXXJxOzmURNYydBPWdL0mgBXiH91j6Nz/iwhSbM8TW3Gdlj\n2Eto12IR0AThbFyXOdTgXAGTCmIydkNElVvBS5tDxGO8LHmOWnU1AVdsCvPW\n60gz+PnwefGN3P+vOAh1ZITmmHuRs8JTywBTsr+jCpLWfbpIjZum8qLVubtN\naVaxg/p7pkRg9QbF9i9OZUURzSn6vfc2g0MCT1pNMAu63RUpd9JtPxUaDbRo\nYD49YjPiiyJrkoott1sfJI6PQG5YqlJls7wZAqvJDpjv9Lz/80ZB0PA7mwgH\nSEViPPYFevuJzsGBYDM0QF0i+OHLz1n8aA/w4La2DYXTbffweq0H9hqggdEQ\nLNqQbIN3vvxvrSHBcAGgAgUKZleRhXjeX3mBkyAJCCHSGS1gbR/r8e8nHcXq\ntVHYHcBV9RcsPgtdQRkbluCsgiy1Irf1xUQ8odN+6+Pu37f2NM/DpY5ccyCJ\nIWyXZ4GKQduFwfKF+g5wJ/wHXrBhTqwktU2hguI/supnNAox4BH7tQzATqP5\ndWCaIq9HpbWqp6G+KYyDHn8HDlEneHgO9P/SqnmVuOn73vLc/ZvrgvBcSfak\nsDD3t3xv25/46dCuN1opiVXHnMY0Yxb9MwA=\n=Qc7e\n-----END PGP SIGNATURE-----\n"
 }
