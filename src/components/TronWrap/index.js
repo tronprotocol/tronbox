@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const _TronWeb = require('tronweb');
+const { TronWeb: _TronWeb } = require('tronweb');
 const chalk = require('chalk');
 const constants = require('./constants');
 const axios = require('axios');

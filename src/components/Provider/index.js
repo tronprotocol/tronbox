@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { TronWeb } = require('../TronWrap');
+const { providers } = require('tronweb');
 const wrapper = require('./wrapper');
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
     } else if (options.provider) {
       provider = options.provider;
     } else {
-      const HttpProvider = TronWeb.providers.HttpProvider;
+      const HttpProvider = providers.HttpProvider;
 
       HttpProvider.prototype.send = async function (payload) {
         const { data } = await axios.post(`${fullHost}/jsonrpc`, payload);
