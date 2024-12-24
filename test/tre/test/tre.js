@@ -53,7 +53,7 @@ contract('MetaCoin', function (accounts) {
     assert.isTrue(success, 'The tre_setAccountBalance return value is incorrect');
     assert.equal(beforeBalance, 0, 'Balance is not 0');
     assert.equal(afterBalance, balance, 'Balance setting failed');
-    assert.equal(afterBalanceByMeta[0].toNumber(), balance, 'Balance returned by the contract is incorrect');
+    assert.equal(Number(afterBalanceByMeta[0]), balance, 'Balance returned by the contract is incorrect');
   });
 
   it('should successfully set account code', async function () {
@@ -94,8 +94,8 @@ contract('MetaCoin', function (accounts) {
     const setStorageSuccess = await tronWrap.send('tre_setAccountStorageAt', [account, slot, value]);
     const afterTotal = await ins.total().call();
     assert.isTrue(setStorageSuccess, 'The tre_setAccountStorageAt return value is incorrect');
-    assert.equal(beforeTotal.toNumber(), 0, 'Total supply is not 0');
-    assert.equal(afterTotal.toNumber(), 1, 'Total supply setting failed');
+    assert.equal(beforeTotal, 0n, 'Total supply is not 0');
+    assert.equal(afterTotal, 1n, 'Total supply setting failed');
   });
 
   it('should successfully set block time', async function () {
@@ -107,7 +107,7 @@ contract('MetaCoin', function (accounts) {
     const afterNumberByMeta = await meta.getBlockNumber();
     assert.isTrue(success, 'The tre_blockTime return value is incorrect');
     assert.equal(beforeNumber, afterNumber, 'Pause mining failed');
-    assert.equal(afterNumber, afterNumberByMeta, 'Block number returned by the contract is incorrect');
+    assert.equal(afterNumber, Number(afterNumberByMeta), 'Block number returned by the contract is incorrect');
 
     await tronWrap.send('tre_blockTime', [3]);
     await wait(10);
@@ -135,7 +135,7 @@ contract('MetaCoin', function (accounts) {
     const result = await tronWrap.send('debug_storageRangeAt', [0, 0, meta.address, '0x01', 1]);
     assert(result.storage, 'The debug_storageRangeAt return missing storage field');
     assert(typeof result.storage === 'object', 'The debug_storageRangeAt return storage is not an object');
-    assert(result.hasOwnProperty('nextKey'), 'The debug_storageRangeAt return missing nextKey field');
+    assert(result['nextKey'] !== undefined, 'The debug_storageRangeAt return missing nextKey field');
     assert(Object.keys(result.storage).length > 0, 'The debug_storageRangeAt return storage is empty');
     const key = Object.keys(result.storage)[0];
     assert.equal(typeof result.storage[key].value, 'string', 'The debug_storageRangeAt return value should be string');
@@ -170,26 +170,18 @@ contract('MetaCoin', function (accounts) {
     });
     await wait(3);
     assert.equal(
-      (await unlockedMeta.getBalance(unlockedAccounts[0])).toNumber(),
-      9990,
+      await unlockedMeta.getBalance(unlockedAccounts[0]),
+      9990n,
       "Amount wasn't correctly taken from the sender"
     );
-    assert.equal(
-      (await unlockedMeta.getBalance(accounts[0])).toNumber(),
-      10,
-      "Amount wasn't correctly sent to the receiver"
-    );
+    assert.equal(await unlockedMeta.getBalance(accounts[0]), 10n, "Amount wasn't correctly sent to the receiver");
 
     await unlockedMeta.sendCoin(unlockedAccounts[1], 10);
     await wait(3);
+    assert.equal(await unlockedMeta.getBalance(accounts[0]), 0n, "Amount wasn't correctly taken from the sender");
     assert.equal(
-      (await unlockedMeta.getBalance(accounts[0])).toNumber(),
-      0,
-      "Amount wasn't correctly taken from the sender"
-    );
-    assert.equal(
-      (await unlockedMeta.getBalance(unlockedAccounts[1])).toNumber(),
-      10,
+      await unlockedMeta.getBalance(unlockedAccounts[1]),
+      10n,
       "Amount wasn't correctly sent to the receiver"
     );
 

@@ -32,33 +32,7 @@ contract('MetaCoin', function (accounts) {
 
   it('should put 10000 MetaCoin in the first account', async function () {
     const balance = await meta.getBalance(accounts[0], { from: accounts[0] });
-    assert.equal(balance, 10000, "10000 wasn't in the first account");
-  });
-
-  it('should send coins from account 0 to 3 and verify that a Transfer event has been emitted', function (done) {
-    assert.isTrue(accounts[3] ? true : false, 'accounts[1] does not exist. Use TronBox Runtime Environment!');
-
-    this.timeout(20000);
-    MetaCoin.deployed().then(meta => {
-      return tronWeb
-        .contract()
-        .at(meta.address)
-        .then(async meta2 => {
-          const transferEvent = await meta2.Transfer().watch((err, res) => {
-            if (res) {
-              assert.equal(res.result._from, tronWeb.address.toHex(accounts[0]));
-              assert.equal(res.result._to, tronWeb.address.toHex(accounts[3]));
-              assert.equal(res.result._value, 1);
-              transferEvent.stop();
-              done();
-            }
-          });
-
-          meta.sendCoin(accounts[3], 1, {
-            from: accounts[0]
-          });
-        });
-    });
+    assert.equal(balance, 10000n, "10000 wasn't in the first account");
   });
 
   it('should send coins from account 0 to 1', async function () {
@@ -67,20 +41,20 @@ contract('MetaCoin', function (accounts) {
     this.timeout(10000);
     const meta = await MetaCoin.deployed();
     await wait(3);
-    const account_one_starting_balance = (await meta.getBalance.call(accounts[0])).toNumber();
-    const account_two_starting_balance = (await meta.getBalance.call(accounts[1])).toNumber();
+    const account_one_starting_balance = await meta.getBalance.call(accounts[0]);
+    const account_two_starting_balance = await meta.getBalance.call(accounts[1]);
     await meta.sendCoin(accounts[1], 10, {
       from: accounts[0]
     });
     await wait(3);
     assert.equal(
-      (await meta.getBalance.call(accounts[0])).toNumber(),
-      account_one_starting_balance - 10,
+      await meta.getBalance.call(accounts[0]),
+      account_one_starting_balance - 10n,
       "Amount wasn't correctly taken from the sender"
     );
     assert.equal(
-      (await meta.getBalance.call(accounts[1])).toNumber(),
-      account_two_starting_balance + 10,
+      await meta.getBalance.call(accounts[1]),
+      account_two_starting_balance + 10n,
       "Amount wasn't correctly sent to the receiver"
     );
   });

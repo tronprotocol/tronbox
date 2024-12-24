@@ -1,6 +1,5 @@
 const { assert } = require('chai');
-var chalk = require('chalk');
-var Tuple = artifacts.require('./Tuple.sol');
+const Tuple = artifacts.require('./Tuple.sol');
 
 // The following tests require TronBox >= 2.1.x
 
@@ -12,6 +11,7 @@ contract('Tuple', function (accounts) {
       return values.map(turnBN2N);
     }
     if (values._isBigNumber) return values.toNumber();
+    if (typeof values === 'bigint') return Number(values);
     return values;
   }
 
