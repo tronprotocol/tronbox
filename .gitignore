@@ -5,5 +5,6 @@ dependencies
 build
 tmp
 dist
+.env
 .idea
 .vscode
