@@ -1,10 +1,9 @@
-const Web3 = require('web3');
+const { Web3 } = require('web3');
 const { TronWeb: _TronWeb } = require('tronweb');
 const chalk = require('chalk');
 const constants = require('./constants');
 const axios = require('axios');
 const ConsoleLogger = require('../ConsoleLogger');
-const reformat = require('./reformat');
 
 let instance;
 
@@ -126,9 +125,11 @@ function init(options, extraOptions = {}) {
   }
   if (extraOptions.evm) {
     const web3 = new Web3(options.fullNode || options.fullHost);
-    const account = web3.eth.accounts.wallet.add(getPrivateKey());
+    let pk = getPrivateKey();
+    if (!pk.startsWith('0x')) pk = '0x' + pk;
+    const account = web3.eth.accounts.wallet.add(pk);
     tronWrap._web3 = web3;
-    tronWrap._web3_accounts = [account.address];
+    tronWrap._web3_accounts = [account[0].address];
   }
 
   tronWrap._getNetworkInfo = async function () {
@@ -519,7 +520,7 @@ function init(options, extraOptions = {}) {
 
   tronWrap._evmGetAccounts = async function (callback) {
     const accounts = [...tronWrap._web3_accounts];
-    tronWrap._privateKeyByAccount[accounts[0]] = tronWrap._web3.eth.accounts.wallet[accounts[0]].privateKey;
+    tronWrap._privateKeyByAccount[accounts[0]] = tronWrap._web3.eth.accounts.wallet.get(accounts[0]).privateKey;
     if (callback) {
       return callback(null, accounts);
     }
@@ -552,7 +553,7 @@ function init(options, extraOptions = {}) {
       }
       let transactionHash = null;
       dlog('Deploying contract:', option.contractName);
-      const newContract = await deployFunc.send(opt, (err, hash) => {
+      const newContract = await deployFunc.send(opt).on('transactionHash', hash => {
         transactionHash = hash;
       });
       const { address } = newContract.options;
@@ -601,19 +602,16 @@ function init(options, extraOptions = {}) {
     }
 
     let callSend = 'send';
-    let abiOutputs = [];
     option.abi.forEach(function (val) {
       if (val.name === option.methodName) {
         callSend = /payable/.test(val.stateMutability) ? 'send' : 'call';
-        abiOutputs = val.outputs;
       }
     });
 
     try {
       if (callSend === 'call') {
         const callRes = await methodFunc.call(opt);
-        const result = reformat(callRes, abiOutputs);
-        return callback(null, result);
+        return callback(null, callRes);
       }
 
       if (!opt.gas) {

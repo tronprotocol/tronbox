@@ -1,10 +1,7 @@
-const ethJSABI = require('ethjs-abi');
-const Web3 = require('web3');
-const Web3Contract = require('web3-eth-contract');
+const { Web3, Contract: Web3Contract } = require('web3');
 const TronWrap = require('../TronWrap');
 const { constants } = require('../TronWrap');
 const BigNumber = require('bignumber.js');
-const StatusError = require('./statuserror.js');
 
 // eslint-disable-next-line no-unused-vars
 const contract = (function (module) {
@@ -38,176 +35,6 @@ const contract = (function (module) {
         return false;
       }
     },
-    decodeLogs: function (C, instance, logs) {
-      return logs
-        .map(function (log) {
-          const logABI = C.events[log.topics[0]];
-
-          if (!logABI) {
-            return null;
-          }
-
-          // This function has been adapted from web3's SolidityEvent.decode() method,
-          // and built to work with ethjs-abi.
-
-          const copy = Utils.merge({}, log);
-
-          function partialABI(fullABI, indexed) {
-            const inputs = fullABI.inputs.filter(function (i) {
-              return i.indexed === indexed;
-            });
-
-            const partial = {
-              inputs: inputs,
-              name: fullABI.name,
-              type: fullABI.type,
-              anonymous: fullABI.anonymous
-            };
-
-            return partial;
-          }
-
-          const argTopics = logABI.anonymous ? copy.topics : copy.topics.slice(1);
-          const indexedData =
-            '0x' +
-            argTopics
-              .map(function (topics) {
-                return topics.slice(2);
-              })
-              .join('');
-          const indexedParams = ethJSABI.decodeEvent(partialABI(logABI, true), indexedData);
-
-          const notIndexedData = copy.data;
-          const notIndexedParams = ethJSABI.decodeEvent(partialABI(logABI, false), notIndexedData);
-
-          copy.event = logABI.name;
-
-          copy.args = logABI.inputs.reduce(function (acc, current) {
-            let val = indexedParams[current.name];
-
-            if (val === undefined) {
-              val = notIndexedParams[current.name];
-            }
-
-            acc[current.name] = val;
-            return acc;
-          }, {});
-
-          Object.keys(copy.args).forEach(function (key) {
-            const val = copy.args[key];
-
-            // We have BN. Convert it to BigNumber
-            if (val.constructor.isBN) {
-              copy.args[key] = BigNumber('0x' + val.toString(16));
-            }
-          });
-
-          delete copy.data;
-          delete copy.topics;
-
-          return copy;
-        })
-        .filter(function (log) {
-          return log != null;
-        });
-    },
-    promisifyFunction: function (fn, C) {
-      return function () {
-        const instance = this;
-
-        const args = Array.prototype.slice.call(arguments);
-        let tx_params = {};
-        const last_arg = args[args.length - 1];
-
-        // It's only tx_params if it's an object and not a BigNumber.
-        if (Utils.is_object(last_arg) && !Utils.is_big_number(last_arg)) {
-          tx_params = args.pop();
-        }
-
-        tx_params = Utils.merge(C.class_defaults, tx_params);
-
-        return new Promise(function (accept, reject) {
-          const callback = function (error, result) {
-            if (error != null) {
-              reject(error);
-            } else {
-              accept(result);
-            }
-          };
-          args.push(tx_params, callback);
-          fn.apply(instance.contract, args);
-        });
-      };
-    },
-    synchronizeFunction: function (fn, instance, C) {
-      const self = this;
-      return function () {
-        const args = Array.prototype.slice.call(arguments);
-        let tx_params = {};
-        const last_arg = args[args.length - 1];
-
-        // It's only tx_params if it's an object and not a BigNumber.
-        if (Utils.is_object(last_arg) && !Utils.is_big_number(last_arg)) {
-          tx_params = args.pop();
-        }
-
-        tx_params = Utils.merge(C.class_defaults, tx_params);
-
-        return new Promise(function (accept, reject) {
-          const callback = function (error, tx) {
-            if (error != null) {
-              reject(error);
-              return;
-            }
-
-            let timeout;
-            if (C.synchronization_timeout === 0 || C.synchronization_timeout !== undefined) {
-              timeout = C.synchronization_timeout;
-            } else {
-              timeout = 240000;
-            }
-
-            const start = new Date().getTime();
-
-            const make_attempt = function () {
-              C.web3.eth.getTransactionReceipt(tx, function (err, receipt) {
-                if (err && !err.toString().includes('unknown transaction')) {
-                  return reject(err);
-                }
-
-                // Reject on transaction failures, accept otherwise
-                // Handles "0x00" or hex 0
-                if (receipt != null) {
-                  if (parseInt(receipt.status, 16) === 0) {
-                    const statusError = new StatusError(tx_params, tx, receipt);
-                    return reject(statusError);
-                  } else {
-                    return accept({
-                      tx: tx,
-                      receipt: receipt,
-                      logs: Utils.decodeLogs(C, instance, receipt.logs)
-                    });
-                  }
-                }
-
-                if (timeout > 0 && new Date().getTime() - start > timeout) {
-                  return reject(
-                    new Error('Transaction ' + tx + " wasn't processed in " + timeout / 1000 + ' seconds!')
-                  );
-                }
-
-                setTimeout(make_attempt, 1000);
-              });
-            };
-
-            make_attempt();
-          };
-
-          args.push(tx_params, callback);
-          fn.apply(self, args);
-        });
-      };
-    },
     merge: function () {
       const merged = {};
       const args = Array.prototype.slice.call(arguments);
@@ -223,28 +50,6 @@ const contract = (function (module) {
       }
 
       return merged;
-    },
-    parallel: function (arr, callback) {
-      callback = callback || function () {};
-      if (!arr.length) {
-        return callback(null, []);
-      }
-      let index = 0;
-      const results = new Array(arr.length);
-      arr.forEach(function (fn, position) {
-        fn(function (err, result) {
-          if (err) {
-            callback(err);
-            callback = function () {};
-          } else {
-            index++;
-            results[position] = result;
-            if (index >= arr.length) {
-              callback(null, results);
-            }
-          }
-        });
-      });
     },
     bootstrap: function (fn) {
       // Add our static methods
@@ -362,7 +167,6 @@ const contract = (function (module) {
         );
       }
       return new Promise(function (accept, reject) {
-        // var contract_class = self.web3.eth.contract(self.abi);
         let tx_params = {
           parameters: args
         };
