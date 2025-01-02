@@ -319,7 +319,6 @@ function init(options, extraOptions = {}) {
       if (ex.toString().includes('does not exist')) {
         const url = this.networkConfig.fullNode + '/wallet/gettransactionbyid?value=' + signedTransaction.txID;
 
-        // eslint-disable-next-line no-ex-assign
         e =
           'Contract ' +
           chalk.bold(options.name) +
@@ -689,7 +688,6 @@ const logErrorAndExit = (logger, err) => {
   } else {
     log('Error encountered, bailing. Network state unknown.');
   }
-  // eslint-disable-next-line no-process-exit
   process.exit();
 };
 
@@ -699,9 +697,7 @@ const dlog = function (...args) {
       if (typeof args[i] === 'object') {
         try {
           args[i] = JSON.stringify(args[i], null, 2);
-        } catch (err) {
-          // eslint-disable-next-line no-empty
-        }
+        } catch (err) {}
       }
     }
     console.debug(chalk.blue(args.join(' ')));

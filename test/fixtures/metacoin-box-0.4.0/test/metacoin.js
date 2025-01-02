@@ -1,6 +1,7 @@
-var wait = require('./helpers/wait');
-var chalk = require('chalk');
-var MetaCoin = artifacts.require('./MetaCoin.sol');
+/* eslint-disable n/no-unpublished-require */
+const wait = require('./helpers/wait');
+const chalk = require('chalk');
+const MetaCoin = artifacts.require('./MetaCoin.sol');
 
 // The following tests require TronBox >= 2.1.x
 // and Tron Quickstart (https://github.com/tronprotocol/docker-tron-quickstart)

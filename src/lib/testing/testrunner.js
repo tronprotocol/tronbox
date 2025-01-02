@@ -36,7 +36,6 @@ function TestRunner(options) {
     this.tronwrap.defaultPrivateKey
   );
 
-  // eslint-disable-next-line no-undef
   global.waitForTransactionReceipt = waitForTransactionReceipt(tronWeb);
 
   // For each test

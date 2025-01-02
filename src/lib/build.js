@@ -92,7 +92,6 @@ const Build = {
 
     // Use our own clean method unless the builder supplies one.
     let clean = this.clean;
-    // eslint-disable-next-line no-prototype-builtins
     if (builder.hasOwnProperty('clean')) {
       clean = builder.clean;
     }

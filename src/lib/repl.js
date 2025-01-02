@@ -59,7 +59,6 @@ ReplManager.prototype.start = function (options) {
           : function () {};
       });
       async.series(doneFunctions, function () {
-        // eslint-disable-next-line no-process-exit
         process.exit();
       });
     });
@@ -102,7 +101,6 @@ ReplManager.prototype.stop = function (callback) {
     // Since we can't recover to a state before the repl was opened,
     // we should just exit. He're, we'll exit after we've popped
     // off the stack of all repl contexts.
-    // eslint-disable-next-line no-process-exit
     process.exit();
   }
 

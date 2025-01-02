@@ -3,7 +3,6 @@ const TronWrap = require('../TronWrap');
 const { constants } = require('../TronWrap');
 const BigNumber = require('bignumber.js');
 
-// eslint-disable-next-line no-unused-vars
 const contract = (function (module) {
   // Planned for future features, logging, etc.
   function Provider(provider) {
@@ -318,7 +317,6 @@ const contract = (function (module) {
             const abi = self.abi || [];
             for (let i = 0; i < abi.length; i++) {
               const item = abi[i];
-              // eslint-disable-next-line no-prototype-builtins
               if (self.hasOwnProperty(item.name)) continue;
               if (/(function|event)/i.test(item.type) && item.name) {
                 const f = (...args) => {

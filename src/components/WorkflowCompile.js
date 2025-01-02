@@ -63,7 +63,7 @@ const Contracts = {
         self.write_contracts(contracts, config, async function (err, abstractions) {
           callback(err, abstractions, paths);
           logger.log(`> Compiled successfully using:`);
-          let solcVersion = options.networks?.compilers
+          const solcVersion = options.networks?.compilers
             ? options.networks?.compilers?.solc?.version
             : options.compilers?.solc?.version;
           logger.log(`  - solc${options.evm ? '(EVM)' : ''}: ${solcVersion}`);

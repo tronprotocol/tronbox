@@ -49,9 +49,7 @@ function getWrapper(options = {}) {
         }
       }
     }
-  } catch (e) {
-    // eslint-disable-next-line no-empty
-  }
+  } catch (e) {}
   supportedVersions = supportedVersions
     .map(a =>
       a
@@ -92,12 +90,9 @@ function getWrapper(options = {}) {
 TronBox supports only the following versions:
 ${supportedVersions.join(' - ')}
 `);
-        // eslint-disable-next-line no-process-exit
         process.exit();
       }
-    } catch (e) {
-      // eslint-disable-next-line no-empty
-    }
+    } catch (e) {}
   }
 
   const soljsonPath = path.join(solcDir, `soljson_v${compilerVersion}.js`);
@@ -116,13 +111,11 @@ Please, download the compiler manually, running:
 
 tronbox --download-compiler ${compilerVersion} ${options.evm ? '--evm' : ''}
 `);
-      // eslint-disable-next-line no-process-exit
       process.exit();
     }
 
     if (output.indexOf('Error:') !== -1) {
       console.error(output);
-      // eslint-disable-next-line no-process-exit
       process.exit();
     }
   }

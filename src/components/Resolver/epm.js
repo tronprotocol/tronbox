@@ -74,25 +74,20 @@ EPM.prototype.require = function (import_path) {
   // If nothing's found, body returns `undefined`
   let body;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     let file_path = path.join(installDir, 'installed_contracts', import_path);
 
     try {
       body = fs.readFileSync(file_path, { encoding: 'utf8' });
       break;
-    } catch (err) {
-      // eslint-disable-next-line no-empty
-    }
+    } catch (err) {}
 
     file_path = path.join(installDir, 'installed_contracts', package_name, 'contracts', internal_path);
 
     try {
       body = fs.readFileSync(file_path, { encoding: 'utf8' });
       break;
-    } catch (err) {
-      // eslint-disable-next-line no-empty
-    }
+    } catch (err) {}
 
     // Recurse outwards until impossible
     const oldInstallDir = installDir;
