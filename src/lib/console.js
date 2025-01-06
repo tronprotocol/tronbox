@@ -66,7 +66,7 @@ Console.prototype.start = function (callback) {
     this.repl = new ReplManager(this.options);
   }
 
-  // TODO: This should probalby be elsewhere.
+  // TODO: This should probably be elsewhere.
   // It's here to ensure the repl manager instance gets
   // passed down to commands.
   this.options.repl = this.repl;

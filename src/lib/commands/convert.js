@@ -76,7 +76,7 @@ ${content}
     }
 
     downloadConfig().then(() => {
-      config.logger.log('OK. Convertion is done. Enjoy tronbox!');
+      config.logger.log('OK. Conversion is done. Enjoy tronbox!');
       config.logger.log();
       done();
     });

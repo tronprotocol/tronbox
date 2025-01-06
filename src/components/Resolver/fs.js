@@ -35,7 +35,7 @@ FS.prototype.require = function (import_path, search_path) {
 
   const contract_name = this.getContractName(import_path, search_path);
 
-  // If we have an absoulte path, only check the file if it's a child of the working_directory.
+  // If we have an absolute path, only check the file if it's a child of the working_directory.
   if (path.isAbsolute(import_path)) {
     if (import_path.indexOf(this.working_directory) !== 0) {
       return null;

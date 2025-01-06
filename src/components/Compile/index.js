@@ -8,7 +8,7 @@ const Config = require('../Config');
 
 // Most basic of the compile commands. Takes a hash of sources, where
 // the keys are file or module paths and the values are the bodies of
-// the contracts. Does not evaulate dependencies that aren't already given.
+// the contracts. Does not evaluate dependencies that aren't already given.
 //
 // Default options:
 // {
