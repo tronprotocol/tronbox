@@ -90,7 +90,7 @@
           },
           {
             "path": "build/lib/commands/convert.js",
-            "sha512": "7a085da1f6d26f82023fc55c72798e6d89ce0f979db715c1ac877cbfe3a638e27c90e374f3d880a885352b2ad01cf3e3ace12cd7306598a566bbea846ac1f435"
+            "sha512": "20c84a9f60d85201ca6d9ff6086120ff81d6df595fdbb6c743c7281d8d94a79debd276127558751bb15ccb7501da6a7810d7bedc1b3c8e87ac088f4f7f1360bb"
           },
           {
             "path": "build/lib/copy.js",
@@ -551,5 +551,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJne9DaACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hiZBAAqLFT6npy+0I/C867r2fudacQ5b5Ayx0wOpUK32omchGarLJ7\n/MR20qtJln2hjywLdn4Kud3P7yW63kqfFur2XKqUzBf94Hz9595LqHRVCfXh\n0fn5tR/Ky8Y1yOOVtcO4MAh3rXyLTg1dHlXzkhyOESC64ClBC+OnVv0X9c1i\nP8lck0UD83IQj73jUnjwVG6RzlqefCNbUAEul1RfQPba+mzAFxSL2KCfk6Xq\nyCApR3jwnfmxgCWfdCQru1H95Z7uiGo5B8y5HXzyLoiR+oiKb5nv160d2z3R\nWEMgZZuXOtsZO1OQnuNlKfaPKCvsR6JayqOtfh6wYUqk50NoWtMAOHw/Bn9u\nW82A+eiXJckIqQjdMnc4yNSaeflqIaF+zHihWyGU4ER6gqmLshuHCLVKhTfY\nyiPQdRp9c4TTulmJ1+WjVDr345LRdHQVc/cnhSGn0h83uyXFCn4wMrhvXmkZ\nOxNdEgxarxA5rql+hNc2Us/tD+qrdUKfGkLjMhITUe12zkA4qI/qhQwXrB92\nI6G0oi6ef+8TRgY9eiEyen9gJOBSl8Vn0TBCr6+KQkadzmCMkdY2D3nWdyiP\nHUqnNfEggLwsmGc+MZZ/FoeeoLyu2d7w/PbIPEW24iwXHXjHeSnKQYvSmYdc\nsfxa31ZqOM2NsldXQLJWaHUNmRzlrJd1glc=\n=U70E\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJnfnv0ACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hK9A/+K+zhN7ks/449zJIQOUmU+RN7z9XZI2ODRZ3or7LIKAayQ9ZL\nu5Doc7mqYxn2yoXXxP7ISQsj6HhJV5WtuM/nMNfTNR7uH6remwfQoxL2zHTO\nVd/aExOk1tGpAHFsdl9BskmEi5trlNKMnCQrUCBYLsPqfcaE2AMvR/o8Gvka\nKKympkDK0heR3EOz2vDmLO5C+jCol92nIEA+cibj81qfvXt9g5+A2MkIAC6t\nvoLr2fPwK4rDgeh3Bd7Bf1vkcAUxKC+WajZTNRhBtA/EfQXXX6JLzgYT4WeY\nqJbeeR8vur9bq3NgVtc0KXNWHqQQ7KCarWr5qDvAcQ57rfdFy2eKcGqsOoST\nUovNEnn56DucCQZy8Ub/X243dc60KO4Jf7cJNZaCgb6+1yq9SxIJgzm0Mqzn\nk9UxCRvNEz7OvIiL5mfGG3bsZVG7Q4c/Ep9SM4Teg7OKUpMJ0jLPGEaldf0R\nn3h1uzKxSj7rsf3jPqtMFqkjE1L9cVQkyM2FNYoEJU1ozKwgacvZMECFtYl+\nknx9QQiqgmCgLuhbd1QlYXtx5k/5dTKXASxFERwPem46BRYJmIUBranQBR5R\n91b7STsRlulT5ULxjUUvLxX9zhwANU4WyLGzokISnhsYjSzKCpNZP+nRcwSz\njaJLbjTs/gw3dhE0YOY2lGsUb65gYegyqYc=\n=tR7V\n-----END PGP SIGNATURE-----\n"
 }
