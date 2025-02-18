@@ -242,7 +242,7 @@ module.exports = {
       // If it's not explicitly relative, then leave it alone (i.e., it's a module).
       if (!self.isExplicitlyRelative(p)) return p;
 
-      // Path must be explicitly releative, therefore make it absolute.
+      // Path must be explicitly relative, therefore make it absolute.
       return path.resolve(path.join(base, p));
     });
   },

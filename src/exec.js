@@ -18,7 +18,6 @@ cmd.stderr.on('data', data => {
 });
 
 cmd.on('close', code => {
-  // eslint-disable-next-line no-process-exit
   process.exit(code);
 });
 

@@ -1,3 +1,9 @@
+**4.1.0**
+
+- Bump tronweb version to v6.0.0
+- Bump web3 version to v4.16.0
+- Bump eslint version to v9.17.0
+
 **4.0.2**
 
 - Support for Solidity compiler 0.8.22

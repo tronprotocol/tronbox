@@ -37,16 +37,13 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
   let body;
   let modulesDir = this.working_directory;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const expected_path = path.join(modulesDir, 'node_modules', import_path);
 
     try {
       body = fs.readFileSync(expected_path, { encoding: 'utf8' });
       break;
-    } catch (err) {
-      // eslint-disable-next-line no-empty
-    }
+    } catch (err) {}
 
     // Recurse outwards until impossible
     const oldModulesDir = modulesDir;

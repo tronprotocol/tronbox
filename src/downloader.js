@@ -20,13 +20,11 @@ async function downloader(compilerVersion, evm) {
           soljsonUrl = `${solidityUrl}/${list.body.releases[compilerVersion]}`;
         } else {
           console.info(chalk.red(chalk.bold('Error:'), 'Wrong Solidity compiler version.'));
-          // eslint-disable-next-line no-process-exit
           process.exit();
         }
       }
     } catch (error) {
       console.info(chalk.red(chalk.bold('Error:'), 'Failed to fetch compiler list.'));
-      // eslint-disable-next-line no-process-exit
       process.exit();
     }
   }
@@ -45,7 +43,6 @@ async function downloader(compilerVersion, evm) {
     }
   } catch (error) {
     console.info(chalk.red(chalk.bold('Error:'), 'Wrong Solidity compiler version.'));
-    // eslint-disable-next-line no-process-exit
     process.exit();
   }
 }

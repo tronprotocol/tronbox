@@ -11,12 +11,12 @@ module.exports = async function (deployer) {
     // Call proxy contract
     const box = await Box.deployed();
     const beforeValue = await box.value();
-    console.info('Value before', beforeValue.toNumber());
+    console.info('Value before', beforeValue);
 
     // Set new Value
-    await box.setValue(beforeValue.toNumber() + 100);
+    await box.setValue(beforeValue + 100n);
     const afterValue = await box.value();
-    console.info('Value after', afterValue.toNumber());
+    console.info('Value after', afterValue);
   } catch (error) {
     console.error('Transparent: deploy box error', error);
   }
