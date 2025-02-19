@@ -1,4 +1,4 @@
-const TronWeb = require('tronweb');
+const { TronWeb, utils } = require('tronweb');
 
 const CONSOLE_ADDRESS = '41000000000000000000636f6e736f6c652e6c6f67'; // toHex("console.log")
 
@@ -403,8 +403,9 @@ const ConsoleLogger = {
         const output = `0x${data}`;
         const types = this.getLogTypes(output.slice(0, 10));
         if (!types) return;
+        if (!types[0]) return console.info();
 
-        const decode = TronWeb.utils.abi.decodeParams([], types, output, true);
+        const decode = utils.abi.decodeParams([], types, output, true);
         types.forEach((_, i) => {
           switch (_) {
             case 'uint256':

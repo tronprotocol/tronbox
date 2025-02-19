@@ -35,7 +35,7 @@ const Require = {
       clearInterval: clearInterval,
       clearTimeout: clearTimeout,
       console: console,
-      // eslint-disable-next-line node/exports-style
+      // eslint-disable-next-line n/exports-style
       exports: exports,
       global: global,
       module: m,
@@ -56,13 +56,10 @@ const Require = {
           // Here we have to require from the node_modules directory directly.
 
           let moduleDir = path.dirname(file);
-          // eslint-disable-next-line no-constant-condition
           while (true) {
             try {
               return originalrequire(path.join(moduleDir, 'node_modules', pkgPath));
-            } catch (e) {
-              // eslint-disable-next-line no-empty
-            }
+            } catch (e) {}
             const oldModuleDir = moduleDir;
             moduleDir = path.join(moduleDir, '..');
             if (moduleDir === oldModuleDir) break;

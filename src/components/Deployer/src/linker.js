@@ -13,7 +13,6 @@ module.exports = {
     let hasAddress = false;
 
     // Abstractions; don't want to use .address directly because it will throw.
-    // eslint-disable-next-line no-constant-condition
     if (typeof library.isDeployed) {
       hasAddress = library.isDeployed();
     } else {

@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -14,11 +14,10 @@
     "build": "scripts/build.sh",
     "test": "npm run build && cd test && sh runTest.sh",
     "prepare": "npm run build",
-    "lint": "find src -name '*.js' | xargs node_modules/.bin/eslint",
+    "lint": "eslint \"src/**/*.js\" \"test/**/*.js\"",
     "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\""
   },
   "dependencies": {
-    "@noble/secp256k1": "1.7.1",
     "@resolver-engine/imports-fs": "^0.3.3",
     "@solidity-parser/parser": "^0.16.0",
     "@truffle/contract-sources": "^0.1.12",
@@ -35,8 +34,6 @@
     "cpr": "^0.4.3",
     "debug": "^3.1.0",
     "del": "^2.2.0",
-    "diff": ">=3.5.0",
-    "ethjs-abi": "0.1.8",
     "finalhandler": "^1.1.2",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
@@ -49,19 +46,18 @@
     "node-dir": "0.1.17",
     "original-require": "1.0.1",
     "request": "^2.88.0",
-    "semver": "^7.5.4",
     "serve-static": "^1.10.0",
     "solc": "^0.8.21",
     "source-map-support": "^0.5.3",
     "spawn-args": "^0.1.0",
     "superagent": "^5.1.0",
     "temp": "^0.8.3",
-    "tronweb": "^5.3.0",
+    "tmp": "0.0.33",
+    "tronweb": "^6.0.0",
+    "truffle-blockchain-utils": "^0.0.5",
     "tsort": "^0.0.1",
     "vcsurl": "^0.1.1",
-    "web3": "1.10.4",
-    "web3-eth-contract": "1.10.4",
-    "web3-utils": "1.10.4",
+    "web3": "^4.16.0",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
@@ -69,15 +65,10 @@
     "@babel/core": "^7.23.3",
     "@babel/plugin-transform-runtime": "^7.23.4",
     "@babel/preset-env": "^7.6.3",
-    "eslint": "^6.6.0",
-    "eslint-plugin-node": "^10.0.0",
-    "glob": "^7.1.2",
-    "js-scrypt": "^0.2.0",
-    "meta-npm": "^1.2.7",
-    "prepend-file": "^1.3.1",
+    "eslint": "^9.17.0",
+    "eslint-plugin-n": "^17.15.1",
     "prettier": "^2.8.5",
-    "tmp": "0.0.33",
-    "truffle-blockchain-utils": "^0.0.5"
+    "tslib": "^2.8.1"
   },
   "bin": {
     "tronbox": "build/tronbox.js"

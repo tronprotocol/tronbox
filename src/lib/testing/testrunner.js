@@ -9,7 +9,7 @@ const _ = require('lodash');
 const async = require('async');
 const fs = require('fs');
 const TronWrap = require('../../components/TronWrap');
-const TronWeb = require('tronweb');
+const { TronWeb } = require('tronweb');
 const waitForTransactionReceipt = require('./waitForTransactionReceipt');
 
 function TestRunner(options) {
@@ -36,7 +36,6 @@ function TestRunner(options) {
     this.tronwrap.defaultPrivateKey
   );
 
-  // eslint-disable-next-line no-undef
   global.waitForTransactionReceipt = waitForTransactionReceipt(tronWeb);
 
   // For each test

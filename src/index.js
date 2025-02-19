@@ -37,14 +37,12 @@ if (commands[0] === '--download-compiler' && commands[1]) {
           console.error(err.message);
         } else if (typeof err === 'number') {
           // If a number is returned, exit with that number.
-          // eslint-disable-next-line no-process-exit
           process.exit(err);
         } else {
           // Bubble up all other unexpected errors.
           console.error(err.stack || err.toString());
         }
       }
-      // eslint-disable-next-line no-process-exit
       process.exit(1);
     }
 

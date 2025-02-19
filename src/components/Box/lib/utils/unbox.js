@@ -3,8 +3,6 @@ const path = require('path');
 const ghdownload = require('github-download');
 const request = require('request');
 const vcsurl = require('vcsurl');
-// eslint-disable-next-line node/no-deprecated-api
-const parseURL = require('url').parse;
 const tmp = require('tmp');
 const exec = require('child_process').exec;
 const cwd = process.cwd();
@@ -29,13 +27,13 @@ function verifyURL(url) {
   // Next let's see if the expected repository exists. If it doesn't, ghdownload
   // will fail spectacularly in a way we can't catch, so we have to do it ourselves.
   return new Promise(function (accept, reject) {
-    const configURL = parseURL(
+    const configURL = new URL(
       vcsurl(url).replace('github.com', 'raw.githubusercontent.com').replace(/#.*/, '') + '/master/tronbox.js'
     );
 
     const options = {
       method: 'HEAD',
-      uri: 'https://' + configURL.host + configURL.path
+      uri: 'https://' + configURL.host + configURL.pathname
     };
     request(options, function (error, r) {
       if (error) {

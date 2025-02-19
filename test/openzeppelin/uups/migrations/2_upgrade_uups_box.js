@@ -17,21 +17,21 @@ module.exports = async function (deployer) {
     // Call proxy contract
     const box = await BoxV2.at(Box.address);
     const beforeValue = await box.value();
-    console.info('Value before', beforeValue.toNumber());
+    console.info('Value before', beforeValue);
 
     // Set new Value
-    await box.setValue(beforeValue.toNumber() + 100);
+    await box.setValue(beforeValue + 100n);
     const afterValue = await box.value();
-    console.info('Value after', afterValue.toNumber());
+    console.info('Value after', afterValue);
 
     // Read new V2 Value
     const beforeValueV2 = await box.valueV2();
-    console.info('ValueV2 before', beforeValueV2.toNumber());
+    console.info('ValueV2 before', beforeValueV2);
 
     // Set new V2 Value
-    await box.setValueV2(beforeValueV2.toNumber() + 100);
+    await box.setValueV2(beforeValueV2 + 100n);
     const afterValueV2 = await box.valueV2();
-    console.info('ValueV2 after', afterValueV2.toNumber());
+    console.info('ValueV2 after', afterValueV2);
   } catch (error) {
     console.error('UUPS: upgrade box error', error);
   }
