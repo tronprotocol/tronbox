@@ -286,8 +286,7 @@ const Migrate = {
           : migrations.call('lastCompletedMigration');
       })
       .then(function (completed_migration) {
-        const value = typeof completed_migration === 'object' ? completed_migration : '0';
-        callback(null, tronWrap._toNumber(value));
+        callback(null, Number(completed_migration));
       })
       .catch(() => {
         // first migration:
