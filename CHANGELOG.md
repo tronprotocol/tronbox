@@ -1,3 +1,7 @@
+**4.1.1**
+
+- Support for Solidity compiler 0.8.23
+
 **4.1.0**
 
 - Bump tronweb version to v6.0.0
