@@ -1,6 +1,7 @@
 **4.1.1**
 
 - Support for Solidity compiler 0.8.23
+- Bump axios version to v1.8.3
 
 **4.1.0**
 
