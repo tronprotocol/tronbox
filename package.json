@@ -25,7 +25,7 @@
     "@truffle/expect": "0.1.7",
     "ajv": "^6.10.2",
     "async": "2.6.4",
-    "axios": "^1.7.7",
+    "axios": "^1.8.3",
     "bignumber.js": "^7.2.1",
     "chai": "4.1.2",
     "chalk": "^2.4.1",
