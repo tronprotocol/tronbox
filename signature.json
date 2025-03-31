@@ -13,6 +13,10 @@
             "sha512": "67e622eb811b5e4a7c336cfe3a82ae1925c3ac680abaab3c8f1b357b1e7ffe06fbcd27dfa5652083b551f642a4da03687fc4fc529f1749b5f174595671fa6043"
           },
           {
+            "path": "sample-projects/javascript/test/.git-folder-keeper",
+            "sha512": "f812a470d200367cf26f5f8deab7477c4b7d84698fd86962d0284fcee431267a40646287c8005754249965c708544449838978efafe6a69a456e0ed009e8d7d4"
+          },
+          {
             "path": ".gitmodules",
             "sha512": "cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e"
           },
@@ -25,8 +29,20 @@
             "sha512": "a0bec7bcfb100e6cb7930ba24fe6f9c6d6aec42606eaa4b9e16bc64358725a03a732cfbb34a733b03c0d5a0bf8bf99d56e882b6d7a9976b748ceb1e3eafd049a"
           },
           {
+            "path": "sample-projects/javascript/sample-env",
+            "sha512": "b8b6a17f6c1bf20914a13cbbbee07fa5c26b7f48870a8eed81e3ddffa0f1d797e7f1722dafcd9c47fe69286fa10a707fb10f0e2eded1dbb0df62da1d340ee06c"
+          },
+          {
             "path": "tronbox.dev",
             "sha512": "13fe0333dee3361ad3f242dea9f3f7ccffdb072946bd7d31d94c542309843ce1954f37c8321120f0cf7e9a759529b695410c4a91acc15f0a941f1a5e61937d5c"
+          },
+          {
+            "path": "sample-projects/javascript/migrations/1_initial_migration.js",
+            "sha512": "d7a02391ee73220199256d73aa968ae4f83b449d428d603e4680d4c2b53fc8b20e092371762e3dc49635e784770fa07e99f3584e09de56a3f202345a52cf6685"
+          },
+          {
+            "path": "sample-projects/javascript/migrations/2_deploy_contracts.js",
+            "sha512": "d09f3c4e227a97effe51f478fb9d12e2c5b025ec6dc151a5bb9abebede73847b3f8d5d88517d6a850b50c99c89818fe0fc8c752dcd4c60ee3fedde287c76953c"
           },
           {
             "path": "build/components/Artifactor.js",
@@ -86,7 +102,7 @@
           },
           {
             "path": "build/components/Contract/contract.js",
-            "sha512": "934bf6a493d800f29c49220afbbbda8c46c688a53f8f411a7b0a8ceb0471fcef2eb01dcb81e9d8713cbeb74372578d1b15aa2fed06d8eef506ffe6f2d4e9d2dd"
+            "sha512": "cce893eb1eb9ab2f6fdc9abb89a68270d097717c9550de9bf3bece6aac8a89eb81506bb25fe43ef410d8d860fcad10a2417f70fdae33122e75824efa6cbb7ecf"
           },
           {
             "path": "build/lib/commands/convert.js",
@@ -189,6 +205,10 @@
             "sha512": "754b2429ba4ca6e531ef8bb3939de7ebe1edc040c0402719c38b31d2ed5cde14906cfe48993be6d58521bb1e3d36ead4d23bfc4a65be0abe5b53b247274aa0ad"
           },
           {
+            "path": "build/components/Init/index.js",
+            "sha512": "d13e55f5e0c8b9685623e2b79425297e9bd5aba11489105cf9e96b5dbc4defa2882cca3e18b99eb93aa3b96575ccd708e90707264fa7ad7e1581375fc0507837"
+          },
+          {
             "path": "build/components/Migrate/index.js",
             "sha512": "6a8b125b890daf1cb0dc0f0528d2a4ed7e05b0a0abdd388af5a245df16ddb732c589c9ff542879f8ffb2484c3ad80c4b7a53cb846014eb32422fab03a6e7908e"
           },
@@ -214,7 +234,7 @@
           },
           {
             "path": "build/lib/commands/init.js",
-            "sha512": "2cf95e4c90387d50b232fe06b7351e831cfa404582e26ec91d3d5903da5e600e24139c16f5a3ee5ee5f9617c524a24efefe5f6151f047adac7113418d981c950"
+            "sha512": "7e388249de456de66b2708e160c14a8bf582f6ff1672fc4494a8b4521f6f7d49b3818fb4acc9b7e0b2d280c487309eacb7411e46e9c165ee25d5da950cfa96fc"
           },
           {
             "path": "build/components/Deployer/src/actions/link.js",
@@ -317,6 +337,14 @@
             "sha512": "e570ad85ac56e157299fa2b977a601b52bd2a4900bc86bc6511c1ef046556a83c10265a8220c5f795e8cff61bd775ef2d23490c5a80c819a92b89ad7edd2cbee"
           },
           {
+            "path": "sample-projects/javascript/tronbox-config.js",
+            "sha512": "957471d268ad5edc852e094ffce3d4a84bab4ac0dfd9bfded99180b920426095f88c69aeff0e2f0479bc90f86afd54826ef25dec9d0a577076fc70913c4b996f"
+          },
+          {
+            "path": "sample-projects/javascript/tronbox-evm-config.js",
+            "sha512": "39cdd97c7456b72f3ab6e02ef991e5f782aeed756c4eee27d9a6a27119ff4dde05960d2c4d25da7fe6c444078983cc3f4632188a0a2dc450e7b19c1ed4df523a"
+          },
+          {
             "path": "build/tronbox.js",
             "sha512": "f8b6335460426d7502dae935cceb79328724fd06275e16de351d18720ce67d340797a9c9a778805d1914b8dc4ac59d79ab6a503493b4e2ff28f048216fea0237"
           },
@@ -374,7 +402,7 @@
           },
           {
             "path": "CHANGELOG.md",
-            "sha512": "b6d791de5b77c0c37a47711242eff4daf15e8fb640015715413b170ec2f2a4e587b2acb9abeb1bb7aa05e9b19c03f503eb2da6d054e7baef8bc874f15ec447eb"
+            "sha512": "958abf055e73794c265025933fdf3fa5cf9d4769b80f742045e19a3eaf1719d6190aefde4e0755ce4fcf68c6001bd2b982947f175769e4ed510d40934f9b347a"
           },
           {
             "path": "CONTRIBUTING.md",
@@ -389,12 +417,20 @@
             "sha512": "78e1dbb9a99bbc946ac305e92e301f33d4abbb3686645c1dc5464780124e4915d8bd581d3854edeb9de5526f7ef001a5cd9fbab7f43d692ab2b4b7adecbf74d7"
           },
           {
+            "path": "sample-projects/javascript/README.md",
+            "sha512": "83ef7d31d20323f13c9f07f95c30f05f07af5ca3fd43786b55594fc7d382ee45b053135c3ef0868e81faf71eff01b62f0a2d490f410a2fe64a2ab4b3657f4ddb"
+          },
+          {
             "path": "assets/TronBox-logo.png",
             "sha512": "7bfd4794e86c383ec6718d6125c13c81e102b674a23e9626046de9ce025e68363a47767715e4096ea61515f7922a3abc912418fd0a1f2084c2e8288568398f30"
           },
           {
             "path": "console.sol",
             "sha512": "4d8fa0379d036df471f198d7f0a85c0e1232a4508e4c639c021113b748868bac4c19d458be6bcdde16cba3572aeba380431245e39d221da54db60bb7a2e10f37"
+          },
+          {
+            "path": "sample-projects/javascript/contracts/Migrations.sol",
+            "sha512": "2a0863408842de1d86ec93870a4ae3f6255f9391bad718f8badf49fd7d9b8acc3cd6da92db369197fc991b4ce17b7e6dfe3cbceb81d4597e57f66a0f11338aba"
           }
         ]
       }
@@ -429,7 +465,7 @@
           "scripts",
           "version"
         ],
-        "sha512": "c93251d97e15046787eb347838ea9d0456d73f1742f42b401caabd57384d4f1ae95b3102d1d11ee6fcd6d2086526c6824d84befaadcbb535b9022ba434a9859c"
+        "sha512": "1eb3dc6702df70ec1a9017dde67b2053fe4fe8b4a04c7af16c898abe6665ee71b5fe8a7453a13bce7cc12bd88d715bd23e36798beae4b6a6715f3d2aede21487"
       }
     },
     {
@@ -438,7 +474,7 @@
         "packageJson": {
           "name": "tronbox",
           "namespace": "tronprotocol",
-          "version": "4.1.1",
+          "version": "4.2.0",
           "description": "TronBox - Simple development framework for Tron",
           "keywords": [
             "TronBox",
@@ -471,6 +507,7 @@
             "cpr": "^0.4.3",
             "debug": "^3.1.0",
             "del": "^2.2.0",
+            "enquirer": "^2.4.1",
             "finalhandler": "^1.1.2",
             "find-up": "^4.1.0",
             "fs-extra": "^8.1.0",
@@ -551,5 +588,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJn0VOLACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1jOBRAA0ri5a3/GRUURP7KYpyWxOy3/PFaQzfA6hqdsAL605EgpusiG\nR0JVX/xyRNexZco5oNRlHef8LHZY7FYhGWnl2+8OmGm/5OUUi7smXwe+JQuN\nhARy8jI7FL8TocKzIZ65kPFFNA5qDfgmrjff/8nv1snuVWRgH7BfoRL8cP+h\njGQ+Q6XNL2Iz1fw8+WF/lq8/5AydiFCXKH2azshDo0AGlbEtVwjMOJK3DrWn\nyaxVdgB57zmCHYbYWnaD6/CiA5AdnadLW2nNPGpy9Eq3moUvvP25KjtDMc0+\n7kImTq1Ha7bBfNixSXD1C0prW2NJ1zKlxU5/EqjAv6VjSNr0GwoP2/NuHWRL\ndZifqfTKQpF7LQn0R8IRF/G0CMLDTSvOEMRzlSJZp0QC2/2nhRSO1fG91XsD\nOHK1+neQOtjqttaCdr1mB3DfU3CXGVan5rc2T0NXO/NqrcW/Xp0jQGNVmI6q\nUwDy6TvZYOPxNWogm2uJ9PLXmI3puSWuA4dAAFWijZaK52dLTUKrzuKeRkx5\nQfkY4SbbDeGbNaAiZRlnZP2rgut2pX+iuWiBFsey7YFonk2p/UyXcNyBtECc\n0i9Euy3t1youGr3Y5tD51MerBDWCtoX0NVdN3zWkB8iguRrebZc3pFyyhBVY\ncIf6n2Jyn1v2vZfrwG8QVP+2k0NPi/2ijBI=\n=Ly9l\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJn6oeaACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1jk1w/+JdFvIMvLlBA1o94uG0OsE4jAoB24/JgWuhK5cTQ2HBSATevz\nlqLq3zTLmRzCMCveU2JkqFb8auAcBZ9AP60jU6DXS6HcbRZtuL1MPPSW9w5g\nSK+cnQXyiMQ9FIogDSPEL4DvF/AZbPA7YzBj6x1u5qey7qCs3u0HWAdvfQTb\nZmLJXUv4uAHNLd3cbXCOdRwslT+0lcdZDI0TDAt0vymDm9G35J8n2BBgy5UP\nk2hYtC7amcbAkwzMAiBtyscBhMQvEG+/kDaY5mK2kaTkBrgcw+rOIWb+ZQAx\n3bRRdawnxgNG7y68YZ/qVpX292SqMbQ7DS51jwOYk1r+Ifam6qPC8KNiaQ3K\noueP8xeB61Y/AIm3FP6ZT31b/tzs2ubdIpAAMgQ83WGyme0TLcqsFmq7mhwj\noBu9H6JWLhIMdWON5skqmFcGDZPTKVNTVjP1xHbYpDMkw8+j7K6VE2r9g9uT\nhTRiGMKrqm2bF4qCcpjP7HNe6a4eGpPNYkBcpQTqIyuiGZ/T8UX+n1Ef/tk4\n5s8mZFgS/s5xWewHgznF+v8AtD6gewoLB3gCOHm58Zx0gqfqJk8wyt72yPOo\nll/fhHfJZef4kH/NBJeejsDoX2xM58xgSUm9mq/ZLGFc1bUu7/0uket59gL7\n8USxZ7EZ58jfcIws2Aenh6JDvReROceVUIE=\n=kQ4+\n-----END PGP SIGNATURE-----\n"
 }
