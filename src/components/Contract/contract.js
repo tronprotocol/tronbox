@@ -246,18 +246,17 @@ const contract = (function (module) {
         methodArgs.call_value = 0;
       }
 
-      if (Array.isArray(args[0])) {
-        if (Array.isArray(args[0][0])) {
-          args = args[0];
-        } else {
+      if (args.length === 1 && Array.isArray(args[0])) {
+        try {
+          let funAbi = {};
           for (const item of self.abi) {
             if (item.name === methodName) {
-              if (!/\[\]$/.test(item.inputs[0].type)) {
-                args = args[0];
-              }
+              funAbi = item;
             }
           }
-        }
+          tronWrap.utils.abi.encodeParamsV2ByABI(funAbi, args[0]);
+          args = args[0];
+        } catch {}
       }
 
       let option = {};
