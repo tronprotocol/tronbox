@@ -25,9 +25,7 @@ contract Tuple {
     }
   }
 
-  function insertBatch2(
-    Person[] memory person
-  ) public returns (Person[] memory) {
+  function insertBatch2(Person[] memory person) public returns (Person[] memory) {
     for (uint256 i = 0; i < person.length; i++) {
       persons.push(person[i]);
     }
@@ -38,9 +36,7 @@ contract Tuple {
     return persons;
   }
 
-  function getPerson2(
-    Person memory person
-  ) public pure returns (Person memory) {
+  function getPerson2(Person memory person) public pure returns (Person memory) {
     return person;
   }
 

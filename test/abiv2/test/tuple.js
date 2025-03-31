@@ -33,29 +33,29 @@ contract('Tuple', function (accounts) {
   });
 
   it('should return the same person', async function () {
-    const person = [['return', 101]];
-    const person2 = turnBN2N(await tuple.getPerson2(person));
-    assert.deepEqual(person[0], person2);
+    const person1 = ['return', 101];
+    const person2 = turnBN2N(await tuple.getPerson2(person1));
+    assert.deepEqual(person1, person2);
   });
 
   it('should insert person', async function () {
     const lastPersons = turnBN2N(await tuple.getPerson());
-    const person = [['insert', 100]];
-    await tuple.insert(person);
+    const person1 = ['insert', 100];
+    await tuple.insert(person1);
+    const person2 = [['insert', 101]];
+    await tuple.insert(person2);
     const persons = turnBN2N(await tuple.getPerson());
-    assert.deepEqual(lastPersons.concat(person), persons);
+    assert.deepEqual(lastPersons.concat([person1, ...person2]), persons);
   });
 
   it('should insert persons', async function () {
     const lastPersons = turnBN2N(await tuple.getPerson());
-    const persons = [
-      [
-        ['insert2', 99],
-        ['insert3', 98]
-      ]
+    const persons1 = [
+      ['insert2', 99],
+      ['insert3', 98]
     ];
-    await tuple.insertBatch(persons);
+    await tuple.insertBatch(persons1);
     const persons2 = turnBN2N(await tuple.getPerson());
-    assert.deepEqual(lastPersons.concat(persons[0]), persons2);
+    assert.deepEqual(lastPersons.concat(persons1), persons2);
   });
 });

@@ -38,7 +38,7 @@ Then, run the migration with:
       // For tronbox/tre docker image
       privateKey: '0000000000000000000000000000000000000000000000000000000000000001',
       userFeePercentage: 0,
-      feeLimit: 1e8,
+      feeLimit: 1e9,
       fullHost: 'http://127.0.0.1:' + port,
       network_id: '9'
     },
