@@ -338,7 +338,7 @@
           },
           {
             "path": "sample-projects/javascript/tronbox-config.js",
-            "sha512": "957471d268ad5edc852e094ffce3d4a84bab4ac0dfd9bfded99180b920426095f88c69aeff0e2f0479bc90f86afd54826ef25dec9d0a577076fc70913c4b996f"
+            "sha512": "ac8347aa4900c2aec2eec5f86b357e4ae7c5d18e21f3fcfcd7a350ab97288523fe6ad418ead39f099a4c7a9536bbe49271dae7de59614a26f49371c7716588a9"
           },
           {
             "path": "sample-projects/javascript/tronbox-evm-config.js",
@@ -418,7 +418,7 @@
           },
           {
             "path": "sample-projects/javascript/README.md",
-            "sha512": "83ef7d31d20323f13c9f07f95c30f05f07af5ca3fd43786b55594fc7d382ee45b053135c3ef0868e81faf71eff01b62f0a2d490f410a2fe64a2ab4b3657f4ddb"
+            "sha512": "88a0f855444ef019d4c41524818dc92d9ad41cc081a361e8b461b6ca864b0f224dae71a98ca2240bf9a444bba9939ef47250ef2a2b4b9c90e83cf3c1f3ff5996"
           },
           {
             "path": "assets/TronBox-logo.png",
@@ -588,5 +588,5 @@
       }
     }
   ],
-  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJn/BcyACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1hWIhAArkKuGR6oobQAomB8wF+uXKS1IVtGJIMDxuYzu9Ui89zx5flx\nS3WDqRxeAC23e8KwXjqdBKVzvB3QCcz505wHTXENG/6DktEQ0nkzgts4ClqC\neVjHDHjZrlDm5LFdCXoRcrarHQtEgd88+FzcwPWRyxcxcF/vdGLqSsTusmzp\nKyLQ4xQx44Al/HBaAFDuM58igobd2nZOOsTccVc7nuxcuGTDkSzUaJvq1hIo\nAxTGiLL1qPGBbavDtNU8CGdzuodK0q4sLOkN2EuW3K1kZavxiTGMVeOJ28uU\n9XLe84KwZp1zl/+wmIA2MMgdscVElTXJR0OLlJjESf9d66dW8hG6Qag59Sdr\nGRkpa8T5fl4rGo/8eZ9JXamKBhkqv/GTgA8Bi8d+V9eZBd5omhEbqz/rYkaN\nzR3NunHW0ORwMC2TXAwvELyr9GAp8cI2uLVkb19C9ytGNmm5MuMb4TpFEa8b\nCZncxQipHB+MjU8LgavwAweij+OV31vswZML0QsOecjjO9D7yVOBTLUBOWch\nL0f5I5f/qJl6CLkp1VrkoHJYf/lye0WU3JBb8HjVzF5RNTICxjZvoAQcZrh/\nakrp69lZliEvd+Fdu0h0fl8NeJsWDUP5sRYdtc1EbYzU/rXglO6J8Zl/Xbah\nVMZK/cDW23ozzf3ihkIQD/j9ya13fsiq9TY=\n=M2K6\n-----END PGP SIGNATURE-----\n"
+  "signature": "-----BEGIN PGP SIGNATURE-----\nVersion: OpenPGP.js v4.10.11\nComment: https://openpgpjs.org\n\nwsFzBAEBCAAGBQJoALAHACEJEAEScGf7i0tYFiEEuL4l7hUU5AsLzHjPARJw\nZ/uLS1h/OBAAnjVb+VPBQcu5xTbtmrTecvODbgKO0yzlsLanzQLD4KEHkrrn\n1lYelXTljAVzs88pap3Dm6nPRXFUUEIE2xqvF75MO5UVY5FHFNR6uJis1q6J\nL+mGO8w3aFcqOArPf4f10meVUZv+ax5gR1Exa5xpUiCHRhnlNhy7pUNuxHe6\nEmvQHjpHmkNoF5idyKQUho2S+uLtSVq6sMJKZcbEq4JlHWOcVejsp+6DZUX+\n7y74lF0SHgMMmriBBr/zsKTGBY4P5Y5/vwuDgd5iqIwUrIQgP8eI/PKF6Pf7\nMT29NwVMFLpyabAxPol1jkQUNvRnleBTgwYstsMn5Gt8R3es0CqibOkP07j4\nREaK8VQVGrFjNcpMfJV7aYSpMtIMXaFi+qiXfBH8rHQB323JEBUu09nAv+Uq\n146YVkv61xKFgJvAObMnjybbFouOAS9nRwisJwbjdAgpl1RF9ImMS8grtYzK\n3uxSKfv13M04LMzg2hrXnXySL1mw1NPuegxnLVNSCWhr4LbtxtPyR9eijGXl\n+m8N7vs4ntFDL2LsWgHQMxrS9tCh8U77RZ/5uYnC/XMMSv8zrIkEADcKTe/G\nl6J7zZQ20OrZVy1U7jKBXHKnstlt/jdUGDHQNQtCvnUHQvwr/f2nbvT17Tt5\nulCLtk+e0aUl+F8WJytuBaAgCDBurnwObNc=\n=+SyM\n-----END PGP SIGNATURE-----\n"
 }
