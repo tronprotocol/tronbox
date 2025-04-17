@@ -53,6 +53,8 @@ tronbox migrate --network nile
 
 ### Localnet
 
+The TronBox Runtime Environment provides a complete development framework for Tron, including a private network for testing.
+
 Get tronbox/tre docker image at https://hub.docker.com/r/tronbox/tre
 
 To deploy your contracts to Localnet, you can run the following:
@@ -68,6 +70,12 @@ To test your contracts, you can run the following:
 ```shell
 tronbox test --network <mainnet|shasta|nile|development>
 ```
+
+## Work with EVM
+
+TronBox supports deploying contracts on EVM-compatible blockchains.
+
+For more information, please refer to: https://developers.tron.network/reference/work-with-evm
 
 ## Additional Resources
 
