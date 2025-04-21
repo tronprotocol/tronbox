@@ -3,15 +3,15 @@ module.exports = {
     bttc: {
       // Don't put your private key here:
       privateKey: process.env.PRIVATE_KEY_BTTC,
-      /*
-Create a .env file (it must be gitignored) containing something like
-
-  export PRIVATE_KEY_BTTC=4E7FEC...656243
-
-Then, run the migration with:
-
-  source .env && tronbox migrate --network bttc --evm
-      */
+      /**
+       * Create a .env file (it must be gitignored) containing something like
+       *
+       *   export PRIVATE_KEY_BTTC=4E7FEC...656243
+       *
+       * Then, run the migration with:
+       *
+       *   source .env && tronbox migrate --network bttc --evm
+       */
       fullHost: 'https://rpc.bt.io',
       // gas: 8500000, // Gas sent with each transaction
       // gasPrice: '500000000000000', // 500,000 gwei (in wei)
