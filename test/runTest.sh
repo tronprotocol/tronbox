@@ -21,7 +21,7 @@ echo 'Test init'
 rm -rf build
 mkdir build
 cd build
-../../tronbox.dev init
+TRONBOX_CREATE_JAVASCRIPT_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
 ../../tronbox.dev migrate
 cd ..
 

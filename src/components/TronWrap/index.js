@@ -511,7 +511,7 @@ function init(options, extraOptions = {}) {
   };
 
   tronWrap.solidityNode.request = function (url, payload = {}, method = 'get') {
-    return tronWrap.fullNode._request(url, payload, method).then(data => {
+    return tronWrap.solidityNode._request(url, payload, method).then(data => {
       tronWrap._getConsoleLog(url, data);
       return data;
     });

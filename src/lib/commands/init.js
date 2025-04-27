@@ -13,7 +13,7 @@ const command = {
     process.env.CURRENT = 'init';
     const Config = require('../../components/Config');
     const OS = require('os');
-    const UnboxCommand = require('./unbox');
+    const InitCommand = require('../../components/Init');
 
     const config = Config.default().with({
       logger: console
@@ -30,10 +30,7 @@ const command = {
       process.exit(1);
     }
 
-    const url = 'https://github.com/tronsuper/bare-box.git';
-    options._ = [url];
-
-    UnboxCommand.run(options, done);
+    InitCommand.run(options, done);
   }
 };
 
