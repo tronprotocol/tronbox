@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -34,6 +34,7 @@
     "cpr": "^0.4.3",
     "debug": "^3.1.0",
     "del": "^2.2.0",
+    "enquirer": "^2.4.1",
     "finalhandler": "^1.1.2",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",

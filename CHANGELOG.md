@@ -1,3 +1,8 @@
+**4.2.0**
+
+- Developed a command-line interface (CLI) for the `init` command
+- Resolve compatibility issue with passing array parameters in method calls
+
 **4.1.1**
 
 - Support for Solidity compiler 0.8.23
