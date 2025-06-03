@@ -1,4 +1,5 @@
 const fsExtra = require('fs-extra');
+const { spawnSync } = require('child_process');
 const path = require('path');
 const chalk = require('chalk');
 const findUp = require('find-up');
@@ -11,12 +12,13 @@ const ACTION = {
     message: 'Create a sample project',
     project: 'javascript'
   },
-  // CREATE_JAVASCRIPT_TRC20_PROJECT_ACTION: {
-  //   env: 'TRONBOX_CREATE_JAVASCRIPT_TRC20_PROJECT_WITH_DEFAULTS',
-  //   message: 'Create a TRC20 project',
-  //   project: 'javascript-trc20'
-  // },
+  CREATE_JAVASCRIPT_METACOIN_PROJECT_ACTION: {
+    env: 'TRONBOX_CREATE_JAVASCRIPT_METACOIN_PROJECT_WITH_DEFAULTS',
+    message: 'Create a MetaCoin project',
+    project: 'javascript-metacoin'
+  },
   QUIT_ACTION: {
+    env: 'TRONBOX_QUIT',
     message: 'Quit'
   }
 };
@@ -56,8 +58,10 @@ function showStarOnGitHubMessage() {
 }
 
 const getAction = async () => {
-  if (process.env[ACTION.CREATE_JAVASCRIPT_PROJECT_ACTION.env] !== undefined) {
-    return ACTION.CREATE_JAVASCRIPT_PROJECT_ACTION.message;
+  const matchedAction = Object.values(ACTION).find(action => process.env[action.env] !== undefined);
+  if (matchedAction) {
+    console.info(chalk.cyan(matchedAction.message));
+    return matchedAction.message;
   }
 
   try {
@@ -129,6 +133,28 @@ const copySampleProject = action => {
   }
 };
 
+const canInstallDeps = () => {
+  return fsExtra.pathExistsSync('package.json');
+};
+
+const installDependencies = () => {
+  console.info();
+  console.info(chalk.cyan('Installing npm dependencies from package.json...'));
+
+  const projectRoot = process.cwd();
+  const result = spawnSync('npm', ['install'], { cwd: projectRoot, stdio: 'inherit', shell: true });
+
+  if (result.error) {
+    return false;
+  }
+
+  if (result.status !== 0) {
+    return false;
+  }
+
+  return true;
+};
+
 const Init = {
   run: function (options, done) {
     printAsciiLogo();
@@ -144,6 +170,17 @@ const Init = {
         }
 
         copySampleProject(action);
+
+        const shouldInstall = canInstallDeps();
+        if (shouldInstall) {
+          const installed = installDependencies();
+          if (!installed) {
+            console.info();
+            console.info(chalk.red("Failed to install the project's dependencies"));
+            done();
+            return;
+          }
+        }
 
         showCreatedMessage();
         showStarOnGitHubMessage();
