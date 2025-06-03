@@ -1,3 +1,10 @@
+**4.3.0**
+
+- Support for Tron Solidity compiler 0.8.24
+- Add MetaCoin project template for tronbox init
+- Support calling overloaded Solidity functions
+- Make tronWeb instance available in migration scripts
+
 **4.2.0**
 
 - Developed a command-line interface (CLI) for the `init` command
