@@ -25,7 +25,15 @@ TRONBOX_CREATE_JAVASCRIPT_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
 ../../tronbox.dev migrate
 cd ..
 
-echo 'Test metacoin'
+echo 'Test init metacoin'
+rm -rf build
+mkdir build
+cd build
+TRONBOX_CREATE_JAVASCRIPT_METACOIN_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox metacoin'
 rm -rf build
 mkdir build
 cd build

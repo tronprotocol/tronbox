@@ -19,7 +19,15 @@ TRONBOX_CREATE_JAVASCRIPT_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
 ../../tronbox.dev migrate --network nile
 cd ..
 
-echo 'Nile: test metacoin'
+echo 'Nile test init metacoin'
+rm -rf build
+mkdir build
+cd build
+TRONBOX_CREATE_JAVASCRIPT_METACOIN_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
+../../tronbox.dev migrate --network nile
+cd ..
+
+echo 'Nile: test unbox metacoin'
 rm -rf build
 mkdir build
 cd build
