@@ -10,7 +10,7 @@ async function downloader(compilerVersion, evm) {
 
   await fs.ensureDir(path.join(dir));
 
-  let soljsonUrl = `https://tronsuper.github.io/tron-solc-bin/bin/soljson_v${compilerVersion}.js`;
+  let soljsonUrl = '';
   if (evm) {
     try {
       const solidityUrl = 'https://binaries.soliditylang.org/bin';
@@ -19,12 +19,43 @@ async function downloader(compilerVersion, evm) {
         if (list.body.releases && list.body.releases[compilerVersion]) {
           soljsonUrl = `${solidityUrl}/${list.body.releases[compilerVersion]}`;
         } else {
-          console.info(chalk.red(chalk.bold('Error:'), 'Wrong Solidity compiler version.'));
+          console.info(
+            chalk.red(
+              chalk.bold('Error:'),
+              `Unable to locate Solidity compiler version ${chalk.yellow(compilerVersion)}.`
+            )
+          );
+
           process.exit();
         }
       }
     } catch (error) {
-      console.info(chalk.red(chalk.bold('Error:'), 'Failed to fetch compiler list.'));
+      console.info(chalk.red(chalk.bold('Error:'), 'Failed to fetch Solidity compiler list.'));
+      process.exit();
+    }
+  } else {
+    try {
+      const solidityUrl = 'https://tronprotocol.github.io/solc-bin/wasm';
+      const list = await req.get(`${solidityUrl}/list.json`);
+      if (list && list.body && list.body.builds) {
+        list.body.builds.forEach(_ => {
+          const { version, path } = _;
+          if (version === compilerVersion) {
+            soljsonUrl = `${solidityUrl}/${path}`;
+          }
+        });
+        if (!soljsonUrl) {
+          console.info(
+            chalk.red(
+              chalk.bold('Error:'),
+              `Unable to locate Solidity compiler version ${chalk.yellow(compilerVersion)}.`
+            )
+          );
+          process.exit();
+        }
+      }
+    } catch (error) {
+      console.info(chalk.red(chalk.bold('Error:'), 'Failed to fetch Solidity compiler list.'));
       process.exit();
     }
   }
@@ -37,6 +68,12 @@ async function downloader(compilerVersion, evm) {
       // double check
       if (!fs.existsSync(soljsonPath)) {
         console.info(chalk.red(chalk.bold('Error:'), 'Permission required.'));
+        console.info(`
+Most likely, you installed Node.js as root.
+Please, download the compiler manually, running:
+
+tronbox --download-compiler ${compilerVersion} ${options.evm ? '--evm' : ''}
+`);
       } else {
         console.info('Compiler downloaded.');
       }
