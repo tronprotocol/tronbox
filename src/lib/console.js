@@ -81,6 +81,7 @@ Console.prototype.start = function (callback) {
       prompt: 'tronbox(' + self.options.network + ')> ',
       context: {
         tronWrap: self.tronWrap,
+        tronWeb: self.tronWrap,
         web3: self.tronWrap._web3 ? self.tronWrap._web3 : undefined
       },
       interpreter: self.interpret.bind(self),

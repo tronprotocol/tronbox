@@ -12,6 +12,7 @@ const Migrate = require('../components/Migrate');
 const Profiler = require('../components/Compile/profiler');
 const originalrequire = require('original-require');
 const TronWrap = require('../components/TronWrap');
+const waitForTransactionReceipt = require('../components/waitForTransactionReceipt');
 
 chai.use(require('./assertions'));
 
@@ -53,7 +54,7 @@ const Test = {
       return path.extname(file) === '.sol';
     });
 
-    // Add Javascript tests because there's nothing we need to do with them.
+    // Add JavaScript tests because there's nothing we need to do with them.
     // Solidity tests will be handled later.
     js_tests.forEach(function (file) {
       // There's an idiosyncrasy in Mocha where the same file can't be run twice
@@ -96,7 +97,7 @@ const Test = {
         return self.performInitialDeploy(config, test_resolver);
       })
       .then(function () {
-        console.info('Preparing Javascript tests (if any)...');
+        console.info('Preparing JavaScript tests (if any)...');
         return self.setJSTestGlobals(accounts, test_resolver, runner, config);
       })
       .then(function () {
@@ -135,6 +136,7 @@ const Test = {
 
     return mocha;
   },
+
   compileContractsWithTestFilesIfNeeded: function (solidity_test_files, config, test_resolver) {
     return new Promise(function (accept, reject) {
       Profiler.updated(
@@ -230,7 +232,10 @@ const Test = {
         });
       };
 
-      global.tronWrap = TronWrap();
+      const tronWrap = TronWrap();
+      global.tronWrap = tronWrap;
+      global.tronWeb = tronWrap;
+      global.waitForTransactionReceipt = waitForTransactionReceipt(tronWrap);
       if (global.tronWrap._web3) {
         global.web3 = global.tronWrap._web3;
       }
