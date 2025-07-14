@@ -1,34 +1,44 @@
 ## Contributing
 
-Please follow these steps to contribute:
+We appreciate your interest in contributing! Please follow these steps to get started:
 
-1. Fork this repository.
+1. **Fork this repository.**
 
-2. Clone your forked repository recursively to include submodules.
+2. **Clone your forked repository.**
 
-For example:
+   Use the following command to clone it:
 
-```shell script
-git clone --recurse-submodules -j8 git@github.com:sullof/tronbox.git
-```
+   ```bash
+   git clone git@github.com:your-username/tronbox.git
+   ```
 
-3. If you use nvm for Node, install Node with a version higher than 8.0:
+   Replace `your-username` with your GitHub username.
 
-```shell script
-nvm install v8.16.0
-nvm use v8.16.0
-```
+3. **Install Node.js using nvm.**
 
-4. Install your project's dependencies:
+   Make sure to use a version higher than 18. You can install the recommended version like this:
 
-```shell script
-npm install
-```
+   ```bash
+   nvm install v18.20.8
+   nvm use v18.20.8
+   ```
 
-5. For better debugging during development, run the unbuilt version of TronBox.
+4. **Install the project's dependencies.**
 
-For example:
+   Run the following command in the root of the project:
 
-```shell script
-./tronbox.dev migrate --reset
-```
+   ```bash
+   npm install
+   ```
+
+5. **Run the unbuilt version of TronBox for better debugging during development.**
+
+   You can do this with the following command:
+
+   ```bash
+   ./tronbox.dev migrate --reset
+   ```
+
+If you like this project, please consider giving it a star!
+
+Thank you for your contributions!
