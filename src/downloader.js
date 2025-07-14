@@ -72,7 +72,7 @@ async function downloader(compilerVersion, evm) {
 Most likely, you installed Node.js as root.
 Please, download the compiler manually, running:
 
-tronbox --download-compiler ${compilerVersion} ${options.evm ? '--evm' : ''}
+tronbox --download-compiler ${compilerVersion} ${evm ? '--evm' : ''}
 `);
       } else {
         console.info('Compiler downloaded.');
