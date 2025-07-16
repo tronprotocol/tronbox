@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -68,6 +68,7 @@
     "@babel/preset-env": "^7.6.3",
     "eslint": "^9.17.0",
     "eslint-plugin-n": "^17.15.1",
+    "globals": "^16.1.0",
     "prettier": "^2.8.5",
     "tslib": "^2.8.1"
   },

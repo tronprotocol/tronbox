@@ -1,3 +1,7 @@
+**4.2.1**
+
+- Support for Tron Solidity compiler 0.8.24
+
 **4.2.0**
 
 - Developed a command-line interface (CLI) for the `init` command
