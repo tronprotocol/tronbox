@@ -1,6 +1,7 @@
 **4.2.1**
 
 - Support for Tron Solidity compiler 0.8.24
+- Upgrade eslint to v9.31.0
 
 **4.2.0**
 
