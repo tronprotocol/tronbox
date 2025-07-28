@@ -3,7 +3,8 @@ const path = require('path');
 const chalk = require('chalk');
 const tsort = require('tsort');
 const parser = require('@solidity-parser/parser');
-const Resolver = require('@resolver-engine/imports-fs').ImportsFsEngine;
+const Config = require('../Config');
+const Resolver = require('../Resolver');
 const packageJson = require('../../../package.json');
 
 const IMPORT_SOLIDITY_REGEX = /^\s*import(\s+)[\s\S]*?;\s*$/gm;
@@ -13,7 +14,9 @@ function unique(array) {
 }
 
 async function resolve(importPath) {
-  const resolver = Resolver();
+  const config = Config.detect({});
+  const resolver = new Resolver(config);
+
   try {
     if (importPath === 'tronbox/console.sol') {
       const filePath = path.resolve(__dirname, '../../../console.sol');
@@ -21,9 +24,15 @@ async function resolve(importPath) {
       return { fileContents, filePath };
     }
 
-    const filePath = await resolver.resolve(importPath);
-    const fileContents = fs.readFileSync(filePath).toString();
-    return { fileContents, filePath };
+    return await new Promise((resolve, reject) => {
+      resolver.resolve(importPath, function (err, fileContents, filePath) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({ fileContents, filePath });
+        }
+      });
+    });
   } catch (error) {
     throw new Error('File ' + importPath + " doesn't exist or is not a readable file.");
   }
