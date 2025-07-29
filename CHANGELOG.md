@@ -1,3 +1,7 @@
+**4.2.2**
+
+- Replace deprecated request with axios
+
 **4.2.1**
 
 - Support for Tron Solidity compiler 0.8.24

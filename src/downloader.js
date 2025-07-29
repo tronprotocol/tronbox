@@ -2,7 +2,7 @@ const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs-extra');
 const homedir = require('homedir');
-const req = require('superagent');
+const req = require('axios');
 
 async function downloader(compilerVersion, evm) {
   const dir = path.join(homedir(), '.tronbox', evm ? 'evm-solc' : 'solc');
@@ -15,9 +15,9 @@ async function downloader(compilerVersion, evm) {
     try {
       const solidityUrl = 'https://binaries.soliditylang.org/bin';
       const list = await req.get(`${solidityUrl}/list.json`);
-      if (list && list.body) {
-        if (list.body.releases && list.body.releases[compilerVersion]) {
-          soljsonUrl = `${solidityUrl}/${list.body.releases[compilerVersion]}`;
+      if (list && list.data) {
+        if (list.data.releases && list.data.releases[compilerVersion]) {
+          soljsonUrl = `${solidityUrl}/${list.data.releases[compilerVersion]}`;
         } else {
           console.info(
             chalk.red(
@@ -37,8 +37,8 @@ async function downloader(compilerVersion, evm) {
     try {
       const solidityUrl = 'https://tronprotocol.github.io/solc-bin/wasm';
       const list = await req.get(`${solidityUrl}/list.json`);
-      if (list && list.body && list.body.builds) {
-        list.body.builds.forEach(_ => {
+      if (list && list.data && list.data.builds) {
+        list.data.builds.forEach(_ => {
           const { version, path } = _;
           if (version === compilerVersion) {
             soljsonUrl = `${solidityUrl}/${path}`;
@@ -61,10 +61,12 @@ async function downloader(compilerVersion, evm) {
   }
 
   try {
-    const res = await req.get(soljsonUrl).responseType('blob');
+    const res = await req.get(soljsonUrl, {
+      responseType: 'arraybuffer'
+    });
 
-    if (res && res.body) {
-      await fs.writeFile(soljsonPath, res.body);
+    if (res && res.data) {
+      await fs.writeFile(soljsonPath, res.data);
       // double check
       if (!fs.existsSync(soljsonPath)) {
         console.info(chalk.red(chalk.bold('Error:'), 'Permission required.'));

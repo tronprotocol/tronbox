@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -18,14 +18,13 @@
     "format": "prettier --write \"src/**/*.js\" \"test/**/*.js\""
   },
   "dependencies": {
-    "@resolver-engine/imports-fs": "^0.3.3",
     "@solidity-parser/parser": "^0.16.0",
     "@truffle/contract-sources": "^0.1.12",
     "@truffle/error": "0.2.2",
     "@truffle/expect": "0.1.7",
     "ajv": "^6.10.2",
     "async": "2.6.4",
-    "axios": "^1.8.3",
+    "axios": "^1.11.0",
     "bignumber.js": "^7.2.1",
     "chai": "4.1.2",
     "chalk": "^2.4.1",
@@ -38,7 +37,6 @@
     "finalhandler": "^1.1.2",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
-    "github-download": "^0.5.0",
     "graphlib": "^2.1.7",
     "homedir": "^0.6.0",
     "lodash": "^4.17.15",
@@ -46,12 +44,10 @@
     "mocha": "10.2.0",
     "node-dir": "0.1.17",
     "original-require": "1.0.1",
-    "request": "^2.88.0",
     "serve-static": "^1.10.0",
     "solc": "^0.8.21",
     "source-map-support": "^0.5.3",
     "spawn-args": "^0.1.0",
-    "superagent": "^5.1.0",
     "temp": "^0.8.3",
     "tmp": "0.0.33",
     "tronweb": "^6.0.0",
@@ -59,7 +55,8 @@
     "tsort": "^0.0.1",
     "vcsurl": "^0.1.1",
     "web3": "^4.16.0",
-    "yargs": "^15.4.1"
+    "yargs": "^15.4.1",
+    "yauzl": "^3.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.4",
