@@ -1,6 +1,11 @@
 **4.2.2**
 
-- Replace deprecated request with axios
+- Upgrade `axios` to v1.11.0 to resolve `form-data` vulnerability
+- Replace `request`/`superagent` with `axios`
+- Remove `@resolver-engine/imports-fs`, replaced with custom implementation
+- Replace `github-download` with inline implementation
+  - Replace deprecated `request` with `axios` for HTTP requests
+  - Replace `adm-zip` with `yauzl` for ZIP file handling
 
 **4.2.1**
 
