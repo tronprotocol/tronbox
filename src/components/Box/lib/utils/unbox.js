@@ -1,10 +1,10 @@
 const fs = require('fs-extra');
 const path = require('path');
-const ghdownload = require('github-download');
-const request = require('request');
+const axios = require('axios');
 const vcsurl = require('vcsurl');
 const tmp = require('tmp');
 const exec = require('child_process').exec;
+const ghdownload = require('./download');
 const cwd = process.cwd();
 
 const config = require('../config');
@@ -31,36 +31,26 @@ function verifyURL(url) {
       vcsurl(url).replace('github.com', 'raw.githubusercontent.com').replace(/#.*/, '') + '/master/tronbox.js'
     );
 
-    const options = {
-      method: 'HEAD',
-      uri: 'https://' + configURL.host + configURL.pathname
-    };
-    request(options, function (error, r) {
-      if (error) {
-        return reject(
-          new Error(
-            'Error making request to ' +
-              options.uri +
-              '. Got error: ' +
-              error.message +
-              '. Please check the format of the requested resource.'
-          )
-        );
-      } else if (r.statusCode === 404) {
-        return reject(
-          new Error(
-            'tronbox Box at URL ' +
-              url +
-              " doesn't exist. If you believe this is an error, please contact tronbox support."
-          )
-        );
-      } else if (r.statusCode !== 200) {
-        return reject(
-          new Error('Error connecting to github.com. Please check your internet connection and try again.')
-        );
-      }
-      accept();
-    });
+    const targetUrl = 'https://' + configURL.host + configURL.pathname;
+
+    axios
+      .head(targetUrl)
+      .then(() => accept())
+      .catch(error => {
+        if (error.response && error.response.status === 404) {
+          return reject(
+            new Error(
+              'TronBox Box at URL ' +
+                url +
+                " doesn't exist. If you believe this is an error, please contact TronBox support."
+            )
+          );
+        } else {
+          return reject(
+            new Error('Error connecting to github.com. Please check your internet connection and try again.')
+          );
+        }
+      });
   });
 }
 
