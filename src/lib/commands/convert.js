@@ -22,9 +22,14 @@ const command = {
 
     function downloadConfig() {
       function downloadFile(url, target) {
-        return new Promise((resolve, reject) => {
-          const request = require('request');
-          request.get(url).pipe(fs.createWriteStream(target)).on('close', resolve).on('error', reject);
+        return new Promise(async (resolve, reject) => {
+          try {
+            const axios = require('axios');
+            const response = await axios.get(url, { responseType: 'stream' });
+            response.data.pipe(fs.createWriteStream(target)).on('close', resolve).on('error', reject);
+          } catch (error) {
+            reject(error);
+          }
         });
       }
       const configFilePromise = downloadFile(

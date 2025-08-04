@@ -4,6 +4,15 @@
 - Support calling overloaded Solidity functions
 - Make tronWeb instance available in migration scripts
 
+**4.2.2**
+
+- Upgrade `axios` to v1.11.0 to resolve `form-data` vulnerability
+- Replace `request`/`superagent` with `axios`
+- Remove `@resolver-engine/imports-fs`, replaced with custom implementation
+- Replace `github-download` with inline implementation
+  - Replace deprecated `request` with `axios` for HTTP requests
+  - Replace `adm-zip` with `yauzl` for ZIP file handling
+
 **4.2.1**
 
 - Support for Tron Solidity compiler 0.8.24
