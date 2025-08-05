@@ -12,11 +12,6 @@ rm -rf build
 ../../tronbox.dev test
 cd ..
 
-echo 'Test openzeppelin'
-cd openzeppelin
-. runTest.sh
-cd ..
-
 echo 'Test init'
 rm -rf build
 mkdir build
@@ -38,6 +33,30 @@ rm -rf build
 mkdir build
 cd build
 ../../tronbox.dev unbox metacoin-box
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox beacon'
+rm -rf build
+mkdir build
+cd build
+../../tronbox.dev unbox beacon
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox transparent'
+rm -rf build
+mkdir build
+cd build
+../../tronbox.dev unbox transparent
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox uups'
+rm -rf build
+mkdir build
+cd build
+../../tronbox.dev unbox uups
 ../../tronbox.dev test
 cd ..
 
