@@ -169,12 +169,6 @@ const contract = (function (module) {
         let tx_params = {
           parameters: args
         };
-        const last_arg = args[args.length - 1];
-
-        // It's only tx_params if it's an object and not a BigNumber.
-        if (Utils.is_object(last_arg) && !Utils.is_big_number(last_arg)) {
-          tx_params = args.pop();
-        }
 
         // Validate constructor args
         const constructor = self.abi.filter(function (item) {
@@ -248,12 +242,7 @@ const contract = (function (module) {
 
       if (args.length === 1 && Array.isArray(args[0])) {
         try {
-          let funAbi = {};
-          for (const item of self.abi) {
-            if (item.name === methodName) {
-              funAbi = item;
-            }
-          }
+          const funAbi = tronWrap._findMethodAbi(methodName, self.abi);
           tronWrap.utils.abi.encodeParamsV2ByABI(funAbi, args[0]);
           args = args[0];
         } catch {}
@@ -281,7 +270,7 @@ const contract = (function (module) {
           self.defaults()
         );
 
-        tronWrap.triggerContract(option, _callback);
+        tronWrap._triggerContract(option, _callback);
       });
     },
 
@@ -316,13 +305,23 @@ const contract = (function (module) {
             const abi = self.abi || [];
             for (let i = 0; i < abi.length; i++) {
               const item = abi[i];
-              if (self.hasOwnProperty(item.name)) continue;
-              if (/(function|event)/i.test(item.type) && item.name) {
-                const f = (...args) => {
-                  return self.call.apply(null, [item.name].concat(args));
+
+              if (/function/i.test(item.type) && item.name) {
+                const iface = new tronWrap.utils.ethersUtils.Interface([item]);
+                const functionSelector = iface.getFunction(item.name).format('sighash');
+
+                const createWrapper = funcName => {
+                  const f = (...args) => {
+                    return self.call.apply(null, [funcName].concat(args));
+                  };
+                  f.call = f;
+                  return f;
                 };
-                self[item.name] = f;
-                self[item.name].call = f;
+                if (!self.hasOwnProperty(item.name)) {
+                  self[item.name] = createWrapper(item.name);
+                }
+
+                self[functionSelector] = createWrapper(functionSelector);
               }
             }
             accept(self);

@@ -12,11 +12,6 @@ rm -rf build
 ../../tronbox.dev test
 cd ..
 
-echo 'Test openzeppelin'
-cd openzeppelin
-. runTest.sh
-cd ..
-
 echo 'Test init'
 rm -rf build
 mkdir build
@@ -25,11 +20,43 @@ TRONBOX_CREATE_JAVASCRIPT_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
 ../../tronbox.dev migrate
 cd ..
 
-echo 'Test metacoin'
+echo 'Test init metacoin'
+rm -rf build
+mkdir build
+cd build
+TRONBOX_CREATE_JAVASCRIPT_METACOIN_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox metacoin'
 rm -rf build
 mkdir build
 cd build
 ../../tronbox.dev unbox metacoin-box
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox beacon'
+rm -rf build
+mkdir build
+cd build
+../../tronbox.dev unbox beacon
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox transparent'
+rm -rf build
+mkdir build
+cd build
+../../tronbox.dev unbox transparent
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox uups'
+rm -rf build
+mkdir build
+cd build
+../../tronbox.dev unbox uups
 ../../tronbox.dev test
 cd ..
 

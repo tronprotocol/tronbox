@@ -8,6 +8,7 @@ const Deployer = require('../Deployer');
 
 const TronWrap = require('../TronWrap');
 const logErrorAndExit = require('../TronWrap').logErrorAndExit;
+const waitForTransactionReceipt = require('../waitForTransactionReceipt');
 let tronWrap;
 
 function Migration(file) {
@@ -26,7 +27,9 @@ Migration.prototype.run = function (options, callback) {
   tronWrap = TronWrap(options);
   // Initial context.
   const context = {
-    tronWrap: tronWrap
+    tronWrap: tronWrap,
+    tronWeb: tronWrap,
+    waitForTransactionReceipt: waitForTransactionReceipt(tronWrap)
   };
   if (tronWrap._web3) {
     context.web3 = tronWrap._web3;

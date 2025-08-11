@@ -47,7 +47,7 @@ contract('MetaCoin', function (accounts) {
     const balance = 100;
     const beforeBalance = await tronWrap.trx.getBalance(account);
     const success = await tronWrap.send('tre_setAccountBalance', [account, balance]);
-    await wait(3);
+
     const afterBalance = await tronWrap.trx.getBalance(account);
     const afterBalanceByMeta = await meta.getTrxBalance(account);
     assert.isTrue(success, 'The tre_setAccountBalance return value is incorrect');
@@ -100,7 +100,7 @@ contract('MetaCoin', function (accounts) {
 
   it('should successfully set block time', async function () {
     const success = await tronWrap.send('tre_blockTime', [0]);
-    await wait(3);
+
     const beforeNumber = await getBlockNumber();
     await wait(10);
     const afterNumber = await getBlockNumber();
@@ -117,10 +117,9 @@ contract('MetaCoin', function (accounts) {
 
   it('should successfully mine some blocks', async function () {
     await tronWrap.send('tre_blockTime', [0]);
-    await wait(3);
+
     const beforeNumber = await getBlockNumber();
     const success = await tronWrap.send('tre_mine', [{ blocks: 3 }]);
-    await wait(10);
     const afterNumber = await getBlockNumber();
     assert.equal(success, '0x0', 'The tre_mine return value is incorrect');
     assert.equal(afterNumber - beforeNumber, 3, 'Mine blocks failed');
@@ -153,7 +152,6 @@ contract('MetaCoin', function (accounts) {
     });
     MetaCoin.address = address;
     const unlockedMeta = await MetaCoin.deployed();
-    await wait(3);
     const owner = await unlockedMeta.getOwner();
     assert.equal(owner, tronWrap.address.toHex(unlockedAccounts[0]), 'The owner is incorrect');
 
@@ -168,7 +166,6 @@ contract('MetaCoin', function (accounts) {
     await unlockedMeta.sendCoin(accounts[0], 10, {
       from: unlockedAccounts[0]
     });
-    await wait(3);
     assert.equal(
       await unlockedMeta.getBalance(unlockedAccounts[0]),
       9990n,
@@ -177,7 +174,6 @@ contract('MetaCoin', function (accounts) {
     assert.equal(await unlockedMeta.getBalance(accounts[0]), 10n, "Amount wasn't correctly sent to the receiver");
 
     await unlockedMeta.sendCoin(unlockedAccounts[1], 10);
-    await wait(3);
     assert.equal(await unlockedMeta.getBalance(accounts[0]), 0n, "Amount wasn't correctly taken from the sender");
     assert.equal(
       await unlockedMeta.getBalance(unlockedAccounts[1]),

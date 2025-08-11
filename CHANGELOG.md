@@ -1,3 +1,9 @@
+**4.3.0**
+
+- Add MetaCoin project template for tronbox init
+- Support calling overloaded Solidity functions
+- Make tronWeb instance available in migration scripts
+
 **4.2.2**
 
 - Upgrade `axios` to v1.11.0 to resolve `form-data` vulnerability

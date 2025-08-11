@@ -34,7 +34,7 @@ contract('Tuple', function (accounts) {
 
   it('should return the same person', async function () {
     const person1 = ['return', 101];
-    const person2 = turnBN2N(await tuple.getPerson2(person1));
+    const person2 = turnBN2N(await tuple.echoPerson(person1));
     assert.deepEqual(person1, person2);
   });
 
@@ -57,5 +57,17 @@ contract('Tuple', function (accounts) {
     await tuple.insertBatch(persons1);
     const persons2 = turnBN2N(await tuple.getPerson());
     assert.deepEqual(lastPersons.concat(persons1), persons2);
+  });
+
+  it('should correctly call overloaded functions', async function () {
+    const uint256Result = await tuple['func(uint256)'](1);
+    const addressResult = await tuple['func(address)'](tuple.address);
+    assert.equal(uint256Result, '0x7f98a45e', 'func(uint256) returned an unexpected value');
+    assert.equal(addressResult, '0xb8550dc7', 'func(address) returned an unexpected value');
+
+    const uint256CallResult = await tuple['func(uint256)'].call(1);
+    const addressCallResult = await tuple['func(address)'].call(tuple.address);
+    assert.equal(uint256CallResult, '0x7f98a45e', 'func(uint256) using .call returned an unexpected value');
+    assert.equal(addressCallResult, '0xb8550dc7', 'func(address) using .call returned an unexpected value');
   });
 });
