@@ -9,8 +9,6 @@ const _ = require('lodash');
 const async = require('async');
 const fs = require('fs');
 const TronWrap = require('../../components/TronWrap');
-const { TronWeb } = require('tronweb');
-const waitForTransactionReceipt = require('./waitForTransactionReceipt');
 
 function TestRunner(options) {
   options = options || {};
@@ -28,15 +26,6 @@ function TestRunner(options) {
   this.initial_snapshot = null;
   this.known_events = {};
   this.tronwrap = TronWrap();
-
-  global.tronWeb = new TronWeb(
-    this.tronwrap.fullNode,
-    this.tronwrap.solidityNode,
-    this.tronwrap.eventServer,
-    this.tronwrap.defaultPrivateKey
-  );
-
-  global.waitForTransactionReceipt = waitForTransactionReceipt(tronWeb);
 
   // For each test
   this.currentTestStartBlock = null;
@@ -114,15 +103,16 @@ TestRunner.prototype.endTest = function (mocha, callback) {
   callback();
 };
 
-(TestRunner.prototype.snapshot = function (callback) {
+TestRunner.prototype.snapshot = function (callback) {
   this.rpc('evm_snapshot', function (err, result) {
     if (err) return callback(err);
     callback(null, result.result);
   });
-}),
-  (TestRunner.prototype.revert = function (snapshot_id, callback) {
-    this.rpc('evm_revert', [snapshot_id], callback);
-  });
+};
+
+TestRunner.prototype.revert = function (snapshot_id, callback) {
+  this.rpc('evm_revert', [snapshot_id], callback);
+};
 
 TestRunner.prototype.rpc = function (method, arg, cb) {
   const req = {

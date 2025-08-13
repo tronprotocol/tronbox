@@ -31,8 +31,6 @@ function ReplManager(options) {
 ReplManager.prototype.start = function (options) {
   const self = this;
 
-  global.tronWeb = TronWrap();
-
   this.contexts.push({
     prompt: options.prompt,
     interpreter: options.interpreter,

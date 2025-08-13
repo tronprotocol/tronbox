@@ -40,13 +40,11 @@ contract('MetaCoin', function (accounts) {
 
     this.timeout(10000);
     const meta = await MetaCoin.deployed();
-    await wait(3);
     const account_one_starting_balance = await meta.getBalance.call(accounts[0]);
     const account_two_starting_balance = await meta.getBalance.call(accounts[1]);
     await meta.sendCoin(accounts[1], 10, {
       from: accounts[0]
     });
-    await wait(3);
     assert.equal(
       await meta.getBalance.call(accounts[0]),
       account_one_starting_balance - 10n,

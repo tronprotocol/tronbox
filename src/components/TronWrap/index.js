@@ -154,6 +154,32 @@ function init(options, extraOptions = {}) {
   tronWrap._privateKeyByAccount = {};
   tronWrap._privateKeyByAccount[defaultAddress] = tronWrap.defaultPrivateKey;
 
+  tronWrap._findMethodAbi = function (methodName, abi) {
+    let funAbi = {};
+
+    if (methodName.includes('(')) {
+      for (const item of abi) {
+        if (/function/i.test(item.type) && item.name) {
+          const iface = new tronWrap.utils.ethersUtils.Interface([item]);
+          const functionSelector = iface.getFunction(item.name).format('sighash');
+          if (functionSelector === methodName) {
+            funAbi = item;
+            break;
+          }
+        }
+      }
+    } else {
+      for (const item of abi) {
+        if (item.name === methodName) {
+          funAbi = item;
+          break;
+        }
+      }
+    }
+
+    return funAbi;
+  };
+
   tronWrap._getAccounts = function (callback) {
     if (extraOptions.evm) return tronWrap._evmGetAccounts(callback);
 
@@ -331,16 +357,13 @@ function init(options, extraOptions = {}) {
     }
   };
 
-  tronWrap.triggerContract = function (option, callback) {
+  tronWrap._triggerContract = function (option, callback) {
     if (extraOptions.evm) return tronWrap._evmTriggerContract(option, callback);
 
     const myContract = this.contract(option.abi, option.address);
     let callSend = 'send'; // constructor and fallback
-    option.abi.forEach(function (val) {
-      if (val.name === option.methodName) {
-        callSend = /payable/.test(val.stateMutability) ? 'send' : 'call';
-      }
-    });
+    const funAbi = tronWrap._findMethodAbi(option.methodName, option.abi);
+    callSend = /payable/.test(funAbi.stateMutability) ? 'send' : 'call';
     option.methodArgs || (option.methodArgs = {});
     option.methodArgs.from || (option.methodArgs.from = this._accounts[0]);
 
@@ -601,11 +624,8 @@ function init(options, extraOptions = {}) {
     }
 
     let callSend = 'send';
-    option.abi.forEach(function (val) {
-      if (val.name === option.methodName) {
-        callSend = /payable/.test(val.stateMutability) ? 'send' : 'call';
-      }
-    });
+    const funAbi = tronWrap._findMethodAbi(option.methodName, option.abi);
+    callSend = /payable/.test(funAbi.stateMutability) ? 'send' : 'call';
 
     try {
       if (callSend === 'call') {
