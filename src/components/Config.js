@@ -60,6 +60,9 @@ function Config() {
         return path.resolve(self.working_directory, value);
       }
     },
+    build_info_directory: function () {
+      return path.join(self.working_directory, 'build-info');
+    },
     contracts_directory: {
       default: function () {
         return path.join(self.working_directory, 'contracts');

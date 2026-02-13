@@ -46,6 +46,10 @@
         }
       ]
     },
+    "metadata": {
+      "type": "string",
+      "description": "Solidity compiler metadata JSON"
+    },
     "sourceMap": {
       "allOf": [
         {
@@ -74,9 +78,6 @@
     },
     "ast": {
       "$ref": "#/definitions/AST"
-    },
-    "legacyAST": {
-      "$ref": "#/definitions/LegacyAST"
     },
     "compiler": {
       "type": "object",
@@ -149,9 +150,6 @@
       "type": "string"
     },
     "AST": {
-      "type": "object"
-    },
-    "LegacyAST": {
       "type": "object"
     },
     "SchemaVersion": {

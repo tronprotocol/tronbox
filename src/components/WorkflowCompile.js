@@ -6,6 +6,8 @@ const { expect } = require('../lib/utils');
 const Resolver = require('./Resolver');
 const Artifactor = require('./Artifactor');
 const TronWrap = require('./TronWrap');
+const fs = require("fs");
+const md5 = require('md5');
 
 async function getCompilerVersion(options) {
   const config = Config.detect(options);
@@ -40,7 +42,7 @@ const Contracts = {
     const self = this;
 
     expect.options(options, ['contracts_build_directory']);
-
+    expect.options(options, ['build_info_directory']);
     expect.one(options, ['contracts_directory', 'files']);
 
     // Use a config object to ensure we get the default sources.
@@ -54,10 +56,20 @@ const Contracts = {
       config.artifactor = new Artifactor(config.contracts_build_directory);
     }
 
-    function finished(err, contracts, paths) {
+    //  Normalize compile targets
+    if (Array.isArray(config.compileTargets) && config.compileTargets.length > 0) {
+      config.compileTargets = config.compileTargets.map(p =>
+        path.resolve(config.working_directory, p)
+      );
+    }
+
+    function finished(err, contracts, paths, solcStandardInput) {
       if (err) return callback(err);
 
       if (contracts != null && Object.keys(contracts).length > 0) {
+        // Create a hash of the standard JSON input to use as a unique identifier for this compilation. 
+        const inputFileName = md5(JSON.stringify(solcStandardInput));
+        // Write contract artifacts
         self.write_contracts(contracts, config, async function (err, abstractions) {
           options.logger.log('');
           options.logger.log(`> Compiled successfully using:`);
@@ -65,11 +77,12 @@ const Contracts = {
             ? options.networks?.compilers?.solc?.version
             : options.compilers?.solc?.version;
           options.logger.log(`  - solc${options.evm ? '(EVM)' : ''}: ${solcVersion}`);
-          callback(err, abstractions, paths);
+          callback(err, abstractions, paths, solcStandardInput);
         });
+        self.write_buildInfo(solcStandardInput, config, inputFileName)
       } else {
         options.logger.log('> Everything is up to date, there is nothing to compile.');
-        callback(null, [], paths);
+        callback(null, [], paths, solcStandardInput);
       }
     }
 
@@ -77,11 +90,17 @@ const Contracts = {
       options.logger.log('Compiling your contracts...');
       options.logger.log('===========================');
 
-      if (config.all === true || config.compileAll === true) {
-        compile.all(config, finished);
-      } else {
-        compile.necessary(config, finished);
+      // Compile specific contracts
+      if (config.compileTargets && config.compileTargets.length > 0) {
+        return compile.specific(config, finished);
       }
+
+      //If ALL option is selected compile all contracts
+      if (config.all === true || config.compileAll === true) {
+        return compile.all(config, finished);
+      }
+      //Compile modified contracts if none of the above is true
+      return compile.necessary(config, finished);
     }
 
     getCompilerVersion(options)
@@ -102,8 +121,8 @@ const Contracts = {
       if (!options.quietWrite) {
         options.logger.log(
           'Writing artifacts to .' +
-            path.sep +
-            path.relative(options.working_directory, options.contracts_build_directory)
+          path.sep +
+          path.relative(options.working_directory, options.contracts_build_directory)
         );
       }
 
@@ -118,7 +137,28 @@ const Contracts = {
         })
         .catch(callback);
     });
+  },
+  //Write the standard JSON input to a file in the build info directory. This can be used for verification or debugging purposes.
+  write_buildInfo: function (solcStandardInput, options, inputFileName) {
+
+    mkdirp(options.build_info_directory, function (err) {
+      if (err != null) {
+        callback(err);
+        return;
+      }
+
+      if (!options.quietWrite) {
+        options.logger.log(
+          'Writing jsnoninput file to .' +
+          path.sep +
+          path.relative(options.working_directory, options.build_info_directory)
+        );
+      }
+      fs.writeFileSync(path.relative(options.working_directory, options.build_info_directory) + path.sep + `${inputFileName}.json`, JSON.stringify(solcStandardInput));
+
+    })
   }
+
 };
 
 module.exports = Contracts;

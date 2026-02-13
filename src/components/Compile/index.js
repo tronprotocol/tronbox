@@ -52,6 +52,8 @@ const compile = function (sources, options, callback) {
       replacement = '/' + replacement;
       replacement = replacement.replace(':', '');
     }
+    //Convert absolute paths to relative for reproducible builds
+    replacement = makeRelative(replacement, options);
 
     // Save the result
     operatingSystemIndependentSources[replacement] = sources[source];
@@ -69,14 +71,19 @@ const compile = function (sources, options, callback) {
       ...settings,
       outputSelection: {
         '*': {
-          '': ['legacyAST', 'ast'],
+          '': ['ast'],
           '*': [
             'abi',
+            'devdoc',
+            'userdoc',
+            'metadata',
+            'storageLayout',
             'evm.bytecode.object',
             'evm.bytecode.sourceMap',
             'evm.bytecode.linkReferences',
             'evm.deployedBytecode.object',
-            'evm.deployedBytecode.sourceMap'
+            'evm.deployedBytecode.sourceMap',
+            'evm.methodIdentifiers',
           ]
         }
       }
@@ -85,7 +92,7 @@ const compile = function (sources, options, callback) {
 
   // Nothing to compile? Bail.
   if (!Object.keys(sources).length) {
-    return callback(null, [], []);
+    return callback(null, [], [], {});
   }
 
   Object.keys(operatingSystemIndependentSources).forEach(function (file_path) {
@@ -158,9 +165,9 @@ const compile = function (sources, options, callback) {
         source: operatingSystemIndependentSources[source_path],
         sourceMap: contract.evm.bytecode.sourceMap,
         deployedSourceMap: contract.evm.deployedBytecode.sourceMap,
-        legacyAST: standardOutput.sources[source_path].legacyAST,
         ast: standardOutput.sources[source_path].ast,
         abi: contract.abi,
+        metadata: contract.metadata,
         bytecode: '0x' + contract.evm.bytecode.object,
         deployedBytecode: '0x' + contract.evm.deployedBytecode.object,
         unlinked_binary: '0x' + contract.evm.bytecode.object, // deprecated
@@ -217,7 +224,7 @@ const compile = function (sources, options, callback) {
     });
   });
 
-  callback(null, returnVal, files);
+  callback(null, returnVal, files, solcStandardInput);
 };
 
 function replaceLinkReferences(bytecode, linkReferences, libraryName) {
@@ -236,6 +243,21 @@ function replaceLinkReferences(bytecode, linkReferences, libraryName) {
 
   return bytecode;
 }
+
+//Takes an absolute path and return a relative path to ensure reproducibility
+const makeRelative = (contractPath, options) => {
+  const absolutePath = contractPath
+
+  const projectRoot = path.resolve(options.working_directory);
+  // Normalize for comparison (important on Windows)
+  const normalizedAbsolute = path.resolve(absolutePath);
+  const normalizedRoot = path.resolve(projectRoot);
+
+  // Convert to project-relative path
+  let relativePath = path.relative(normalizedRoot, normalizedAbsolute);
+
+  return relativePath;
+};
 
 function orderABI(contract) {
   const { abi, contractName, ast } = contract;
@@ -289,6 +311,13 @@ compile.all = function (options, callback) {
   });
 };
 
+//Compile an specific set of contracts or a single one
+compile.specific = function (options, callback) {
+
+  options.paths = options.compileTargets;
+  compile.with_dependencies(options, callback);
+
+};
 // contracts_directory: String. Directory where .sol files can be found.
 // build_directory: String. Optional. Directory where .sol.js files can be found. Only required if `all` is false.
 // all: Boolean. Compile all sources found. Defaults to true. If false, will compare sources against built files
@@ -300,7 +329,7 @@ compile.necessary = function (options, callback) {
     if (err) return callback(err);
 
     if (updated.length === 0) {
-      return callback(null, [], {});
+      return callback(null, [], {}, {});
     }
 
     options.paths = updated;

@@ -1,4 +1,4 @@
-const pkgVersion = '2.0.1';
+const pkgVersion = '2.0.2';
 const Ajv = require('ajv');
 
 const contractObjectSchema = require('./spec/contract-object.spec.json');
@@ -62,6 +62,12 @@ const properties = {
       return value;
     }
   },
+  metadata: {
+    sources: ['metadata'],
+    transform(value) {
+      return typeof value == 'string' ? value : undefined;
+    }
+  },
   sourceMap: {
     sources: ['sourceMap', 'srcmap', 'evm.bytecode.sourceMap']
   },
@@ -71,18 +77,6 @@ const properties = {
   source: {},
   sourcePath: {},
   ast: {},
-  legacyAST: {
-    transform: function (value, obj) {
-      const schemaVersion = obj.schemaVersion || '0.0.0';
-
-      // legacyAST introduced in v2.0.0
-      if (schemaVersion[0] < 2) {
-        return obj.ast;
-      } else {
-        return value;
-      }
-    }
-  },
   compiler: {},
   networks: {
     transform: function (value) {
