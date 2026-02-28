@@ -66,8 +66,6 @@ const Utils = {
       const library_address = links[library_name];
       const regex = new RegExp('__' + library_name + '_+', 'g');
       bytecode = bytecode.replace(regex, library_address.replace('0x', '').replace('41', ''));
-      // var address = TronWrap.address2HexString(library_address);
-      // bytecode = bytecode.replace(eval('/'+library_address+"/ig"),address.replace("41", ""));
     });
 
     return bytecode;

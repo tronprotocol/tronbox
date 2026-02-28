@@ -1,4 +1,5 @@
 const { execFileSync } = require('child_process');
+const { createRequire } = require('module');
 const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
@@ -91,7 +92,9 @@ You are using version ${chalk.yellow(compilerVersion)}, which is not supported.`
       process.exit(1);
     }
   }
-  const soljson = eval('require')(soljsonPath);
+
+  const runtimeRequire = createRequire(__filename);
+  const soljson = runtimeRequire(soljsonPath);
   return wrapper(soljson);
 }
 
