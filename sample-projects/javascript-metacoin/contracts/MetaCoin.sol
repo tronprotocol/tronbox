@@ -63,7 +63,8 @@ contract MetaCoin is ERC20 {
     require(msg.sender == owner, "You aren't the owner");
     require(_to != address(0), 'Invalid address');
 
-    payable(_to).transfer(address(this).balance);
+    (bool success, ) = payable(_to).call{ value: address(this).balance }('');
+    require(success, 'Transfer failed');
   }
 
   /**
