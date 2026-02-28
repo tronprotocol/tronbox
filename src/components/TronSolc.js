@@ -1,4 +1,4 @@
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
@@ -25,6 +25,10 @@ function compareVersions(version1, version2) {
   return 0; // Versions are equal
 }
 
+function isValidCompilerVersion(version) {
+  return /^\d+\.\d+\.\d+$/.test(version);
+}
+
 function getWrapper(options = {}) {
   let compilerVersion = maxVersion;
   const solcDir = path.join(homedir(), '.tronbox', options.evm ? 'evm-solc' : 'solc');
@@ -43,12 +47,19 @@ function getWrapper(options = {}) {
         compilerVersion = options.compilers.solc.version;
       }
 
+      if (!isValidCompilerVersion(compilerVersion)) {
+        console.error(
+          `${chalk.red(chalk.bold('Error:'))} Invalid compiler version '${chalk.yellow(compilerVersion)}'.`
+        );
+        process.exit(1);
+      }
+
       if (compareVersions(compilerVersion, maxVersion) > 0 && !options.evm) {
         console.error(`${chalk.red(
           chalk.bold('Error:')
         )} TronBox v${version} currently supports Tron Solidity compiler versions up to ${chalk.green(maxVersion)}.
 You are using version ${chalk.yellow(compilerVersion)}, which is not supported.`);
-        process.exit();
+        process.exit(1);
       }
     } catch (e) {}
   }
@@ -59,13 +70,15 @@ You are using version ${chalk.yellow(compilerVersion)}, which is not supported.`
     if (process.argv[1]) {
       name = process.argv[1];
     }
-    if (process.env.TRONBOX_NAME) {
-      name = process.env.TRONBOX_NAME;
-    }
 
     options.logger.log(`Fetching ${options.evm ? 'Ethereum' : 'Tron'} Solidity compiler version ${compilerVersion}...`);
     try {
-      const result = execSync(`${name} --download-compiler ${compilerVersion} ${options.evm ? '--evm' : ''}`, {
+      const args = ['--download-compiler', compilerVersion];
+      if (options.evm) {
+        args.push('--evm');
+      }
+
+      const result = execFileSync(name, args, {
         env: { ...process.env, FORCE_COLOR: '1' },
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe']
