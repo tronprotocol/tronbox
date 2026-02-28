@@ -96,12 +96,16 @@ function init(options, extraOptions = {}) {
     }
   }
 
-  // support mnemonic
   const getPrivateKey = () => {
-    if (options.mnemonic) {
-      return _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey.replace(/^0x/, '');
+    const privateKey = options.mnemonic
+      ? _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey
+      : options.privateKey;
+
+    if (typeof privateKey !== 'string' || !privateKey) {
+      throw new Error('Invalid privateKey. Expected a non-empty string.');
     }
-    return options.privateKey.replace(/^0x/, '');
+
+    return privateKey.replace(/^0x/, '');
   };
 
   TronWrap.prototype = new _TronWeb(
@@ -112,7 +116,6 @@ function init(options, extraOptions = {}) {
   );
 
   const tronWrap = TronWrap.prototype;
-  // tronWrap._compilerVersion = 3
 
   tronWrap._tre = extraOptions.tre;
   tronWrap._treUnlockedAccounts = {};
@@ -232,7 +235,7 @@ function init(options, extraOptions = {}) {
     if (contractInstance) {
       callback && callback(null, contractInstance.contract_address);
     } else {
-      callback(new Error('no code'));
+      callback && callback(new Error('no code'));
     }
   };
 
@@ -439,6 +442,9 @@ function init(options, extraOptions = {}) {
                   .catch(err => {
                     return reject(err);
                   });
+              })
+              .catch(err => {
+                return reject(err);
               });
           });
         }
@@ -701,7 +707,7 @@ const logErrorAndExit = (logger, err) => {
   } else {
     log('Error encountered, bailing. Network state unknown.');
   }
-  process.exit();
+  process.exit(1);
 };
 
 const dlog = function (...args) {

@@ -660,6 +660,10 @@ Contract._properties = {
     get: function () {
       let code = this._json.deployedBytecode;
 
+      if (code == null) {
+        return '0x';
+      }
+
       if (code.indexOf('0x') !== 0) {
         code = '0x' + code;
       }
@@ -667,9 +671,14 @@ Contract._properties = {
       return code;
     },
     set: function (val) {
-      let code = val;
+      if (val == null) {
+        this._json.deployedBytecode = '0x';
+        return;
+      }
 
-      if (val.indexOf('0x') !== 0) {
+      let code = typeof val === 'string' ? val : String(val);
+
+      if (code.indexOf('0x') !== 0) {
         code = '0x' + code;
       }
 
