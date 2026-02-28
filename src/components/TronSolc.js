@@ -40,29 +40,26 @@ function getWrapper(options = {}) {
     } else if (options.networks.useZeroFiveCompiler) {
       compilerVersion = '0.5.4';
     }
-    try {
-      if (options.networks.compilers) {
-        compilerVersion = options.networks.compilers.solc.version;
-      }
-      if (options.compilers) {
-        compilerVersion = options.compilers.solc.version;
-      }
+    const networkVersion = options.networks.compilers?.solc?.version;
+    const globalVersion = options.compilers.solc?.version;
+    if (globalVersion) {
+      compilerVersion = globalVersion;
+    } else if (networkVersion) {
+      compilerVersion = networkVersion;
+    }
 
-      if (!isValidCompilerVersion(compilerVersion)) {
-        console.error(
-          `${chalk.red(chalk.bold('Error:'))} Invalid compiler version '${chalk.yellow(compilerVersion)}'.`
-        );
-        process.exit(1);
-      }
+    if (!isValidCompilerVersion(compilerVersion)) {
+      console.error(`${chalk.red(chalk.bold('Error:'))} Invalid compiler version '${chalk.yellow(compilerVersion)}'.`);
+      process.exit(1);
+    }
 
-      if (compareVersions(compilerVersion, maxVersion) > 0 && !options.evm) {
-        console.error(`${chalk.red(
-          chalk.bold('Error:')
-        )} TronBox v${version} currently supports Tron Solidity compiler versions up to ${chalk.green(maxVersion)}.
+    if (compareVersions(compilerVersion, maxVersion) > 0 && !options.evm) {
+      console.error(`${chalk.red(
+        chalk.bold('Error:')
+      )} TronBox v${version} currently supports Tron Solidity compiler versions up to ${chalk.green(maxVersion)}.
 You are using version ${chalk.yellow(compilerVersion)}, which is not supported.`);
-        process.exit(1);
-      }
-    } catch (e) {}
+      process.exit(1);
+    }
   }
 
   const soljsonPath = path.join(solcDir, `soljson_v${compilerVersion}.js`);

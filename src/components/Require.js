@@ -88,7 +88,7 @@ const Require = {
     try {
       script.runInNewContext(context);
     } catch (error) {
-      console.error(error);
+      console.error(error instanceof Error ? error.message : String(error));
       process.exit(1);
     }
 

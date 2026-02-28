@@ -374,7 +374,7 @@ function init(options, extraOptions = {}) {
     option.methodArgs || (option.methodArgs = {});
     option.methodArgs.from || (option.methodArgs.from = this._accounts[0]);
 
-    dlog(option.methodName, option.args, options.methodArgs);
+    dlog(option.methodName, option.args, option.methodArgs);
 
     let privateKey;
     if (callSend === 'send' && option.methodArgs.from) {

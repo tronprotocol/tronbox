@@ -20,10 +20,10 @@ if (commands[0] === '--download-compiler' && commands[1]) {
         // If a number is returned, exit with that number.
         process.exit(err);
       } else if (err instanceof Error) {
-        console.error(err.stack || err.message);
+        console.error(err.message);
       } else {
         // Handle other types (string, object, etc.)
-        console.error(err.message || err.toString() || String(err));
+        console.error(typeof err === 'string' ? err : String(err));
       }
       process.exit(1);
     }
