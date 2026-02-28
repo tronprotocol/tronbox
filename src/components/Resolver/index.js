@@ -46,6 +46,7 @@ Resolver.prototype.resolve = function (import_path, imported_from, callback) {
 
   let resolved_body = null;
   let resolved_path = null;
+  let resolved_package_info = null;
   let current_index = -1;
   let current_source;
 
@@ -57,10 +58,11 @@ Resolver.prototype.resolve = function (import_path, imported_from, callback) {
       current_index += 1;
       current_source = self.sources[current_index];
 
-      current_source.resolve(import_path, imported_from, function (err, body, file_path) {
+      current_source.resolve(import_path, imported_from, function (err, body, file_path, package_info) {
         if (!err && body) {
           resolved_body = body;
           resolved_path = file_path;
+          resolved_package_info = package_info;
         }
         next(err);
       });
@@ -79,7 +81,7 @@ Resolver.prototype.resolve = function (import_path, imported_from, callback) {
         return callback(new Error(message));
       }
 
-      callback(null, resolved_body, resolved_path, current_source);
+      callback(null, resolved_body, resolved_path, current_source, resolved_package_info);
     }
   );
 };

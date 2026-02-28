@@ -1,6 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 
+// Extract npm package name from an import path.
+// Scoped:   "@openzeppelin/contracts/token/ERC20.sol" → "@openzeppelin/contracts"
+// Unscoped: "solmate/src/tokens/ERC20.sol"            → "solmate"
+function getPackageName(importPath) {
+  const parts = importPath.split('/');
+  return importPath.startsWith('@') ? parts.slice(0, 2).join('/') : parts[0];
+}
+
 function NPM(working_directory) {
   this.working_directory = working_directory;
 }
@@ -35,6 +43,7 @@ NPM.prototype.require = function (import_path, search_path) {
 NPM.prototype.resolve = function (import_path, imported_from, callback) {
   // If nothing's found, body returns `undefined`
   let body;
+  let packageInfo = {};
   let modulesDir = this.working_directory;
 
   while (true) {
@@ -42,8 +51,16 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
 
     try {
       body = fs.readFileSync(expected_path, { encoding: 'utf8' });
+
+      const packageName = getPackageName(import_path);
+      const pkgJsonPath = path.join(modulesDir, 'node_modules', packageName, 'package.json');
+      try {
+        const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, { encoding: 'utf8' }));
+        packageInfo = { name: pkg.name, version: pkg.version };
+      } catch (e) {}
+
       break;
-    } catch (err) {}
+    } catch (e) {}
 
     // Recurse outwards until impossible
     const oldModulesDir = modulesDir;
@@ -52,7 +69,8 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
       break;
     }
   }
-  return callback(null, body, import_path);
+
+  return callback(null, body, import_path, packageInfo);
 };
 
 // We're resolving package paths to other package paths, not absolute paths.
