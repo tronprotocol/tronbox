@@ -99,7 +99,7 @@ const Test = {
       })
       .then(function () {
         console.info('Preparing JavaScript tests (if any)...');
-        return self.setJSTestGlobals(accounts, test_resolver, runner, config);
+        return self.setJSTestGlobals(accounts, test_resolver, runner);
       })
       .then(function () {
         // Finally, run mocha.
@@ -187,7 +187,7 @@ const Test = {
     });
   },
 
-  setJSTestGlobals: function (accounts, test_resolver, runner, config) {
+  setJSTestGlobals: function (accounts, test_resolver, runner) {
     return new Promise(function (accept) {
       global.assert = chai.assert;
       global.expect = chai.expect;
@@ -196,8 +196,6 @@ const Test = {
           return test_resolver.require(import_path);
         }
       };
-
-      global.config = config;
 
       const template = function (tests) {
         this.timeout(runner.TEST_TIMEOUT);

@@ -3,7 +3,7 @@ const Tuple = artifacts.require('./Tuple.sol');
 
 // The following tests require TronBox >= 2.1.x
 
-contract('Tuple', function () {
+contract('Tuple', function (accounts) {
   let tuple;
 
   function turnBN2N(values) {
@@ -133,7 +133,8 @@ contract('Tuple', function () {
     assert.deepEqual(personB, turnBN2N(resultB[1]), 'Result B (with keepTxID) did not match the expected values');
     assert.deepEqual(personC, turnBN2N(decodedC[0]), 'Decoded Result C did not match the expected values');
 
-    if (config.network !== 'development') {
+    // Use account count to determine whether this is a tronbox/tre environment
+    if (accounts.length === 1) {
       try {
         await tuple.insert(personA, {
           shouldPollResponse: true,
