@@ -3,7 +3,7 @@ const path = require('path');
 const axios = require('axios');
 const vcsurl = require('vcsurl');
 const tmp = require('tmp');
-const exec = require('child_process').exec;
+const { spawnSync } = require('child_process');
 const ghdownload = require('./download');
 const cwd = process.cwd();
 
@@ -102,6 +102,7 @@ function cleanupUnpack(boxConfig, destination) {
   // remove box config file
   needingRemoval.push('tronbox.json');
   needingRemoval.push('tronbox-init.json');
+  needingRemoval.push('post-unpack.sh');
 
   const promises = needingRemoval
     .map(function (file_path) {
@@ -119,28 +120,33 @@ function cleanupUnpack(boxConfig, destination) {
   return Promise.all(promises);
 }
 
-function installBoxDependencies(boxConfig, destination) {
-  const postUnpack = boxConfig.hooks['post-unpack'];
-
+function installBoxDependencies(_boxConfig, destination) {
   return new Promise(function (accept, reject) {
-    if (postUnpack.length === 0) {
+    const packageJsonPath = path.join(destination, 'package.json');
+    if (!fs.existsSync(packageJsonPath)) {
       return accept();
     }
 
-    exec(postUnpack, { cwd: destination }, function (err, stdout, stderr) {
-      if (err) return reject(err);
-      accept(stdout, stderr);
-    });
+    const result = spawnSync('npm', ['install'], { cwd: destination, stdio: 'ignore', shell: true });
+    if (result.error) {
+      return reject(result.error);
+    }
+
+    if (result.status !== 0) {
+      return reject(new Error('Failed to install box dependencies using npm install'));
+    }
+
+    accept();
   });
 }
 
 module.exports = {
-  checkDestination: checkDestination,
-  verifyURL: verifyURL,
-  setupTempDirectory: setupTempDirectory,
-  fetchRepository: fetchRepository,
-  copyTempIntoDestination: copyTempIntoDestination,
-  readBoxConfig: readBoxConfig,
-  cleanupUnpack: cleanupUnpack,
-  installBoxDependencies: installBoxDependencies
+  checkDestination,
+  verifyURL,
+  setupTempDirectory,
+  fetchRepository,
+  copyTempIntoDestination,
+  readBoxConfig,
+  cleanupUnpack,
+  installBoxDependencies
 };
