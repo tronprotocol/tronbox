@@ -26,8 +26,12 @@ Artifactor.prototype.save = function (object, options) {
     let output_path = object.contractName;
 
     // Create new path off of destination.
-    output_path = path.join(self.destination, output_path);
+    const destinationPath = path.resolve(self.destination);
+    output_path = path.join(destinationPath, output_path);
     output_path = path.resolve(output_path);
+    if (!output_path.startsWith(destinationPath + path.sep)) {
+      return reject(new Error(`Invalid contractName "${object.contractName}"`));
+    }
 
     // Add json extension.
     output_path = output_path + '.json';
