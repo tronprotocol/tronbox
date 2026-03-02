@@ -68,7 +68,7 @@ function fetchRepository(url, dir) {
   return new Promise(function (accept, reject) {
     // Download the package from github.
     ghdownload(url, dir)
-      .on('err', function (err) {
+      .on('error', function (err) {
         reject(err);
       })
       .on('end', function () {

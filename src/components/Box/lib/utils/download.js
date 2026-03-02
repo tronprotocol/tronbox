@@ -152,6 +152,14 @@ function extractZip(zipFile, outputDir, callback) {
           if (err) return _this.emit('error', err);
 
           const file = path.resolve(outputDir, entry.fileName);
+          const normalizedOutputDir = path.resolve(outputDir);
+          if (!file.startsWith(normalizedOutputDir + path.sep)) {
+            return _this.emit(
+              'error',
+              new Error(`Refusing to extract unsafe zip entry outside destination: ${entry.fileName}`)
+            );
+          }
+
           fs.ensureDir(path.dirname(file), err => {
             if (err) return _this.emit('error', err);
 
@@ -188,7 +196,7 @@ function downloadZip() {
   _this._getZip = true;
 
   _this._log.forEach(function (file) {
-    fs.remove(file);
+    fs.removeSync(file);
   });
 
   const tmpdir = generateTempDir();
