@@ -41,7 +41,7 @@ function getWrapper(options = {}) {
       compilerVersion = '0.5.4';
     }
     const networkVersion = options.networks.compilers?.solc?.version;
-    const globalVersion = options.compilers.solc?.version;
+    const globalVersion = options.compilers?.solc?.version;
     if (globalVersion) {
       compilerVersion = globalVersion;
     } else if (networkVersion) {
