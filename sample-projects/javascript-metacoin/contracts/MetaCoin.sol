@@ -20,6 +20,9 @@ contract MetaCoin is ERC20 {
   // Unlock time for TRX locking feature
   uint256 public unlockTime;
 
+  // Tracks whether lock() has ever been called
+  bool public isLocked;
+
   /**
    * @param _initialSupply The initial supply.
    */
@@ -51,7 +54,12 @@ contract MetaCoin is ERC20 {
     require(block.timestamp < _unlockTime, 'Unlock time should be in the future');
     require(msg.sender == owner, "You aren't the owner");
 
+    if (isLocked) {
+      require(_unlockTime >= unlockTime, 'Unlock time can only be extended');
+    }
+
     unlockTime = _unlockTime;
+    isLocked = true;
   }
 
   /**
@@ -59,6 +67,7 @@ contract MetaCoin is ERC20 {
    * @param _to The address to send the TRX to.
    */
   function withdraw(address _to) public {
+    require(isLocked, 'Funds are not locked yet');
     require(block.timestamp >= unlockTime, "You can't withdraw yet");
     require(msg.sender == owner, "You aren't the owner");
     require(_to != address(0), 'Invalid address');
