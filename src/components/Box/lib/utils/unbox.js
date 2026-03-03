@@ -98,6 +98,7 @@ function readBoxConfig(destination) {
 
 function cleanupUnpack(boxConfig, destination) {
   const needingRemoval = boxConfig.ignore || [];
+  const workingDirectoryPath = path.resolve(destination);
 
   // remove box config file
   needingRemoval.push('tronbox.json');
@@ -110,7 +111,12 @@ function cleanupUnpack(boxConfig, destination) {
     })
     .map(function (file_path) {
       return new Promise(function (accept, reject) {
-        fs.remove(file_path, function (err) {
+        const resolvedPath = path.resolve(workingDirectoryPath, file_path);
+        if (!resolvedPath.startsWith(workingDirectoryPath + path.sep)) {
+          return accept();
+        }
+
+        fs.remove(resolvedPath, function (err) {
           if (err) return reject(err);
           accept();
         });
