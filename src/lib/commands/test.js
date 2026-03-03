@@ -122,7 +122,8 @@ Usage: $0 test [<files...>] [--file <file>]
           Test.run(
             config.with({
               test_files: files,
-              contracts_build_directory: temporaryDirectory
+              contracts_build_directory: temporaryDirectory,
+              _allowExternalContractsBuildDirectory: true
             }),
             cleanup
           );
