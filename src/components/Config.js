@@ -22,7 +22,7 @@ function Config() {
       return resolvedPath;
     }
     if (!resolvedPath.startsWith(workingDirectoryPath + path.sep)) {
-      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is outside project directory.`));
+      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is outside the project directory.`));
     }
 
     return resolvedPath;

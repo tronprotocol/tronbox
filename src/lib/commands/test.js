@@ -1,4 +1,6 @@
 const version = require('../version');
+const path = require('path');
+const chalk = require('chalk');
 const describe = 'Run contract tests written in JavaScript';
 
 const command = {
@@ -91,6 +93,14 @@ Usage: $0 test [<files...>] [--file <file>]
 
     function getFiles(callback) {
       if (files.length !== 0) {
+        const workingDirectoryPath = path.resolve(config.working_directory);
+        files.map(file => {
+          const resolvedPath = path.resolve(workingDirectoryPath, file);
+
+          if (!resolvedPath.startsWith(workingDirectoryPath + path.sep)) {
+            throw new Error(chalk.red(chalk.bold('ERROR:') + ` ${file} is outside the project directory.`));
+          }
+        });
         return callback(null, files);
       }
 
