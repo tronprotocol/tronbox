@@ -1,7 +1,5 @@
-const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const tsort = require('tsort');
 const parser = require('@solidity-parser/parser');
 const Config = require('../Config');
 const Resolver = require('../Resolver');
@@ -11,21 +9,11 @@ const SPDX_LICENSES_REGEX = /^(?:\/\/|\/\*)\s*SPDX-License-Identifier:\s*([a-zA-
 const PRAGMA_DIRECTIVES_REGEX = /^(?: |\t)*(pragma\s*abicoder\s*v(1|2)|pragma\s*experimental\s*ABIEncoderV2)\s*;/gim;
 const IMPORT_SOLIDITY_REGEX = /^\s*import(\s+)[\s\S]*?;\s*$/gm;
 
-function unique(array) {
-  return [...new Set(array)];
-}
-
 async function resolve(importPath) {
   const config = Config.detect({});
   const resolver = new Resolver(config);
 
   try {
-    if (importPath === 'tronbox/console.sol') {
-      const filePath = path.resolve(__dirname, '../../../console.sol');
-      const fileContents = fs.readFileSync(filePath).toString();
-      return { fileContents, filePath, packageInfo: { name: packageJson.name, version: packageJson.version } };
-    }
-
     return await new Promise((resolve, reject) => {
       resolver.resolve(importPath, function (err, fileContents, filePath, _source, packageInfo) {
         if (err) {
@@ -70,49 +58,50 @@ function getNormalizedDependencyPath(dependency, filePath) {
   return dependency.replace(/\\/g, '/');
 }
 
-async function dependenciesDfs(graph, visitedFiles, filePath) {
-  visitedFiles.push(filePath);
+function compareDependencyPaths(a, b) {
+  const aIsLocal = path.isAbsolute(a);
+  const bIsLocal = path.isAbsolute(b);
+  if (aIsLocal !== bIsLocal) {
+    return aIsLocal ? 1 : -1;
+  }
+  return a.localeCompare(b);
+}
+
+async function dependenciesDfs(sortedFiles, visitedFiles, processing, filePath) {
+  if (visitedFiles.has(filePath)) return;
+
+  if (processing.has(filePath)) {
+    throw new Error(
+      'There is a cycle in the dependency' + " graph, can't compute topological ordering. Files:\n\t" + filePath
+    );
+  }
+
+  processing.add(filePath);
 
   const resolved = await resolve(filePath);
-
-  const dependencies = getDependencies(resolved.filePath, resolved.fileContents).sort();
+  const dependencies = getDependencies(resolved.filePath, resolved.fileContents).sort(compareDependencyPaths);
 
   for (const dependency of dependencies) {
-    graph.add(dependency, filePath);
-
-    if (!visitedFiles.includes(dependency)) {
-      await dependenciesDfs(graph, visitedFiles, dependency);
-    }
+    await dependenciesDfs(sortedFiles, visitedFiles, processing, dependency);
   }
+
+  processing.delete(filePath);
+  visitedFiles.add(filePath);
+  sortedFiles.push(filePath);
 }
 
 async function getSortedFilePaths(entryPoints, projectRoot) {
-  const graph = tsort();
-  const visitedFiles = [];
+  const sortedFiles = [];
+  const visitedFiles = new Set();
+  const processing = new Set();
 
-  for (const entryPoint of entryPoints) {
-    await dependenciesDfs(graph, visitedFiles, entryPoint);
+  const sortedEntryPoints = [...entryPoints].sort();
+
+  for (const entryPoint of sortedEntryPoints) {
+    await dependenciesDfs(sortedFiles, visitedFiles, processing, entryPoint);
   }
 
-  let topologicalSortedFiles;
-  try {
-    topologicalSortedFiles = graph.sort();
-  } catch (e) {
-    if (e.toString().includes('Error: There is a cycle in the graph.')) {
-      const message =
-        'There is a cycle in the dependency' +
-        " graph, can't compute topological ordering. Files:\n\t" +
-        visitedFiles.join('\n\t');
-      throw new Error(message);
-    }
-
-    throw e;
-  }
-
-  // If an entry has no dependency it won't be included in the graph, so we
-  // add them and then dedup the array
-  const withEntries = topologicalSortedFiles.concat(entryPoints).map(f => {
-    // Remove the prefix node modules.
+  const files = sortedFiles.map(f => {
     const fileName = fileNameToGlobalName(f, projectRoot);
     if (fileName.substring(0, 14) === 'node_modules\\@') {
       return fileName.substring(13);
@@ -120,8 +109,6 @@ async function getSortedFilePaths(entryPoints, projectRoot) {
       return fileName;
     }
   });
-
-  const files = unique(withEntries);
 
   return files;
 }
