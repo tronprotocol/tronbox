@@ -43,7 +43,6 @@
     "source-map-support": "0.5.21",
     "tmp": "0.0.33",
     "tronweb": "6.1.1",
-    "tsort": "0.0.1",
     "vcsurl": "0.1.1",
     "yargs": "15.4.1",
     "yauzl": "3.2.0"
