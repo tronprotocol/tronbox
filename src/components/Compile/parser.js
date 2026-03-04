@@ -1,7 +1,6 @@
 const CompileError = require('./compileerror');
 const { getWrapper } = require('../TronSolc');
 const fs = require('fs');
-const path = require('path');
 
 // Clean up after solc.
 const listeners = process.listeners('uncaughtException');
@@ -14,8 +13,6 @@ if (solc_listener) {
 // Warning issued by a pre-release compiler version, ignored by this component.
 const preReleaseCompilerWarning = require('./messages').preReleaseCompilerWarning;
 
-const installedContractsDir = 'installed_contracts';
-
 module.exports = {
   parse: function (body, fileName, options) {
     // Here, we want a valid AST even if imports don't exist. The way to
@@ -23,17 +20,7 @@ module.exports = {
     // have source for them (an empty file).
 
     const build_remappings = function () {
-      // Maps import paths to paths from EthPM installed contracts, so we can correctly solve imports
-      // e.g. "my_pkg/=installed_contracts/my_pkg/contracts/"
       const remappings = [];
-
-      if (fs.existsSync('ethpm.json')) {
-        const ethpm = JSON.parse(fs.readFileSync('ethpm.json'));
-        for (const pkg in ethpm.dependencies) {
-          remappings.push(pkg + '/=' + path.join(installedContractsDir, pkg, 'contracts', '/'));
-        }
-      }
-
       return remappings;
     };
 
