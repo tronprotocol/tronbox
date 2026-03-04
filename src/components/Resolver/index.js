@@ -13,7 +13,6 @@ function Resolver(options) {
 
   this.sources = [
     new NPMSource(options.working_directory),
-    new NPMSource(__dirname),
     new FSSource(options.working_directory, options.contracts_build_directory)
   ];
 }

@@ -44,31 +44,22 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
   // If nothing's found, body returns `undefined`
   let body;
   let packageInfo = {};
-  let modulesDir = this.working_directory;
-
-  while (true) {
-    const expected_path = path.join(modulesDir, 'node_modules', import_path);
-
-    try {
-      body = fs.readFileSync(expected_path, { encoding: 'utf8' });
-
-      const packageName = getPackageName(import_path);
-      const pkgJsonPath = path.join(modulesDir, 'node_modules', packageName, 'package.json');
-      try {
-        const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, { encoding: 'utf8' }));
-        packageInfo = { name: pkg.name, version: pkg.version };
-      } catch (e) {}
-
-      break;
-    } catch (e) {}
-
-    // Recurse outwards until impossible
-    const oldModulesDir = modulesDir;
-    modulesDir = path.join(modulesDir, '..');
-    if (modulesDir === oldModulesDir) {
-      break;
-    }
+  const nodeModulesDir = path.join(this.working_directory, 'node_modules');
+  let expected_path = path.join(nodeModulesDir, import_path);
+  if (import_path === 'tronbox/console.sol') {
+    expected_path = path.resolve(__dirname, '../../../console.sol');
   }
+
+  try {
+    body = fs.readFileSync(expected_path, { encoding: 'utf8' });
+
+    const packageName = getPackageName(import_path);
+    const pkgJsonPath = path.join(nodeModulesDir, packageName, 'package.json');
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, { encoding: 'utf8' }));
+      packageInfo = { name: pkg.name, version: pkg.version };
+    } catch (e) {}
+  } catch (e) {}
 
   return callback(null, body, import_path, packageInfo);
 };
@@ -81,11 +72,6 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
 NPM.prototype.resolve_dependency_path = function (import_path, dependency_path) {
   const dirname = path.dirname(import_path);
   return path.join(dirname, dependency_path);
-};
-
-NPM.prototype.provision_contracts = function (callback) {
-  // TODO: Fill this out!
-  callback(null, {});
 };
 
 module.exports = NPM;
