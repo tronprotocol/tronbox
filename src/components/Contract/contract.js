@@ -64,8 +64,9 @@ const Utils = {
   linkBytecode: function (bytecode, links) {
     Object.keys(links).forEach(function (library_name) {
       const library_address = links[library_name];
-      const regex = new RegExp('__' + library_name + '_+', 'g');
-      bytecode = bytecode.replace(regex, library_address.replace('0x', '').replace('41', ''));
+      const escaped_library_name = library_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp('__' + escaped_library_name + '_+', 'g');
+      bytecode = bytecode.replace(regex, library_address.replace('0x', '').replace(/^41/, ''));
     });
 
     return bytecode;
