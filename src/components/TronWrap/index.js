@@ -44,13 +44,51 @@ function sleep(millis) {
   return new Promise(resolve => setTimeout(resolve, millis));
 }
 
+function isLocalHostname(hostname = '') {
+  const normalizedHostname = String(hostname).toLowerCase();
+  return (
+    normalizedHostname === 'localhost' ||
+    normalizedHostname === '127.0.0.1' ||
+    normalizedHostname === '::1' ||
+    normalizedHostname === '0.0.0.0'
+  );
+}
+
 function isLocalNode(url) {
   try {
     const { hostname } = new URL(url);
-    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1' || hostname === '0.0.0.0';
+    return isLocalHostname(hostname);
   } catch {
     return false;
   }
+}
+
+function validateNodeUrl(value, options = {}) {
+  if (!value || typeof value !== 'string') {
+    return value;
+  }
+
+  const { fieldName = 'node url', allowHttpForLocal = true } = options;
+
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(value);
+  } catch (error) {
+    throw new Error(`${fieldName} must be a valid URL.`);
+  }
+
+  const protocol = parsedUrl.protocol;
+  if (protocol !== 'http:' && protocol !== 'https:') {
+    throw new Error(`${fieldName} must use http or https protocol.`);
+  }
+
+  if (protocol === 'http:' && allowHttpForLocal && !isLocalHostname(parsedUrl.hostname)) {
+    throw new Error(
+      `${fieldName} must use https for non-local URLs; http is allowed only for localhost/127.0.0.1/::1/0.0.0.0.`
+    );
+  }
+
+  return value;
 }
 
 function filterNetworkConfig(options) {
@@ -102,6 +140,19 @@ function init(options, extraOptions = {}) {
       throw new Error(
         `It was not possible to instantiate ${clientName}. The configuration key \`fullHost\` is missing in your "${configFile}".`
       );
+    }
+
+    // Validate node URLs
+    const nodeUrls = [
+      { key: 'fullHost', value: options.fullHost },
+      { key: 'fullNode', value: options.fullNode },
+      { key: 'solidityNode', value: options.solidityNode },
+      { key: 'eventServer', value: options.eventServer }
+    ];
+    for (const { key, value } of nodeUrls) {
+      if (value) {
+        validateNodeUrl(value, { fieldName: key });
+      }
     }
   }
 
