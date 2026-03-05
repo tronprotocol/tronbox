@@ -44,6 +44,15 @@ function sleep(millis) {
   return new Promise(resolve => setTimeout(resolve, millis));
 }
 
+function isLocalNode(url) {
+  try {
+    const { hostname } = new URL(url);
+    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1' || hostname === '0.0.0.0';
+  } catch {
+    return false;
+  }
+}
+
 function filterNetworkConfig(options) {
   const userFeePercentage =
     typeof options.userFeePercentage === 'number'
@@ -202,6 +211,11 @@ function init(options, extraOptions = {}) {
       }
 
       if (self._accountsRequested) {
+        return cb();
+      }
+
+      if (!isLocalNode(self.networkConfig.fullNode)) {
+        self._accountsRequested = true;
         return cb();
       }
 
