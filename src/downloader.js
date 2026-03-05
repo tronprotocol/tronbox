@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs-extra');
 const homedir = require('homedir');
@@ -11,13 +12,21 @@ async function downloader(compilerVersion, evm) {
   await fs.ensureDir(path.join(dir));
 
   let soljsonUrl = '';
+  let expectedSha256 = '';
   if (evm) {
     try {
       const solidityUrl = 'https://binaries.soliditylang.org/bin';
       const list = await req.get(`${solidityUrl}/list.json`);
       if (list && list.data) {
-        if (list.data.releases && list.data.releases[compilerVersion]) {
-          soljsonUrl = `${solidityUrl}/${list.data.releases[compilerVersion]}`;
+        if (list.data.builds && list.data.releases && list.data.releases[compilerVersion]) {
+          const releasePath = list.data.releases[compilerVersion];
+          list.data.builds.forEach(_ => {
+            const { sha256, path: buildPath } = _;
+            if (buildPath === releasePath) {
+              expectedSha256 = sha256;
+              soljsonUrl = `${solidityUrl}/${buildPath}`;
+            }
+          });
         } else {
           process.stderr.write(
             chalk.red(
@@ -39,8 +48,9 @@ async function downloader(compilerVersion, evm) {
       const list = await req.get(`${solidityUrl}/list.json`);
       if (list && list.data && list.data.builds) {
         list.data.builds.forEach(_ => {
-          const { version, path } = _;
+          const { version, sha256, path } = _;
           if (version === compilerVersion) {
+            expectedSha256 = sha256;
             soljsonUrl = `${solidityUrl}/${path}`;
           }
         });
@@ -77,7 +87,17 @@ Please, download the compiler manually, running:
 tronbox --download-compiler ${compilerVersion} ${evm ? '--evm' : ''}
 `);
       } else {
-        process.stdout.write('Compiler downloaded.\n');
+        const fileBuffer = await fs.readFile(soljsonPath);
+        const hash = '0x' + crypto.createHash('sha256').update(fileBuffer).digest('hex');
+        if (hash === expectedSha256) {
+          process.stdout.write('Compiler downloaded.\n');
+        } else {
+          await fs.remove(soljsonPath);
+          process.stderr.write(
+            chalk.red(chalk.bold('Error:'), 'SHA256 checksum mismatch. The downloaded file has been deleted.') + '\n'
+          );
+          process.exit(1);
+        }
       }
     }
   } catch (error) {
