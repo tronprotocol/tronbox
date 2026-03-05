@@ -96,12 +96,12 @@ function filterEnergyParameter(args) {
   if (typeof lastArg !== 'object' || Array.isArray(lastArg)) return [args, {}];
   args.pop();
   const res = {};
-  for (const property in lastArg) {
+  Object.keys(lastArg).forEach(property => {
     const camelCased = toCamelCase(property);
     if (~deployParameters.indexOf(camelCased)) {
       res[camelCased] = lastArg[property];
     }
-  }
+  });
   return [args, res];
 }
 
@@ -318,7 +318,9 @@ Contract._static_methods = {
                 self[item.name] = createWrapper(item.name);
               }
 
-              self[functionSelector] = createWrapper(functionSelector);
+              if (!self.hasOwnProperty(functionSelector)) {
+                self[functionSelector] = createWrapper(functionSelector);
+              }
             }
           }
           accept(self);
