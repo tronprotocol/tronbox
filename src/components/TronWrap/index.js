@@ -50,12 +50,7 @@ function sleep(millis) {
 
 function isLocalHostname(hostname = '') {
   const normalizedHostname = String(hostname).toLowerCase();
-  return (
-    normalizedHostname === 'localhost' ||
-    normalizedHostname === '127.0.0.1' ||
-    normalizedHostname === '::1' ||
-    normalizedHostname === '0.0.0.0'
-  );
+  return normalizedHostname === 'localhost' || normalizedHostname === '127.0.0.1' || normalizedHostname === '::1';
 }
 
 function isLocalNode(url) {
@@ -88,7 +83,7 @@ function validateNodeUrl(value, options = {}) {
 
   if (protocol === 'http:' && allowHttpForLocal && !isLocalHostname(parsedUrl.hostname)) {
     throw new Error(
-      `${fieldName} must use https for non-local URLs; http is allowed only for localhost/127.0.0.1/::1/0.0.0.0.`
+      `${fieldName} must use https for non-local URLs; http is allowed only for localhost/127.0.0.1/::1.`
     );
   }
 
