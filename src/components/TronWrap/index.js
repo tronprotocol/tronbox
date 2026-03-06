@@ -1,11 +1,15 @@
 const { ethers } = require('ethers');
-const { TronWeb: _TronWeb } = require('tronweb');
+const { TronWeb } = require('tronweb');
 const chalk = require('chalk');
-const constants = require('./constants');
 const axios = require('axios');
+const constants = require('./constants');
 const ConsoleLogger = require('../ConsoleLogger');
+const { TronWebProxy } = require('./TronWebProxy');
+const { EthersSignerProxy } = require('./EthersProxy');
 
 let instance;
+let privateKeyByAccount = {};
+let ethersWallets = {};
 
 function TronWrap() {
   this._toNumber = toNumber;
@@ -158,7 +162,7 @@ function init(options, extraOptions = {}) {
 
   const getPrivateKey = () => {
     const privateKey = options.mnemonic
-      ? _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey
+      ? TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey
       : options.privateKey;
 
     if (typeof privateKey !== 'string' || !privateKey) {
@@ -168,7 +172,7 @@ function init(options, extraOptions = {}) {
     return privateKey.replace(/^0x/, '');
   };
 
-  TronWrap.prototype = new _TronWeb(
+  TronWrap.prototype = new TronWebProxy(
     options.fullNode || options.fullHost,
     options.solidityNode || options.fullHost,
     options.eventServer || options.fullHost,
@@ -188,13 +192,13 @@ function init(options, extraOptions = {}) {
   if (extraOptions.evm) {
     const provider = new ethers.JsonRpcProvider(options.fullNode || options.fullHost);
     const wallet = new ethers.Wallet(getPrivateKey(), provider);
-    tronWrap._ethers_wallets = { [wallet.address]: wallet };
     tronWrap._ethers_accounts = [wallet.address];
+    ethersWallets = { [wallet.address]: wallet };
     tronWrap._ethers = {
       ...ethers,
       provider,
-      getSigner: address => tronWrap._ethers_wallets[address],
-      getSigners: () => Object.values(tronWrap._ethers_wallets)
+      getSigner: address => EthersSignerProxy(ethersWallets[address]),
+      getSigners: () => Object.values(ethersWallets).map(EthersSignerProxy)
     };
   }
 
@@ -215,10 +219,9 @@ function init(options, extraOptions = {}) {
     callback && callback(null, options.network_id);
   };
 
-  const defaultAddress = tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey);
+  const defaultAddress = tronWrap.defaultAddress.base58;
   tronWrap._accounts = [defaultAddress];
-  tronWrap._privateKeyByAccount = {};
-  tronWrap._privateKeyByAccount[defaultAddress] = tronWrap.defaultPrivateKey;
+  privateKeyByAccount[defaultAddress] = getPrivateKey();
 
   tronWrap._findMethodAbi = function (methodName, abi) {
     let funAbi = {};
@@ -278,10 +281,10 @@ function init(options, extraOptions = {}) {
             self.setPrivateKey(data[0]);
             tronWrap.setPrivateKey(data[0]);
             self._accounts = [];
-            self._privateKeyByAccount = {};
-            for (const account of data) {
-              const address = this.address.fromPrivateKey(account);
-              self._privateKeyByAccount[address] = account;
+            privateKeyByAccount = {};
+            for (const pk of data) {
+              const address = this.address.fromPrivateKey(pk);
+              privateKeyByAccount[address] = pk;
               self._accounts.push(address);
             }
           }
@@ -347,16 +350,17 @@ function init(options, extraOptions = {}) {
       });
   };
 
-  tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey) {
+  tronWrap._new = async function (myContract, options, _privateKey) {
     let signedTransaction;
     try {
-      const address = options.from ? options.from : tronWrap.address.fromPrivateKey(privateKey);
+      const address = options.from ? options.from : tronWrap._accounts[0];
       const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address);
       if (tronWrap._treUnlockedAccounts[address]) {
         dlog('Unlocked account', { address });
         signedTransaction = transaction;
         transaction.signature = [];
       } else {
+        const privateKey = privateKeyByAccount[address];
         signedTransaction = await tronWrap.trx.sign(transaction, privateKey);
       }
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction);
@@ -443,7 +447,7 @@ function init(options, extraOptions = {}) {
 
     let privateKey;
     if (callSend === 'send' && option.methodArgs.from) {
-      privateKey = this._privateKeyByAccount[option.methodArgs.from];
+      privateKey = privateKeyByAccount[option.methodArgs.from];
     }
 
     if (!option.methodArgs.feeLimit) {
@@ -617,7 +621,7 @@ function init(options, extraOptions = {}) {
 
   tronWrap._evmGetAccounts = async function (callback) {
     const accounts = [...tronWrap._ethers_accounts];
-    tronWrap._privateKeyByAccount[accounts[0]] = tronWrap._ethers_wallets[accounts[0]].privateKey;
+    privateKeyByAccount[accounts[0]] = ethersWallets[accounts[0]].privateKey;
     if (callback) {
       return callback(null, accounts);
     }
@@ -651,7 +655,7 @@ function init(options, extraOptions = {}) {
       if (opt.nonce === undefined) {
         opt.nonce = await tronWrap._evmGetNonce(opt.from);
       }
-      const wallet = tronWrap._ethers_wallets[opt.from];
+      const wallet = ethersWallets[opt.from];
       const factory = new ethers.ContractFactory(option.abi, option.data, wallet);
       const constructorArgs = option.parameters || [];
       const deployedContract = await factory.deploy(...constructorArgs, opt);
@@ -715,7 +719,7 @@ function init(options, extraOptions = {}) {
       if (opt.nonce === undefined) {
         opt.nonce = await tronWrap._evmGetNonce(opt.from);
       }
-      const wallet = tronWrap._ethers_wallets[opt.from];
+      const wallet = ethersWallets[opt.from];
       const contract = new ethers.Contract(option.address, option.abi, wallet);
       const methodArgs = option.args || [];
       const methodFunc = contract[option.methodName];
@@ -795,4 +799,4 @@ module.exports.constants = constants;
 module.exports.logErrorAndExit = logErrorAndExit;
 module.exports.dlog = dlog;
 module.exports.sleep = sleep;
-module.exports.TronWeb = _TronWeb;
+module.exports.TronWeb = TronWeb;

@@ -7,6 +7,10 @@ contract('MetaCoin', function (accounts) {
     meta = await MetaCoin.deployed();
   });
 
+  it('should read privateKey as false', async function () {
+    assert.strictEqual(ethers.getSigners()[0].privateKey, false);
+  });
+
   it('should verify that the contract has been deployed by accounts[0]', async function () {
     assert.equal(await meta.getOwner(), ethers.getSigners()[0].address);
   });

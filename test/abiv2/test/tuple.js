@@ -19,6 +19,12 @@ contract('Tuple', function (accounts) {
     tuple = await Tuple.deployed();
   });
 
+  it('should read defaultPrivateKey as false', async function () {
+    assert.strictEqual(tronWeb.defaultPrivateKey, false);
+    assert.strictEqual(tronWeb.trx.tronWeb.defaultPrivateKey, false);
+    assert.strictEqual(tronWeb._privateKeyByAccount, undefined);
+  });
+
   it('should have 3 `person`s with `Tom` which is the first to verify that the argument passed to constructor works', async function () {
     assert.deepEqual(turnBN2N(await tuple.getPerson()), [
       ['Tom', 30],

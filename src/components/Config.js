@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const path = require('path');
-const { constants, TronWeb } = require('./TronWrap');
+const { constants } = require('./TronWrap');
 const Provider = require('./Provider');
 const TronBoxError = require('../lib/errors/tronboxerror');
 const Module = require('module');
@@ -152,25 +152,9 @@ function Config() {
       }
     },
     privateKey: {
-      get: (() => {
-        let _privateKey_cached = null;
-        return function () {
-          try {
-            const network_config = self.network_config;
-            // `mnemonic` is prior to `privateKey`.
-            if (network_config.mnemonic) {
-              if (_privateKey_cached === null) {
-                const { mnemonic, path } = network_config;
-                _privateKey_cached = TronWeb.fromMnemonic(mnemonic, path).privateKey.slice(2);
-                network_config.privateKey = _privateKey_cached;
-              }
-            }
-            return network_config.privateKey;
-          } catch (e) {
-            return default_tx_values.privateKey;
-          }
-        };
-      })(),
+      get: function () {
+        return null;
+      },
       set: function () {
         throw new Error(
           "Don't set config.privateKey directly. Instead, set config.networks and then config.networks[<network name>].privateKey"

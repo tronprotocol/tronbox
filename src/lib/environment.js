@@ -63,7 +63,6 @@ const Environment = {
       tronWrap._getAccounts(function (err, accounts) {
         if (err) return done(err);
         config.networks[config.network].from = accounts[0];
-        config.networks[config.network].privateKey = tronWrap._privateKeyByAccount[accounts[0]];
         done();
       });
     }
