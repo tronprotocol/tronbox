@@ -1,3 +1,34 @@
+**4.6.0**
+
+### Features
+
+- Enhanced `flatten` command
+  - Unified SPDX license header generation across all input files
+  - Unified `pragma abicoder` handling and normalization
+  - Added dependency library version information in build output
+
+### Breaking Changes
+
+- **BREAKING CHANGE**: Removed EPM (Ethereum Package Manager) support
+- **BREAKING CHANGE**: Configuration directory paths (`build_directory`, `contracts_directory`, `contracts_build_directory`, `migrations_directory`, `test_directory`) are now constrained to the project root
+- **BREAKING CHANGE**: Disallowed running and importing files outside the project directory
+- **BREAKING CHANGE**: Removed global config injection
+
+### Bug Fixes & Improvements
+
+- Non-local nodes now enforce HTTPS connections
+- Added checksum validation for downloaded soljson compiler files
+- Improved error capturing and unhandled promise rejection handling
+- Normalized error output formatting and added explicit exit codes
+- Enhanced runtime stability with null-safety checks on deployment and contract interactions
+
+### Dependencies
+
+- Upgraded `tronweb` from 6.1.1 to 6.2.2
+- Upgraded `axios` from 1.12.0 to 1.13.6
+- Upgraded `glob` to 13.0.6
+- Upgraded `ajv` to 6.14.0
+
 **4.5.0**
 
 ### Major Refactoring
