@@ -38,14 +38,11 @@ FS.prototype.require = function (import_path, search_path) {
     return this.requireJson(import_path);
   }
 
-  const contract_name = this.getContractName(import_path, search_path);
-
-  // If we have an absolute path, only check the file if it's a child of the working_directory.
-  if (path.isAbsolute(import_path)) {
-    if (import_path.indexOf(this.working_directory) !== 0) {
-      return null;
-    }
+  if (import_path.includes(path.sep)) {
+    return null;
   }
+
+  const contract_name = this.getContractName(import_path, search_path);
 
   try {
     const result = fs.readFileSync(path.join(search_path, contract_name + '.json'), 'utf8');
