@@ -94,7 +94,7 @@ Usage: $0 test [<files...>] [--file <file>]
     function getFiles(callback) {
       if (files.length !== 0) {
         const workingDirectoryPath = path.resolve(config.working_directory);
-        files.map(file => {
+        files.forEach(file => {
           const resolvedPath = path.resolve(workingDirectoryPath, file);
 
           if (!resolvedPath.startsWith(workingDirectoryPath + path.sep)) {
