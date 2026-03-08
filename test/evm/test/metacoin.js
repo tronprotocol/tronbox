@@ -9,6 +9,7 @@ contract('MetaCoin', function (accounts) {
 
   it('should read privateKey as false', async function () {
     assert.strictEqual(ethers.getSigners()[0].privateKey, false);
+    assert.strictEqual(ethers.getSigners()[0].connect(ethers.provider).privateKey, false);
   });
 
   it('should verify that the contract has been deployed by accounts[0]', async function () {
