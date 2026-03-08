@@ -50,7 +50,7 @@ function sleep(millis) {
 
 function isLocalHostname(hostname = '') {
   const normalizedHostname = String(hostname).toLowerCase();
-  return normalizedHostname === 'localhost' || normalizedHostname === '127.0.0.1' || normalizedHostname === '::1';
+  return normalizedHostname === 'localhost' || normalizedHostname === '127.0.0.1' || normalizedHostname === '[::1]';
 }
 
 function isLocalNode(url) {
@@ -62,32 +62,30 @@ function isLocalNode(url) {
   }
 }
 
-function validateNodeUrl(value, options = {}) {
-  if (!value || typeof value !== 'string') {
-    return value;
+function validateNodeUrl(nodeUrl, configKey = 'node URL') {
+  if (!nodeUrl || typeof nodeUrl !== 'string') {
+    return nodeUrl;
   }
-
-  const { fieldName = 'node url', allowHttpForLocal = true } = options;
 
   let parsedUrl;
   try {
-    parsedUrl = new URL(value);
+    parsedUrl = new URL(nodeUrl);
   } catch (error) {
-    throw new Error(`${fieldName} must be a valid URL.`);
+    throw new Error(`${configKey} must be a valid URL.`);
   }
 
   const protocol = parsedUrl.protocol;
   if (protocol !== 'http:' && protocol !== 'https:') {
-    throw new Error(`${fieldName} must use http or https protocol.`);
+    throw new Error(`${configKey} must use http or https protocol.`);
   }
 
-  if (protocol === 'http:' && allowHttpForLocal && !isLocalHostname(parsedUrl.hostname)) {
+  if (protocol === 'http:' && !isLocalHostname(parsedUrl.hostname)) {
     throw new Error(
-      `${fieldName} must use https for non-local URLs; http is allowed only for localhost/127.0.0.1/::1.`
+      `${configKey} must use https for non-local URLs. http is only allowed for localhost/127.0.0.1/[::1].`
     );
   }
 
-  return value;
+  return nodeUrl;
 }
 
 function filterNetworkConfig(options) {
@@ -142,17 +140,10 @@ function init(options, extraOptions = {}) {
     }
 
     // Validate node URLs
-    const nodeUrls = [
-      { key: 'fullHost', value: options.fullHost },
-      { key: 'fullNode', value: options.fullNode },
-      { key: 'solidityNode', value: options.solidityNode },
-      { key: 'eventServer', value: options.eventServer }
-    ];
-    for (const { key, value } of nodeUrls) {
-      if (value) {
-        validateNodeUrl(value, { fieldName: key });
-      }
-    }
+    const nodeUrlConfigKeys = ['fullHost', 'fullNode', 'solidityNode', 'eventServer'];
+    nodeUrlConfigKeys.forEach(configKey => {
+      validateNodeUrl(options[configKey], configKey);
+    });
   }
 
   const getPrivateKey = () => {
