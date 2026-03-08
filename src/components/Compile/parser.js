@@ -1,6 +1,4 @@
-const CompileError = require('./compileerror');
 const { getWrapper } = require('../TronSolc');
-const fs = require('fs');
 
 // Clean up after solc.
 const listeners = process.listeners('uncaughtException');
