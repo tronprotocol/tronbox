@@ -18,6 +18,9 @@ function Config() {
   const resolvePathInWorkingDirectory = function (value, keyName) {
     const workingDirectoryPath = path.resolve(self.working_directory);
     const resolvedPath = path.resolve(workingDirectoryPath, value);
+    if (resolvedPath === workingDirectoryPath) {
+      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is root of the project directory.`));
+    }
     if (keyName === 'contracts_build_directory' && self._allowExternalContractsBuildDirectory) {
       return resolvedPath;
     }
