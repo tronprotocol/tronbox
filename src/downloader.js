@@ -76,9 +76,10 @@ async function downloader(compilerVersion, evm) {
     });
 
     if (res && res.data) {
-      await fs.writeFile(soljsonPath, res.data);
+      const tempFilePath = `${soljsonPath}.tmp`;
+      await fs.writeFile(tempFilePath, res.data);
       // double check
-      if (!fs.existsSync(soljsonPath)) {
+      if (!fs.existsSync(tempFilePath)) {
         process.stderr.write(chalk.red(chalk.bold('Error:'), 'Permission required.') + '\n');
         process.stderr.write(`
 Most likely, you installed Node.js as root.
@@ -87,12 +88,13 @@ Please, download the compiler manually, running:
 tronbox --download-compiler ${compilerVersion} ${evm ? '--evm' : ''}
 `);
       } else {
-        const fileBuffer = await fs.readFile(soljsonPath);
+        const fileBuffer = await fs.readFile(tempFilePath);
         const hash = '0x' + crypto.createHash('sha256').update(fileBuffer).digest('hex');
         if (hash === expectedSha256) {
+          await fs.rename(tempFilePath, soljsonPath);
           process.stdout.write('Compiler downloaded.\n');
         } else {
-          await fs.remove(soljsonPath);
+          await fs.remove(tempFilePath);
           process.stderr.write(
             chalk.red(chalk.bold('Error:'), 'SHA256 checksum mismatch. The downloaded file has been deleted.') + '\n'
           );
