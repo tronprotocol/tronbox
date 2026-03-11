@@ -16,6 +16,7 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs-extra');
 const util = require('util');
+const crypto = require('crypto');
 
 const cwd = process.cwd();
 
@@ -230,5 +231,5 @@ function downloadZip() {
 }
 
 function generateTempDir() {
-  return path.join(cwd, Date.now().toString() + '-' + Math.random().toString().substring(2));
+  return path.join(cwd, Date.now().toString() + '-' + crypto.randomBytes(16).toString('hex'));
 }
