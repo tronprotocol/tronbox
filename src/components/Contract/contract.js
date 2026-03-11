@@ -66,7 +66,7 @@ const Utils = {
       const library_address = links[library_name];
       const escaped_library_name = library_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp('__' + escaped_library_name + '_+', 'g');
-      bytecode = bytecode.replace(regex, library_address.replace('0x', '').replace(/^41/, ''));
+      bytecode = bytecode.replace(regex, library_address.replace(/^41/, '0x').replace('0x', ''));
     });
 
     return bytecode;
