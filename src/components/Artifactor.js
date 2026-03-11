@@ -29,7 +29,8 @@ Artifactor.prototype.save = function (object, options) {
     const destinationPath = path.resolve(self.destination);
     output_path = path.join(destinationPath, output_path);
     output_path = path.resolve(output_path);
-    if (!output_path.startsWith(destinationPath + path.sep)) {
+    const relative = path.relative(destinationPath, output_path);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
       return reject(new Error(`Invalid contractName "${object.contractName}"`));
     }
 

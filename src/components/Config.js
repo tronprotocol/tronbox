@@ -18,13 +18,14 @@ function Config() {
   const resolvePathInWorkingDirectory = function (value, keyName) {
     const workingDirectoryPath = path.resolve(self.working_directory);
     const resolvedPath = path.resolve(workingDirectoryPath, value);
-    if (resolvedPath === workingDirectoryPath) {
+    const relative = path.relative(workingDirectoryPath, resolvedPath);
+    if (relative === '') {
       throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is root of the project directory.`));
     }
     if (keyName === 'contracts_build_directory' && self._allowExternalContractsBuildDirectory) {
       return resolvedPath;
     }
-    if (!resolvedPath.startsWith(workingDirectoryPath + path.sep)) {
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
       throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is outside the project directory.`));
     }
 

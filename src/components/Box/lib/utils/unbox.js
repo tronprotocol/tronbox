@@ -112,7 +112,8 @@ function cleanupUnpack(boxConfig, destination) {
     .map(function (file_path) {
       return new Promise(function (accept, reject) {
         const resolvedPath = path.resolve(workingDirectoryPath, file_path);
-        if (!resolvedPath.startsWith(workingDirectoryPath + path.sep)) {
+        const relative = path.relative(workingDirectoryPath, resolvedPath);
+        if (relative.startsWith('..') || path.isAbsolute(relative)) {
           return accept();
         }
 

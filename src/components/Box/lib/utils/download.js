@@ -153,7 +153,8 @@ function extractZip(zipFile, outputDir, callback) {
 
           const file = path.resolve(outputDir, entry.fileName);
           const normalizedOutputDir = path.resolve(outputDir);
-          if (!file.startsWith(normalizedOutputDir + path.sep)) {
+          const relative = path.relative(normalizedOutputDir, file);
+          if (relative.startsWith('..') || path.isAbsolute(relative)) {
             return _this.emit(
               'error',
               new Error(`Refusing to extract unsafe zip entry outside destination: ${entry.fileName}`)

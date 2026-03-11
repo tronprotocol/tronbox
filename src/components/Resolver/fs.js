@@ -16,7 +16,8 @@ FS.prototype.requireJson = function (import_path) {
   try {
     const workingDirectoryPath = path.resolve(this.working_directory);
     const resolvedPath = path.resolve(workingDirectoryPath, file_path);
-    if (!resolvedPath.startsWith(workingDirectoryPath + path.sep)) {
+    const relative = path.relative(workingDirectoryPath, resolvedPath);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
       throw new Error(`${import_path} is outside the project directory.`);
     }
 
@@ -89,7 +90,8 @@ FS.prototype.resolve = function (import_path, imported_from, callback) {
       }
 
       const resolvedPath = path.resolve(workingDirectoryPath, possible_path);
-      if (!resolvedPath.startsWith(workingDirectoryPath + path.sep)) {
+      const relative = path.relative(workingDirectoryPath, resolvedPath);
+      if (relative.startsWith('..') || path.isAbsolute(relative)) {
         return finished(new Error(`${import_path} is outside the project directory.`));
       }
 
