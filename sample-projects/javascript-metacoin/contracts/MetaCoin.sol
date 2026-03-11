@@ -67,11 +67,12 @@ contract MetaCoin is ERC20 {
    * @param _to The address to send the TRX to.
    */
   function withdraw(address _to) public {
-    require(isLocked, 'Funds are not locked yet');
     require(block.timestamp >= unlockTime, "You can't withdraw yet");
     require(msg.sender == owner, "You aren't the owner");
     require(_to != address(0), 'Invalid address');
+    require(isLocked, 'Funds are not locked yet');
 
+    isLocked = false;
     (bool success, ) = payable(_to).call{ value: address(this).balance }('');
     require(success, 'Transfer failed');
   }
