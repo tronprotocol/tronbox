@@ -15,10 +15,10 @@ module.exports = {
       .then(function () {
         return unbox.setupTempDirectory();
       })
-      .then(function (dir, func) {
+      .then(function ({ dir, cleanupCallback }) {
         // save tmpDir result
         tmpDir = dir;
-        tmpCleanup = func;
+        tmpCleanup = cleanupCallback;
       })
       .then(function () {
         return unbox.fetchRepository(url, tmpDir);
@@ -26,7 +26,11 @@ module.exports = {
       .then(function () {
         return unbox.copyTempIntoDestination(tmpDir, destination);
       })
-      .then(tmpCleanup);
+      .then(tmpCleanup)
+      .catch(error => {
+        if (tmpCleanup) tmpCleanup();
+        throw error;
+      });
   },
 
   unpackBox: function (destination) {

@@ -77,7 +77,7 @@ GithubDownloader.prototype.start = function () {
           .catch(err => _this.emit('error', err));
       });
     } else {
-      _this.emit('Error', new Error(JSON.stringify(item, null, 2) + '\n does not have type.'));
+      _this.emit('error', new Error(JSON.stringify(item, null, 2) + '\n does not have type.'));
     }
   }
 

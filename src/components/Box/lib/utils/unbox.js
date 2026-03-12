@@ -59,7 +59,7 @@ function setupTempDirectory() {
     tmp.dir({ dir: cwd, unsafeCleanup: true }, function (err, dir, cleanupCallback) {
       if (err) return reject(err);
 
-      accept(path.join(dir, 'box'), cleanupCallback);
+      accept({ dir: path.join(dir, 'box'), cleanupCallback });
     });
   });
 }
