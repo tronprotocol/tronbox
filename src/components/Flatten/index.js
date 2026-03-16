@@ -102,12 +102,7 @@ async function getSortedFilePaths(entryPoints, projectRoot) {
   }
 
   const files = sortedFiles.map(f => {
-    const fileName = fileNameToGlobalName(f, projectRoot);
-    if (fileName.substring(0, 14) === 'node_modules\\@') {
-      return fileName.substring(13);
-    } else {
-      return fileName;
-    }
+    return fileNameToGlobalName(f, projectRoot);
   });
 
   return files;
@@ -115,8 +110,8 @@ async function getSortedFilePaths(entryPoints, projectRoot) {
 
 function fileNameToGlobalName(fileName, projectRoot) {
   let globalName = getFilePathsFromProjectRoot([fileName], projectRoot)[0];
-  if (globalName.indexOf('node_modules/') !== -1) {
-    globalName = globalName.substr(globalName.indexOf('node_modules/') + 'node_modules/'.length);
+  if (globalName.startsWith('node_modules/')) {
+    globalName = globalName.substr('node_modules/'.length);
   }
 
   return globalName;
