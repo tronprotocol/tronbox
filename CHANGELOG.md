@@ -28,6 +28,7 @@
 - Upgraded `axios` from 1.12.0 to 1.13.6
 - Upgraded `glob` to 13.0.6
 - Upgraded `ajv` to 6.14.0
+- Upgraded `yauzl` to 3.2.1
 
 **4.5.0**
 
