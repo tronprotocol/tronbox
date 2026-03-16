@@ -48,7 +48,7 @@ Artifactor.prototype.save = function (object, options) {
         try {
           existingObjDirty = JSON.parse(json);
         } catch (e) {
-          reject(e);
+          return reject(e);
         }
 
         // normalize existing and merge into final
