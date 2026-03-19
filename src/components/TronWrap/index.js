@@ -62,7 +62,7 @@ function isLocalNode(url) {
   }
 }
 
-function validateNodeUrl(nodeUrl, configKey = 'node URL') {
+function validateNodeUrl(nodeUrl, configKey = 'node URL', logger = {}) {
   if (!nodeUrl || typeof nodeUrl !== 'string') {
     return nodeUrl;
   }
@@ -80,8 +80,9 @@ function validateNodeUrl(nodeUrl, configKey = 'node URL') {
   }
 
   if (protocol === 'http:' && !isLocalHostname(parsedUrl.hostname)) {
-    throw new Error(
-      `${configKey} must use https for non-local URLs. http is only allowed for localhost/127.0.0.1/[::1].`
+    logger?.log?.(
+      chalk.yellow('WARNING:'),
+      `${configKey} is using http for a non-local URL. It's recommended to use https for security reasons.\n`
     );
   }
 
@@ -142,7 +143,7 @@ function init(options, extraOptions = {}) {
     // Validate node URLs
     const nodeUrlConfigKeys = ['fullHost', 'fullNode', 'solidityNode', 'eventServer'];
     nodeUrlConfigKeys.forEach(configKey => {
-      validateNodeUrl(options[configKey], configKey);
+      validateNodeUrl(options[configKey], configKey, extraOptions.logger);
     });
   }
 

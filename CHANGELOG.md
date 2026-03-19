@@ -16,7 +16,6 @@
 
 ### Bug Fixes & Improvements
 
-- Non-local nodes now enforce HTTPS connections
 - Added checksum validation for downloaded soljson compiler files
 - Improved error capturing and unhandled promise rejection handling
 - Normalized error output formatting and added explicit exit codes
