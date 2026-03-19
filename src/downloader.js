@@ -30,7 +30,7 @@ async function downloader(compilerVersion, evm) {
         } else {
           process.stderr.write(
             chalk.red(
-              chalk.bold('Error:'),
+              chalk.bold('ERROR:'),
               `Unable to locate Solidity compiler version ${chalk.yellow(compilerVersion)}.`
             ) + '\n'
           );
@@ -39,7 +39,7 @@ async function downloader(compilerVersion, evm) {
         }
       }
     } catch (error) {
-      process.stderr.write(chalk.red(chalk.bold('Error:'), 'Failed to fetch Solidity compiler list.') + '\n');
+      process.stderr.write(chalk.red(chalk.bold('ERROR:'), 'Failed to fetch Solidity compiler list.') + '\n');
       process.exit(1);
     }
   } else {
@@ -57,7 +57,7 @@ async function downloader(compilerVersion, evm) {
         if (!soljsonUrl) {
           process.stderr.write(
             chalk.red(
-              chalk.bold('Error:'),
+              chalk.bold('ERROR:'),
               `Unable to locate Solidity compiler version ${chalk.yellow(compilerVersion)}.`
             ) + '\n'
           );
@@ -65,7 +65,7 @@ async function downloader(compilerVersion, evm) {
         }
       }
     } catch (error) {
-      process.stderr.write(chalk.red(chalk.bold('Error:'), 'Failed to fetch Solidity compiler list.') + '\n');
+      process.stderr.write(chalk.red(chalk.bold('ERROR:'), 'Failed to fetch Solidity compiler list.') + '\n');
       process.exit(1);
     }
   }
@@ -80,7 +80,7 @@ async function downloader(compilerVersion, evm) {
       await fs.writeFile(tempFilePath, res.data);
       // double check
       if (!fs.existsSync(tempFilePath)) {
-        process.stderr.write(chalk.red(chalk.bold('Error:'), 'Permission required.') + '\n');
+        process.stderr.write(chalk.red(chalk.bold('ERROR:'), 'Permission required.') + '\n');
         process.stderr.write(`
 Most likely, you installed Node.js as root.
 Please, download the compiler manually, running:
@@ -96,14 +96,14 @@ tronbox --download-compiler ${compilerVersion} ${evm ? '--evm' : ''}
         } else {
           await fs.remove(tempFilePath);
           process.stderr.write(
-            chalk.red(chalk.bold('Error:'), 'SHA256 checksum mismatch. The downloaded file has been deleted.') + '\n'
+            chalk.red(chalk.bold('ERROR:'), 'SHA256 checksum mismatch. The downloaded file has been deleted.') + '\n'
           );
           process.exit(1);
         }
       }
     }
   } catch (error) {
-    process.stderr.write(chalk.red(chalk.bold('Error:'), 'Wrong Solidity compiler version.') + '\n');
+    process.stderr.write(chalk.red(chalk.bold('ERROR:'), 'Wrong Solidity compiler version.') + '\n');
     process.exit(1);
   }
 }

@@ -24,7 +24,7 @@ Usage: $0 init`
     });
 
     if (options._ && options._.length > 0) {
-      config.logger.log('Error: `tronbox init` no longer accepts a project template name as an argument.');
+      config.logger.log('ERROR: `tronbox init` no longer accepts a project template name as an argument.');
       config.logger.log();
       config.logger.log(
         ' - For an empty project, use `tronbox init` with no arguments' +

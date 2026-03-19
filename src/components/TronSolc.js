@@ -49,13 +49,13 @@ function getWrapper(options = {}) {
     }
 
     if (!isValidCompilerVersion(compilerVersion)) {
-      console.error(`${chalk.red(chalk.bold('Error:'))} Invalid compiler version '${chalk.yellow(compilerVersion)}'.`);
+      console.error(`${chalk.red(chalk.bold('ERROR:'))} Invalid compiler version '${chalk.yellow(compilerVersion)}'.`);
       process.exit(1);
     }
 
     if (compareVersions(compilerVersion, maxVersion) > 0 && !options.evm) {
       console.error(`${chalk.red(
-        chalk.bold('Error:')
+        chalk.bold('ERROR:')
       )} TronBox v${version} currently supports Tron Solidity compiler versions up to ${chalk.green(maxVersion)}.
 You are using version ${chalk.yellow(compilerVersion)}, which is not supported.`);
       process.exit(1);
