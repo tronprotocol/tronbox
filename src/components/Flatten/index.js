@@ -117,7 +117,7 @@ function fileNameToGlobalName(fileName, projectRoot) {
   return globalName;
 }
 
-async function printContactenation(files, log) {
+async function printFileContents(files, log) {
   const parts = files.map(({ file, content, packageInfo }) => {
     let normalizedText = getTextWithoutImports(content);
     normalizedText = commentOutLicenses(normalizedText);
@@ -260,7 +260,7 @@ const Flatten = {
         res += getLicensesHeader(licenses);
         res += getPragmaAbicoderDirectiveHeader(pragmaDirective);
 
-        printContactenation(fileContents, str => (res += str))
+        printFileContents(fileContents, str => (res += str))
           .then(() => {
             process.stdout.write(res);
 
