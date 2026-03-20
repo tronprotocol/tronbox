@@ -95,7 +95,7 @@ Usage: $0 test [<files...>] [--file <file>]
       if (files.length !== 0) {
         const workingDirectoryPath = path.resolve(config.working_directory);
         files.forEach(file => {
-          const resolvedPath = path.resolve(workingDirectoryPath, file);
+          const resolvedPath = path.resolve(process.cwd(), file);
           const relative = path.relative(workingDirectoryPath, resolvedPath);
           if (relative.startsWith('..') || path.isAbsolute(relative)) {
             throw new Error(chalk.red(chalk.bold('ERROR:') + ` ${file} is outside the project directory.`));
