@@ -109,7 +109,7 @@ async function getSortedFilePaths(entryPoints, projectRoot) {
 }
 
 function fileNameToGlobalName(fileName, projectRoot) {
-  let globalName = getFilePathsFromProjectRoot([fileName], projectRoot)[0];
+  let globalName = getFilePathsFromProjectRoot([fileName], projectRoot, projectRoot)[0];
   if (globalName.startsWith('node_modules/')) {
     globalName = globalName.substr('node_modules/'.length);
   }
@@ -134,8 +134,8 @@ async function printFileContents(files, log) {
   log(parts.join(''));
 }
 
-function getFilePathsFromProjectRoot(filePaths, projectRoot) {
-  return filePaths.map(f => path.relative(projectRoot, path.resolve(f)));
+function getFilePathsFromProjectRoot(filePaths, projectRoot, fromDir = process.cwd()) {
+  return filePaths.map(f => path.relative(projectRoot, path.resolve(fromDir, f)));
 }
 
 function removeDuplicateAndSurroundingWhitespaces(str) {
@@ -236,7 +236,8 @@ function commentOutPragmaAbicoderDirectives(fileContent) {
 
 const Flatten = {
   run: function (filePaths, callback) {
-    const projectRoot = process.cwd();
+    const config = Config.detect({});
+    const projectRoot = config.working_directory;
     const filePathsFromProjectRoot = getFilePathsFromProjectRoot(filePaths, projectRoot);
 
     let res = `// Sources flattened with TronBox v${packageJson.version} ${packageJson.homepage}`;
