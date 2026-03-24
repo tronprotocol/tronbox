@@ -1,11 +1,12 @@
 const _ = require('lodash');
 const path = require('path');
-const { constants, TronWeb } = require('./TronWrap');
+const { constants } = require('./TronWrap');
 const Provider = require('./Provider');
 const TronBoxError = require('../lib/errors/tronboxerror');
 const Module = require('module');
 const findUp = require('find-up');
 const originalrequire = require('original-require');
+const chalk = require('chalk');
 
 const DEFAULT_CONFIG_FILENAME = 'tronbox.js';
 const BACKUP_CONFIG_FILENAME = 'tronbox-config.js'; // For Windows + Command Prompt
@@ -14,6 +15,23 @@ const EVM_CONFIG_FILENAME = 'tronbox-evm-config.js'; // For EVM
 function Config() {
   const self = this;
   const default_tx_values = constants.deployParameters;
+  const resolvePathInWorkingDirectory = function (value, keyName) {
+    const workingDirectoryPath = path.resolve(self.working_directory);
+    const resolvedPath = path.resolve(workingDirectoryPath, value);
+    const relative = path.relative(workingDirectoryPath, resolvedPath);
+    if (relative === '') {
+      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is root of the project directory.`));
+    }
+    if (keyName === 'contracts_build_directory' && self._allowExternalContractsBuildDirectory) {
+      return resolvedPath;
+    }
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is outside the project directory.`));
+    }
+
+    return resolvedPath;
+  };
+
   this._values = {
     working_directory: process.cwd(),
     network: 'development',
@@ -57,7 +75,7 @@ function Config() {
         return path.join(self.working_directory, 'build');
       },
       transform: function (value) {
-        return path.resolve(self.working_directory, value);
+        return resolvePathInWorkingDirectory(value, 'build_directory');
       }
     },
     contracts_directory: {
@@ -65,7 +83,7 @@ function Config() {
         return path.join(self.working_directory, 'contracts');
       },
       transform: function (value) {
-        return path.resolve(self.working_directory, value);
+        return resolvePathInWorkingDirectory(value, 'contracts_directory');
       }
     },
     contracts_build_directory: {
@@ -73,7 +91,7 @@ function Config() {
         return path.join(self.build_directory, 'contracts');
       },
       transform: function (value) {
-        return path.resolve(self.working_directory, value);
+        return resolvePathInWorkingDirectory(value, 'contracts_build_directory');
       }
     },
     migrations_directory: {
@@ -81,7 +99,7 @@ function Config() {
         return path.join(self.working_directory, 'migrations');
       },
       transform: function (value) {
-        return path.resolve(self.working_directory, value);
+        return resolvePathInWorkingDirectory(value, 'migrations_directory');
       }
     },
     test_directory: {
@@ -89,7 +107,7 @@ function Config() {
         return path.join(self.working_directory, 'test');
       },
       transform: function (value) {
-        return path.resolve(self.working_directory, value);
+        return resolvePathInWorkingDirectory(value, 'test_directory');
       }
     },
     test_file_extension_regexp: function () {
@@ -138,25 +156,9 @@ function Config() {
       }
     },
     privateKey: {
-      get: (() => {
-        let _privateKey_cached = null;
-        return function () {
-          try {
-            const network_config = self.network_config;
-            // `mnemonic` is prior to `privateKey`.
-            if (network_config.mnemonic) {
-              if (_privateKey_cached === null) {
-                const { mnemonic, path } = network_config;
-                _privateKey_cached = TronWeb.fromMnemonic(mnemonic, path).privateKey.slice(2);
-                network_config.privateKey = _privateKey_cached;
-              }
-            }
-            return network_config.privateKey;
-          } catch (e) {
-            return default_tx_values.privateKey;
-          }
-        };
-      })(),
+      get: function () {
+        return null;
+      },
       set: function () {
         throw new Error(
           "Don't set config.privateKey directly. Instead, set config.networks and then config.networks[<network name>].privateKey"
@@ -367,13 +369,25 @@ Config.prototype.with = function (obj) {
 Config.prototype.merge = function (obj) {
   const self = this;
   const clone = this.normalize(obj);
+  const strictPathKeys = new Set([
+    'build_directory',
+    'contracts_directory',
+    'contracts_build_directory',
+    'migrations_directory',
+    'test_directory'
+  ]);
 
-  // Only set keys for values that don't throw.
+  if (clone._allowExternalContractsBuildDirectory) {
+    self._allowExternalContractsBuildDirectory = true;
+  }
+
   Object.keys(obj).forEach(function (key) {
     try {
       self[key] = clone[key];
     } catch (e) {
-      // Do nothing.
+      if (strictPathKeys.has(key)) {
+        throw e;
+      }
     }
   });
 
@@ -413,6 +427,9 @@ Config.load = function (file, options) {
   // it doesn't bundle very well. So we've pulled it out ourselves.
   delete require.cache[Module._resolveFilename(file, module)];
   const static_config = originalrequire(file);
+
+  // If the config file doesn't explicitly set _allowExternalContractsBuildDirectory, default it to false to maintain security.
+  delete static_config._allowExternalContractsBuildDirectory;
 
   config.merge(static_config);
   config.merge(options);

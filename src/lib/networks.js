@@ -226,6 +226,8 @@ const Networks = {
     if (isFirstANumber && isSecondANumber) {
       return callback(null, false);
     }
+
+    return callback(null, false);
   }
 };
 

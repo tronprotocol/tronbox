@@ -64,10 +64,9 @@ const Utils = {
   linkBytecode: function (bytecode, links) {
     Object.keys(links).forEach(function (library_name) {
       const library_address = links[library_name];
-      const regex = new RegExp('__' + library_name + '_+', 'g');
-      bytecode = bytecode.replace(regex, library_address.replace('0x', '').replace('41', ''));
-      // var address = TronWrap.address2HexString(library_address);
-      // bytecode = bytecode.replace(eval('/'+library_address+"/ig"),address.replace("41", ""));
+      const escaped_library_name = library_name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp('__' + escaped_library_name + '_+', 'g');
+      bytecode = bytecode.replace(regex, library_address.replace(/^41/, '0x').replace('0x', ''));
     });
 
     return bytecode;
@@ -97,12 +96,12 @@ function filterEnergyParameter(args) {
   if (typeof lastArg !== 'object' || Array.isArray(lastArg)) return [args, {}];
   args.pop();
   const res = {};
-  for (const property in lastArg) {
+  Object.keys(lastArg).forEach(property => {
     const camelCased = toCamelCase(property);
     if (~deployParameters.indexOf(camelCased)) {
       res[camelCased] = lastArg[property];
     }
-  }
+  });
   return [args, res];
 }
 
@@ -319,7 +318,9 @@ Contract._static_methods = {
                 self[item.name] = createWrapper(item.name);
               }
 
-              self[functionSelector] = createWrapper(functionSelector);
+              if (!self.hasOwnProperty(functionSelector)) {
+                self[functionSelector] = createWrapper(functionSelector);
+              }
             }
           }
           accept(self);
@@ -662,6 +663,10 @@ Contract._properties = {
     get: function () {
       let code = this._json.deployedBytecode;
 
+      if (code == null) {
+        return '0x';
+      }
+
       if (code.indexOf('0x') !== 0) {
         code = '0x' + code;
       }
@@ -669,9 +674,14 @@ Contract._properties = {
       return code;
     },
     set: function (val) {
-      let code = val;
+      if (val == null) {
+        this._json.deployedBytecode = '0x';
+        return;
+      }
 
-      if (val.indexOf('0x') !== 0) {
+      let code = typeof val === 'string' ? val : String(val);
+
+      if (code.indexOf('0x') !== 0) {
         code = '0x' + code;
       }
 

@@ -1,4 +1,3 @@
-const EPMSource = require('./epm');
 const NPMSource = require('./npm');
 const FSSource = require('./fs');
 const path = require('path');
@@ -13,9 +12,7 @@ function Resolver(options) {
   this.options = options;
 
   this.sources = [
-    new EPMSource(options.working_directory, options.contracts_build_directory),
     new NPMSource(options.working_directory),
-    new NPMSource(__dirname),
     new FSSource(options.working_directory, options.contracts_build_directory)
   ];
 }
@@ -46,6 +43,7 @@ Resolver.prototype.resolve = function (import_path, imported_from, callback) {
 
   let resolved_body = null;
   let resolved_path = null;
+  let resolved_package_info = null;
   let current_index = -1;
   let current_source;
 
@@ -57,10 +55,11 @@ Resolver.prototype.resolve = function (import_path, imported_from, callback) {
       current_index += 1;
       current_source = self.sources[current_index];
 
-      current_source.resolve(import_path, imported_from, function (err, body, file_path) {
+      current_source.resolve(import_path, imported_from, function (err, body, file_path, package_info) {
         if (!err && body) {
           resolved_body = body;
           resolved_path = file_path;
+          resolved_package_info = package_info;
         }
         next(err);
       });
@@ -69,17 +68,16 @@ Resolver.prototype.resolve = function (import_path, imported_from, callback) {
       if (err) return callback(err);
 
       if (!resolved_body) {
-        let message =
-          'Could not find ' + path.relative(self.options.working_directory, import_path) + ' from any sources';
+        let message = 'Could not find ' + import_path + ' from any sources';
 
         if (imported_from) {
-          message += '; imported from ' + path.relative(self.options.working_directory, imported_from);
+          message += '; imported from ' + imported_from;
         }
 
         return callback(new Error(message));
       }
 
-      callback(null, resolved_body, resolved_path, current_source);
+      callback(null, resolved_body, resolved_path, current_source, resolved_package_info);
     }
   );
 };
