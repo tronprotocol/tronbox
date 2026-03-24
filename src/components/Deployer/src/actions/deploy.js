@@ -10,7 +10,6 @@ module.exports = function (contract, args, deployer) {
 
     if (!contract.initTronWeb) {
       const abstraction = Contract(contract._json);
-      // abstraction.defaults(this.class_defaults)
       provision(abstraction, deployer.options);
       contract = abstraction;
     }

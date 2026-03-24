@@ -90,15 +90,12 @@ Migration.prototype.run = function (options, callback) {
         logErrorAndExit(logger, e);
       });
   };
-  const fn = Require.file(
-    {
-      file: self.file,
-      context: context,
-      resolver: resolver,
-      args: [deployer]
-    },
-    options
-  );
+  const fn = Require.file({
+    file: self.file,
+    context: context,
+    resolver: resolver,
+    args: [deployer]
+  });
 
   if (!fn || !fn.length || fn.length === 0) {
     return callback(new Error('Migration ' + self.file + ' invalid or does not take any parameters'));

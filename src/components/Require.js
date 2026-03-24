@@ -12,7 +12,7 @@ const Config = require('./Config');
 // options.context: Object containing any global variables you'd like set when this
 //   function is run.
 const Require = {
-  file: (options, config) => {
+  file: options => {
     const file = options.file;
 
     expect.options(options, ['file']);
@@ -23,8 +23,6 @@ const Require = {
 
     // Modified from here: https://gist.github.com/anatoliychakkaev/1599423
     const m = new Module(file);
-
-    global.config = config;
 
     // Provide all the globals listed here: https://nodejs.org/api/globals.html
     const context = {
@@ -88,7 +86,7 @@ const Require = {
     try {
       script.runInNewContext(context);
     } catch (error) {
-      console.error(error);
+      console.error(error instanceof Error ? error.message : String(error));
       process.exit(1);
     }
 

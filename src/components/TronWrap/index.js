@@ -1,11 +1,15 @@
 const { ethers } = require('ethers');
-const { TronWeb: _TronWeb } = require('tronweb');
+const { TronWeb } = require('tronweb');
 const chalk = require('chalk');
-const constants = require('./constants');
 const axios = require('axios');
+const constants = require('./constants');
 const ConsoleLogger = require('../ConsoleLogger');
+const { TronWebProxy } = require('./TronWebProxy');
+const { EthersSignerProxy } = require('./EthersProxy');
 
 let instance;
+let privateKeyByAccount = {};
+let ethersWallets = {};
 
 function TronWrap() {
   this._toNumber = toNumber;
@@ -42,6 +46,47 @@ function filterMatchFunction(method, abi) {
 
 function sleep(millis) {
   return new Promise(resolve => setTimeout(resolve, millis));
+}
+
+function isLocalHostname(hostname = '') {
+  const normalizedHostname = String(hostname).toLowerCase();
+  return normalizedHostname === 'localhost' || normalizedHostname === '127.0.0.1' || normalizedHostname === '[::1]';
+}
+
+function isLocalNode(url) {
+  try {
+    const { hostname } = new URL(url);
+    return isLocalHostname(hostname);
+  } catch {
+    return false;
+  }
+}
+
+function validateNodeUrl(nodeUrl, configKey = 'node URL', logger = {}) {
+  if (!nodeUrl || typeof nodeUrl !== 'string') {
+    return nodeUrl;
+  }
+
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(nodeUrl);
+  } catch (error) {
+    throw new Error(`${configKey} must be a valid URL.`);
+  }
+
+  const protocol = parsedUrl.protocol;
+  if (protocol !== 'http:' && protocol !== 'https:') {
+    throw new Error(`${configKey} must use http or https protocol.`);
+  }
+
+  if (protocol === 'http:' && !isLocalHostname(parsedUrl.hostname)) {
+    logger?.log?.(
+      chalk.yellow('WARNING:'),
+      `${configKey} is using http for a non-local URL. It's recommended to use https for security reasons.\n`
+    );
+  }
+
+  return nodeUrl;
 }
 
 function filterNetworkConfig(options) {
@@ -94,17 +139,27 @@ function init(options, extraOptions = {}) {
         `It was not possible to instantiate ${clientName}. The configuration key \`fullHost\` is missing in your "${configFile}".`
       );
     }
+
+    // Validate node URLs
+    const nodeUrlConfigKeys = ['fullHost', 'fullNode', 'solidityNode', 'eventServer'];
+    nodeUrlConfigKeys.forEach(configKey => {
+      validateNodeUrl(options[configKey], configKey, extraOptions.logger);
+    });
   }
 
-  // support mnemonic
   const getPrivateKey = () => {
-    if (options.mnemonic) {
-      return _TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey.replace(/^0x/, '');
+    const privateKey = options.mnemonic
+      ? TronWeb.fromMnemonic(options.mnemonic, options.path).privateKey
+      : options.privateKey;
+
+    if (typeof privateKey !== 'string' || !privateKey) {
+      throw new Error('Invalid privateKey. Expected a non-empty string.');
     }
-    return options.privateKey.replace(/^0x/, '');
+
+    return privateKey.replace(/^0x/, '');
   };
 
-  TronWrap.prototype = new _TronWeb(
+  TronWrap.prototype = new TronWebProxy(
     options.fullNode || options.fullHost,
     options.solidityNode || options.fullHost,
     options.eventServer || options.fullHost,
@@ -112,7 +167,6 @@ function init(options, extraOptions = {}) {
   );
 
   const tronWrap = TronWrap.prototype;
-  // tronWrap._compilerVersion = 3
 
   tronWrap._tre = extraOptions.tre;
   tronWrap._treUnlockedAccounts = {};
@@ -125,13 +179,13 @@ function init(options, extraOptions = {}) {
   if (extraOptions.evm) {
     const provider = new ethers.JsonRpcProvider(options.fullNode || options.fullHost);
     const wallet = new ethers.Wallet(getPrivateKey(), provider);
-    tronWrap._ethers_wallets = { [wallet.address]: wallet };
     tronWrap._ethers_accounts = [wallet.address];
+    ethersWallets = { [wallet.address]: wallet };
     tronWrap._ethers = {
       ...ethers,
       provider,
-      getSigner: address => tronWrap._ethers_wallets[address],
-      getSigners: () => Object.values(tronWrap._ethers_wallets)
+      getSigner: address => EthersSignerProxy(ethersWallets[address]),
+      getSigners: () => Object.values(ethersWallets).map(EthersSignerProxy)
     };
   }
 
@@ -152,10 +206,9 @@ function init(options, extraOptions = {}) {
     callback && callback(null, options.network_id);
   };
 
-  const defaultAddress = tronWrap.address.fromPrivateKey(tronWrap.defaultPrivateKey);
+  const defaultAddress = tronWrap.defaultAddress.base58;
   tronWrap._accounts = [defaultAddress];
-  tronWrap._privateKeyByAccount = {};
-  tronWrap._privateKeyByAccount[defaultAddress] = tronWrap.defaultPrivateKey;
+  privateKeyByAccount[defaultAddress] = getPrivateKey();
 
   tronWrap._findMethodAbi = function (methodName, abi) {
     let funAbi = {};
@@ -202,6 +255,11 @@ function init(options, extraOptions = {}) {
         return cb();
       }
 
+      if (!isLocalNode(self.networkConfig.fullNode)) {
+        self._accountsRequested = true;
+        return cb();
+      }
+
       return axios
         .get(self.networkConfig.fullNode + '/admin/accounts-json')
         .then(({ data }) => {
@@ -210,10 +268,10 @@ function init(options, extraOptions = {}) {
             self.setPrivateKey(data[0]);
             tronWrap.setPrivateKey(data[0]);
             self._accounts = [];
-            self._privateKeyByAccount = {};
-            for (const account of data) {
-              const address = this.address.fromPrivateKey(account);
-              self._privateKeyByAccount[address] = account;
+            privateKeyByAccount = {};
+            for (const pk of data) {
+              const address = this.address.fromPrivateKey(pk);
+              privateKeyByAccount[address] = pk;
               self._accounts.push(address);
             }
           }
@@ -232,7 +290,7 @@ function init(options, extraOptions = {}) {
     if (contractInstance) {
       callback && callback(null, contractInstance.contract_address);
     } else {
-      callback(new Error('no code'));
+      callback && callback(new Error('no code'));
     }
   };
 
@@ -279,16 +337,17 @@ function init(options, extraOptions = {}) {
       });
   };
 
-  tronWrap._new = async function (myContract, options, privateKey = tronWrap.defaultPrivateKey) {
+  tronWrap._new = async function (myContract, options, _privateKey) {
     let signedTransaction;
     try {
-      const address = options.from ? options.from : tronWrap.address.fromPrivateKey(privateKey);
+      const address = options.from ? options.from : tronWrap._accounts[0];
       const transaction = await tronWrap.transactionBuilder.createSmartContract(options, address);
       if (tronWrap._treUnlockedAccounts[address]) {
         dlog('Unlocked account', { address });
         signedTransaction = transaction;
         transaction.signature = [];
       } else {
+        const privateKey = privateKeyByAccount[address];
         signedTransaction = await tronWrap.trx.sign(transaction, privateKey);
       }
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction);
@@ -371,11 +430,11 @@ function init(options, extraOptions = {}) {
     option.methodArgs || (option.methodArgs = {});
     option.methodArgs.from || (option.methodArgs.from = this._accounts[0]);
 
-    dlog(option.methodName, option.args, options.methodArgs);
+    dlog(option.methodName, option.args, option.methodArgs);
 
     let privateKey;
     if (callSend === 'send' && option.methodArgs.from) {
-      privateKey = this._privateKeyByAccount[option.methodArgs.from];
+      privateKey = privateKeyByAccount[option.methodArgs.from];
     }
 
     if (!option.methodArgs.feeLimit) {
@@ -439,6 +498,9 @@ function init(options, extraOptions = {}) {
                   .catch(err => {
                     return reject(err);
                   });
+              })
+              .catch(err => {
+                return reject(err);
               });
           });
         }
@@ -546,7 +608,7 @@ function init(options, extraOptions = {}) {
 
   tronWrap._evmGetAccounts = async function (callback) {
     const accounts = [...tronWrap._ethers_accounts];
-    tronWrap._privateKeyByAccount[accounts[0]] = tronWrap._ethers_wallets[accounts[0]].privateKey;
+    privateKeyByAccount[accounts[0]] = ethersWallets[accounts[0]].privateKey;
     if (callback) {
       return callback(null, accounts);
     }
@@ -580,7 +642,7 @@ function init(options, extraOptions = {}) {
       if (opt.nonce === undefined) {
         opt.nonce = await tronWrap._evmGetNonce(opt.from);
       }
-      const wallet = tronWrap._ethers_wallets[opt.from];
+      const wallet = ethersWallets[opt.from];
       const factory = new ethers.ContractFactory(option.abi, option.data, wallet);
       const constructorArgs = option.parameters || [];
       const deployedContract = await factory.deploy(...constructorArgs, opt);
@@ -644,7 +706,7 @@ function init(options, extraOptions = {}) {
       if (opt.nonce === undefined) {
         opt.nonce = await tronWrap._evmGetNonce(opt.from);
       }
-      const wallet = tronWrap._ethers_wallets[opt.from];
+      const wallet = ethersWallets[opt.from];
       const contract = new ethers.Contract(option.address, option.abi, wallet);
       const methodArgs = option.args || [];
       const methodFunc = contract[option.methodName];
@@ -701,7 +763,7 @@ const logErrorAndExit = (logger, err) => {
   } else {
     log('Error encountered, bailing. Network state unknown.');
   }
-  process.exit();
+  process.exit(1);
 };
 
 const dlog = function (...args) {
@@ -724,4 +786,4 @@ module.exports.constants = constants;
 module.exports.logErrorAndExit = logErrorAndExit;
 module.exports.dlog = dlog;
 module.exports.sleep = sleep;
-module.exports.TronWeb = _TronWeb;
+module.exports.TronWeb = TronWeb;

@@ -121,7 +121,7 @@ const copySampleProject = action => {
     const errorMsg = 'This directory is not empty.\nPlease execute `tronbox init` in an empty directory.\n';
     console.info();
     console.info(chalk.red(errorMsg));
-    process.exit();
+    process.exit(1);
   }
 
   // copy the files

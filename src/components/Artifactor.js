@@ -26,8 +26,13 @@ Artifactor.prototype.save = function (object, options) {
     let output_path = object.contractName;
 
     // Create new path off of destination.
-    output_path = path.join(self.destination, output_path);
+    const destinationPath = path.resolve(self.destination);
+    output_path = path.join(destinationPath, output_path);
     output_path = path.resolve(output_path);
+    const relative = path.relative(destinationPath, output_path);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+      return reject(new Error(`Invalid contractName "${object.contractName}"`));
+    }
 
     // Add json extension.
     output_path = output_path + '.json';
@@ -43,7 +48,7 @@ Artifactor.prototype.save = function (object, options) {
         try {
           existingObjDirty = JSON.parse(json);
         } catch (e) {
-          reject(e);
+          return reject(e);
         }
 
         // normalize existing and merge into final

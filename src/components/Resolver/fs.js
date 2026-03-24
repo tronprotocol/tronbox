@@ -8,14 +8,20 @@ function FS(working_directory, contracts_build_directory) {
 }
 
 FS.prototype.requireJson = function (import_path) {
-  const workingDirectory = this.working_directory;
-
-  if (!import_path.startsWith('./')) {
-    import_path = `./node_modules/${import_path}`;
+  let file_path = import_path;
+  if (!file_path.startsWith('./')) {
+    file_path = `./node_modules/${file_path}`;
   }
 
   try {
-    const result = fs.readFileSync(path.join(workingDirectory, import_path), 'utf8');
+    const workingDirectoryPath = path.resolve(this.working_directory);
+    const resolvedPath = path.resolve(workingDirectoryPath, file_path);
+    const relative = path.relative(workingDirectoryPath, resolvedPath);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+      throw new Error(`${import_path} is outside the project directory.`);
+    }
+
+    const result = fs.readFileSync(resolvedPath, 'utf8');
     return JSON.parse(result);
   } catch (e) {
     return null;
@@ -33,15 +39,11 @@ FS.prototype.require = function (import_path, search_path) {
     return this.requireJson(import_path);
   }
 
-  const contract_name = this.getContractName(import_path, search_path);
-
-  // If we have an absolute path, only check the file if it's a child of the working_directory.
-  if (path.isAbsolute(import_path)) {
-    if (import_path.indexOf(this.working_directory) !== 0) {
-      return null;
-    }
-    import_path = './' + import_path.replace(this.working_directory);
+  if (import_path.includes(path.sep)) {
+    return null;
   }
+
+  const contract_name = this.getContractName(import_path, search_path);
 
   try {
     const result = fs.readFileSync(path.join(search_path, contract_name + '.json'), 'utf8');
@@ -72,7 +74,10 @@ FS.prototype.getContractName = function (sourcePath, searchPath) {
 FS.prototype.resolve = function (import_path, imported_from, callback) {
   imported_from = imported_from || '';
 
-  const possible_paths = [import_path, path.join(path.dirname(imported_from), import_path)];
+  const possible_paths = path.isAbsolute(import_path)
+    ? [import_path]
+    : [import_path, path.join(path.dirname(imported_from), import_path)];
+  const workingDirectoryPath = path.resolve(this.working_directory);
 
   let resolved_body = null;
   let resolved_path = null;
@@ -84,14 +89,20 @@ FS.prototype.resolve = function (import_path, imported_from, callback) {
         return finished();
       }
 
+      const resolvedPath = path.resolve(workingDirectoryPath, possible_path);
+      const relative = path.relative(workingDirectoryPath, resolvedPath);
+      if (relative.startsWith('..') || path.isAbsolute(relative)) {
+        return finished(new Error(`${import_path} is outside the project directory.`));
+      }
+
       // Check the expected path.
-      fs.readFile(possible_path, { encoding: 'utf8' }, function (err, body) {
+      fs.readFile(resolvedPath, { encoding: 'utf8' }, function (err, body) {
         // If there's an error, that means we can't read the source even if
         // it exists. Treat it as if it doesn't by ignoring any errors.
         // body will be undefined if error.
         if (body) {
           resolved_body = body;
-          resolved_path = possible_path;
+          resolved_path = resolvedPath;
         }
 
         return finished();

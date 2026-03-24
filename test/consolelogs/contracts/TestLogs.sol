@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-import '../../../console.sol';
+import 'tronbox/console.sol';
 
 contract TestLogs {
   address addr1 = 0x000000000000000000000000000000000000aDd1;
