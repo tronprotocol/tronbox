@@ -428,7 +428,7 @@ Config.load = function (file, options) {
   delete require.cache[Module._resolveFilename(file, module)];
   const static_config = originalrequire(file);
 
-  // If the config file doesn't explicitly set _allowExternalContractsBuildDirectory, default it to false to maintain security.
+  // Remove any `_allowExternalContractsBuildDirectory` property from the loaded config file.
   delete static_config._allowExternalContractsBuildDirectory;
 
   config.merge(static_config);
