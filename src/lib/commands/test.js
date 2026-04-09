@@ -98,7 +98,7 @@ Usage: $0 test [<files...>] [--file <file>]
           const resolvedPath = path.resolve(process.cwd(), file);
           const relative = path.relative(workingDirectoryPath, resolvedPath);
           if (relative.startsWith('..') || path.isAbsolute(relative)) {
-            throw new Error(chalk.red(chalk.bold('ERROR:') + ` ${file} is outside the project directory.`));
+            return callback(chalk.red(chalk.bold('ERROR:') + ` ${file} is outside the project directory.`));
           }
         });
         return callback(null, files);
