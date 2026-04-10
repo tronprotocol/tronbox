@@ -127,7 +127,8 @@ const copySampleProject = action => {
   // copy the files
   for (const file of sampleProjectFiles) {
     const sampleProjectFile = path.resolve(sampleProjectPath, file);
-    const targetProjectFile = path.resolve(projectRoot, file);
+    const targetFile = path.basename(file) === 'gitignore' ? path.join(path.dirname(file), '.gitignore') : file;
+    const targetProjectFile = path.resolve(projectRoot, targetFile);
 
     fsExtra.copySync(sampleProjectFile, targetProjectFile);
   }
