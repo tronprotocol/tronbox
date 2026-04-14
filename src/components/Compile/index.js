@@ -69,7 +69,7 @@ const compile = function (sources, options, callback) {
       ...settings,
       outputSelection: {
         '*': {
-          '': ['legacyAST', 'ast'],
+          '': ['ast'],
           '*': [
             'abi',
             'evm.bytecode.object',
@@ -158,7 +158,6 @@ const compile = function (sources, options, callback) {
         source: operatingSystemIndependentSources[source_path],
         sourceMap: contract.evm.bytecode.sourceMap,
         deployedSourceMap: contract.evm.deployedBytecode.sourceMap,
-        legacyAST: standardOutput.sources[source_path].legacyAST,
         ast: standardOutput.sources[source_path].ast,
         abi: contract.abi,
         bytecode: '0x' + contract.evm.bytecode.object,

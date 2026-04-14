@@ -720,14 +720,6 @@ Contract._properties = {
       this._json.sourcePath = val;
     }
   },
-  legacyAST: {
-    get: function () {
-      return this._json.legacyAST;
-    },
-    set: function (val) {
-      this._json.legacyAST = val;
-    }
-  },
   ast: {
     get: function () {
       return this._json.ast;
