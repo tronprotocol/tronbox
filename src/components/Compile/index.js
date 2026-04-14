@@ -38,26 +38,22 @@ const compile = function (sources, options, callback) {
     process.removeListener('uncaughtException', solc_listener);
   }
 
-  // Ensure sources have operating system independent paths
-  // i.e., convert backslashes to forward slashes; things like C: are left intact.
+  // Compile sources keyed by paths relative to contracts_directory, with
+  // backslashes normalized to forward slashes so solc sees OS-independent keys.
   const operatingSystemIndependentSources = {};
   const originalPathMappings = {};
 
   Object.keys(sources).forEach(function (source) {
-    // Turn all backslashes into forward slashes
-    let replacement = source.replace(/\\/g, '/');
+    let key = source;
 
-    // Turn G:/.../ into /G/.../ for Windows
-    if (replacement.length >= 2 && replacement[1] === ':') {
-      replacement = '/' + replacement;
-      replacement = replacement.replace(':', '');
+    if (path.isAbsolute(key)) {
+      key = path.relative(options.contracts_directory, key);
     }
 
-    // Save the result
-    operatingSystemIndependentSources[replacement] = sources[source];
+    key = key.replace(/\\/g, '/');
 
-    // Map the replacement back to the original source path.
-    originalPathMappings[replacement] = source;
+    operatingSystemIndependentSources[key] = sources[source];
+    originalPathMappings[key] = source;
   });
 
   const settings = Object.keys(options.solc).length ? options.solc : options.compilers?.solc?.settings || {};
@@ -76,7 +72,11 @@ const compile = function (sources, options, callback) {
             'evm.bytecode.sourceMap',
             'evm.bytecode.linkReferences',
             'evm.deployedBytecode.object',
-            'evm.deployedBytecode.sourceMap'
+            'evm.deployedBytecode.sourceMap',
+            'evm.deployedBytecode.linkReferences',
+            'evm.deployedBytecode.immutableReferences',
+            'evm.methodIdentifiers',
+            'metadata'
           ]
         }
       }
@@ -94,8 +94,7 @@ const compile = function (sources, options, callback) {
     };
   });
 
-  const result = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput));
-
+  const result = solc.compile(JSON.stringify(solcStandardInput));
   const standardOutput = JSON.parse(result);
 
   let errors = standardOutput.errors || [];
