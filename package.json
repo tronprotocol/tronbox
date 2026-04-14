@@ -39,7 +39,7 @@
     "mocha": "11.7.4",
     "node-dir": "0.1.17",
     "original-require": "1.0.1",
-    "solc": "0.8.25",
+    "solc": "0.8.34",
     "source-map-support": "0.5.21",
     "tmp": "0.0.33",
     "tronweb": "6.2.2",
