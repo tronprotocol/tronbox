@@ -26,7 +26,7 @@ Usage: $0 flatten <files...>`
     process.env.CURRENT = 'flatten';
     const Flatten = require('../../components/Flatten');
 
-    const filePaths = options._;
+    const filePaths = options._.slice();
 
     if (!filePaths.length) {
       console.error('Usage: tronbox flatten <files...>\n');
