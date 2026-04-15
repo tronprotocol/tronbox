@@ -94,6 +94,14 @@ function Config() {
         return resolvePathInWorkingDirectory(value, 'contracts_build_directory');
       }
     },
+    build_info_directory: {
+      default: function () {
+        return path.join(self.build_directory, 'build-info');
+      },
+      transform: function (value) {
+        return resolvePathInWorkingDirectory(value, 'build_info_directory');
+      }
+    },
     migrations_directory: {
       default: function () {
         return path.join(self.working_directory, 'migrations');
@@ -373,6 +381,7 @@ Config.prototype.merge = function (obj) {
     'build_directory',
     'contracts_directory',
     'contracts_build_directory',
+    'build_info_directory',
     'migrations_directory',
     'test_directory'
   ]);

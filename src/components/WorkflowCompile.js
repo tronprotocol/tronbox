@@ -1,5 +1,7 @@
 const mkdirp = require('mkdirp');
 const path = require('path');
+const fs = require('fs');
+const crypto = require('crypto');
 const Config = require('./Config');
 const compile = require('./Compile');
 const { expect } = require('../lib/utils');
@@ -39,7 +41,7 @@ const Contracts = {
   compile: function (options, callback) {
     const self = this;
 
-    expect.options(options, ['contracts_build_directory']);
+    expect.options(options, ['contracts_build_directory', 'build_info_directory']);
 
     expect.one(options, ['contracts_directory', 'files']);
 
@@ -54,11 +56,11 @@ const Contracts = {
       config.artifactor = new Artifactor(config.contracts_build_directory);
     }
 
-    function finished(err, contracts, paths) {
+    function finished(err, contracts, paths, buildInfo) {
       if (err) return callback(err);
 
       if (contracts != null && Object.keys(contracts).length > 0) {
-        self.write_contracts(contracts, config, async function (err, abstractions) {
+        self.write_contracts(contracts, config, buildInfo, async function (err, abstractions) {
           options.logger.log('');
           options.logger.log(`> Compiled successfully using:`);
           const solcVersion = options.networks?.compilers
@@ -92,7 +94,7 @@ const Contracts = {
       .catch(start);
   },
 
-  write_contracts: function (contracts, options, callback) {
+  write_contracts: function (contracts, options, buildInfo, callback) {
     mkdirp(options.contracts_build_directory, function (err) {
       if (err != null) {
         callback(err);
@@ -110,11 +112,28 @@ const Contracts = {
       options.artifactor
         .saveAll(contracts)
         .then(function () {
+          writeBuildInfo(options, buildInfo);
           callback(null, contracts);
         })
         .catch(callback);
     });
   }
 };
+
+function writeBuildInfo(options, buildInfo) {
+  if (options.quietWrite || !buildInfo) return;
+
+  const buildInfoDir = options.build_info_directory;
+  const { input, output } = buildInfo;
+  const hash = crypto.createHash('sha256').update(input).digest('hex');
+
+  try {
+    fs.mkdirSync(buildInfoDir, { recursive: true });
+    fs.writeFileSync(path.join(buildInfoDir, `${hash}.json`), input);
+    fs.writeFileSync(path.join(buildInfoDir, `${hash}.output.json`), output);
+  } catch (e) {
+    options.logger.log(`Warning: failed to write build-info: ${e.message}`);
+  }
+}
 
 module.exports = Contracts;

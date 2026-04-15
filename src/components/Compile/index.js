@@ -1,6 +1,7 @@
 const Profiler = require('./profiler');
 const OS = require('os');
 const path = require('path');
+const chalk = require('chalk');
 const CompileError = require('./compileerror');
 const { expect, findContracts } = require('../../lib/utils');
 const Config = require('../Config');
@@ -94,7 +95,8 @@ const compile = function (sources, options, callback) {
     };
   });
 
-  const result = solc.compile(JSON.stringify(solcStandardInput));
+  const inputString = JSON.stringify(solcStandardInput);
+  const result = solc.compile(inputString);
   const standardOutput = JSON.parse(result);
 
   let errors = standardOutput.errors || [];
@@ -215,7 +217,7 @@ const compile = function (sources, options, callback) {
     });
   });
 
-  callback(null, returnVal, files);
+  callback(null, returnVal, files, { input: inputString, output: result });
 };
 
 function replaceLinkReferences(bytecode, linkReferences, libraryName) {
@@ -294,6 +296,23 @@ compile.all = function (options, callback) {
 // quiet: Boolean. Suppress output. Defaults to false.
 // strict: Boolean. Return compiler warnings as errors. Defaults to false.
 compile.necessary = function (options, callback) {
+  if (options.files && options.files.length > 0) {
+    try {
+      const workingDirectoryPath = path.resolve(options.working_directory);
+      options.paths = options.files.map(function (file) {
+        const resolvedPath = path.resolve(process.cwd(), file);
+        const relative = path.relative(workingDirectoryPath, resolvedPath);
+        if (relative.startsWith('..') || path.isAbsolute(relative)) {
+          throw new Error(chalk.red(chalk.bold('ERROR:') + ` ${file} is outside the project directory.`));
+        }
+        return resolvedPath;
+      });
+    } catch (err) {
+      return callback(err);
+    }
+    return compile.with_dependencies(options, callback);
+  }
+
   Profiler.updated(options, function (err, updated) {
     if (err) return callback(err);
 

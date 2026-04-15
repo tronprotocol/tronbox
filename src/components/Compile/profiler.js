@@ -17,11 +17,7 @@ module.exports = {
     const build_directory = options.contracts_build_directory;
 
     function getFiles(done) {
-      if (options.files) {
-        done(null, options.files);
-      } else {
-        findContracts(contracts_directory, done);
-      }
+      findContracts(contracts_directory, done);
     }
 
     const sourceFilesArtifacts = {};
