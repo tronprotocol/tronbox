@@ -107,12 +107,8 @@ const Contracts = {
         );
       }
 
-      const extra_opts = {
-        network_id: options.network_id
-      };
-
       options.artifactor
-        .saveAll(contracts, extra_opts)
+        .saveAll(contracts)
         .then(function () {
           callback(null, contracts);
         })
