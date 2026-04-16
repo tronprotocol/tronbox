@@ -1,3 +1,31 @@
+**4.7.0**
+
+### Features
+
+- Added support for Tron Solidity compiler 0.8.26
+- Added `compile [<files...>]` to compile specific contract files with their dependencies
+- Added `build_info_directory` config option; solc standard JSON input/output are written per compilation for build reproducibility
+- Expanded solc output selection for richer build artifacts
+
+### Bug Fixes
+
+- Removed unused address normalization from Artifactor to fix cross-network address corruption
+- Fixed `HttpProvider.prototype` global pollution; `send`/`sendAsync` are now set on the provider instance
+- Fixed `.gitignore` being overwritten when copying sample projects during `init`
+- Preserved correct `source` and `sourcePath` in build artifacts by using relative paths as canonical solc input keys
+
+### Improvements
+
+- Removed `legacyAST` field from contract schema and compiler output
+- Centralized and simplified error formatting and output
+- Simplified `downloader.js` by deduplicating evm/tron fetch logic
+
+### Dependencies
+
+- Upgraded `axios` from 1.13.6 to 1.15.0
+- Upgraded `lodash` from 4.17.23 to 4.18.1
+- Added `axios` override for `tronweb` to resolve audit vulnerabilities
+
 **4.6.0**
 
 ### Features
