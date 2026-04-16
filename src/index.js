@@ -1,5 +1,6 @@
 require('source-map-support/register');
 
+const chalk = require('chalk');
 const Command = require('./lib/command');
 const downloader = require('./downloader');
 
@@ -20,7 +21,7 @@ if (commands[0] === '--download-compiler' && commands[1]) {
         // If a number is returned, exit with that number.
         process.exit(err);
       } else if (err instanceof Error) {
-        console.error(err.message);
+        console.error(chalk.red(chalk.bold('ERROR:'), err.message));
       } else {
         // Handle other types (string, object, etc.)
         console.error(typeof err === 'string' ? err : String(err));

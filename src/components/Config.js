@@ -6,7 +6,6 @@ const TronBoxError = require('../lib/errors/tronboxerror');
 const Module = require('module');
 const findUp = require('find-up');
 const originalrequire = require('original-require');
-const chalk = require('chalk');
 
 const DEFAULT_CONFIG_FILENAME = 'tronbox.js';
 const BACKUP_CONFIG_FILENAME = 'tronbox-config.js'; // For Windows + Command Prompt
@@ -20,13 +19,13 @@ function Config() {
     const resolvedPath = path.resolve(workingDirectoryPath, value);
     const relative = path.relative(workingDirectoryPath, resolvedPath);
     if (relative === '') {
-      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is root of the project directory.`));
+      throw new Error(`config.${keyName} is root of the project directory.`);
     }
     if (keyName === 'contracts_build_directory' && self._allowExternalContractsBuildDirectory) {
       return resolvedPath;
     }
     if (relative.startsWith('..') || path.isAbsolute(relative)) {
-      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is outside the project directory.`));
+      throw new Error(`config.${keyName} is outside the project directory.`);
     }
 
     return resolvedPath;

@@ -1,6 +1,5 @@
-const version = require('../version');
 const path = require('path');
-const chalk = require('chalk');
+const version = require('../version');
 const describe = 'Run contract tests written in JavaScript';
 
 const command = {
@@ -98,7 +97,7 @@ Usage: $0 test [<files...>] [--file <file>]
           const resolvedPath = path.resolve(process.cwd(), file);
           const relative = path.relative(workingDirectoryPath, resolvedPath);
           if (relative.startsWith('..') || path.isAbsolute(relative)) {
-            return callback(chalk.red(chalk.bold('ERROR:') + ` ${file} is outside the project directory.`));
+            return callback(new Error(`${file} is outside the project directory.`));
           }
         });
         return callback(null, files);
