@@ -16,14 +16,14 @@ module.exports = {
     } else if (options.provider) {
       provider = options.provider;
     } else {
-      const HttpProvider = providers.HttpProvider;
+      provider = new providers.HttpProvider(fullHost);
 
-      HttpProvider.prototype.send = async function (payload) {
+      provider.send = async function (payload) {
         const { data } = await axios.post(`${fullHost}/jsonrpc`, payload);
         return data;
       };
 
-      HttpProvider.prototype.sendAsync = function (payload, callback) {
+      provider.sendAsync = function (payload, callback) {
         return axios
           .post(`${fullHost}/jsonrpc`, payload)
           .then(({ data }) => {
@@ -33,8 +33,6 @@ module.exports = {
             callback(error);
           });
       };
-
-      provider = new HttpProvider(fullHost);
     }
     return this.wrap(provider, options);
   }
