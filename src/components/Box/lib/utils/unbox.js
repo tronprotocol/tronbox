@@ -134,7 +134,11 @@ function installBoxDependencies(_boxConfig, destination) {
       return accept();
     }
 
-    const result = spawnSync('npm', ['install'], { cwd: destination, stdio: 'ignore', shell: true });
+    const result = spawnSync('npm', ['install', '--ignore-scripts'], {
+      cwd: destination,
+      stdio: 'ignore',
+      shell: true
+    });
     if (result.error) {
       return reject(result.error);
     }
