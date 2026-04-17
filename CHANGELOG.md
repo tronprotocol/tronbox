@@ -14,6 +14,10 @@
 - Fixed `.gitignore` being overwritten when copying sample projects during `init`
 - Preserved correct `source` and `sourcePath` in build artifacts by using relative paths as canonical solc input keys
 
+### Security
+
+- Passed `--ignore-scripts` to `npm install` in `unbox` to prevent remote templates from executing preinstall/postinstall hooks
+
 ### Improvements
 
 - Removed `legacyAST` field from contract schema and compiler output
