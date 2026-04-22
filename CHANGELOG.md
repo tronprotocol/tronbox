@@ -26,9 +26,9 @@
 
 ### Dependencies
 
+- Upgraded `tronweb` from 6.2.2 to 6.3.0
 - Upgraded `axios` from 1.13.6 to 1.15.0
 - Upgraded `lodash` from 4.17.23 to 4.18.1
-- Added `axios` override for `tronweb` to resolve audit vulnerabilities
 
 **4.6.0**
 
