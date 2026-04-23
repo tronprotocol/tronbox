@@ -2,6 +2,9 @@ const nodePlugin = require('eslint-plugin-n');
 const globals = require('globals');
 
 module.exports = [
+  {
+    ignores: ['test/build/**']
+  },
   nodePlugin.configs['flat/recommended-script'],
   {
     rules: {

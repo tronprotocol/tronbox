@@ -75,9 +75,6 @@
     "ast": {
       "$ref": "#/definitions/AST"
     },
-    "legacyAST": {
-      "$ref": "#/definitions/LegacyAST"
-    },
     "compiler": {
       "type": "object",
       "properties": {
@@ -105,9 +102,7 @@
       "format": "date-time"
     }
   },
-  "required": [
-    "abi"
-  ],
+  "required": ["abi"],
   "patternProperties": {
     "^x-": {
       "anyOf": [
@@ -149,9 +144,6 @@
       "type": "string"
     },
     "AST": {
-      "type": "object"
-    },
-    "LegacyAST": {
       "type": "object"
     },
     "SchemaVersion": {

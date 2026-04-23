@@ -24,7 +24,7 @@ async function resolve(importPath) {
       });
     });
   } catch (error) {
-    throw new Error('File ' + importPath + ' not found or is outside the project directory.');
+    throw new Error(importPath + ' not found or is outside the project directory.');
   }
 }
 

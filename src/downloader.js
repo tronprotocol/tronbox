@@ -5,106 +5,74 @@ const fs = require('fs-extra');
 const homedir = require('homedir');
 const req = require('axios');
 
+function fatal(msg) {
+  process.stderr.write(chalk.red(chalk.bold('ERROR:'), msg) + '\n');
+  process.exit(1);
+}
+
 async function downloader(compilerVersion, evm) {
   const dir = path.join(homedir(), '.tronbox', evm ? 'evm-solc' : 'solc');
   const soljsonPath = path.join(dir, `soljson_v${compilerVersion}.js`);
 
-  await fs.ensureDir(path.join(dir));
+  await fs.ensureDir(dir);
 
   let soljsonUrl = '';
   let expectedSha256 = '';
-  if (evm) {
-    try {
-      const solidityUrl = 'https://binaries.soliditylang.org/bin';
-      const list = await req.get(`${solidityUrl}/list.json`);
-      if (list && list.data) {
-        if (list.data.builds && list.data.releases && list.data.releases[compilerVersion]) {
-          const releasePath = list.data.releases[compilerVersion];
-          list.data.builds.forEach(_ => {
-            const { sha256, path: buildPath } = _;
-            if (buildPath === releasePath) {
-              expectedSha256 = sha256;
-              soljsonUrl = `${solidityUrl}/${buildPath}`;
-            }
-          });
-        } else {
-          process.stderr.write(
-            chalk.red(
-              chalk.bold('ERROR:'),
-              `Unable to locate Solidity compiler version ${chalk.yellow(compilerVersion)}.`
-            ) + '\n'
-          );
 
-          process.exit(1);
-        }
-      }
-    } catch (error) {
-      process.stderr.write(chalk.red(chalk.bold('ERROR:'), 'Failed to fetch Solidity compiler list.') + '\n');
-      process.exit(1);
-    }
-  } else {
-    try {
-      const solidityUrl = 'https://tronprotocol.github.io/solc-bin/wasm';
-      const list = await req.get(`${solidityUrl}/list.json`);
-      if (list && list.data && list.data.builds) {
-        list.data.builds.forEach(_ => {
-          const { version, sha256, path } = _;
-          if (version === compilerVersion) {
-            expectedSha256 = sha256;
-            soljsonUrl = `${solidityUrl}/${path}`;
-          }
-        });
-        if (!soljsonUrl) {
-          process.stderr.write(
-            chalk.red(
-              chalk.bold('ERROR:'),
-              `Unable to locate Solidity compiler version ${chalk.yellow(compilerVersion)}.`
-            ) + '\n'
-          );
-          process.exit(1);
-        }
-      }
-    } catch (error) {
-      process.stderr.write(chalk.red(chalk.bold('ERROR:'), 'Failed to fetch Solidity compiler list.') + '\n');
-      process.exit(1);
-    }
+  const solidityUrl = evm ? 'https://binaries.soliditylang.org/bin' : 'https://tronprotocol.github.io/solc-bin/wasm';
+
+  let list;
+  try {
+    list = (await req.get(`${solidityUrl}/list.json`)).data;
+  } catch {
+    fatal('Failed to fetch Solidity compiler list.');
+  }
+
+  const builds = list?.builds;
+  const build = evm
+    ? builds?.find(b => b.path === list?.releases?.[compilerVersion])
+    : builds?.find(b => b.version === compilerVersion);
+
+  if (build) {
+    expectedSha256 = build.sha256;
+    soljsonUrl = `${solidityUrl}/${build.path}`;
+  }
+
+  if (!soljsonUrl) {
+    fatal(`Unable to locate Solidity compiler version ${chalk.yellow(compilerVersion)}.`);
   }
 
   try {
-    const res = await req.get(soljsonUrl, {
-      responseType: 'arraybuffer'
-    });
+    const res = await req.get(soljsonUrl, { responseType: 'arraybuffer' });
 
     if (res && res.data) {
       const tempFilePath = `${soljsonPath}.tmp`;
       await fs.writeFile(tempFilePath, res.data);
-      // double check
-      if (!fs.existsSync(tempFilePath)) {
-        process.stderr.write(chalk.red(chalk.bold('ERROR:'), 'Permission required.') + '\n');
-        process.stderr.write(`
-Most likely, you installed Node.js as root.
-Please, download the compiler manually, running:
 
-tronbox --download-compiler ${compilerVersion} ${evm ? '--evm' : ''}
-`);
+      if (!fs.existsSync(tempFilePath)) {
+        fatal(
+          'Permission required.\n\n' +
+            'Most likely, you installed Node.js as root.\n' +
+            'Please, download the compiler manually, running:\n\n' +
+            `tronbox --download-compiler ${compilerVersion} ${evm ? '--evm' : ''}`
+        );
+      }
+
+      const fileBuffer = await fs.readFile(tempFilePath);
+      const hash = '0x' + crypto.createHash('sha256').update(fileBuffer).digest('hex');
+      if (hash === expectedSha256) {
+        await fs.rename(tempFilePath, soljsonPath);
+        process.stdout.write('Compiler downloaded.\n');
       } else {
-        const fileBuffer = await fs.readFile(tempFilePath);
-        const hash = '0x' + crypto.createHash('sha256').update(fileBuffer).digest('hex');
-        if (hash === expectedSha256) {
-          await fs.rename(tempFilePath, soljsonPath);
-          process.stdout.write('Compiler downloaded.\n');
-        } else {
-          await fs.remove(tempFilePath);
-          process.stderr.write(
-            chalk.red(chalk.bold('ERROR:'), 'SHA256 checksum mismatch. The downloaded file has been deleted.') + '\n'
-          );
-          process.exit(1);
-        }
+        await fs.remove(tempFilePath);
+        fatal('SHA256 checksum mismatch. The downloaded file has been deleted.');
       }
     }
   } catch (error) {
-    process.stderr.write(chalk.red(chalk.bold('ERROR:'), 'Wrong Solidity compiler version.') + '\n');
-    process.exit(1);
+    if (error.message) {
+      fatal(error.message);
+    }
+    fatal('Wrong Solidity compiler version.');
   }
 }
 

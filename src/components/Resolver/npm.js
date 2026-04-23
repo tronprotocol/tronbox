@@ -44,14 +44,23 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
   // If nothing's found, body returns `undefined`
   let body;
   let packageInfo = {};
-  const nodeModulesDir = path.join(this.working_directory, 'node_modules');
-  let expected_path = path.join(nodeModulesDir, import_path);
   if (import_path === 'tronbox/console.sol') {
-    expected_path = path.resolve(__dirname, '../../../console.sol');
+    const consolePath = path.resolve(__dirname, '../../../console.sol');
+    try {
+      body = fs.readFileSync(consolePath, { encoding: 'utf8' });
+    } catch (e) {}
+    return callback(null, body, import_path, packageInfo);
+  }
+
+  const nodeModulesDir = path.join(this.working_directory, 'node_modules');
+  const expectedPath = path.join(nodeModulesDir, import_path);
+  const relative = path.relative(this.working_directory, expectedPath);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    return callback(new Error(`${import_path} is outside the project directory.`));
   }
 
   try {
-    body = fs.readFileSync(expected_path, { encoding: 'utf8' });
+    body = fs.readFileSync(expectedPath, { encoding: 'utf8' });
 
     const packageName = getPackageName(import_path);
     const pkgJsonPath = path.join(nodeModulesDir, packageName, 'package.json');
