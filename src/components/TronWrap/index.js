@@ -270,7 +270,7 @@ function init(options, extraOptions = {}) {
             self._accounts = [];
             privateKeyByAccount = {};
             for (const pk of data) {
-              const address = this.address.fromPrivateKey(pk);
+              const address = self.address.fromPrivateKey(pk);
               privateKeyByAccount[address] = pk;
               self._accounts.push(address);
             }
@@ -348,6 +348,9 @@ function init(options, extraOptions = {}) {
         transaction.signature = [];
       } else {
         const privateKey = privateKeyByAccount[address];
+        if (!privateKey) {
+          throw new Error(`No private key available for from address ${address}. `);
+        }
         signedTransaction = await tronWrap.trx.sign(transaction, privateKey);
       }
       const result = await tronWrap.trx.sendRawTransaction(signedTransaction);
@@ -506,7 +509,7 @@ function init(options, extraOptions = {}) {
         }
 
         if (callSend === 'send' && !tronWrap._treUnlockedAccounts[address] && !privateKey) {
-          return callback('sender account not recognized');
+          return callback(`No private key available for from address ${address}. `);
         }
 
         return myContract[option.methodName](...option.args)[callSend](option.methodArgs || {}, privateKey);

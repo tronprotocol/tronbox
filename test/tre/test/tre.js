@@ -186,7 +186,7 @@ contract('MetaCoin', function (accounts) {
         from: unlockedAccounts[1]
       });
     } catch (error) {
-      assert.equal(error, 'sender account not recognized');
+      assert.equal(error, `No private key available for from address ${unlockedAccounts[1]}. `);
     }
   });
 });

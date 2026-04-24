@@ -80,7 +80,7 @@ Migration.prototype.run = function (options, callback) {
       .then(function () {
         if (options.save === false) return;
         logger.log('Saving artifacts...');
-        return options.artifactor.saveAll(resolver.contracts(), { evm: options.evm });
+        return options.artifactor.saveAll(resolver.contracts());
       })
       .then(function () {
         // Use process.nextTicK() to prevent errors thrown in the callback from triggering the below catch()

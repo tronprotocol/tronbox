@@ -6,7 +6,6 @@ const TronBoxError = require('../lib/errors/tronboxerror');
 const Module = require('module');
 const findUp = require('find-up');
 const originalrequire = require('original-require');
-const chalk = require('chalk');
 
 const DEFAULT_CONFIG_FILENAME = 'tronbox.js';
 const BACKUP_CONFIG_FILENAME = 'tronbox-config.js'; // For Windows + Command Prompt
@@ -20,13 +19,13 @@ function Config() {
     const resolvedPath = path.resolve(workingDirectoryPath, value);
     const relative = path.relative(workingDirectoryPath, resolvedPath);
     if (relative === '') {
-      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is root of the project directory.`));
+      throw new Error(`config.${keyName} is root of the project directory.`);
     }
     if (keyName === 'contracts_build_directory' && self._allowExternalContractsBuildDirectory) {
       return resolvedPath;
     }
     if (relative.startsWith('..') || path.isAbsolute(relative)) {
-      throw new Error(chalk.red(chalk.bold('ERROR:') + ` config.${keyName} is outside the project directory.`));
+      throw new Error(`config.${keyName} is outside the project directory.`);
     }
 
     return resolvedPath;
@@ -92,6 +91,14 @@ function Config() {
       },
       transform: function (value) {
         return resolvePathInWorkingDirectory(value, 'contracts_build_directory');
+      }
+    },
+    build_info_directory: {
+      default: function () {
+        return path.join(self.build_directory, 'build-info');
+      },
+      transform: function (value) {
+        return resolvePathInWorkingDirectory(value, 'build_info_directory');
       }
     },
     migrations_directory: {
@@ -373,6 +380,7 @@ Config.prototype.merge = function (obj) {
     'build_directory',
     'contracts_directory',
     'contracts_build_directory',
+    'build_info_directory',
     'migrations_directory',
     'test_directory'
   ]);
@@ -428,7 +436,7 @@ Config.load = function (file, options) {
   delete require.cache[Module._resolveFilename(file, module)];
   const static_config = originalrequire(file);
 
-  // If the config file doesn't explicitly set _allowExternalContractsBuildDirectory, default it to false to maintain security.
+  // Remove any `_allowExternalContractsBuildDirectory` property from the loaded config file.
   delete static_config._allowExternalContractsBuildDirectory;
 
   config.merge(static_config);

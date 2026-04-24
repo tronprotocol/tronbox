@@ -1,7 +1,7 @@
 {
   "name": "tronbox",
   "namespace": "tronprotocol",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "description": "TronBox - Simple development framework for Tron",
   "keywords": [
     "TronBox",
@@ -21,7 +21,7 @@
     "@solidity-parser/parser": "0.20.2",
     "ajv": "6.14.0",
     "async": "2.6.4",
-    "axios": "1.13.6",
+    "axios": "1.15.0",
     "bignumber.js": "7.2.1",
     "chai": "4.1.2",
     "chalk": "2.4.2",
@@ -34,15 +34,15 @@
     "glob": "13.0.6",
     "graphlib": "2.1.8",
     "homedir": "0.6.0",
-    "lodash": "4.17.23",
+    "lodash": "4.18.1",
     "mkdirp": "0.5.6",
     "mocha": "11.7.4",
     "node-dir": "0.1.17",
     "original-require": "1.0.1",
-    "solc": "0.8.25",
+    "solc": "0.8.34",
     "source-map-support": "0.5.21",
     "tmp": "0.0.33",
-    "tronweb": "6.2.2",
+    "tronweb": "6.3.0",
     "vcsurl": "0.1.1",
     "yargs": "15.4.1",
     "yauzl": "3.2.1"
@@ -60,7 +60,7 @@
   },
   "overrides": {
     "mocha": {
-      "serialize-javascript": "7.0.3"
+      "serialize-javascript": "7.0.5"
     }
   },
   "bin": {

@@ -38,26 +38,22 @@ const compile = function (sources, options, callback) {
     process.removeListener('uncaughtException', solc_listener);
   }
 
-  // Ensure sources have operating system independent paths
-  // i.e., convert backslashes to forward slashes; things like C: are left intact.
+  // Compile sources keyed by paths relative to contracts_directory, with
+  // backslashes normalized to forward slashes so solc sees OS-independent keys.
   const operatingSystemIndependentSources = {};
   const originalPathMappings = {};
 
   Object.keys(sources).forEach(function (source) {
-    // Turn all backslashes into forward slashes
-    let replacement = source.replace(/\\/g, '/');
+    let key = source;
 
-    // Turn G:/.../ into /G/.../ for Windows
-    if (replacement.length >= 2 && replacement[1] === ':') {
-      replacement = '/' + replacement;
-      replacement = replacement.replace(':', '');
+    if (path.isAbsolute(key)) {
+      key = path.relative(options.contracts_directory, key);
     }
 
-    // Save the result
-    operatingSystemIndependentSources[replacement] = sources[source];
+    key = key.replace(/\\/g, '/');
 
-    // Map the replacement back to the original source path.
-    originalPathMappings[replacement] = source;
+    operatingSystemIndependentSources[key] = sources[source];
+    originalPathMappings[key] = source;
   });
 
   const settings = Object.keys(options.solc).length ? options.solc : options.compilers?.solc?.settings || {};
@@ -69,14 +65,18 @@ const compile = function (sources, options, callback) {
       ...settings,
       outputSelection: {
         '*': {
-          '': ['legacyAST', 'ast'],
+          '': ['ast'],
           '*': [
             'abi',
             'evm.bytecode.object',
             'evm.bytecode.sourceMap',
             'evm.bytecode.linkReferences',
             'evm.deployedBytecode.object',
-            'evm.deployedBytecode.sourceMap'
+            'evm.deployedBytecode.sourceMap',
+            'evm.deployedBytecode.linkReferences',
+            'evm.deployedBytecode.immutableReferences',
+            'evm.methodIdentifiers',
+            'metadata'
           ]
         }
       }
@@ -94,8 +94,8 @@ const compile = function (sources, options, callback) {
     };
   });
 
-  const result = solc[solc.compileStandard ? 'compileStandard' : 'compile'](JSON.stringify(solcStandardInput));
-
+  const inputString = JSON.stringify(solcStandardInput);
+  const result = solc.compile(inputString);
   const standardOutput = JSON.parse(result);
 
   let errors = standardOutput.errors || [];
@@ -158,7 +158,6 @@ const compile = function (sources, options, callback) {
         source: operatingSystemIndependentSources[source_path],
         sourceMap: contract.evm.bytecode.sourceMap,
         deployedSourceMap: contract.evm.deployedBytecode.sourceMap,
-        legacyAST: standardOutput.sources[source_path].legacyAST,
         ast: standardOutput.sources[source_path].ast,
         abi: contract.abi,
         bytecode: '0x' + contract.evm.bytecode.object,
@@ -217,7 +216,7 @@ const compile = function (sources, options, callback) {
     });
   });
 
-  callback(null, returnVal, files);
+  callback(null, returnVal, files, { input: inputString, output: result });
 };
 
 function replaceLinkReferences(bytecode, linkReferences, libraryName) {
@@ -296,6 +295,23 @@ compile.all = function (options, callback) {
 // quiet: Boolean. Suppress output. Defaults to false.
 // strict: Boolean. Return compiler warnings as errors. Defaults to false.
 compile.necessary = function (options, callback) {
+  if (options.files && options.files.length > 0) {
+    try {
+      const workingDirectoryPath = path.resolve(options.working_directory);
+      options.paths = options.files.map(function (file) {
+        const resolvedPath = path.resolve(process.cwd(), file);
+        const relative = path.relative(workingDirectoryPath, resolvedPath);
+        if (relative.startsWith('..') || path.isAbsolute(relative)) {
+          throw new Error(`${file} is outside the project directory.`);
+        }
+        return resolvedPath;
+      });
+    } catch (err) {
+      return callback(err);
+    }
+    return compile.with_dependencies(options, callback);
+  }
+
   Profiler.updated(options, function (err, updated) {
     if (err) return callback(err);
 

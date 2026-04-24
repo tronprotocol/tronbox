@@ -19,7 +19,7 @@ const waitForTransactionReceipt =
         });
     };
     if (Array.isArray(txHash)) {
-      return Promise.all(txHash.map(oneTxHash => waitForTransactionReceipt(tronWeb)(oneTxHash)));
+      return Promise.all(txHash.map(oneTxHash => waitForTransactionReceipt(tronWeb)(oneTxHash, interval)));
     } else if (typeof txHash === 'string') {
       return new Promise(transactionReceiptAsync);
     } else {
