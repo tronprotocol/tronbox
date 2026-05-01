@@ -1,3 +1,66 @@
+**4.7.0**
+
+### Features
+
+- Added support for Tron Solidity compiler 0.8.26
+- Added `compile [<files...>]` to compile specific contract files with their dependencies
+- Added `build_info_directory` config option; solc standard JSON input/output are written per compilation for build reproducibility
+- Expanded solc output selection for richer build artifacts
+
+### Bug Fixes
+
+- Removed unused address normalization from Artifactor to fix cross-network address corruption
+- Fixed `HttpProvider.prototype` global pollution; `send`/`sendAsync` are now set on the provider instance
+- Fixed `.gitignore` being overwritten when copying sample projects during `init`
+- Preserved correct `source` and `sourcePath` in build artifacts by using relative paths as canonical solc input keys
+
+### Security
+
+- Passed `--ignore-scripts` to `npm install` in `unbox` to prevent remote templates from executing preinstall/postinstall hooks
+
+### Improvements
+
+- Removed `legacyAST` field from contract schema and compiler output
+- Centralized and simplified error formatting and output
+- Simplified `downloader.js` by deduplicating evm/tron fetch logic
+
+### Dependencies
+
+- Upgraded `tronweb` from 6.2.2 to 6.3.0
+- Upgraded `axios` from 1.13.6 to 1.15.0
+- Upgraded `lodash` from 4.17.23 to 4.18.1
+
+**4.6.0**
+
+### Features
+
+- Enhanced `flatten` command
+  - Unified SPDX license header generation across all input files
+  - Unified `pragma abicoder` handling and normalization
+  - Added dependency library version information in build output
+
+### Breaking Changes
+
+- **BREAKING CHANGE**: Removed EPM (Ethereum Package Manager) support
+- **BREAKING CHANGE**: Configuration directory paths (`build_directory`, `contracts_directory`, `contracts_build_directory`, `migrations_directory`, `test_directory`) are now constrained to the project root
+- **BREAKING CHANGE**: Disallowed running and importing files outside the project directory
+- **BREAKING CHANGE**: Removed global config injection
+
+### Bug Fixes & Improvements
+
+- Added checksum validation for downloaded soljson compiler files
+- Improved error capturing and unhandled promise rejection handling
+- Normalized error output formatting and added explicit exit codes
+- Enhanced runtime stability with null-safety checks on deployment and contract interactions
+
+### Dependencies
+
+- Upgraded `tronweb` from 6.1.1 to 6.2.2
+- Upgraded `axios` from 1.12.0 to 1.13.6
+- Upgraded `glob` to 13.0.6
+- Upgraded `ajv` to 6.14.0
+- Upgraded `yauzl` to 3.2.1
+
 **4.5.0**
 
 ### Major Refactoring

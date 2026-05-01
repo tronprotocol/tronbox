@@ -23,7 +23,7 @@ const TriggerLogs = artifacts.require('./TriggerLogs.sol');
 
 module.exports = async function (deployer) {
   // Skip deployment while testing
-  if (global.config.test_files) {
+  if (process.env.CURRENT === 'test') {
     return;
   }
   const sleep = (millis = 3000) => {

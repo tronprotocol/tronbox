@@ -1,7 +1,24 @@
+# OSX
 .DS_Store
-/.vscode
-/.idea
-/assets
-/scripts
-/src
-/test
+
+# Claude Code
+.claude
+
+# IDE
+.vscode
+.idea
+
+# Dependency directories
+node_modules
+
+# Project files not needed in published package
+assets
+scripts
+src
+test
+.babelrc
+.githooks
+.prettierrc.json
+eslint.config.js
+tronbox.dev
+CONTRIBUTING.md

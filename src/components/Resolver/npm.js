@@ -1,6 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 
+// Extract npm package name from an import path.
+// Scoped:   "@openzeppelin/contracts/token/ERC20.sol" → "@openzeppelin/contracts"
+// Unscoped: "solmate/src/tokens/ERC20.sol"            → "solmate"
+function getPackageName(importPath) {
+  const parts = importPath.split('/');
+  return importPath.startsWith('@') ? parts.slice(0, 2).join('/') : parts[0];
+}
+
 function NPM(working_directory) {
   this.working_directory = working_directory;
 }
@@ -35,24 +43,34 @@ NPM.prototype.require = function (import_path, search_path) {
 NPM.prototype.resolve = function (import_path, imported_from, callback) {
   // If nothing's found, body returns `undefined`
   let body;
-  let modulesDir = this.working_directory;
-
-  while (true) {
-    const expected_path = path.join(modulesDir, 'node_modules', import_path);
-
+  let packageInfo = {};
+  if (import_path === 'tronbox/console.sol') {
+    const consolePath = path.resolve(__dirname, '../../../console.sol');
     try {
-      body = fs.readFileSync(expected_path, { encoding: 'utf8' });
-      break;
-    } catch (err) {}
-
-    // Recurse outwards until impossible
-    const oldModulesDir = modulesDir;
-    modulesDir = path.join(modulesDir, '..');
-    if (modulesDir === oldModulesDir) {
-      break;
-    }
+      body = fs.readFileSync(consolePath, { encoding: 'utf8' });
+    } catch (e) {}
+    return callback(null, body, import_path, packageInfo);
   }
-  return callback(null, body, import_path);
+
+  const nodeModulesDir = path.join(this.working_directory, 'node_modules');
+  const expectedPath = path.join(nodeModulesDir, import_path);
+  const relative = path.relative(this.working_directory, expectedPath);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    return callback(new Error(`${import_path} is outside the project directory.`));
+  }
+
+  try {
+    body = fs.readFileSync(expectedPath, { encoding: 'utf8' });
+
+    const packageName = getPackageName(import_path);
+    const pkgJsonPath = path.join(nodeModulesDir, packageName, 'package.json');
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, { encoding: 'utf8' }));
+      packageInfo = { name: pkg.name, version: pkg.version };
+    } catch (e) {}
+  } catch (e) {}
+
+  return callback(null, body, import_path, packageInfo);
 };
 
 // We're resolving package paths to other package paths, not absolute paths.
@@ -63,11 +81,6 @@ NPM.prototype.resolve = function (import_path, imported_from, callback) {
 NPM.prototype.resolve_dependency_path = function (import_path, dependency_path) {
   const dirname = path.dirname(import_path);
   return path.join(dirname, dependency_path);
-};
-
-NPM.prototype.provision_contracts = function (callback) {
-  // TODO: Fill this out!
-  callback(null, {});
 };
 
 module.exports = NPM;

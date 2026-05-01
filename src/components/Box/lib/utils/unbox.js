@@ -3,7 +3,7 @@ const path = require('path');
 const axios = require('axios');
 const vcsurl = require('vcsurl');
 const tmp = require('tmp');
-const exec = require('child_process').exec;
+const { spawnSync } = require('child_process');
 const ghdownload = require('./download');
 const cwd = process.cwd();
 
@@ -59,7 +59,7 @@ function setupTempDirectory() {
     tmp.dir({ dir: cwd, unsafeCleanup: true }, function (err, dir, cleanupCallback) {
       if (err) return reject(err);
 
-      accept(path.join(dir, 'box'), cleanupCallback);
+      accept({ dir: path.join(dir, 'box'), cleanupCallback });
     });
   });
 }
@@ -68,7 +68,7 @@ function fetchRepository(url, dir) {
   return new Promise(function (accept, reject) {
     // Download the package from github.
     ghdownload(url, dir)
-      .on('err', function (err) {
+      .on('error', function (err) {
         reject(err);
       })
       .on('end', function () {
@@ -98,10 +98,12 @@ function readBoxConfig(destination) {
 
 function cleanupUnpack(boxConfig, destination) {
   const needingRemoval = boxConfig.ignore || [];
+  const workingDirectoryPath = path.resolve(destination);
 
   // remove box config file
   needingRemoval.push('tronbox.json');
   needingRemoval.push('tronbox-init.json');
+  needingRemoval.push('post-unpack.sh');
 
   const promises = needingRemoval
     .map(function (file_path) {
@@ -109,7 +111,13 @@ function cleanupUnpack(boxConfig, destination) {
     })
     .map(function (file_path) {
       return new Promise(function (accept, reject) {
-        fs.remove(file_path, function (err) {
+        const resolvedPath = path.resolve(workingDirectoryPath, file_path);
+        const relative = path.relative(workingDirectoryPath, resolvedPath);
+        if (relative.startsWith('..') || path.isAbsolute(relative)) {
+          return accept();
+        }
+
+        fs.remove(resolvedPath, function (err) {
           if (err) return reject(err);
           accept();
         });
@@ -119,28 +127,37 @@ function cleanupUnpack(boxConfig, destination) {
   return Promise.all(promises);
 }
 
-function installBoxDependencies(boxConfig, destination) {
-  const postUnpack = boxConfig.hooks['post-unpack'];
-
+function installBoxDependencies(_boxConfig, destination) {
   return new Promise(function (accept, reject) {
-    if (postUnpack.length === 0) {
+    const packageJsonPath = path.join(destination, 'package.json');
+    if (!fs.existsSync(packageJsonPath)) {
       return accept();
     }
 
-    exec(postUnpack, { cwd: destination }, function (err, stdout, stderr) {
-      if (err) return reject(err);
-      accept(stdout, stderr);
+    const result = spawnSync('npm', ['install', '--ignore-scripts'], {
+      cwd: destination,
+      stdio: 'ignore',
+      shell: true
     });
+    if (result.error) {
+      return reject(result.error);
+    }
+
+    if (result.status !== 0) {
+      return reject(new Error('Failed to install box dependencies using npm install'));
+    }
+
+    accept();
   });
 }
 
 module.exports = {
-  checkDestination: checkDestination,
-  verifyURL: verifyURL,
-  setupTempDirectory: setupTempDirectory,
-  fetchRepository: fetchRepository,
-  copyTempIntoDestination: copyTempIntoDestination,
-  readBoxConfig: readBoxConfig,
-  cleanupUnpack: cleanupUnpack,
-  installBoxDependencies: installBoxDependencies
+  checkDestination,
+  verifyURL,
+  setupTempDirectory,
+  fetchRepository,
+  copyTempIntoDestination,
+  readBoxConfig,
+  cleanupUnpack,
+  installBoxDependencies
 };

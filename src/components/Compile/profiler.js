@@ -17,11 +17,7 @@ module.exports = {
     const build_directory = options.contracts_build_directory;
 
     function getFiles(done) {
-      if (options.files) {
-        done(null, options.files);
-      } else {
-        findContracts(contracts_directory, done);
-      }
+      findContracts(contracts_directory, done);
     }
 
     const sourceFilesArtifacts = {};
@@ -321,62 +317,5 @@ module.exports = {
         callback(null, dependsGraph);
       }
     );
-  },
-
-  // Parse all source files in the directory and output the names of contracts and their source paths
-  // directory can either be a directory or array of files.
-  defined_contracts: function (directory, callback) {
-    function getFiles(callback) {
-      if (Array.isArray(directory)) {
-        callback(null, directory);
-      } else {
-        findContracts(directory, callback);
-      }
-    }
-
-    getFiles(function (err, files) {
-      if (err) return callback(err);
-
-      const promises = files.map(function (file) {
-        return new Promise(function (accept, reject) {
-          fs.readFile(file, 'utf8', function (err, body) {
-            if (err) return reject(err);
-
-            let output;
-
-            try {
-              output = Parser.parse(body);
-            } catch (e) {
-              e.message = 'Error parsing ' + file + ': ' + e.message;
-              return reject(e);
-            }
-
-            accept(output.contracts);
-          });
-        }).then(function (contract_names) {
-          const returnVal = {};
-
-          contract_names.forEach(function (contract_name) {
-            returnVal[contract_name] = file;
-          });
-
-          return returnVal;
-        });
-      });
-
-      Promise.all(promises)
-        .then(function (objects) {
-          const contract_source_paths = {};
-
-          objects.forEach(function (object) {
-            Object.keys(object).forEach(function (contract_name) {
-              contract_source_paths[contract_name] = object[contract_name];
-            });
-          });
-
-          callback(null, contract_source_paths);
-        })
-        .catch(callback);
-    });
   }
 };

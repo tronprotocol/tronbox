@@ -1,13 +1,13 @@
 const mkdirp = require('mkdirp');
 const path = require('path');
+const fs = require('fs');
+const crypto = require('crypto');
 const Config = require('./Config');
 const compile = require('./Compile');
 const { expect } = require('../lib/utils');
 const Resolver = require('./Resolver');
 const Artifactor = require('./Artifactor');
 const TronWrap = require('./TronWrap');
-const fs = require("fs");
-const md5 = require('md5');
 
 async function getCompilerVersion(options) {
   const config = Config.detect(options);
@@ -41,8 +41,8 @@ const Contracts = {
   compile: function (options, callback) {
     const self = this;
 
-    expect.options(options, ['contracts_build_directory']);
-    expect.options(options, ['build_info_directory']);
+    expect.options(options, ['contracts_build_directory', 'build_info_directory']);
+
     expect.one(options, ['contracts_directory', 'files']);
 
     // Use a config object to ensure we get the default sources.
@@ -56,21 +56,11 @@ const Contracts = {
       config.artifactor = new Artifactor(config.contracts_build_directory);
     }
 
-    //  Normalize compile targets
-    if (Array.isArray(config.compileTargets) && config.compileTargets.length > 0) {
-      config.compileTargets = config.compileTargets.map(p =>
-        path.resolve(config.working_directory, p)
-      );
-    }
-
-    function finished(err, contracts, paths, solcStandardInput) {
+    function finished(err, contracts, paths, buildInfo) {
       if (err) return callback(err);
 
       if (contracts != null && Object.keys(contracts).length > 0) {
-        // Create a hash of the standard JSON input to use as a unique identifier for this compilation. 
-        const inputFileName = md5(JSON.stringify(solcStandardInput));
-        // Write contract artifacts
-        self.write_contracts(contracts, config, async function (err, abstractions) {
+        self.write_contracts(contracts, config, buildInfo, async function (err, abstractions) {
           options.logger.log('');
           options.logger.log(`> Compiled successfully using:`);
           const solcVersion = options.networks?.compilers
@@ -111,7 +101,7 @@ const Contracts = {
       .catch(start);
   },
 
-  write_contracts: function (contracts, options, callback) {
+  write_contracts: function (contracts, options, buildInfo, callback) {
     mkdirp(options.contracts_build_directory, function (err) {
       if (err != null) {
         callback(err);
@@ -126,39 +116,31 @@ const Contracts = {
         );
       }
 
-      const extra_opts = {
-        network_id: options.network_id
-      };
-
       options.artifactor
-        .saveAll(contracts, extra_opts)
+        .saveAll(contracts)
         .then(function () {
+          writeBuildInfo(options, buildInfo);
           callback(null, contracts);
         })
         .catch(callback);
     });
-  },
-  //Write the standard JSON input to a file in the build info directory. This can be used for verification or debugging purposes.
-  write_buildInfo: function (solcStandardInput, options, inputFileName) {
-
-    mkdirp(options.build_info_directory, function (err) {
-      if (err != null) {
-        callback(err);
-        return;
-      }
-
-      if (!options.quietWrite) {
-        options.logger.log(
-          'Writing jsnoninput file to .' +
-          path.sep +
-          path.relative(options.working_directory, options.build_info_directory)
-        );
-      }
-      fs.writeFileSync(path.relative(options.working_directory, options.build_info_directory) + path.sep + `${inputFileName}.json`, JSON.stringify(solcStandardInput));
-
-    })
   }
-
 };
+
+function writeBuildInfo(options, buildInfo) {
+  if (options.quietWrite || !buildInfo) return;
+
+  const buildInfoDir = options.build_info_directory;
+  const { input, output } = buildInfo;
+  const hash = crypto.createHash('sha256').update(input).digest('hex');
+
+  try {
+    fs.mkdirSync(buildInfoDir, { recursive: true });
+    fs.writeFileSync(path.join(buildInfoDir, `${hash}.json`), input);
+    fs.writeFileSync(path.join(buildInfoDir, `${hash}.output.json`), output);
+  } catch (e) {
+    options.logger.log(`Warning: failed to write build-info: ${e.message}`);
+  }
+}
 
 module.exports = Contracts;

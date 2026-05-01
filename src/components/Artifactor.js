@@ -7,17 +7,11 @@ function Artifactor(destination) {
   this.destination = destination;
 }
 
-Artifactor.prototype.save = function (object, options) {
+Artifactor.prototype.save = function (object) {
   const self = this;
 
   return new Promise(function (accept, reject) {
     object = Schema.normalize(object);
-
-    Object.values(object.networks).forEach(_ => (_.address = _.address.toLowerCase().replace(/^0x/, '41')));
-
-    if (options.evm) {
-      Object.values(object.networks).forEach(_ => (_.address = _.address.toLowerCase().replace(/^41/, '0x')));
-    }
 
     if (!object.contractName) {
       return reject(new Error('You must specify a contract name.'));
@@ -26,8 +20,13 @@ Artifactor.prototype.save = function (object, options) {
     let output_path = object.contractName;
 
     // Create new path off of destination.
-    output_path = path.join(self.destination, output_path);
+    const destinationPath = path.resolve(self.destination);
+    output_path = path.join(destinationPath, output_path);
     output_path = path.resolve(output_path);
+    const relative = path.relative(destinationPath, output_path);
+    if (relative.startsWith('..') || path.isAbsolute(relative)) {
+      return reject(new Error(`Invalid contractName "${object.contractName}"`));
+    }
 
     // Add json extension.
     output_path = output_path + '.json';
@@ -43,7 +42,7 @@ Artifactor.prototype.save = function (object, options) {
         try {
           existingObjDirty = JSON.parse(json);
         } catch (e) {
-          reject(e);
+          return reject(e);
         }
 
         // normalize existing and merge into final
@@ -70,7 +69,7 @@ Artifactor.prototype.save = function (object, options) {
   });
 };
 
-Artifactor.prototype.saveAll = function (objects, options) {
+Artifactor.prototype.saveAll = function (objects) {
   const self = this;
 
   if (Array.isArray(objects)) {
@@ -95,7 +94,7 @@ Artifactor.prototype.saveAll = function (objects, options) {
     Object.keys(objects).forEach(function (contractName) {
       const object = objects[contractName];
       object.contractName = contractName;
-      promises.push(self.save(object, options));
+      promises.push(self.save(object));
     });
 
     return Promise.all(promises);

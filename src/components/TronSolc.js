@@ -1,4 +1,5 @@
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
+const { createRequire } = require('module');
 const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
@@ -6,7 +7,7 @@ const homedir = require('homedir');
 const wrapper = require('solc/wrapper');
 let { name, version } = require('../../package');
 
-const maxVersion = '0.8.25';
+const maxVersion = '0.8.26';
 
 function compareVersions(version1, version2) {
   const v1Parts = version1.split('.').map(Number);
@@ -25,6 +26,10 @@ function compareVersions(version1, version2) {
   return 0; // Versions are equal
 }
 
+function isValidCompilerVersion(version) {
+  return /^\d+\.\d+\.\d+$/.test(version);
+}
+
 function getWrapper(options = {}) {
   let compilerVersion = maxVersion;
   const solcDir = path.join(homedir(), '.tronbox', options.evm ? 'evm-solc' : 'solc');
@@ -35,22 +40,26 @@ function getWrapper(options = {}) {
     } else if (options.networks.useZeroFiveCompiler) {
       compilerVersion = '0.5.4';
     }
-    try {
-      if (options.networks.compilers) {
-        compilerVersion = options.networks.compilers.solc.version;
-      }
-      if (options.compilers) {
-        compilerVersion = options.compilers.solc.version;
-      }
+    const networkVersion = options.networks.compilers?.solc?.version;
+    const globalVersion = options.compilers?.solc?.version;
+    if (globalVersion) {
+      compilerVersion = globalVersion;
+    } else if (networkVersion) {
+      compilerVersion = networkVersion;
+    }
 
-      if (compareVersions(compilerVersion, maxVersion) > 0 && !options.evm) {
-        console.error(`${chalk.red(
-          chalk.bold('Error:')
-        )} TronBox v${version} currently supports Tron Solidity compiler versions up to ${chalk.green(maxVersion)}.
+    if (!isValidCompilerVersion(compilerVersion)) {
+      console.error(`${chalk.red(chalk.bold('ERROR:'))} Invalid compiler version '${chalk.yellow(compilerVersion)}'.`);
+      process.exit(1);
+    }
+
+    if (compareVersions(compilerVersion, maxVersion) > 0 && !options.evm) {
+      console.error(`${chalk.red(
+        chalk.bold('ERROR:')
+      )} TronBox v${version} currently supports Tron Solidity compiler versions up to ${chalk.green(maxVersion)}.
 You are using version ${chalk.yellow(compilerVersion)}, which is not supported.`);
-        process.exit();
-      }
-    } catch (e) {}
+      process.exit(1);
+    }
   }
 
   const soljsonPath = path.join(solcDir, `soljson_v${compilerVersion}.js`);
@@ -59,13 +68,15 @@ You are using version ${chalk.yellow(compilerVersion)}, which is not supported.`
     if (process.argv[1]) {
       name = process.argv[1];
     }
-    if (process.env.TRONBOX_NAME) {
-      name = process.env.TRONBOX_NAME;
-    }
 
     options.logger.log(`Fetching ${options.evm ? 'Ethereum' : 'Tron'} Solidity compiler version ${compilerVersion}...`);
     try {
-      const result = execSync(`${name} --download-compiler ${compilerVersion} ${options.evm ? '--evm' : ''}`, {
+      const args = ['--download-compiler', compilerVersion];
+      if (options.evm) {
+        args.push('--evm');
+      }
+
+      const result = execFileSync(name, args, {
         env: { ...process.env, FORCE_COLOR: '1' },
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe']
@@ -78,7 +89,9 @@ You are using version ${chalk.yellow(compilerVersion)}, which is not supported.`
       process.exit(1);
     }
   }
-  const soljson = eval('require')(soljsonPath);
+
+  const runtimeRequire = createRequire(__filename);
+  const soljson = runtimeRequire(soljsonPath);
   return wrapper(soljson);
 }
 

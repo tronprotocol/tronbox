@@ -10,6 +10,10 @@ function TestResolver(resolver, source, search_path) {
 }
 
 TestResolver.prototype.require = function (import_path) {
+  // Modify import_path so the cache key is consistently the same irrespective
+  // of whether a user explicated .sol extension
+  import_path = import_path.replace(/^\.\//, '').replace(/\.sol$/i, '');
+
   if (this.cache_on && this.require_cache[import_path]) {
     return this.require_cache[import_path];
   }

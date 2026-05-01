@@ -16,6 +16,7 @@ const axios = require('axios');
 const path = require('path');
 const fs = require('fs-extra');
 const util = require('util');
+const crypto = require('crypto');
 
 const cwd = process.cwd();
 
@@ -76,7 +77,7 @@ GithubDownloader.prototype.start = function () {
           .catch(err => _this.emit('error', err));
       });
     } else {
-      _this.emit('Error', new Error(JSON.stringify(item, null, 2) + '\n does not have type.'));
+      _this.emit('error', new Error(JSON.stringify(item, null, 2) + '\n does not have type.'));
     }
   }
 
@@ -152,6 +153,15 @@ function extractZip(zipFile, outputDir, callback) {
           if (err) return _this.emit('error', err);
 
           const file = path.resolve(outputDir, entry.fileName);
+          const normalizedOutputDir = path.resolve(outputDir);
+          const relative = path.relative(normalizedOutputDir, file);
+          if (relative.startsWith('..') || path.isAbsolute(relative)) {
+            return _this.emit(
+              'error',
+              new Error(`Refusing to extract unsafe zip entry outside destination: ${entry.fileName}`)
+            );
+          }
+
           fs.ensureDir(path.dirname(file), err => {
             if (err) return _this.emit('error', err);
 
@@ -188,7 +198,7 @@ function downloadZip() {
   _this._getZip = true;
 
   _this._log.forEach(function (file) {
-    fs.remove(file);
+    fs.removeSync(file);
   });
 
   const tmpdir = generateTempDir();
@@ -221,5 +231,5 @@ function downloadZip() {
 }
 
 function generateTempDir() {
-  return path.join(cwd, Date.now().toString() + '-' + Math.random().toString().substring(2));
+  return path.join(cwd, Date.now().toString() + '-' + crypto.randomBytes(16).toString('hex'));
 }

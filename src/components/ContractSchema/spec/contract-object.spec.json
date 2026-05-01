@@ -106,9 +106,7 @@
       "format": "date-time"
     }
   },
-  "required": [
-    "abi"
-  ],
+  "required": ["abi"],
   "patternProperties": {
     "^x-": {
       "anyOf": [

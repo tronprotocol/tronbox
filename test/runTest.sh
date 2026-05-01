@@ -10,7 +10,14 @@ cd ..
 echo 'Test tre'
 cd tre
 rm -rf build
-rm -rf build-info
+../../tronbox.dev test
+cd ..
+
+echo 'Test unbox metacoin'
+rm -rf build
+mkdir build
+cd build
+../../tronbox.dev unbox metacoin-box
 ../../tronbox.dev test
 cd ..
 
@@ -29,15 +36,6 @@ rm -rf build-info
 mkdir build
 cd build
 TRONBOX_CREATE_JAVASCRIPT_METACOIN_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
-../../tronbox.dev test
-cd ..
-
-echo 'Test unbox metacoin'
-rm -rf build
-rm -rf build-info
-mkdir build
-cd build
-../../tronbox.dev unbox metacoin-box
 ../../tronbox.dev test
 cd ..
 
