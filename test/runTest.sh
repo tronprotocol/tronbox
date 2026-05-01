@@ -3,6 +3,7 @@
 echo 'Test abiv2'
 cd abiv2
 rm -rf build
+rm -rf build-info
 ../../tronbox.dev test
 cd ..
 
@@ -22,6 +23,7 @@ cd ..
 
 echo 'Test init'
 rm -rf build
+rm -rf build-info
 mkdir build
 cd build
 TRONBOX_CREATE_JAVASCRIPT_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
@@ -30,6 +32,7 @@ cd ..
 
 echo 'Test init metacoin'
 rm -rf build
+rm -rf build-info
 mkdir build
 cd build
 TRONBOX_CREATE_JAVASCRIPT_METACOIN_PROJECT_WITH_DEFAULTS=true ../../tronbox.dev init
@@ -44,5 +47,12 @@ cd ..
 echo 'Test evm'
 cd evm
 rm -rf build
+rm -rf build-info
 ../../tronbox.dev test --evm
 cd ..
+
+echo 'Test compile & solcjson input file generation'
+cd solcjsoninput
+rm -rf build
+rm -rf build-info
+../../tronbox.dev test 

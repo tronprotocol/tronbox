@@ -85,7 +85,7 @@ const compile = function (sources, options, callback) {
 
   // Nothing to compile? Bail.
   if (!Object.keys(sources).length) {
-    return callback(null, [], []);
+    return callback(null, [], [], {});
   }
 
   Object.keys(operatingSystemIndependentSources).forEach(function (file_path) {
@@ -160,6 +160,7 @@ const compile = function (sources, options, callback) {
         deployedSourceMap: contract.evm.deployedBytecode.sourceMap,
         ast: standardOutput.sources[source_path].ast,
         abi: contract.abi,
+        metadata: contract.metadata,
         bytecode: '0x' + contract.evm.bytecode.object,
         deployedBytecode: '0x' + contract.evm.deployedBytecode.object,
         unlinked_binary: '0x' + contract.evm.bytecode.object, // deprecated
@@ -236,6 +237,8 @@ function replaceLinkReferences(bytecode, linkReferences, libraryName) {
   return bytecode;
 }
 
+
+
 function orderABI(contract) {
   const { abi, contractName, ast } = contract;
 
@@ -288,6 +291,13 @@ compile.all = function (options, callback) {
   });
 };
 
+//Compile an specific set of contracts or a single one
+compile.specific = function (options, callback) {
+
+  options.paths = options.compileTargets;
+  compile.with_dependencies(options, callback);
+
+};
 // contracts_directory: String. Directory where .sol files can be found.
 // build_directory: String. Optional. Directory where .sol.js files can be found. Only required if `all` is false.
 // all: Boolean. Compile all sources found. Defaults to true. If false, will compare sources against built files
@@ -316,7 +326,7 @@ compile.necessary = function (options, callback) {
     if (err) return callback(err);
 
     if (updated.length === 0) {
-      return callback(null, [], {});
+      return callback(null, [], {}, {});
     }
 
     options.paths = updated;

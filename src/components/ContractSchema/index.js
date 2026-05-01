@@ -1,4 +1,4 @@
-const pkgVersion = '2.0.1';
+const pkgVersion = '2.0.2';
 const Ajv = require('ajv');
 
 const contractObjectSchema = require('./spec/contract-object.spec.json');
@@ -60,6 +60,12 @@ const properties = {
         value = '0x' + value;
       }
       return value;
+    }
+  },
+  metadata: {
+    sources: ['metadata'],
+    transform(value) {
+      return typeof value == 'string' ? value : undefined;
     }
   },
   sourceMap: {

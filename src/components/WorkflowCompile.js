@@ -67,11 +67,12 @@ const Contracts = {
             ? options.networks?.compilers?.solc?.version
             : options.compilers?.solc?.version;
           options.logger.log(`  - solc${options.evm ? '(EVM)' : ''}: ${solcVersion}`);
-          callback(err, abstractions, paths);
+          callback(err, abstractions, paths, solcStandardInput);
         });
+        self.write_buildInfo(solcStandardInput, config, inputFileName)
       } else {
         options.logger.log('> Everything is up to date, there is nothing to compile.');
-        callback(null, [], paths);
+        callback(null, [], paths, solcStandardInput);
       }
     }
 
@@ -79,11 +80,17 @@ const Contracts = {
       options.logger.log('Compiling your contracts...');
       options.logger.log('===========================');
 
-      if (config.all === true || config.compileAll === true) {
-        compile.all(config, finished);
-      } else {
-        compile.necessary(config, finished);
+      // Compile specific contracts
+      if (config.compileTargets && config.compileTargets.length > 0) {
+        return compile.specific(config, finished);
       }
+
+      //If ALL option is selected compile all contracts
+      if (config.all === true || config.compileAll === true) {
+        return compile.all(config, finished);
+      }
+      //Compile modified contracts if none of the above is true
+      return compile.necessary(config, finished);
     }
 
     getCompilerVersion(options)
@@ -104,8 +111,8 @@ const Contracts = {
       if (!options.quietWrite) {
         options.logger.log(
           'Writing artifacts to .' +
-            path.sep +
-            path.relative(options.working_directory, options.contracts_build_directory)
+          path.sep +
+          path.relative(options.working_directory, options.contracts_build_directory)
         );
       }
 
