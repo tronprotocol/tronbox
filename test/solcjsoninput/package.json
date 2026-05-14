@@ -1,0 +1,22 @@
+{
+  "name": "jsoninputdemo",
+  "version": "0.0.1",
+  "description": "Json input file generation tests",
+  "keywords": [
+    "tron",
+    "tronbox",
+    "contracts",
+    "solidity",
+    "verification"
+  ],
+  "author": {
+    "name": "Simbad Marino"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts": "5.4.0",
+    "chai": "^6.2.2",
+    "picocolors": "^1.1.1",
+    "sinon": "^21.0.1"
+  }
+}

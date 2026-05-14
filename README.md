@@ -59,6 +59,12 @@ $ tronbox compile
 
 To compile all contracts, use the `--compile-all` option.
 
+To compile an specific set of contracts:
+
+```bash
+tronbox compile contracts/your_contract.sol contracts/another_contract.sol ...
+```
+
 Specify a network using the `--network` option. Network name must exist in the configuration. For details, see [Compile a Project](https://tronbox.io/docs/guides/compile-contracts).
 
 ### Migrate

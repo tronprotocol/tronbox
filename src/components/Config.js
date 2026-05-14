@@ -77,6 +77,9 @@ function Config() {
         return resolvePathInWorkingDirectory(value, 'build_directory');
       }
     },
+    build_info_directory: function () {
+      return path.join(self.working_directory, 'build-info');
+    },
     contracts_directory: {
       default: function () {
         return path.join(self.working_directory, 'contracts');
