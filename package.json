@@ -41,7 +41,7 @@
     "original-require": "1.0.1",
     "solc": "0.8.34",
     "source-map-support": "0.5.21",
-    "tmp": "0.0.33",
+    "tmp": "0.2.6",
     "tronweb": "6.3.0",
     "vcsurl": "0.1.1",
     "yargs": "15.4.1",
