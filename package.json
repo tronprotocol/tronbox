@@ -41,7 +41,7 @@
     "mocha": "11.7.4",
     "node-dir": "0.1.17",
     "source-map-support": "0.5.21",
-    "tmp": "0.2.6",
+    "tmp": "0.2.7",
     "tronweb": "6.3.0",
     "yargs": "15.4.1",
     "yauzl": "3.2.1"
