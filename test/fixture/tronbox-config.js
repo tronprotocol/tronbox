@@ -5,7 +5,7 @@
 //   MIGRATIONS_DIR    — switches migrations_directory (default: migrations)
 //   TEST_DIR          — switches test_directory (default: test)
 //   BUILD_DIR         — switches build_directory (default: build)
-//   SOLC_VERSION      — pins the Tron Solidity compiler version (default: 0.8.29)
+//   SOLC_VERSION      — pins the Tron Solidity compiler version (default: 0.8.31)
 //   SOLC_SETTINGS_JSON — JSON-encoded compilers.solc.settings (default: {})
 
 module.exports = {
@@ -45,7 +45,7 @@ module.exports = {
   },
   compilers: {
     solc: {
-      version: process.env.SOLC_VERSION || '0.8.29',
+      version: process.env.SOLC_VERSION || '0.8.31',
       settings: process.env.SOLC_SETTINGS_JSON ? JSON.parse(process.env.SOLC_SETTINGS_JSON) : {}
     }
   }
