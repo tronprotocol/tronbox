@@ -6,7 +6,7 @@ const fs = require('fs-extra');
 const homedir = require('homedir');
 const pkg = require('../lib/pkg');
 
-const maxVersion = '0.8.29';
+const maxVersion = '0.8.31';
 
 function compareVersions(version1, version2) {
   const v1Parts = version1.split('.').map(Number);

@@ -17,7 +17,7 @@ contract TvmBuiltins {
 
   function validateMultiSign(address a, uint256 permissionId, bytes32 hash, bytes[] memory signatures)
     public
-    pure
+    view
     returns (bool)
   {
     return validatemultisign(a, permissionId, hash, signatures);
