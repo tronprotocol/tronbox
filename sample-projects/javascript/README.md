@@ -53,11 +53,24 @@ tronbox migrate --network nile
 
 ### Localnet
 
-The TronBox Runtime Environment provides a complete development framework for Tron, including a private network for testing.
+For local development and testing, start a private TRON network using either TronBox Runtime Environment (TRE) or TVMJS client.
 
-Get tronbox/tre docker image at https://hub.docker.com/r/tronbox/tre
+#### TronBox Runtime Environment (TRE)
 
-To deploy your contracts to Localnet, you can run the following:
+TRE provides a Docker-based private TRON network. Get the image and startup instructions at https://hub.docker.com/r/tronbox/tre.
+
+#### TVMJS client
+
+[`@tvmjs/client`](https://www.npmjs.com/package/@tvmjs/client) provides a TRE-compatible local TRON development node. With Node.js 20 or later installed, install the client and start it:
+
+```shell
+npm install --global @tvmjs/client
+tvmjs
+```
+
+Both options serve the local network at `http://127.0.0.1:9090` and work with the project's `development` configuration.
+
+To deploy your contracts to Localnet, keep the node running and run the following in another terminal:
 
 ```shell
 tronbox migrate

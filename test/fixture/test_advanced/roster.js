@@ -130,7 +130,7 @@ contract('Roster', function (accounts) {
     assert.deepEqual(personB, turnBN2N(resultB[1]), 'Result B (with keepTxID) did not match the expected values');
     assert.deepEqual(personC, turnBN2N(decodedC[0]), 'Decoded Result C did not match the expected values');
 
-    // Single-account environments (e.g. tronbox/tre default) let us verify the pollTimes guard.
+    // Single-account environments let us verify the pollTimes guard.
     if (accounts.length === 1) {
       try {
         await roster.insert(personA, {

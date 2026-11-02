@@ -374,7 +374,17 @@ function init(options, extraOptions = {}) {
         throw new Error('Contract does not exist');
       }
 
-      myContract.address = contract.contract_address;
+      const expectedAddress = tronWrap.address.toHex(signedTransaction.contract_address);
+      const actualAddress = tronWrap.address.toHex(contract.contract_address);
+
+      if (actualAddress !== expectedAddress) {
+        throw new Error(
+          `Contract address mismatch: expected ${expectedAddress}, got ${actualAddress}. ` +
+            `Transaction: ${signedTransaction.txID}`
+        );
+      }
+
+      myContract.address = expectedAddress;
       myContract.bytecode = contract.bytecode;
       myContract.deployed = true;
 

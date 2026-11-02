@@ -120,7 +120,9 @@ function installBoxDependencies(_boxConfig, destination) {
     const result = spawnSync('npm', ['install', '--ignore-scripts'], {
       cwd: destination,
       stdio: 'ignore',
-      shell: true
+      shell: true,
+      // Prevent cmd.exe from finding npm in the unpacked box directory.
+      env: { ...process.env, NoDefaultCurrentDirectoryInExePath: '1' }
     });
     if (result.error) {
       return reject(result.error);

@@ -7,8 +7,9 @@ const sleep = async secs => {
   process.stdout.write(pc.yellow(' Slept.\n'));
 };
 
-// Exercises TronBox Runtime Environment (TRE) RPCs against a generic sandbox contract.
-// Requires TRE running at the network configured in tronbox-config.js.
+// Exercises development RPCs against a generic sandbox contract.
+// Requires a local TRON development node supporting these RPCs at the endpoint
+// configured in tronbox-config.js.
 
 contract('Sandbox', function (accounts) {
   let sandbox;

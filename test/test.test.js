@@ -1,4 +1,4 @@
-// Requires TRE running on http://127.0.0.1:9090.
+// Requires a local TRON development node running on http://127.0.0.1:9090.
 
 const { expect } = require('chai');
 const path = require('path');
@@ -140,30 +140,36 @@ describe('tronbox test', function () {
     });
 
     describe('test_require', () => {
-      const env = {
-        TEST_DIR: 'test_require',
-        BUILD_DIR: 'build_require'
-      };
-      const altBuildDir = path.join(cwd, env.BUILD_DIR);
+      const env = { TEST_DIR: 'test_require' };
 
       it('exercises Resolver.require dispatch paths', () => {
-        fs.removeSync(altBuildDir);
         const r = runCli(['test'], { cwd, env });
         expect(r.status, r.stderr).to.equal(0);
         expect(r.stdout).to.include('Contract: artifacts.require');
       });
     });
 
-    describe('test_failing', () => {
-      const env = { TEST_DIR: 'test_failing', BUILD_DIR: 'build_failing' };
-      const altBuildDir = path.join(cwd, env.BUILD_DIR);
+    describe('test_deployment', () => {
+      const env = { TEST_DIR: 'test_deployment' };
 
-      it('exits non-zero and reports the failure', () => {
-        fs.removeSync(altBuildDir);
+      it('rejects a deployment response for a different contract address', () => {
         const r = runCli(['test'], { cwd, env });
-        expect(r.status).to.not.equal(0);
-        expect(r.stdout).to.match(/\d+ failing/);
-        expect(r.stdout).to.include('intentional assertion failure');
+        expect(r.status, r.stderr).to.equal(0);
+        expect(r.stdout).to.include('Contract: Deployment address');
+        expect(r.stdout).to.include('1 passing');
+      });
+    });
+
+    describe('test_failing', () => {
+      const env = { TEST_DIR: 'test_failing' };
+
+      [1, 2, 127, 130, 256, 512].forEach(failures => {
+        it(`exits with 1 and reports ${failures} failing tests`, () => {
+          const r = runCli(['test'], { cwd, env: { ...env, TEST_FAILURE_COUNT: String(failures) } });
+          expect(r.status, r.stderr).to.equal(1);
+          expect(r.stdout).to.include(`${failures} failing`);
+          expect(r.stdout).to.include('intentional assertion failure');
+        });
       });
     });
   });

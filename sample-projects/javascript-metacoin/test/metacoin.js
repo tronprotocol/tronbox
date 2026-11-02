@@ -1,8 +1,8 @@
 const pc = require('picocolors');
 const MetaCoin = artifacts.require('MetaCoin.sol');
+const isEvm = typeof ethers !== 'undefined';
 
-// The following tests require TronBox >= 4.1.x
-// and TronBox Runtime Environment (https://hub.docker.com/r/tronbox/tre)
+// Requires a local TRON development node or an EVM node, depending on the selected mode.
 
 const sleep = async secs => {
   process.stdout.write(pc.yellow(`Sleeping for ${secs} second${secs === 1 ? '' : 's'}...`));
@@ -18,10 +18,12 @@ contract('MetaCoin', function (accounts) {
   });
 
   it('should verify that there are at least two available accounts', async function () {
+    if (isEvm) this.skip();
+
     if (accounts.length < 2) {
       console.info(
         pc.blue(
-          '\n[YOUR ATTENTION, PLEASE.]\nTo test MetaCoin, use TronBox Runtime Environment (https://hub.docker.com/r/tronbox/tre) as your private network.'
+          '\n[YOUR ATTENTION, PLEASE.]\nTo test MetaCoin, use a local TRON development node with at least two funded accounts. See README.md for setup instructions.'
         )
       );
     }
@@ -29,11 +31,8 @@ contract('MetaCoin', function (accounts) {
   });
 
   it('should verify that the contract has been deployed by accounts[0]', async function () {
-    assert.equal(
-      await metaCoinInstance.getOwner(),
-      tronWeb.address.toHex(accounts[0]),
-      'Contract was not deployed by the owner.'
-    );
+    const owner = isEvm ? accounts[0] : tronWeb.address.toHex(accounts[0]);
+    assert.equal(await metaCoinInstance.getOwner(), owner, 'Contract was not deployed by the owner.');
   });
 
   it('should put 10000 MetaCoin in the first account', async function () {
@@ -52,33 +51,40 @@ contract('MetaCoin', function (accounts) {
     );
   });
 
-  it('should send coins from account 0 to 1', async function () {
-    assert.isTrue(accounts[1] ? true : false, 'accounts[1] does not exist. Use TronBox Runtime Environment!');
-
+  it('should send coins to another address', async function () {
     this.timeout(10000);
-    const accountOneStartingBalance = await metaCoinInstance.balanceOf(accounts[0]);
-    const accountTwoStartingBalance = await metaCoinInstance.balanceOf(accounts[1]);
+
+    const sender = accounts[0];
+    const receiver = metaCoinInstance.address;
+
+    const senderStartingBalance = await metaCoinInstance.balanceOf(sender);
+    const receiverStartingBalance = await metaCoinInstance.balanceOf(receiver);
 
     const amountToSend = 10;
-    await metaCoinInstance.sendCoin(accounts[1], amountToSend, { from: accounts[0] });
+    await metaCoinInstance.sendCoin(receiver, amountToSend, { from: sender });
 
-    const accountOneFinalBalance = await metaCoinInstance.balanceOf(accounts[0]);
-    const accountTwoFinalBalance = await metaCoinInstance.balanceOf(accounts[1]);
+    const senderFinalBalance = await metaCoinInstance.balanceOf(sender);
+    const receiverFinalBalance = await metaCoinInstance.balanceOf(receiver);
 
     assert.equal(
-      accountOneFinalBalance,
-      accountOneStartingBalance - BigInt(amountToSend),
+      senderFinalBalance,
+      senderStartingBalance - BigInt(amountToSend),
       "Amount wasn't correctly taken from the sender."
     );
     assert.equal(
-      accountTwoFinalBalance,
-      accountTwoStartingBalance + BigInt(amountToSend),
+      receiverFinalBalance,
+      receiverStartingBalance + BigInt(amountToSend),
       "Amount wasn't correctly sent to the receiver."
     );
   });
 
   it('should allow owner to withdraw TRX after unlock time', async function () {
-    assert.isTrue(accounts[1] ? true : false, 'accounts[1] does not exist. Use TronBox Runtime Environment!');
+    if (isEvm) this.skip();
+
+    assert.isTrue(
+      accounts[1] ? true : false,
+      'accounts[1] does not exist. Use a local TRON development node with at least two funded accounts.'
+    );
     await sleep(10);
 
     const initialReceiverBalance = await tronWeb.trx.getBalance(accounts[1]);

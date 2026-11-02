@@ -3,7 +3,6 @@ const Command = require('./command');
 const provision = require('../components/Provisioner');
 const contract = require('../components/Contract');
 const TronWrap = require('../components/TronWrap');
-const vm = require('vm');
 const { expect } = require('./utils');
 const fs = require('fs');
 const path = require('path');
@@ -146,7 +145,7 @@ Console.prototype.resetContractsInConsoleContext = function (abstractions) {
   self.repl.setContextVars(contextVars);
 };
 
-Console.prototype.interpret = function (cmd, context, filename, callback) {
+Console.prototype.interpret = function (cmd, context, filename, evaluate, callback) {
   const self = this;
 
   cmd = cmd.trim();
@@ -229,26 +228,24 @@ Console.prototype.interpret = function (cmd, context, filename, callback) {
     return;
   }
 
-  let result;
-  try {
-    result = vm.runInContext(cmd, context, {
-      displayErrors: false
-    });
-  } catch (e) {
-    return callback(e);
-  }
+  let evaluating = true;
+  evaluate(cmd, context, filename, function (err, result) {
+    // Native await calls back asynchronously; finish before buffered input resumes.
+    if (err || !evaluating) return callback(err, result);
 
-  // Resolve all promises. This will leave non-promises alone.
-  Promise.resolve(result)
-    .then(function (res) {
-      callback(null, res);
-    })
-    .catch(function (err) {
-      let msg = typeof err === 'string' ? err : err && err.message ? err.message : String(err);
-      msg = msg.replace(/^error(:|) /i, '');
-      console.error(chalk.red(chalk.bold('ERROR:'), msg));
-      callback();
-    });
+    // Resolve all promises. This will leave non-promises alone.
+    Promise.resolve(result)
+      .then(function (res) {
+        callback(null, res);
+      })
+      .catch(function (err) {
+        let msg = typeof err === 'string' ? err : err && err.message ? err.message : String(err);
+        msg = msg.replace(/^error(:|) /i, '');
+        console.error(chalk.red(chalk.bold('ERROR:'), msg));
+        callback();
+      });
+  });
+  evaluating = false;
 };
 
 module.exports = Console;

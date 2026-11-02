@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import { ERC20 } from '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import { TRC20 } from '@openzeppelin/tron-contracts/token/TRC20/TRC20.sol';
 import './ConvertLib.sol';
 
-// To use console.log, you need TronBox Runtime Environment
-// (https://hub.docker.com/r/tronbox/tre) as your private network.
+// To use console.log, use TronBox Runtime Environment (TRE) or TVMJS client as your private network.
+// TRE: https://hub.docker.com/r/tronbox/tre
+// TVMJS client: https://www.npmjs.com/package/@tvmjs/client
 // Uncomment this line to use console.log
 // import "tronbox/console.sol";
 
@@ -13,7 +14,7 @@ import './ConvertLib.sol';
  * @title MetaCoin - Example Token Contract
  * @dev Implements a MetaCoin token contract with example methods.
  */
-contract MetaCoin is ERC20 {
+contract MetaCoin is TRC20 {
   // Address of the contract deployer
   address public owner;
 
@@ -26,7 +27,7 @@ contract MetaCoin is ERC20 {
   /**
    * @param _initialSupply The initial supply.
    */
-  constructor(uint256 _initialSupply) ERC20('MetaCoin', 'MC') {
+  constructor(uint256 _initialSupply) TRC20('MetaCoin', 'MC') {
     owner = msg.sender;
     _mint(msg.sender, _initialSupply);
   }

@@ -52,7 +52,8 @@ function formatCommands(commands) {
 }
 
 const pkg = require('../pkg');
-const describe = 'Download a pre-built TronBox Box template';
+const describe = 'Download a pre-built TronBox Box template (deprecated)';
+const deprecationNotice = 'DEPRECATED: The `unbox` command will be removed in a future version.';
 
 const command = {
   command: 'unbox',
@@ -60,7 +61,7 @@ const command = {
   builder: yargs => {
     yargs
       .usage(
-        `TronBox v${pkg.version}\n\n${describe}\n
+        `TronBox v${pkg.version}\n\n${describe}\n\n${deprecationNotice}\n
 Usage: $0 unbox [<name>] [--quiet]`
       )
       .version(false)

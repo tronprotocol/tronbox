@@ -1,4 +1,4 @@
-// Hits GitHub to clone the box. The metacoin-box round-trip also needs TRE
+// Hits GitHub to clone the box. The metacoin-box round-trip also needs a local TRON development node
 // running on http://127.0.0.1:9090.
 
 const { expect } = require('chai');

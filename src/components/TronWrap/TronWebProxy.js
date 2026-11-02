@@ -57,11 +57,23 @@ function installInstanceGuards(instance) {
  * instance, while keeping every method bound to the *original* sub-module
  * (signing still works because `this` is the real object).
  */
-function createSubModuleProxy(subModule, outerProxy) {
+function createSubModuleProxy(subModule, outerProxy, moduleName) {
+  let rawTarget;
+  let rawProxy;
+
   return new Proxy(subModule, {
     get(target, prop) {
       if (prop === 'tronWeb') return outerProxy;
       const value = Reflect.get(target, prop, target);
+
+      if (moduleName === 'trx' && prop === 'raw' && value && typeof value === 'object') {
+        if (rawTarget !== value) {
+          rawTarget = value;
+          rawProxy = createSubModuleProxy(value, outerProxy, 'raw');
+        }
+        return rawProxy;
+      }
+
       return typeof value === 'function' ? value.bind(target) : value;
     }
   });
@@ -122,7 +134,7 @@ function TronWebProxy(...args) {
       // Wrap sub-modules so `module.tronWeb.defaultPrivateKey` is also hidden.
       if (SUB_MODULE_KEYS.has(prop) && value && typeof value === 'object') {
         if (!subModuleCache.has(prop)) {
-          subModuleCache.set(prop, createSubModuleProxy(value, proxy));
+          subModuleCache.set(prop, createSubModuleProxy(value, proxy, prop));
         }
         return subModuleCache.get(prop);
       }

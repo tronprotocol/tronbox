@@ -82,7 +82,8 @@ const Test = {
       })
       .then(function () {
         mocha.run(function (failures) {
-          callback(failures);
+          // Use 0/1 exit codes to avoid truncation and conflicts with shell status codes.
+          callback(failures ? 1 : 0);
         });
       })
       .catch(callback);
