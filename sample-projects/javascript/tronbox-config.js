@@ -34,8 +34,9 @@ module.exports = {
       network_id: '3'
     },
     development: {
-      // For tronbox/tre docker image
-      // See https://hub.docker.com/r/tronbox/tre
+      // Local development with TronBox Runtime Environment (TRE) or TVMJS client.
+      // TRE: https://hub.docker.com/r/tronbox/tre
+      // TVMJS client: https://www.npmjs.com/package/@tvmjs/client
       privateKey: '0000000000000000000000000000000000000000000000000000000000000001',
       userFeePercentage: 0,
       feeLimit: 1000 * 1e6,

@@ -182,7 +182,7 @@ describe('npm pack', function () {
           expect(r.status, r.stderr).to.equal(0);
           expect(r.stdout).to.match(/^\/\/ Sources flattened with TronBox v\d+\.\d+\.\d+/);
           expect(r.stdout).to.include('// File contracts/MetaCoin.sol');
-          expect(r.stdout).to.include('@openzeppelin/contracts');
+          expect(r.stdout).to.include('@openzeppelin/tron-contracts');
           expect(r.stdout).to.not.match(/^\s*import\s+['"]/m);
         });
       });

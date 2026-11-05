@@ -20,6 +20,12 @@ describe('tronbox CLI', function () {
     it('no args prints help', () => expectHelp(runCli([], { cwd })));
     it('help command prints help', () => expectHelp(runCli(['help'], { cwd })));
     it('--help flag prints help', () => expectHelp(runCli(['--help'], { cwd })));
+
+    it('marks unbox as deprecated in the command list', () => {
+      const r = runCli(['help'], { cwd });
+      expect(r.stderr).to.include('tronbox unbox');
+      expect(r.stderr).to.include('(deprecated)');
+    });
   });
 
   describe('subcommand help', () => {
@@ -42,6 +48,10 @@ describe('tronbox CLI', function () {
         expect(r.stdout).to.include('TronBox v');
         expect(r.stdout).to.include(banner);
         expect(r.stdout).to.include(`Usage: tronbox ${cmd}`);
+        if (cmd === 'unbox') {
+          expect(r.stdout).to.include('DEPRECATED: The `unbox` command');
+          expect(r.stdout).to.include('a future version');
+        }
       });
     });
   });

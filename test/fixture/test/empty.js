@@ -13,6 +13,7 @@ contract('Empty', function () {
   it('should read defaultPrivateKey as false', async function () {
     assert.strictEqual(tronWeb.defaultPrivateKey, false);
     assert.strictEqual(tronWeb.trx.tronWeb.defaultPrivateKey, false);
+    assert.strictEqual(tronWeb.trx.raw.tronWeb.defaultPrivateKey, false);
     assert.strictEqual(tronWeb._privateKeyByAccount, undefined);
   });
 });

@@ -1,4 +1,4 @@
-// Requires TRE running on http://127.0.0.1:9090.
+// Requires a local TRON development node running on http://127.0.0.1:9090.
 
 const { expect } = require('chai');
 const { TronWeb } = require('tronweb');

@@ -41,8 +41,20 @@ ReplManager.prototype.start = function (options) {
   if (!this.repl) {
     this.repl = repl.start({
       prompt: currentContext.prompt,
-      eval: this.interpret.bind(this)
+      breakEvalOnSigint: true
     });
+
+    const evaluate = this.repl.eval;
+    this.repl.eval = function (cmd, context, filename, callback) {
+      // Enter Node's evaluation scope before routing console commands.
+      return evaluate('\n', context, filename, function () {
+        try {
+          self.interpret(cmd, context, filename, evaluate, callback);
+        } catch (err) {
+          callback(err);
+        }
+      });
+    };
 
     this.repl.setupHistory(path.join(this.options.working_directory, '.console_history'), function () {});
 
@@ -108,9 +120,9 @@ ReplManager.prototype.stop = function (callback) {
   }
 };
 
-ReplManager.prototype.interpret = function (cmd, context, filename, callback) {
+ReplManager.prototype.interpret = function (cmd, context, filename, evaluate, callback) {
   const currentContext = this.contexts[this.contexts.length - 1];
-  currentContext.interpreter(cmd, context, filename, callback);
+  currentContext.interpreter(cmd, context, filename, evaluate, callback);
 };
 
 module.exports = ReplManager;

@@ -1,5 +1,32 @@
 # Changelog
 
+## 4.12.0
+
+### Features
+
+- Upgraded `console` with native Node.js REPL support
+
+### Improvements
+
+- Improved contract address validation during deployment
+- Standardized `test` exit codes for consistent success and failure reporting
+- Added local development node setup instructions using `@tvmjs/client`
+- Updated the MetaCoin sample to use `@openzeppelin/tron-contracts`
+- Improved dependency installation security for `unbox`
+
+### Breaking Changes
+
+- Raised minimum supported Node.js version to 24
+
+### Deprecations
+
+- Deprecated `unbox`; the command will be removed in a future version
+
+### Dependencies
+
+- Upgraded `tronweb` to 6.5.1
+- Upgraded `axios` to 1.20.0
+
 ## 4.11.0
 
 ### Features

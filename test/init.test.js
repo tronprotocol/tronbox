@@ -1,6 +1,7 @@
 // `tronbox init` writes a sample project into the current working directory.
 // Each test runs inside an isolated temp directory.
-// The metacoin variant additionally needs TRE running on http://127.0.0.1:9090.
+// The MetaCoin integration tests require local TRON and EVM development nodes
+// at the endpoints configured in the generated project.
 
 const { expect } = require('chai');
 const path = require('path');
@@ -70,7 +71,17 @@ describe('tronbox init', function () {
       expect(r.status, r.stderr).to.equal(0);
       expect(r.stdout).to.include("Using network 'development'");
       expect(r.stdout).to.include('Contract: MetaCoin');
-      expect(r.stdout).to.match(/\d+ passing/);
+      expect(r.stdout).to.match(/6 passing/);
+      expect(r.stdout).to.not.match(/\d+ pending/);
+      expect(r.stdout).to.not.match(/\d+ failing/);
+    });
+
+    it('runs the shared tests in EVM mode and skips only the TRON-specific cases', () => {
+      const r = runCli(['test', '--evm'], { cwd: tmp });
+      expect(r.status, r.stderr).to.equal(0);
+      expect(r.stdout).to.include('Contract: MetaCoin');
+      expect(r.stdout).to.match(/4 passing/);
+      expect(r.stdout).to.match(/2 pending/);
       expect(r.stdout).to.not.match(/\d+ failing/);
     });
   });
