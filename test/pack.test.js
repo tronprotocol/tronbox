@@ -187,20 +187,10 @@ describe('npm pack', function () {
         });
       });
 
-      describe('unboxed project', function () {
-        let project;
-
-        before(function () {
-          project = path.join(cli.root, 'projects', 'unboxed-metacoin');
-          fs.mkdirSync(project, { recursive: true });
-          const r = run(['unbox', 'metacoin-box'], { cwd: project });
-          expect(r.status, r.stderr).to.equal(0);
-          expect(r.stdout).to.include('Unbox successful');
-        });
-
-        it('runs the unboxed contract tests', () => {
-          expectTestsToPass(run(['test'], { cwd: project }));
-        });
+      it('explains that unbox is no longer supported', () => {
+        const r = run(['unbox'], { cwd: cli.root });
+        expect(r.status).to.not.equal(0);
+        expect(r.stderr).to.include('The `unbox` command is no longer supported.');
       });
     });
   }

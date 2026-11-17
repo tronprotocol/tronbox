@@ -12,20 +12,15 @@ describe('tronbox CLI', function () {
       // Help goes to stderr (yargs default).
       expect(r.stderr).to.include('TronBox v');
       expect(r.stderr).to.include('Usage: tronbox <command> [options]');
-      ['init', 'compile', 'migrate', 'deploy', 'test', 'console', 'flatten', 'unbox', 'version'].forEach(c => {
+      ['init', 'compile', 'migrate', 'deploy', 'test', 'console', 'flatten', 'version'].forEach(c => {
         expect(r.stderr).to.include(`tronbox ${c}`);
       });
+      expect(r.stderr).to.not.include('unbox');
     };
 
     it('no args prints help', () => expectHelp(runCli([], { cwd })));
     it('help command prints help', () => expectHelp(runCli(['help'], { cwd })));
     it('--help flag prints help', () => expectHelp(runCli(['--help'], { cwd })));
-
-    it('marks unbox as deprecated in the command list', () => {
-      const r = runCli(['help'], { cwd });
-      expect(r.stderr).to.include('tronbox unbox');
-      expect(r.stderr).to.include('(deprecated)');
-    });
   });
 
   describe('subcommand help', () => {
@@ -38,7 +33,7 @@ describe('tronbox CLI', function () {
       ['test', 'Run contract tests written in JavaScript'],
       ['console', 'Run a console with contract abstractions'],
       ['flatten', 'Flattens and prints contracts and their dependencies'],
-      ['unbox', 'Download a pre-built TronBox Box template'],
+      ['unbox', 'The `unbox` command is no longer supported.'],
       ['version', 'Show version information']
     ];
     cases.forEach(([cmd, banner]) => {
@@ -48,10 +43,6 @@ describe('tronbox CLI', function () {
         expect(r.stdout).to.include('TronBox v');
         expect(r.stdout).to.include(banner);
         expect(r.stdout).to.include(`Usage: tronbox ${cmd}`);
-        if (cmd === 'unbox') {
-          expect(r.stdout).to.include('DEPRECATED: The `unbox` command');
-          expect(r.stdout).to.include('a future version');
-        }
       });
     });
   });
