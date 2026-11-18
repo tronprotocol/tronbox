@@ -1,6 +1,6 @@
 const path = require('path');
 const pkg = require('../pkg');
-const describe = 'Run contract tests written in JavaScript';
+const describe = 'Run JavaScript contract tests';
 
 const command = {
   command: 'test',
@@ -15,7 +15,7 @@ Usage: $0 test [<files...>] [--file <file>]
       .version(false)
       .options({
         file: {
-          describe: 'Specify a single test file path to run',
+          describe: 'Run a single JavaScript test file',
           type: 'string'
         },
         network: {

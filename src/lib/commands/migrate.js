@@ -19,16 +19,16 @@ Usage: $0 ${cmd} [--network <network>]
           type: 'string'
         },
         reset: {
-          describe: 'Re-run all migrations',
+          describe: 'Run migrations from the beginning',
           type: 'boolean'
         },
         from: {
           alias: 'f',
-          describe: 'Specify a migration number to run from',
+          describe: 'Start at this migration number',
           type: 'number'
         },
         to: {
-          describe: 'Specify a migration number to run to',
+          describe: 'Run through this migration number',
           type: 'number'
         },
         'compile-all': {
@@ -44,9 +44,9 @@ Usage: $0 ${cmd} [--network <network>]
           type: 'boolean'
         }
       })
-      .example(`$0 ${cmd}`, 'Run all migrations on the development network')
-      .example(`$0 ${cmd} --network nile`, 'Run migrations on the nile network')
-      .example(`$0 ${cmd} --reset`, 'Re-run all migrations')
+      .example(`$0 ${cmd}`, 'Run pending migrations on the default network')
+      .example(`$0 ${cmd} --network nile`, 'Run pending migrations on the Nile network')
+      .example(`$0 ${cmd} --reset`, 'Run migrations from the beginning')
       .group(['network', 'reset', 'from', 'to', 'compile-all', 'evm', 'quiet', 'help'], 'Options:');
   },
   run: function (options, done) {

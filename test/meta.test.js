@@ -26,14 +26,14 @@ describe('tronbox CLI', function () {
   describe('subcommand help', () => {
     // Subcommand --help goes to stdout (yargs default), unlike top-level --help.
     const cases = [
-      ['init', 'Initialize new TronBox project'],
+      ['init', 'Initialize a new TronBox project'],
       ['compile', 'Compile contract source files'],
       ['node', 'Start a local TRON development node'],
       ['migrate', 'Run migrations to deploy contracts'],
       ['deploy', 'Run migrations to deploy contracts'],
-      ['test', 'Run contract tests written in JavaScript'],
-      ['console', 'Run a console with contract abstractions'],
-      ['flatten', 'Flattens and prints contracts and their dependencies'],
+      ['test', 'Run JavaScript contract tests'],
+      ['console', 'Open a console with contracts and TronBox commands'],
+      ['flatten', 'Flatten and print contracts and their dependencies'],
       ['unbox', 'The `unbox` command is no longer supported.'],
       ['version', 'Show version information']
     ];

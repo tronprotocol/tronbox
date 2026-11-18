@@ -1,5 +1,5 @@
 const pkg = require('../pkg');
-const describe = 'Run a console with contract abstractions and commands available';
+const describe = 'Open a console with contracts and TronBox commands';
 
 const command = {
   command: 'console',
@@ -21,9 +21,9 @@ Usage: $0 console [--network <network>] [--evm]`
           type: 'boolean'
         }
       })
-      .example('$0 console', 'Start the console with the development network')
-      .example('$0 console --network nile', 'Start the console with the nile network')
-      .example('$0 console --evm', 'Start the console with EVM configuration')
+      .example('$0 console', 'Open the console on the default network')
+      .example('$0 console --network nile', 'Open the console on the Nile network')
+      .example('$0 console --evm', 'Open the console using EVM configuration')
       .group(['network', 'evm', 'help'], 'Options:');
   },
   run: function (options, done) {
