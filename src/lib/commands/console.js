@@ -50,7 +50,7 @@ Usage: $0 console [--network <network>] [--evm]`
 
     // This require a smell?
     const commands = require('./index');
-    const excluded = ['console', 'init', 'flatten', 'unbox'];
+    const excluded = ['console', 'init', 'flatten', 'unbox', 'node'];
 
     const available_commands = Object.keys(commands).filter(function (name) {
       return excluded.indexOf(name) === -1;
