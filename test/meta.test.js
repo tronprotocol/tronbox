@@ -12,7 +12,7 @@ describe('tronbox CLI', function () {
       // Help goes to stderr (yargs default).
       expect(r.stderr).to.include('TronBox v');
       expect(r.stderr).to.include('Usage: tronbox <command> [options]');
-      ['init', 'compile', 'migrate', 'deploy', 'test', 'console', 'flatten', 'version'].forEach(c => {
+      ['init', 'compile', 'node', 'migrate', 'deploy', 'test', 'console', 'flatten', 'version'].forEach(c => {
         expect(r.stderr).to.include(`tronbox ${c}`);
       });
       expect(r.stderr).to.not.include('unbox');
@@ -28,6 +28,7 @@ describe('tronbox CLI', function () {
     const cases = [
       ['init', 'Initialize new TronBox project'],
       ['compile', 'Compile contract source files'],
+      ['node', 'Start a local TRON development node'],
       ['migrate', 'Run migrations to deploy contracts'],
       ['deploy', 'Run migrations to deploy contracts'],
       ['test', 'Run contract tests written in JavaScript'],
