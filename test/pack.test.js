@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { expect } = require('chai');
-const { REPO_ROOT, makeTmp, makeLocalTmp, removeTmp, runInConsole } = require('./helpers');
+const { REPO_ROOT, makeTmp, makeLocalTmp, removeTmp, runInConsole, startNode } = require('./helpers');
 
 const ALWAYS_SKIP = new Set(['.git', 'node_modules', '.DS_Store']);
 
@@ -185,6 +185,23 @@ describe('npm pack', function () {
           expect(r.stdout).to.include('@openzeppelin/tron-contracts');
           expect(r.stdout).to.not.match(/^\s*import\s+['"]/m);
         });
+      });
+
+      it('starts a local node through the installed CLI', async () => {
+        const node = await startNode([], {
+          bin: cli.bin,
+          binArgs: cli.binArgs,
+          cwd: cli.root,
+          env: cli.env
+        });
+        try {
+          const response = await fetch(`${node.url}/wallet/getnowblock`, { signal: AbortSignal.timeout(5_000) });
+          expect(response.status).to.equal(200);
+          const block = await response.json();
+          expect(block.blockID).to.match(/^[0-9a-f]{64}$/);
+        } finally {
+          await node.stop();
+        }
       });
 
       it('explains that unbox is no longer supported', () => {
