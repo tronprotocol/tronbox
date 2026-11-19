@@ -1,5 +1,33 @@
 # Changelog
 
+## 4.13.0
+
+### Features
+
+- Added the `tronbox node` command to start a standalone TRON development node
+  - The in-memory node starts with funded test accounts by default
+  - The default HTTP address is `http://127.0.0.1:9090`
+  - Use `--host <host>` and `--port <port>` to set the listening address
+  - Use `--init <file>` to load the initial chain state from a JSON file
+
+### Improvements
+
+- Clarified CLI help text and examples
+- Updated the quick start and sample project guides for local development
+
+### Breaking Changes
+
+- The `tronbox unbox` command is no longer supported
+  - Use `tronbox init` to create a project from a built-in template
+  - For a remote Box, clone its repository and follow its setup instructions
+
+### Dependencies
+
+- Added `@tvmjs/client` 1.0.0
+- Upgraded `tronweb` to 6.5.2
+- Upgraded `axios` to 1.21.1
+- Upgraded Babel tooling to 7.29.7
+
 ## 4.12.0
 
 ### Features
