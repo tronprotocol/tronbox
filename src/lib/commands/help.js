@@ -3,7 +3,7 @@ const pkg = require('../pkg');
 
 const command = {
   command: 'help',
-  describe: 'Show general help and list all available commands',
+  describe: 'Show help and available commands',
   builder: {},
   run: function (options, done) {
     const args = yargs().scriptName(pkg.name).detectLocale(false).exitProcess(false).version(false).help(false);

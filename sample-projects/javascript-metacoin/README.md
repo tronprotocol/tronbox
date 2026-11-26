@@ -1,95 +1,83 @@
 # MetaCoin TronBox Project
 
-This is a MetaCoin TronBox project.
+A sample project with MetaCoin and ConvertLib contracts, deployment scripts, and JavaScript contract tests.
 
 ## Configuration
 
-Your configuration file is called `tronbox-config.js` and is located at the root of your project directory.
+Network and compiler settings are defined in `tronbox-config.js`. The default network is `development`.
 
-## Compiling
+## Install dependencies
 
-To compile your contracts, use the following command:
+If dependencies were not installed during project initialization, run:
+
+```shell
+npm install
+```
+
+## Compile
+
+Compile the contracts in `contracts/`:
 
 ```shell
 tronbox compile
 ```
 
-## Migration
+Use `--all` to recompile every contract. Artifacts are written to `build/contracts/`.
 
-The project comes pre-configured with four separate networks:
+## Start a local node
 
-- Mainnet (https://api.trongrid.io)
-- Shasta Testnet (https://api.shasta.trongrid.io)
-- Nile Testnet (https://nile.trongrid.io).
-- Localnet (http://127.0.0.1:9090)
-
-### Mainnet
-
-To deploy your contracts to Mainnet, you can run the following:
+Start an in-memory TRON development network with funded accounts:
 
 ```shell
-tronbox migrate --network mainnet
+tronbox node
 ```
 
-### Shasta Testnet
+The node listens at `http://127.0.0.1:9090` by default. Keep it running and use another terminal for the following commands. Alternatively, you can use the [TronBox Runtime Environment (TRE)](https://hub.docker.com/r/tronbox/tre).
 
-Obtain test coin at https://shasta.tronex.io/
+## Migrate
 
-To deploy your contracts to Shasta Testnet, you can run the following:
-
-```shell
-tronbox migrate --network shasta
-```
-
-### Nile Testnet
-
-Obtain test coin at https://nileex.io/join/getJoinPage
-
-To deploy your contracts to Nile Testnet, you can run the following:
-
-```shell
-tronbox migrate --network nile
-```
-
-### Localnet
-
-For local development and testing, start a private TRON network using either TronBox Runtime Environment (TRE) or TVMJS client.
-
-#### TronBox Runtime Environment (TRE)
-
-TRE provides a Docker-based private TRON network. Get the image and startup instructions at https://hub.docker.com/r/tronbox/tre.
-
-#### TVMJS client
-
-[`@tvmjs/client`](https://www.npmjs.com/package/@tvmjs/client) provides a TRE-compatible local TRON development node. With Node.js 20 or later installed, install the client and start it:
-
-```shell
-npm install --global @tvmjs/client
-tvmjs
-```
-
-Both options serve the local network at `http://127.0.0.1:9090` and work with the project's `development` configuration.
-
-To deploy your contracts to Localnet, keep the node running and run the following in another terminal:
+Deploy contracts using the scripts in `migrations/`:
 
 ```shell
 tronbox migrate
 ```
 
-## Testing
-
-To test your contracts, you can run the following:
+To deploy to another configured network, use `--network <name>`. For example:
 
 ```shell
-tronbox test --network <mainnet|shasta|nile|development>
+tronbox migrate --network nile
+```
+
+For details, see [Contract Deployment (Migrations)](https://tronbox.io/docs/guides/deploy-contracts).
+
+## Test
+
+Run the MetaCoin contract tests against the local development node:
+
+```shell
+tronbox test
+```
+
+The tests require at least two funded accounts, provided by `tronbox node` or TRE. To run only the MetaCoin test file, use `tronbox test test/metacoin.js`.
+
+## Console
+
+Open an interactive console with your project's contracts available:
+
+```shell
+tronbox console
+```
+
+The prompt shows the selected network:
+
+```text
+tronbox(development)>
 ```
 
 ## Work with EVM
 
-TronBox supports deploying contracts on EVM-compatible blockchains.
+TronBox supports deploying contracts on EVM-compatible blockchains. For details, see [Work with EVM](https://tronbox.io/docs/guides/work-with-evm).
 
-For more information, please refer to: https://tronbox.io/docs/guides/work-with-evm
+## Documentation
 
-## Additional Resources
-
-For further learning, visit the official TronBox site at https://tronbox.io
+For more guides and examples, see the [Official TronBox Documentation](https://tronbox.io/docs/).

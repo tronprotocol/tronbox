@@ -2,7 +2,7 @@ const migrate = require('./migrate');
 
 const command = {
   command: 'deploy',
-  describe: '(alias for migrate)',
+  describe: 'Alias for migrate',
   builder: yargs => {
     migrate.builder(yargs, 'deploy');
   },

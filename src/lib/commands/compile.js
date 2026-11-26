@@ -8,7 +8,7 @@ const command = {
     yargs
       .usage(
         `TronBox v${pkg.version}\n\n${describe}\n
-Usage: $0 compile [<files...>] [--all] [--evm] [--quiet] `
+Usage: $0 compile [<files...>] [--all] [--evm] [--quiet]`
       )
       .version(false)
       .positional('files', {
@@ -18,7 +18,7 @@ Usage: $0 compile [<files...>] [--all] [--evm] [--quiet] `
       })
       .options({
         all: {
-          describe: 'Force compile all contracts',
+          describe: 'Recompile all contracts',
           type: 'boolean'
         },
         evm: {
@@ -30,8 +30,8 @@ Usage: $0 compile [<files...>] [--all] [--evm] [--quiet] `
           type: 'boolean'
         }
       })
-      .example('$0 compile', 'Compile all contracts in the project')
-      .example('$0 compile --all', 'Compile all contracts, even if not changed')
+      .example('$0 compile', 'Compile contracts as needed')
+      .example('$0 compile --all', 'Recompile all contracts')
       .example('$0 compile --evm', 'Compile using EVM configuration')
       .example('$0 compile contracts/Foo.sol', 'Compile a specific file')
       .group(['all', 'evm', 'quiet', 'help'], 'Options:');

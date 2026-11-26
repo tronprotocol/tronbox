@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { expect } = require('chai');
-const { REPO_ROOT, makeTmp, makeLocalTmp, removeTmp, runInConsole } = require('./helpers');
+const { REPO_ROOT, makeTmp, makeLocalTmp, removeTmp, runInConsole, startNode } = require('./helpers');
 
 const ALWAYS_SKIP = new Set(['.git', 'node_modules', '.DS_Store']);
 
@@ -187,20 +187,27 @@ describe('npm pack', function () {
         });
       });
 
-      describe('unboxed project', function () {
-        let project;
-
-        before(function () {
-          project = path.join(cli.root, 'projects', 'unboxed-metacoin');
-          fs.mkdirSync(project, { recursive: true });
-          const r = run(['unbox', 'metacoin-box'], { cwd: project });
-          expect(r.status, r.stderr).to.equal(0);
-          expect(r.stdout).to.include('Unbox successful');
+      it('starts a local node through the installed CLI', async () => {
+        const node = await startNode([], {
+          bin: cli.bin,
+          binArgs: cli.binArgs,
+          cwd: cli.root,
+          env: cli.env
         });
+        try {
+          const response = await fetch(`${node.url}/wallet/getnowblock`, { signal: AbortSignal.timeout(5_000) });
+          expect(response.status).to.equal(200);
+          const block = await response.json();
+          expect(block.blockID).to.match(/^[0-9a-f]{64}$/);
+        } finally {
+          await node.stop();
+        }
+      });
 
-        it('runs the unboxed contract tests', () => {
-          expectTestsToPass(run(['test'], { cwd: project }));
-        });
+      it('explains that unbox is no longer supported', () => {
+        const r = run(['unbox'], { cwd: cli.root });
+        expect(r.status).to.not.equal(0);
+        expect(r.stderr).to.include('The `unbox` command is no longer supported.');
       });
     });
   }

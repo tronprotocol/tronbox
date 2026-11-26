@@ -12,33 +12,29 @@ describe('tronbox CLI', function () {
       // Help goes to stderr (yargs default).
       expect(r.stderr).to.include('TronBox v');
       expect(r.stderr).to.include('Usage: tronbox <command> [options]');
-      ['init', 'compile', 'migrate', 'deploy', 'test', 'console', 'flatten', 'unbox', 'version'].forEach(c => {
+      ['init', 'compile', 'node', 'migrate', 'deploy', 'test', 'console', 'flatten', 'version'].forEach(c => {
         expect(r.stderr).to.include(`tronbox ${c}`);
       });
+      expect(r.stderr).to.not.include('unbox');
     };
 
     it('no args prints help', () => expectHelp(runCli([], { cwd })));
     it('help command prints help', () => expectHelp(runCli(['help'], { cwd })));
     it('--help flag prints help', () => expectHelp(runCli(['--help'], { cwd })));
-
-    it('marks unbox as deprecated in the command list', () => {
-      const r = runCli(['help'], { cwd });
-      expect(r.stderr).to.include('tronbox unbox');
-      expect(r.stderr).to.include('(deprecated)');
-    });
   });
 
   describe('subcommand help', () => {
     // Subcommand --help goes to stdout (yargs default), unlike top-level --help.
     const cases = [
-      ['init', 'Initialize new TronBox project'],
+      ['init', 'Initialize a new TronBox project'],
       ['compile', 'Compile contract source files'],
+      ['node', 'Start a local TRON development node'],
       ['migrate', 'Run migrations to deploy contracts'],
       ['deploy', 'Run migrations to deploy contracts'],
-      ['test', 'Run contract tests written in JavaScript'],
-      ['console', 'Run a console with contract abstractions'],
-      ['flatten', 'Flattens and prints contracts and their dependencies'],
-      ['unbox', 'Download a pre-built TronBox Box template'],
+      ['test', 'Run JavaScript contract tests'],
+      ['console', 'Open a console with contracts and TronBox commands'],
+      ['flatten', 'Flatten and print contracts and their dependencies'],
+      ['unbox', 'The `unbox` command is no longer supported.'],
       ['version', 'Show version information']
     ];
     cases.forEach(([cmd, banner]) => {
@@ -48,10 +44,6 @@ describe('tronbox CLI', function () {
         expect(r.stdout).to.include('TronBox v');
         expect(r.stdout).to.include(banner);
         expect(r.stdout).to.include(`Usage: tronbox ${cmd}`);
-        if (cmd === 'unbox') {
-          expect(r.stdout).to.include('DEPRECATED: The `unbox` command');
-          expect(r.stdout).to.include('a future version');
-        }
       });
     });
   });

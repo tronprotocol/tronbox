@@ -61,6 +61,72 @@ function runInConsole(commands, { cwd = FIXTURE_DIR, env = {}, timeout = 60_000,
   });
 }
 
+// Start the dev node or an installed CLI on an ephemeral loopback port.
+async function startNode(args = [], { cwd, bin, binArgs = [], env = {} } = {}) {
+  const child = spawn(bin || process.execPath, [...(bin ? binArgs : [TRONBOX_BIN]), 'node', '--port', '0', ...args], {
+    cwd,
+    env: { ...process.env, ...env, FORCE_COLOR: '0' },
+    shell: Boolean(bin),
+    detached: Boolean(bin)
+  });
+  const closed = new Promise(resolve => child.once('close', (status, signal) => resolve({ status, signal })));
+  const kill = signal => {
+    if (!bin) return child.kill(signal);
+    // Stop the wrapper and node together so npx/shell children cannot leak.
+    if (child.pid !== undefined) {
+      try {
+        process.kill(-child.pid, signal);
+      } catch (error) {
+        if (error.code !== 'ESRCH') throw error;
+      }
+    }
+  };
+  const stop = async (signal = 'SIGTERM') => {
+    const timer = setTimeout(() => kill('SIGKILL'), 5_000);
+    try {
+      kill(signal);
+      return await closed;
+    } finally {
+      clearTimeout(timer);
+    }
+  };
+
+  try {
+    const url = await new Promise((resolve, reject) => {
+      let output = '';
+      let stderr = '';
+      let ready = false;
+      const timer = setTimeout(() => {
+        kill('SIGKILL');
+        reject(new Error('Development node startup timed out'));
+      }, 10_000);
+      child.stdout.on('data', data => {
+        if (ready) return;
+        output += data.toString();
+        const match = output.match(/Started HTTP server at (http:\/\/[^\s]+)/);
+        if (match) {
+          ready = true;
+          clearTimeout(timer);
+          resolve(match[1]);
+        }
+      });
+      child.stderr.on('data', data => (stderr += data.toString()));
+      child.once('error', error => {
+        clearTimeout(timer);
+        reject(error);
+      });
+      closed.then(({ status }) => {
+        clearTimeout(timer);
+        if (!ready) reject(new Error(`Development node exited with ${status}: ${stderr}`));
+      });
+    });
+    return { url, child, closed, stop };
+  } catch (error) {
+    await stop();
+    throw error;
+  }
+}
+
 function makeTmp(prefix = 'tronbox-test-') {
   return fs.mkdtempSync(path.join(os.tmpdir(), prefix));
 }
@@ -77,6 +143,7 @@ function removeTmp(dir) {
 module.exports = {
   runCli,
   runInConsole,
+  startNode,
   makeTmp,
   makeLocalTmp,
   removeTmp,

@@ -1,5 +1,5 @@
 const pkg = require('../pkg');
-const describe = 'Initialize new TronBox project';
+const describe = 'Initialize a new TronBox project';
 
 const command = {
   command: 'init',

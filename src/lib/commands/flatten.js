@@ -1,5 +1,5 @@
 const pkg = require('../pkg');
-const describe = 'Flattens and prints contracts and their dependencies';
+const describe = 'Flatten and print contracts and their dependencies';
 
 const command = {
   command: 'flatten',
